@@ -1,0 +1,235 @@
+/* body and wrapper */
+
+:root {
+    --sidebar_width: 300px;
+    --sidebar_padding_left: 20px;
+}
+
+body {
+    background-color: #fff;
+    margin:0;
+    min-height: 100dvh;
+    font-size:14px;
+    font-family:Helvetica, Arial, sans-serif;
+    line-height: 1.5em;
+    font-weight:normal;
+    color:#727272;
+}
+
+.wrapper {
+    display: flex;
+    /* height: 100dvh; */
+    width: 100dvw;
+    /* overflow: auto; */
+}
+
+/* mobile */
+
+/* sidebar */
+
+.hamburger {
+    display: block;
+    position: fixed;
+    cursor: pointer;
+    font-size: 40px;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 10px;
+    padding-bottom: 15px;
+}
+
+.side {
+    min-height: 60dvh;
+    width: 0;
+    /* margin-left: calc(-1 * var(--sidebar_width)); */
+    background-color: #eeffee;
+    color: #444444;
+    height: 100vh;
+    overflow-y: scroll;
+    transition: all 0.5s;
+    top: 0;
+    position: sticky;
+}
+
+main {
+    /* fix sidebar size and flex size for main */
+    flex: 1; 
+    margin: auto;
+    max-width: 90dvw;
+    transition: all 0.5s;
+    display: block;
+}
+
+article {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+
+/* sidebar when hamburger menu is clicked */
+.side.open {
+    min-width: var(--sidebar_width); 
+    margin-left: 0;
+    padding-left: var(--sidebar_padding_left);
+}
+
+/* main when hamburger menu is clicked */ 
+main.hidden {
+    padding-left: 20px;
+    min-width: 90dvw;
+    /* overflow-x: hidden; */
+}
+
+
+.side nav {
+    padding-bottom: 0px;
+}
+
+.page_title {
+    font-size: 34px;
+    font-weight: bold;
+    padding-top: 60px;
+    padding-left: 10px;
+    padding-bottom: 20px;
+}
+
+main a {
+    color: inherit;
+    font-weight: bold;
+}
+
+nav a {
+    margin-left: 10px;
+    margin-bottom: 5px;
+    color: inherit; 
+    text-decoration: none;
+    display: block;        
+}
+
+a:hover, a:focus {
+    color: inherit;
+    font-weight: bold;
+}
+
+.side p, ul{
+    margin: 0;
+}
+
+.side ul li {
+    margin-left: 10px;
+}
+
+.side footer {
+    color: inherit;
+    background-color: #eeffee;
+    opacity: 0.75;
+    width: calc(var(--sidebar_width) - var(--sidebar_padding_left));
+    float: left;
+    bottom: 0; 
+    /* position: sticky; */
+    padding-top: 5px;
+    padding-bottom: 15px;
+    padding-left: var(--sidebar_padding_left);
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* main contents */
+
+main ul li {
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+    line-height: 1.5em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color:#222;
+    margin: 20px 0 20px;
+}
+
+h1 {
+    font-size: 30px
+}
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-top: 3px solid #cccccc;
+}
+
+/* custom class */
+
+.definition, .theorem, .lemma, .problem {
+    width: 90%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    border: 2px solid #888888;
+}
+
+.example, .remark, .proof {
+    width: 92%;
+    margin-top: 15px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+    padding-left: 15px;
+    border-left: solid 5px #cccccc;
+}
+
+.legend_title {
+    font-size: 120%;
+    font-weight: bold; 
+    text-decoration: underline;
+}
+
+/* resize */
+.resize {
+    width: 500px;
+    max-width: 80dvw;
+    margin-left: auto;
+    margin-right: auto;
+}
+.resize img {
+    width: 100%;
+    max-width: 80dvw;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+}
+
+.wave {
+    text-decoration: underline;
+    text-decoration-style: wavy;
+}
+
+/* mathjax: display math */
+mjx-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 90dvw;
+}
+/* mjx-math { 
+    overflow-x: auto;
+    max-width: 70dvw;
+} */
+
+@media only screen and (min-width: 800px) {
+    /* no need hamburger */
+    .hamburger {
+        display: none;
+    }
+    /* always show side bar */
+    .side {
+        min-width: var(--sidebar_width);
+        margin-left: 0;
+        padding-left: var(--sidebar_padding_left);
+    }
+    main {
+        padding-left: 20px;
+        padding-right: 20px;
+        max-width: 1200px;
+    }
+}
