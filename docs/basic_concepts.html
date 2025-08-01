@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>力学系入門</title>
+    <!-- style -->
+    <link rel="stylesheet" href="./common/style.css">
+    <!-- mathjax -->
+    <script src="./common/import_mathjax.js"></script>
+</head>
+
+<body>
+    <header>
+        <!-- (no header) -->
+    </header>
+
+    <!-- contents -->
+    <div class="wrapper">
+
+    <!-- sidebar -->
+    <div class="side" id="sidebar"></div>
+
+    <div class="hamburger" onclick="toggleSidebar()">
+        ☰
+    </div>
+    
+    <!-- main -->
+    <main role="main"><article id="section1"><h1>力学系の諸概念</h1>
+        <p>まず, 力学系の理論を説明するために必要な概念を紹介する. 
+        具体例としては, ひとまず線形力学系のみを扱うことにするが, ここで導入する様々なアイデアはより一般の状況を考える際にも重要となるものである.</p>
+        
+        <section id="section1-1"><h2>1.1: 線形力学系</h2>
+            <p>様々な概念について紹介する前に, まずは線形力学系について簡単に触れておく.</p>
+            <p>まず, 変数 $t$ と未知のベクトル値関数 $\mathbf{x}(t)\in\mathbb{R}^n$, 与えられた線形写像 $f: \mathbb{R}^{n}\to\mathbb{R}^n$ に対して,
+                \[
+                    \mathbf{x}' = \mathbf{f}(\mathbf{x})
+                \] と表される力学系 (特に自励系である) を <b>線形力学系</b> (<b>linear dynamical system</b>) という. 
+                ここで, 写像 $\mathbf{f}:\mathbb{R}^n\to\mathbb{R}$ が線形であるとは, 任意の $c_1, c_2\in\mathbb{R}$ および $\mathbf{x}_1, \mathbf{x}_2\in\mathbb{R}^n$ に対し
+                \[
+                    \mathbf{f}(c_1\mathbf{x}_1 + c_2\mathbf{x}_2) = c_1\mathbf{f}(\mathbf{x}_1) + c_2\mathbf{f}(\mathbf{x}_2)
+                \] が成り立つことであり, 従って $\mathbf{x}$ を標準規定 $\mathbf{e}_1, \dots, \mathbf{e}_n$ の線型結合により 
+                \[
+                    \mathbf{x} = \begin{pmatrix} 
+                        x_1 \cr 
+                        \vdots \cr 
+                        x_n 
+                    \end{pmatrix} = x_1\mathbf{e}_1 + \dots + x_n\mathbf{e}_n
+                \] と表現したときに, 
+                \[
+                    \begin{array}{rl} 
+                        \mathbf{f}(\mathbf{x}) &= x_1\mathbf{f}(\mathbf{e}_1) + \dots + x_n\mathbf{f}(\mathbf{e}_n) \cr 
+                        &= (\mathbf{f}(\mathbf{e}_1), \dots, \mathbf{f}(\mathbf{e}_n))\mathbf{x}
+                    \end{array}
+                \] が成立する. 
+                ここで, $(\mathbf{f}(\mathbf{e}_1), \dots, \mathbf{f}(\mathbf{e}_n)) \in\mathbb{R}^{n\times n}$ なので, この行列を $A$ とおくと, 線形力学系とは
+                \[
+                    \mathbf{x}' = A\mathbf{x} \tag{1.1}
+                \] と表される力学系のことに他ならない. 
+            </p>
+            <p>線形力学系の解については, それらの線型結合もまた解になるという性質がある. 
+                例えば, $\mathbf{x}_1$, $\mathbf{x}_2$ が式 $(1.1)$ の解となるならば, その線型結合も 
+                \[  
+                    \begin{array}{rl}
+                        (c_1\mathbf{x}_1 + c_2\mathbf{x}_2)' &= c_1\mathbf{x}_1' + c_2\mathbf{x}_2' \cr 
+                        &= c_1A\mathbf{x}_1 + c_2A\mathbf{x}_2 \cr 
+                        &= A(c_1\mathbf{x}_1 + c_2\mathbf{x}_2)
+                    \end{array}
+                \] を満たすため, 確かに式 $(1.1)$ の解である. 
+            </p> 
+            <p>また, 線形力学系の解は, 行列 $A$ の固有値と固有ベクトルを用いて表すことができる: 具体的には, 行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
+                \[
+                    \mathbf{x}(t) = e^{\lambda_i t}\mathbf{v}_i
+                \] は式 $(1.1)$ の解である. 実際, $\mathbf{x}(t) = e^{\lambda_i t}\mathbf{v}_i$ に対して
+                \[
+                    \mathbf{x}' = \lambda_ie^{\lambda_i t}\mathbf{v}_i = e^{\lambda_i t}A\mathbf{v}_i = A \mathbf{x}
+                \] が成立する. 
+            </p>
+            
+            <hr>
+
+            <p>具体例として, 
+                \[
+                    A = \begin{pmatrix} 
+                        a & b \cr 
+                        c & d 
+                    \end{pmatrix} \in\mathbb{R}^{2\times 2}
+                \] であるときに, 
+                \[
+                    \left\{\begin{array}{rl} 
+                        \mathbf{x}' &= A\mathbf{x}, \cr 
+                        \mathbf{x}(0) &= \mathbf{x}_0 
+                    \end{array}\right. \tag{1.2}
+                \] の解 $\mathbf{x}: \mathbb{R}\to \mathbb{R}^2$ がどのように表されるかを考えてみよう, ただし, $\mathbf{x}_0\in\mathbb{R}^2$ は与えられたベクトルである. 
+                ここで $\mathbf{x}(0) = \mathbf{x}_0$ は, $t=0$ における $\mathbf{x}$ を指定する条件であり, 特に変数 $t$ が時刻を表す場合には <b>初期条件</b> と呼ばれる. 
+            </p>
+            <p>まず, 記号の簡単のために, 
+                \[
+                    T = \operatorname{tr}A = a+d, \quad D = \det A = ad-bc 
+                \] と表すことにすると, 行列 $A$ の固有値は固有方程式
+                \[
+                    0 = \det(\lambda I-A) = \lambda^2 - T\lambda + D
+                \] を解くことで得られる. 
+                ここで $2$ 次方程式の解の公式を用いると
+            </p>
+            <ul>
+                <li>$T^2-4D\gt 0$ ならば, 異なる二つの固有値 $\lambda_1$, $\lambda_2\in\mathbb{R}$ が存在する,</li>
+                <li>$T^2-4D = 0$ ならば, 固有値は重複した $1$ つの実数のみである,</li>
+                <li>$T^2-4D\lt 0$ ならば, 虚部が $0$ でない異なる二つの固有値 $\lambda_1$, $\lambda_2\in \mathbb{C}$ が存在し, $\lambda_1 = \overline{\lambda_2}$ である.</li>
+            </ul>
+            <p>上で挙げた $3$ つの状況について, 一つずつ考察していこう:
+            </p>
+            <ul>
+                <li><p>まず, 異なる二つの固有値 $\lambda_1$, $\lambda_2\in\mathbb{R}$ が存在する場合, それぞれに対応する固有ベクトル $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{R}^2$ が存在し, それらは線型独立である. 
+                    これらを用いて, 
+                    \[
+                        \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2
+                    \] という線型結合で表される $\mathbf{x}(t)$ は $\mathbf{x}' = A\mathbf{x}$ の一般解である. 
+                    </p>
+                    <p>あとは, 与えられた $\mathbf{x}_0\in\mathbb{R}^2$ に対して
+                    \[
+                        \mathbf{x}_0 = \mathbf{x}(0) = c_1\mathbf{v}_1 + c_2\mathbf{v}_2 = (\mathbf{v}_1,\mathbf{v}_2)\begin{pmatrix} 
+                            c_1 \cr 
+                            c_2 
+                        \end{pmatrix}
+                    \] を満たす $c_1$, $c_2\in\mathbb{R}$ が得られれば, 式 $(1.2)$ の解 (初期条件下での特殊解) が得られる. 
+                    具体的には, $\mathbf{v}_1$, $\mathbf{v}_2$ が線型独立であることから, 
+                    \[
+                        P = (\mathbf{v}_1, \mathbf{v}_2)\in\mathbb{R}^{2\times 2}
+                    \] は正則行列であり, 従って 
+                    \[
+                        \begin{pmatrix} 
+                            c_1 \cr 
+                            c_2 
+                        \end{pmatrix} = P^{-1}\mathbf{x}_0
+                    \] を計算することで, 任意定数 $c_1$, $c_2$ の値が決定され特殊解が得られる. 
+                    </p>
+                    <p>さらに, このとき行列 $A$ を対角化すると
+                        \[
+                            P^{-1}AP = \begin{pmatrix} 
+                                \lambda_1 & 0 \cr 
+                                0 & \lambda_2 
+                            \end{pmatrix}
+                        \] となるため, 式 $(1.2)$ の解 $\mathbf{x}$ に対して $\widetilde{\mathbf{x}} = P^{-1}\mathbf{x}$ と定めると, 
+                        \[
+                            \begin{array}{rl} 
+                                \begin{pmatrix} 
+                                    \lambda_1 & 0 \cr 
+                                    0 & \lambda_2 
+                                \end{pmatrix} \widetilde{\mathbf{x}} &= P^{-1}AP\widetilde{\mathbf{x}} \cr 
+                                &= P^{-1}A\mathbf{x} \cr 
+                                &= P^{-1}\mathbf{x}' = \widetilde{\mathbf{x}}'
+                            \end{array}
+                        \] となる. このことは, 式 $(1.2)$ の解は
+                        \[
+                            \left\{\begin{array}{rl} 
+                                \widetilde{\mathbf{x}}' &= \begin{pmatrix} 
+                                    \lambda_1 & 0 \cr 
+                                    0 & \lambda_2 
+                                \end{pmatrix}\widetilde{\mathbf{x}}, \cr 
+                                \widetilde{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
+                            \end{array}\right. 
+                        \] の解 $\widetilde{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widetilde{\mathbf{x}}$ により説明できることを意味している. 
+                    </p>
+                </li>
+                <li><p>次に, 固有値が $1$ つの実数のみの場合は, 固有値 $\lambda\in\mathbb{R}$ に対応する (線型独立な) 固有ベクトルが複数ある場合と $1$ つしか無い場合と $2$ つのケースが考えられる.  
+                    </p>
+                    <p>固有値 $\lambda$ に対応する複数の固有ベクトルが存在する場合は, 少なくとも $2$ つの線型独立な固有ベクトルが存在するため, それらを $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{R}^2$ とおく. 
+                    このとき, $\mathbb{R}^2$ の全てのベクトル $\mathbf{v}$ は $\mathbb{R}^2$ の基底 $\mathbf{v}_1, \mathbf{v}_2$ の線型結合で表現できる: 
+                    \[
+                        \mathbf{v} = c_1\mathbf{v}_1 + c_2\mathbf{v}_2
+                    \] 
+                    このとき, 
+                    \[
+                        A\mathbf{v} = A(c_1\mathbf{v}_1 + c_2\mathbf{v}_2) = \lambda(c_1\mathbf{v}_1 + c_2\mathbf{v}_2) = \lambda\mathbf{v}
+                    \] となることから, 任意の $\mathbf{0}$ でないベクトル $\mathbf{v}\in\mathbb{R}^2$ は, 行列 $A\in\mathbb{R}^{2\times 2}$ の固有値 $\lambda$ に対応する固有ベクトルになる (なお, このような行列 $A\in\mathbb{R}^{2\times 2}$ は $A=\lambda I$ しか存在しない). 
+                    このときは, 任意のベクトル $\mathbf{v}\in\mathbb{R}^2$ に対して
+                    \[
+                        \mathbf{x}(t) = ce^{\lambda t}\mathbf{v}
+                    \] が $\mathbf{x}' = A\mathbf{x}$ の一般解であり, 初期条件を満たす特殊解は $\mathbf{x}(t) = e^{\lambda t}\mathbf{x}_0$ である. 
+                    </p>
+                    <p>ただ一つの固有値 $\lambda$ に対応する固有ベクトルが (スカラー倍を除き) 一つしか無い場合は, 行列 $A$ は固有ベクトルを用いて対角化することはできないが, 代わりに一般固有空間の元 (一般固有ベクトル) を用いてジョルダン標準形にすることができる. 
+                        いま, $\lambda$ は固有方程式の $2$ 重解であるため, $\lambda$ に対応する固有ベクトル $\mathbf{v}_1$ に対して, 例えば
+                        \[
+                            (\lambda I - A)\mathbf{v}_2 = -\mathbf{v}_1
+                        \] となる (固有値 $\lambda$ に対する階数 $2$ の一般固有ベクトル) $\mathbf{v}_2$ を考えれれば良い. 
+                        このとき, 確かに $(\lambda I - A)^2\mathbf{v}_2 = \mathbf{0}$ であり, $\mathbf{v}_1$ と $\mathbf{v}_2$ は線型独立であり, また $A\mathbf{v}_2 = \mathbf{v}_1 + \lambda\mathbf{v}_2$ となる.  
+                    </p>
+                    <p>これらを用いると, 
+                        \[
+                            \mathbf{x}(t) = e^{\lambda t}\mathbf{v}_1,\quad \mathbf{x}(t) = te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2
+                        \] はどちらも $\mathbf{x}' = A\mathbf{x}$ を満たし, これらの線型結合で一般解が得られる:
+                        \[
+                            \mathbf{x}(t) = (c_1e^{\lambda t} + c_2te^{\lambda t})\mathbf{v}_1 + c_2e^{\lambda t}\mathbf{v}_2.
+                        \] また, $P=(\mathbf{v}_1, \mathbf{v}_2)$ を用いて与えられた初期条件に対する特殊解を得ることができ, さらに 
+                        \[
+                            P^{-1}AP = \begin{pmatrix} 
+                                \lambda & 1 \cr 
+                                0 & \lambda 
+                            \end{pmatrix}
+                        \] というジョルダン標準形が得られることから, このパターンに対する式 $(1.2)$ の解は 
+                        \[
+                            \left\{\begin{array}{rl} 
+                                \widetilde{\mathbf{x}}' &= \begin{pmatrix} 
+                                    \lambda & 1 \cr 
+                                    0 & \lambda 
+                                \end{pmatrix}\widetilde{\mathbf{x}}, \cr 
+                                \widetilde{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
+                            \end{array}\right. 
+                        \] の解 $\widetilde{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widetilde{\mathbf{x}}$ により説明できる. 
+                    </p>
+                </li>
+                <li>
+                    <p>最後に, 異なる二つの固有値 $\lambda_1$, $\lambda_2\in\mathbb{C}\backslash\mathbb{R}$ が存在する場合を考える. 
+                        これらは実数係数 $2$ 次方程式の解であるため, $\lambda_1=\overline{\lambda}_2$ である. 
+                        対応する固有ベクトル $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{C}^2\backslash\mathbb{R}^{2}$ について, 
+                        \[
+                            c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 \in\mathbb{C}^2
+                        \] が $\mathbf{x}' = A\mathbf{x}$ を満たすことは確かだが, 一般に実数係数の微分方程式の解としては実数値の関数がほしい. 
+                        そこで, 
+                        \[
+                            A\overline{\mathbf{v}}_2 = \overline{\lambda_2\mathbf{v}_2} = \lambda_1\overline{\mathbf{v}}_2
+                        \] であることに注目し, 特に $\mathbf{v}_1 = \overline{\mathbf{v}}_2$ である状況を考えることにする. 
+                        いま, 
+                        \[
+                            \lambda_1 = a+ib,\quad \mathbf{v}_1 = \mathbf{w}_1 + i\mathbf{w}_2
+                        \] とおく, ここで $a, b\in\mathbb{R}$, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^2$ とする, また $i$ は虚数単位である. 
+                        このとき, $\lambda_1\in\mathbb{C}\backslash\mathbb{R}$ より $b\neq0$ であり, $\mathbf{v}_1\in\mathbb{C}^2\backslash\mathbb{R}^2$ より $\mathbf{w}_2\neq\mathbf{0}$ であることに注意. 
+                    </p>
+                    <p>ここで, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^2$ は線型独立である. 
+                        このことは背理法で以下のように証明できる: もしも線型独立で無いならば, $\mathbf{w}_1 = c\mathbf{w}_2$ となる $c\in\mathbb{R}$ が存在するため, 
+                        \[
+                            \begin{array}{rl} 
+                                (c+i)A\mathbf{w}_2 &= A(\mathbf{w}_1+i\mathbf{w}_2) \cr 
+                                &= A\mathbf{v}_1 \cr 
+                                &= \lambda_1\mathbf{v}_1 \cr 
+                                &= (a+ib)(c+i)\mathbf{w}_2
+                            \end{array}
+                        \] となるが, $c\in\mathbb{R}$ より $c+i\neq0$ であり, 従って 
+                        \[
+                            A\mathbf{w}_2 = (a+ib)\mathbf{w}_2 
+                        \] が成立する. この左辺は実ベクトルであり, 右辺は $b\neq0$, $\mathbf{w}_2\neq\mathbf{0}$ より実ベクトルでは無いため矛盾する. 
+                        従って, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^2$ は線型独立である. 
+                    </p>
+                    <p>このようにして, 固有ベクトルと密接に関連する $2$ つの線型独立な実ベクトル $\mathbf{w}_1$, $\mathbf{w}_2$ が得られるので, これらを用いて一般解の表現を試みる. 
+
+
+                    </p>
+                </li>
+            </ul>
+
+            </p>
+    
+    <!-- 
+    授業の概要(授業の目標) : 力学系について入門的な講義を行う. 
+    相空間において初期点を与え，時間の経過に従い軌道として相空間を移動する,このような概念を力学系という. 
+    力学系においては軌道全体の大域的な構造を知ることが主な問題である. 
+    多くの重要な数理現象は力学系として非線形の常微分方程式系あるいは差分方程式系で記述される. 
+    授業ではこれらを解析する上で必要な基礎的諸概念(用語)について講義する. 
+    また，非線形の方程式系を解析するために有効となる数値解析を利用し，具体的な力学系の軌道構造，分岐現象等を可視化，理解する手法を学習する．
+    到達目標 : 非線形方程式系で記述される現象を解析する上で必要な基礎的な諸概念を理解し,非線形現象から具体的な力学的性質を導く手法を修得する.
+    授業計画 : 時間連続な力学系および離散時間の力学系について，次の基礎的な項目について講義した後に更に高度な内容に進む．
+    典型的な具体例を中心に，数値計算によって軌道の構造を理解する手法を扱う．
+    1. 平衡点と周期軌道
+    2. 軌道の安定性と分岐現象
+    3. カオス的な力学系の性質
+    4. ポアンカレ写像による連続な力学系と離散力学系の同値性の例
+    キーワード : 力学系，安定性，不変集合，カオス，数理モデル 
+    単純な線形微分方程式系については解析学Bですでにやっているはず. 
+    -->
+    </main>
+
+
+
+</body>
+
+<!-- javascript -->
+<script src="./common/create_statement_block.js"></script>
+<script src="./common/function_toggleSidebar.js"></script>
+<script src="./common/import_sidebar.js"></script>
+
+</html>
+
