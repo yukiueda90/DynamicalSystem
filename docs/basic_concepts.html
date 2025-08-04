@@ -142,26 +142,26 @@
                                 \lambda_1 & 0 \cr 
                                 0 & \lambda_2 
                             \end{pmatrix}
-                        \] となるため, 式 $(1.2)$ の解 $\mathbf{x}$ に対して $\widetilde{\mathbf{x}} = P^{-1}\mathbf{x}$ と定めると, 
+                        \] となるため, 式 $(1.2)$ の解 $\mathbf{x}$ に対して $\widehat{\mathbf{x}} = P^{-1}\mathbf{x}$ と定めると, 
                         \[
                             \begin{array}{rl} 
                                 \begin{pmatrix} 
                                     \lambda_1 & 0 \cr 
                                     0 & \lambda_2 
-                                \end{pmatrix} \widetilde{\mathbf{x}} &= P^{-1}AP\widetilde{\mathbf{x}} \cr 
+                                \end{pmatrix} \widehat{\mathbf{x}} &= P^{-1}AP\widehat{\mathbf{x}} \cr 
                                 &= P^{-1}A\mathbf{x} \cr 
-                                &= P^{-1}\mathbf{x}' = \widetilde{\mathbf{x}}'
+                                &= P^{-1}\mathbf{x}' = \widehat{\mathbf{x}}'
                             \end{array}
                         \] となる. このことは, 式 $(1.2)$ の解は
                         \[
                             \left\{\begin{array}{rl} 
-                                \widetilde{\mathbf{x}}' &= \begin{pmatrix} 
+                                \widehat{\mathbf{x}}' &= \begin{pmatrix} 
                                     \lambda_1 & 0 \cr 
                                     0 & \lambda_2 
-                                \end{pmatrix}\widetilde{\mathbf{x}}, \cr 
-                                \widetilde{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
+                                \end{pmatrix}\widehat{\mathbf{x}}, \cr 
+                                \widehat{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
                             \end{array}\right. 
-                        \] の解 $\widetilde{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widetilde{\mathbf{x}}$ により説明できることを意味している. 
+                        \] の解 $\widehat{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widehat{\mathbf{x}}$ により説明できることを意味している. 
                     </p>
                 </li>
                 <li><p>次に, 固有値が $1$ つの実数のみの場合は, 固有値 $\lambda\in\mathbb{R}$ に対応する (線型独立な) 固有ベクトルが複数ある場合と $1$ つしか無い場合と $2$ つのケースが考えられる.  
@@ -193,7 +193,8 @@
                         \] はどちらも $\mathbf{x}' = A\mathbf{x}$ を満たし, これらの線型結合で一般解が得られる:
                         \[
                             \mathbf{x}(t) = (c_1e^{\lambda t} + c_2te^{\lambda t})\mathbf{v}_1 + c_2e^{\lambda t}\mathbf{v}_2.
-                        \] また, $P=(\mathbf{v}_1, \mathbf{v}_2)$ を用いて与えられた初期条件に対する特殊解を得ることができ, さらに 
+                        \] なお, $te^{\lambda t}\mathbf{v}_1$ という部分を考えるのは, 本質的に $1$ 階線形微分方程式の未定係数法による. 
+                        また, $P=(\mathbf{v}_1, \mathbf{v}_2)$ を用いて与えられた初期条件に対する特殊解を得ることができ, さらに 
                         \[
                             P^{-1}AP = \begin{pmatrix} 
                                 \lambda & 1 \cr 
@@ -202,13 +203,13 @@
                         \] というジョルダン標準形が得られることから, このパターンに対する式 $(1.2)$ の解は 
                         \[
                             \left\{\begin{array}{rl} 
-                                \widetilde{\mathbf{x}}' &= \begin{pmatrix} 
+                                \widehat{\mathbf{x}}' &= \begin{pmatrix} 
                                     \lambda & 1 \cr 
                                     0 & \lambda 
-                                \end{pmatrix}\widetilde{\mathbf{x}}, \cr 
-                                \widetilde{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
+                                \end{pmatrix}\widehat{\mathbf{x}}, \cr 
+                                \widehat{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
                             \end{array}\right. 
-                        \] の解 $\widetilde{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widetilde{\mathbf{x}}$ により説明できる. 
+                        \] の解 $\widehat{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widehat{\mathbf{x}}$ により説明できる. 
                     </p>
                 </li>
                 <li>
@@ -216,7 +217,7 @@
                         これらは実数係数 $2$ 次方程式の解であるため, $\lambda_1=\overline{\lambda}_2$ である. 
                         対応する固有ベクトル $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{C}^2\backslash\mathbb{R}^{2}$ について, 
                         \[
-                            c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 \in\mathbb{C}^2
+                            \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 \in\mathbb{C}^2
                         \] が $\mathbf{x}' = A\mathbf{x}$ を満たすことは確かだが, 一般に実数係数の微分方程式の解としては実数値の関数がほしい. 
                         そこで, 
                         \[
@@ -244,8 +245,55 @@
                         従って, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^2$ は線型独立である. 
                     </p>
                     <p>このようにして, 固有ベクトルと密接に関連する $2$ つの線型独立な実ベクトル $\mathbf{w}_1$, $\mathbf{w}_2$ が得られるので, これらを用いて一般解の表現を試みる. 
-
-
+                        直接計算するとやや面倒なので, ここでは先に簡単な形の線形力学系に帰着させ, その解 $\widehat{\mathbf{x}}$ の線形変換により説明することにする. 
+                        いま, $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1$ に注目すると 
+                        \[
+                            \begin{array}{rl}
+                                A(\mathbf{w}_1 + i\mathbf{w}_2) &= (a+ib)(\mathbf{w}_1 + i\mathbf{w}_2) \cr 
+                                &= a\mathbf{w}_1 - b\mathbf{w}_2 + i(b\mathbf{w}_1 + a\mathbf{w}_2)
+                            \end{array}
+                        \] となるため, 実部と虚部とをそれぞれ比較することで
+                        \[
+                            \left\{\begin{array}{rl} 
+                                A\mathbf{w}_1 &= a\mathbf{w}_1 - b\mathbf{w}_2, \cr 
+                                A\mathbf{w}_2 &= b\mathbf{w}_1 + a\mathbf{w}_2  
+                            \end{array}\right.
+                        \] が得られる ($A\mathbf{v}_2 = \lambda_2\mathbf{v}_2$ に注目して実部と虚部とをそれぞれ比較しても同じ結果が得られる). 
+                        従って, 
+                        \[
+                            A(\mathbf{w}_1, \mathbf{w}_2) = (\mathbf{w}_1, \mathbf{w}_2)\begin{pmatrix} 
+                                a & b \cr 
+                                -b & a 
+                            \end{pmatrix}
+                        \] となり, $P=(\mathbf{w}_1, \mathbf{w}_2)$ とおくことで, 
+                        \[
+                            P^{-1}AP = \begin{pmatrix} 
+                                a & b \cr 
+                                -b & a 
+                            \end{pmatrix}
+                        \] が得られる. 
+                        記号の簡単のため, 右辺の行列を $\widehat{A}$ とおく. 
+                        このことは, このパターンに対する一般解が 
+                        \[
+                            \widehat{\mathbf{x}}' = \widehat{A}\widehat{\mathbf{x}}
+                        \] の一般解 $\widehat{\mathbf{x}}$ に対して $\mathbf{x} = P\widehat{\mathbf{x}}$ となることを意味している. 
+                    </p>
+                    <p>それでは $\widehat{\mathbf{x}}$ の具体的な形を考えよう. 
+                        行列 $\widehat{A}$ は $A$ と相似なので, 固有値は共通で $\lambda_1 = a+ib$, $\lambda_2= a-ib$ である (当然, $\det(\lambda I-\widehat{A})=0$ を解いても同じ結果が得られる). 
+                        対応する固有ベクトルは 
+                        \[
+                            \widehat{\mathbf{v}}_1 = \begin{pmatrix} 
+                                1 \cr 
+                                i 
+                            \end{pmatrix}, \quad \widehat{\mathbf{v}}_2 = \begin{pmatrix} 
+                                1 \cr 
+                                -i 
+                            \end{pmatrix}
+                        \] なので, $\widehat{\mathbf{x}}' = \widehat{A}\widehat{\mathbf{x}}$ を満たすような $\widehat{\mathbf{x}}$ として, 
+                        \[
+                            e^{\lambda_1 t}\widehat{\mathbf{v}}_1,\quad e^{\lambda_2 t}\widehat{\mathbf{v}}_2
+                        \] の $2$ つが考えられるが, $\overline{e^{\lambda_2 t}\widehat{\mathbf{v}}_2} = e^{\lambda_1 t}\widehat{\mathbf{v}}_1$ なので一方だけ考えれば十分だろう. 
+                        
                     </p>
                 </li>
             </ul>
