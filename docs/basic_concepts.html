@@ -162,6 +162,19 @@
                                 \widehat{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
                             \end{array}\right. 
                         \] の解 $\widehat{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widehat{\mathbf{x}}$ により説明できることを意味している. 
+                        実際, 一般解を考えると 
+                        \[
+                            \widehat{\mathbf{x}}(t) = \begin{pmatrix} 
+                                c_1e^{\lambda_1 t} \cr 
+                                c_2e^{\lambda_2 t} 
+                            \end{pmatrix}
+                        \] が得られ, 確かに 
+                        \[
+                            \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 = (\mathbf{v}_1, \mathbf{v}_2) \begin{pmatrix} 
+                                c_1e^{\lambda_1 t} \cr 
+                                c_2e^{\lambda_2 t} 
+                            \end{pmatrix} = P\widehat{\mathbf{x}}(t)
+                        \] となっている. 
                     </p>
                 </li>
                 <li><p>次に, 固有値が $1$ つの実数のみの場合は, 固有値 $\lambda\in\mathbb{R}$ に対応する (線型独立な) 固有ベクトルが複数ある場合と $1$ つしか無い場合と $2$ つのケースが考えられる.  
@@ -171,7 +184,7 @@
                     \[
                         \mathbf{v} = c_1\mathbf{v}_1 + c_2\mathbf{v}_2
                     \] 
-                    このとき, 
+                    これを用いると, 
                     \[
                         A\mathbf{v} = A(c_1\mathbf{v}_1 + c_2\mathbf{v}_2) = \lambda(c_1\mathbf{v}_1 + c_2\mathbf{v}_2) = \lambda\mathbf{v}
                     \] となることから, 任意の $\mathbf{0}$ でないベクトル $\mathbf{v}\in\mathbb{R}^2$ は, 行列 $A\in\mathbb{R}^{2\times 2}$ の固有値 $\lambda$ に対応する固有ベクトルになる (なお, このような行列 $A\in\mathbb{R}^{2\times 2}$ は $A=\lambda I$ しか存在しない). 
@@ -190,7 +203,7 @@
                     <p>これらを用いると, 
                         \[
                             \mathbf{x}(t) = e^{\lambda t}\mathbf{v}_1,\quad \mathbf{x}(t) = te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2
-                        \] はどちらも $\mathbf{x}' = A\mathbf{x}$ を満たし, これらの線型結合で一般解が得られる:
+                        \] はどちらも $\mathbf{x}' = A\mathbf{x}$ を満たし, 実はこれらの線型結合で一般解が得られる:
                         \[
                             \mathbf{x}(t) = (c_1e^{\lambda t} + c_2te^{\lambda t})\mathbf{v}_1 + c_2e^{\lambda t}\mathbf{v}_2.
                         \] なお, $te^{\lambda t}\mathbf{v}_1$ という部分を考えるのは, 本質的に $1$ 階線形微分方程式の未定係数法による. 
@@ -210,6 +223,19 @@
                                 \widehat{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
                             \end{array}\right. 
                         \] の解 $\widehat{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widehat{\mathbf{x}}$ により説明できる. 
+                        実際, 一般解を考えると 
+                        \[
+                            \widehat{\mathbf{x}}(t) = \begin{pmatrix} 
+                                c_1e^{\lambda t} + c_2te^{\lambda t} \cr 
+                                c_2e^{\lambda t} 
+                            \end{pmatrix}
+                        \] が得られ, 確かに 
+                        \[
+                            \mathbf{x}(t) = (c_1e^{\lambda t} + c_2te^{\lambda t})\mathbf{v}_1 + c_2e^{\lambda t}\mathbf{v}_2 = (\mathbf{v}_1, \mathbf{v}_2) \begin{pmatrix} 
+                                c_1e^{\lambda_1 t} + c_2te^{\lambda t} \cr 
+                                c_2e^{\lambda_2 t} 
+                            \end{pmatrix} = P\widehat{\mathbf{x}}(t)
+                        \] となっている. 
                     </p>
                 </li>
                 <li>
@@ -218,7 +244,7 @@
                         対応する固有ベクトル $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{C}^2\backslash\mathbb{R}^{2}$ について, 
                         \[
                             \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 \in\mathbb{C}^2
-                        \] が $\mathbf{x}' = A\mathbf{x}$ を満たすことは確かだが, 一般に実数係数の微分方程式の解としては実数値の関数がほしい. 
+                        \] が (任意の $c_1, c_2\in\mathbb{C}$ に対して) $\mathbf{x}' = A\mathbf{x}$ を満たすことは確かだが, 一般に実数係数の微分方程式の解としては実数値の関数がほしい. 
                         そこで, 
                         \[
                             A\overline{\mathbf{v}}_2 = \overline{\lambda_2\mathbf{v}_2} = \lambda_1\overline{\mathbf{v}}_2
@@ -245,8 +271,31 @@
                         従って, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^2$ は線型独立である. 
                     </p>
                     <p>このようにして, 固有ベクトルと密接に関連する $2$ つの線型独立な実ベクトル $\mathbf{w}_1$, $\mathbf{w}_2$ が得られるので, これらを用いて一般解の表現を試みる. 
-                        直接計算するとやや面倒なので, ここでは先に簡単な形の線形力学系に帰着させ, その解 $\widehat{\mathbf{x}}$ の線形変換により説明することにする. 
-                        いま, $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1$ に注目すると 
+                        まず, <b>オイラーの公式</b>  
+                        \[
+                            e^{iz} = \cos z + i\sin z \quad\text{ for all }\quad z\in\mathbb{C}
+                        \] を用いて 
+                        \[
+                            e^{\lambda_1 t} = e^{(a+ib)t} = e^{at}(\cos bt + i\sin bt)
+                        \] が得られる. 従って 
+                        \[
+                            e^{\lambda_1 t}\mathbf{v}_1 = e^{at}((\mathbf{w}_1\cos bt - \mathbf{w}_2\sin bt) + i(\mathbf{w}_1\sin bt + \mathbf{w}_2\cos bt))
+                        \] であり, また 
+                        \[
+                            e^{\lambda_2 t}\mathbf{v}_2 = \overline{e^{\lambda_1 t}\mathbf{v}_1}
+                        \] である. これらを用いると, 
+                        \[
+                            \begin{array}{rl}
+                                \mathbf{x}(t) &= \dfrac{1}{2}e^{\lambda_1 t}\mathbf{v}_1 + \dfrac{1}{2}e^{\lambda_2 t}\mathbf{v}_2 = e^{at}(\mathbf{w}_1\cos bt - \mathbf{w}_2\sin bt) \in \mathbb{R}, \cr  
+                                \mathbf{x}(t) &= -\dfrac{i}{2}e^{\lambda_1 t}\mathbf{v}_1 + \dfrac{i}{2}e^{\lambda_2 t}\mathbf{v}_2 = e^{at}(\mathbf{w}_1\sin bt + \mathbf{w}_2\cos bt) \in \mathbb{R} 
+                            \end{array} 
+                        \] はどちらも $\mathbf{x}' = A\mathbf{x}$ を満たし, 実はこれらの線型結合で一般解が得られる: 
+                        \[
+                            \mathbf{x}(t) = e^{at}(c_1(\mathbf{w}_1\cos bt - \mathbf{w}_2\sin bt) + c_2(\mathbf{w}_1\sin bt + \mathbf{w}_2\cos bt)) \in\mathbb{R},
+                        \] ただし, ここでは $c_1, c_2\in\mathbb{R}$ とする. 
+                        このようにして, 実数係数の微分方程式の解となる実数値の関数が得られる. 
+                    </p>
+                    <p>なお, $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1$ に注目すると 
                         \[
                             \begin{array}{rl}
                                 A(\mathbf{w}_1 + i\mathbf{w}_2) &= (a+ib)(\mathbf{w}_1 + i\mathbf{w}_2) \cr 
@@ -294,6 +343,29 @@
                             e^{\lambda_1 t}\widehat{\mathbf{v}}_1,\quad e^{\lambda_2 t}\widehat{\mathbf{v}}_2
                         \] の $2$ つが考えられるが, $\overline{e^{\lambda_2 t}\widehat{\mathbf{v}}_2} = e^{\lambda_1 t}\widehat{\mathbf{v}}_1$ なので一方だけ考えれば十分だろう. 
                         
+                    このパターンに対する式 $(1.2)$ の解は
+                        \[
+                            \left\{\begin{array}{rl} 
+                                \widehat{\mathbf{x}}' &= \begin{pmatrix} 
+                                    a & b \cr 
+                                    -b & a 
+                                \end{pmatrix}\widehat{\mathbf{x}}, \cr 
+                                \widehat{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
+                            \end{array}\right. 
+                        \] の解 $\widehat{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widehat{\mathbf{x}}$ により説明できることを意味している ($\lambda_1=a+ib$, $\lambda_2=a-ib$ に注意). 
+                        実際, 一般解を考えると 
+                        \[
+                            \widehat{\mathbf{x}}(t) = \begin{pmatrix} 
+                                c_1e^{\lambda_1 t} \cr 
+                                c_2e^{\lambda_2 t} 
+                            \end{pmatrix}
+                        \] が得られ, 確かに 
+                        \[
+                            \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 = (\mathbf{v}_1, \mathbf{v}_2) \begin{pmatrix} 
+                                c_1e^{\lambda_1 t} \cr 
+                                c_2e^{\lambda_2 t} 
+                            \end{pmatrix} = P\widehat{\mathbf{x}}(t)
+                        \] となっている. 
                     </p>
                 </li>
             </ul>
