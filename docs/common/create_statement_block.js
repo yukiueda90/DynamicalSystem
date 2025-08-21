@@ -8,6 +8,8 @@ const definitions = document.querySelectorAll('.definition');
 const theorems = document.querySelectorAll('.theorem');
 const lemmas = document.querySelectorAll('.lemma');
 const problems = document.querySelectorAll('.problem');
+const exercises = document.querySelectorAll('.exercise');
+const answers = document.querySelectorAll('.answer');
 
 // Loop 
 examples.forEach(example => {
@@ -65,4 +67,22 @@ problems.forEach(problem => {
     titleElement.className = 'legend_title';
     titleElement.textContent = '問題';
     problem.insertBefore(titleElement, problem.firstChild);
+});
+exercises.forEach(exercise=> {
+    const titleElement = document.createElement('p');
+    titleElement.className = 'legend_title';
+    titleElement.textContent = '例題';
+    exercise.insertBefore(titleElement, exercise.firstChild);
+});
+answers.forEach(answer=> {
+    const details = document.createElement('details');
+    const summary = document.createElement('summary');
+    details.className = answer.className
+    summary.className = 'legend_title';
+    summary.textContent = '解答例';
+    details.appendChild(summary);
+    while (answer.firstChild) {
+        details.appendChild(answer.firstChild);
+    }
+    answer.replaceWith(details);
 });

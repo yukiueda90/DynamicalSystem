@@ -59,42 +59,79 @@
                     \mathbf{x}' = A\mathbf{x} \tag{1.1}
                 \] と表される力学系のことに他ならない. 
             </p>
-            <p>線形力学系の解については, それらの線型結合もまた解になるという性質がある. 
-                例えば, $\mathbf{x}_1$, $\mathbf{x}_2$ が式 $(1.1)$ の解となるならば, その線型結合も 
-                \[  
-                    \begin{array}{rl}
-                        (c_1\mathbf{x}_1 + c_2\mathbf{x}_2)' &= c_1\mathbf{x}_1' + c_2\mathbf{x}_2' \cr 
-                        &= c_1A\mathbf{x}_1 + c_2A\mathbf{x}_2 \cr 
-                        &= A(c_1\mathbf{x}_1 + c_2\mathbf{x}_2)
-                    \end{array}
-                \] を満たすため, 確かに式 $(1.1)$ の解である. 
-            </p> 
-            <p>また, 線形力学系の解は, 行列 $A$ の固有値と固有ベクトルを用いて表すことができる: 具体的には, 行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
-                \[
-                    \mathbf{x}(t) = e^{\lambda_i t}\mathbf{v}_i
-                \] は式 $(1.1)$ の解である. 実際, $\mathbf{x}(t) = e^{\lambda_i t}\mathbf{v}_i$ に対して
-                \[
-                    \mathbf{x}' = \lambda_ie^{\lambda_i t}\mathbf{v}_i = e^{\lambda_i t}A\mathbf{v}_i = A \mathbf{x}
-                \] が成立する. 
+            <p>線形力学系の解についての性質を確認しておこう:
             </p>
 
-            <div class="remark">
-                線形力学系 
+            <div class="lemma">
+                線形力学系 $(1.1)$ について, 
+                <ul>
+                    <li>行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
+                        \[
+                            \mathbf{x}(t) = e^{\lambda_i t}\mathbf{v}_i
+                        \] は解となる.
+                    </li>
+                    <li>$\mathbf{x}_1(t)$, $\mathbf{x}_2(t)$ が解ならば, それら線型結合で与えられる関数
+                        \[
+                            \mathbf{x}(t) = c_1\mathbf{x}_1(t) + c_2\mathbf{x}_2(t) 
+                        \] も解となる.</li>
+                </ul>
+            </div><!-- /lamma --> 
+
+            <div class="proof">
+                <ul>
+                    <li>$A\mathbf{v}_i = \lambda_i\mathbf{v}_i$ より, $\mathbf{x}(t) = e^{\lambda_i t}\mathbf{v}_i$ に対して
+                        \[
+                            \mathbf{x}' = \lambda_ie^{\lambda_i t}\mathbf{v}_i = e^{\lambda_i t}A\mathbf{v}_i = A \mathbf{x}
+                        \] である. </li>
+                    <li>$\mathbf{x}_1' = A\mathbf{x}$ かつ $\mathbf{x}_2' = A\mathbf{x}_2$ より, $\mathbf{x}(t) = c_1\mathbf{x}_1(t) + c_2\mathbf{x}_2(t)$ に対して
+                        \[
+                            \begin{array}{rl}
+                                \mathbf{x}' &= (c_1\mathbf{x}_1 + c_2\mathbf{x}_2)' \cr 
+                                &= c_1\mathbf{x}_1' + c_2\mathbf{x}_2' \cr 
+                                &= c_1A\mathbf{x}_1 + c_2A\mathbf{x}_2 \cr 
+                                &= A(c_1\mathbf{x}_1 + c_2\mathbf{x}_2) = A\mathbf{x}
+                            \end{array}
+                        \] である.
+                    </li>
+                </ul>
+            </div><!-- /proof -->
+
+            <p>上の性質を用いることで, 線形力学系 $(1.1)$ の一般解は, 行列 $A$ の固有値および固有ベクトルを用いて表現することができる. 
+                さらに, 例えば $t=0$ で与えられた条件を満たす特殊解については, 簡単に具体的表記を与えることができる. 
+                ここでは, 
                 \[
-                    \left\{\begin{array}{rl}
-                        \mathbf{x}' &= Ax \cr 
+                    \left\{\begin{array}{rl} 
+                        \mathbf{x}' &= A\mathbf{x}, \cr 
                         \mathbf{x}(0) &= \mathbf{x}_0 
-                    \end{array}\right.
-                \] の解は 
+                    \end{array}\right. \tag{1.2}
+                \] を考えてみよう, ただし, $\mathbf{x}_0\in\mathbb{R}^n$ は与えられたベクトルであり, $\mathbf{x}(0) = \mathbf{x}_0$ は $t=0$ における $\mathbf{x}$ を指定する条件である (特に変数 $t$ が時刻を表す場合には <b>初期条件</b> と呼ばれる). 
+                このとき, 線形力学系 $(1.2)$ の解 $\mathbf{x}: \mathbb{R}\to\mathbb{R}^n$ は 
                 \[
-                    \mathbf{x} = e^{tA}\mathbf{x}_0 
+                    \mathbf{x}(t) = e^{tA}\mathbf{x}_0 
                 \] と表すことができる. ここで, $e^{tA}$ は 
                 \[
-                    e^{tA} = \sum_{i=0}^\infty \dfrac{(tA)^i}{i!} = I + tA + \dfrac{(tA)^2}{2} + \dots
+                    e^{tA} = \sum_{i=0}^\infty \dfrac{(tA)^i}{i!} = I + tA + \dfrac{(tA)^2}{2} + \dfrac{(tA)^3}{3!} + \dots
                 \] と定義される行列である. 特に, 行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
                 \[
                     e^{tA}\mathbf{v}_i = e^{\lambda_i t}\mathbf{v}_i
-                \] が成立する (つまり $\mathbf{v}_i$ は行列 $e^{tA}$ の固有値 $e^{\lambda_i t}$ に対応する固有ベクトルである) ことに注意. 
+                \] が成立する (つまり $\mathbf{v}_i$ は行列 $e^{tA}\in\mathbb{R}^{n\times n}$ の固有値 $e^{\lambda_i t}$ に対応する固有ベクトルになっている).  
+            </p>
+
+            <div class="exercise">
+                $\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ が式 $(1.2)$ を満たすことを確認せよ.
+            </div><!-- /exercise -->
+
+            <div class="answer">
+                <ul>
+                    まず, 
+                        \[
+                            \begin{array}{rl} 
+                                \mathbf{x}' &= \dfrac{d}{dt}\displaystyle\sum_{i=0}^{\infty}\dfrac{(tA)^i}{i!}\mathbf{x}_0 \cr 
+                                &= \displaystyle\sum_{i=1}^{\infty}\dfrac{t^{i-1}A^i}{(i-1)!}\mathbf{x}_0 \cr 
+                                &= Ae^{tA}\mathbf{x}_0 = A\mathbf{x}
+                            \end{array}
+                        \] となる. また, $\mathbf{x}(0) = I\mathbf{x}_0 = \mathbf{x}_0$ も容易に確かめられる. 
+                </ul>
             </div>
 
             <p>具体例として, 
@@ -103,15 +140,9 @@
                         a & b \cr 
                         c & d 
                     \end{pmatrix} \in\mathbb{R}^{2\times 2}
-                \] であるときに, 
-                \[
-                    \left\{\begin{array}{rl} 
-                        \mathbf{x}' &= A\mathbf{x}, \cr 
-                        \mathbf{x}(0) &= \mathbf{x}_0 
-                    \end{array}\right. \tag{1.2}
-                \] の解 $\mathbf{x}: \mathbb{R}\to \mathbb{R}^2$ がどのように表されるかを考えてみよう, ただし, $\mathbf{x}_0\in\mathbb{R}^2$ は与えられたベクトルである. 
-                ここで $\mathbf{x}(0) = \mathbf{x}_0$ は, $t=0$ における $\mathbf{x}$ を指定する条件であり, 特に変数 $t$ が時刻を表す場合には <b>初期条件</b> と呼ばれる. 
+                \] であるときに, 線形力学系 $(1.1)$ の一般解と $(1.2)$ の特殊解それぞれの表記を考えてみよう.
             </p>
+
             <p>まず, 記号の簡単のために, 
                 \[
                     T = \operatorname{tr}A = a+d, \quad D = \det A = ad-bc 
@@ -342,7 +373,9 @@
                         a & b \cr 
                         -b & a 
                     \end{pmatrix}
-                \] が得られる. 
+                \] が得られる.
+<!--                 
+                . 
                 記号の簡単のため, 右辺の行列を $\widehat{A}$ とおく. 
                 このことは, このパターンに対する一般解が 
                 \[
@@ -363,9 +396,9 @@
                 \] なので, $\widehat{\mathbf{x}}' = \widehat{A}\widehat{\mathbf{x}}$ を満たすような $\widehat{\mathbf{x}}$ として, 
                 \[
                     e^{\lambda_1 t}\widehat{\mathbf{v}}_1,\quad e^{\lambda_2 t}\widehat{\mathbf{v}}_2
-                \] の $2$ つが考えられるが, $\overline{e^{\lambda_2 t}\widehat{\mathbf{v}}_2} = e^{\lambda_1 t}\widehat{\mathbf{v}}_1$ なので一方だけ考えれば十分だろう. 
+                \] の $2$ つが考えられるが, $\overline{e^{\lambda_2 t}\widehat{\mathbf{v}}_2} = e^{\lambda_1 t}\widehat{\mathbf{v}}_1$ なので一方だけ考えれば十分だろう.  -->
                 
-            このパターンに対する式 $(1.2)$ の解は
+            このことは, $A$ が異なる $2$ つの複素固有値を持つパターンに対する式 $(1.2)$ の解は
                 \[
                     \left\{\begin{array}{rl} 
                         \widehat{\mathbf{x}}' &= \begin{pmatrix} 
@@ -378,7 +411,7 @@
                 実際, 一般解を考えると 
                 \[
                     \widehat{\mathbf{x}}(t) = \begin{pmatrix} 
-                        c_1e^{\lambda_1 t} \cr 
+                        c_1e^{at}(\cos bt + \sin bt) \cr 
                         c_2e^{\lambda_2 t} 
                     \end{pmatrix}
                 \] が得られ, 確かに 

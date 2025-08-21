@@ -159,7 +159,7 @@ hr {
 
 /* custom class */
 
-.definition, .theorem, .lemma, .problem {
+.definition, .theorem, .lemma, .problem, .exercise {
     width: 90%;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -170,7 +170,7 @@ hr {
     border: 2px solid #888888;
 }
 
-.example, .remark, .proof {
+.example, .remark, .proof, .answer {
     width: 92%;
     margin-top: 15px;
     margin-left: 15px;
