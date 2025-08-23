@@ -79,11 +79,11 @@
 
             <div class="proof">
                 <ul>
-                    <li>$A\mathbf{v}_i = \lambda_i\mathbf{v}_i$ より, $\mathbf{x}(t) = e^{\lambda_i t}\mathbf{v}_i$ に対して
+                    <li>$A\mathbf{v}_i = \lambda_i\mathbf{v}_i$ より, $\mathbf{x}(t) = e^{\lambda_i t}\mathbf{v}_i$ は
                         \[
                             \mathbf{x}' = \lambda_ie^{\lambda_i t}\mathbf{v}_i = e^{\lambda_i t}A\mathbf{v}_i = A \mathbf{x}
-                        \] である. </li>
-                    <li>$\mathbf{x}_1' = A\mathbf{x}$ かつ $\mathbf{x}_2' = A\mathbf{x}_2$ より, $\mathbf{x}(t) = c_1\mathbf{x}_1(t) + c_2\mathbf{x}_2(t)$ に対して
+                        \] を満たす. </li>
+                    <li>$\mathbf{x}_1' = A\mathbf{x}$ かつ $\mathbf{x}_2' = A\mathbf{x}_2$ より, $\mathbf{x}(t) = c_1\mathbf{x}_1(t) + c_2\mathbf{x}_2(t)$ は
                         \[
                             \begin{array}{rl}
                                 \mathbf{x}' &= (c_1\mathbf{x}_1 + c_2\mathbf{x}_2)' \cr 
@@ -91,13 +91,14 @@
                                 &= c_1A\mathbf{x}_1 + c_2A\mathbf{x}_2 \cr 
                                 &= A(c_1\mathbf{x}_1 + c_2\mathbf{x}_2) = A\mathbf{x}
                             \end{array}
-                        \] である.
+                        \] を満たす.
                     </li>
                 </ul>
             </div><!-- /proof -->
 
-            <p>上の性質を用いることで, 線形力学系 $(1.1)$ の一般解は, 行列 $A$ の固有値および固有ベクトルを用いて表現することができる. 
-                さらに, 例えば $t=0$ で与えられた条件を満たす特殊解については, 簡単に具体的表記を与えることができる. 
+            <p>上の性質を用いることで, 線形力学系 $(1.1)$ の一般解は, 行列 $A$ の固有値, 固有ベクトルおよび線型結合を用いて表現することができる. 
+            </p>
+            <p>さらに, 例えば $t=0$ で与えられた条件を満たす特殊解については, 簡単に具体的表記を与えることができる. 
                 ここでは, 
                 \[
                     \left\{\begin{array}{rl} 
@@ -110,7 +111,7 @@
                     \mathbf{x}(t) = e^{tA}\mathbf{x}_0 
                 \] と表すことができる. ここで, $e^{tA}$ は 
                 \[
-                    e^{tA} = \sum_{i=0}^\infty \dfrac{(tA)^i}{i!} = I + tA + \dfrac{(tA)^2}{2} + \dfrac{(tA)^3}{3!} + \dots
+                    e^{tA} = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!} = I + tA + \dfrac{(tA)^2}{2} + \dfrac{(tA)^3}{3!} + \dots
                 \] と定義される行列である. 特に, 行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
                 \[
                     e^{tA}\mathbf{v}_i = e^{\lambda_i t}\mathbf{v}_i
@@ -126,11 +127,12 @@
                     まず, 
                         \[
                             \begin{array}{rl} 
-                                \mathbf{x}' &= \dfrac{d}{dt}\displaystyle\sum_{i=0}^{\infty}\dfrac{(tA)^i}{i!}\mathbf{x}_0 \cr 
-                                &= \displaystyle\sum_{i=1}^{\infty}\dfrac{t^{i-1}A^i}{(i-1)!}\mathbf{x}_0 \cr 
+                                \mathbf{x}' &= \dfrac{d}{dt}\displaystyle\sum_{k=0}^{\infty}\dfrac{(tA)^k}{k!}\mathbf{x}_0 \cr 
+                                &= \displaystyle\sum_{k=1}^{\infty}\dfrac{t^{k-1}A^i}{(k-1)!}\mathbf{x}_0 \cr 
                                 &= Ae^{tA}\mathbf{x}_0 = A\mathbf{x}
                             \end{array}
-                        \] となる. また, $\mathbf{x}(0) = I\mathbf{x}_0 = \mathbf{x}_0$ も容易に確かめられる. 
+                        \] となる. 
+                        また, $\mathbf{x}(0) = I\mathbf{x}_0 = \mathbf{x}_0$ である. 
                 </ul>
             </div>
 
@@ -185,6 +187,11 @@
                         c_2 
                     \end{pmatrix} = P^{-1}\mathbf{x}_0
                 \] を計算することで, 任意定数 $c_1$, $c_2$ の値が決定され特殊解が得られる. 
+                なお, このようにして得られる $c_1$, $c_2$ は $\mathbf{x}_0 = c_1\mathbf{v}_1 + c_2\mathbf{v}_2$ を満たすことに注意すると, $\mathbf{x} = e^{tA}\mathbf{x}_0$ に基づき
+                \[
+                    \mathbf{x}(t) = e^{tA}\mathbf{x}_0 = c_1e^{tA}\mathbf{v}_1 + c_2e^{tA}\mathbf{v}_2 = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2
+                \] と計算することもできる. 
+                いずれにしても, 一般解の表記において初期条件に応じた $c_1$, $c_2$ を指定したものが特殊解となることが確かめられる. 
             </p>
             <p>さらに, このとき行列 $A$ を対角化すると
                 \[
@@ -192,7 +199,7 @@
                         \lambda_1 & 0 \cr 
                         0 & \lambda_2 
                     \end{pmatrix}
-                \] となるため, 式 $(1.2)$ の解 $\mathbf{x}$ に対して $\widehat{\mathbf{x}} = P^{-1}\mathbf{x}$ と定めると, 
+                \] となるため, 式 $(1.1)$ の解 $\mathbf{x}$ に対して $\widehat{\mathbf{x}} = P^{-1}\mathbf{x}$ と定めると, 
                 \[
                     \begin{array}{rl} 
                         \begin{pmatrix} 
@@ -257,9 +264,27 @@
                     \mathbf{x}(t) = e^{\lambda t}\mathbf{v}_1,\quad \mathbf{x}(t) = te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2
                 \] はどちらも $\mathbf{x}' = A\mathbf{x}$ を満たし, 実はこれらの線型結合で一般解が得られる:
                 \[
-                    \mathbf{x}(t) = (c_1e^{\lambda t} + c_2te^{\lambda t})\mathbf{v}_1 + c_2e^{\lambda t}\mathbf{v}_2.
+                    \begin{array}{rl}
+                        \mathbf{x}(t) &= c_1e^{\lambda t}\mathbf{v}_1 + c_2(te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2) \cr 
+                        &= (c_1e^{\lambda t} + c_2te^{\lambda t})\mathbf{v}_1 + c_2e^{\lambda t}\mathbf{v}_2.
+                    \end{array}
                 \] なお, $te^{\lambda t}\mathbf{v}_1$ という部分を考えるのは, 本質的に $1$ 階線形微分方程式の未定係数法による. 
-                また, $P=(\mathbf{v}_1, \mathbf{v}_2)$ を用いて与えられた初期条件に対する特殊解を得ることができ, さらに 
+                また, $P=(\mathbf{v}_1, \mathbf{v}_2)$ を用いることで, 与えられた初期条件に対する特殊解を得ることができる. 
+                実際に, 上の一般固有ベクトル $\mathbf{v}_2$ に対して
+                \[
+                    \begin{array}{rl} 
+                        e^{tA}\mathbf{v}_2 &= \displaystyle\sum_{k=0}^{\infty} \dfrac{(tA)^k}{k!}\mathbf{v}_2 \cr
+                        &= \displaystyle\sum_{k=1}^{\infty}\dfrac{t^k}{k!}k\lambda^{k-1}\mathbf{v}_1 + \sum_{k=0}^{\infty}\dfrac{t^k}{k!}\lambda^k\mathbf{v}_2 \cr 
+                        &= te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2 
+                    \end{array} 
+                \] であることに注意すれば, $\mathbf{x}_0 = c_1\mathbf{v}_1 + c_2\mathbf{v}_2$ なる $c_1$, $c_2$ に対し, 確かに 
+                \[
+                    \begin{array}{rl} 
+                        \mathbf{x}(t) &= c_1e^{tA}\mathbf{v}_1 + c_2e^{tA}\mathbf{v}_2 \cr 
+                        &= c_1e^{\lambda t}\mathbf{v}_1 + c_2(te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2)
+                    \end{array} 
+                \] を得ることができる.
+                さらに 
                 \[
                     P^{-1}AP = \begin{pmatrix} 
                         \lambda & 1 \cr 
@@ -347,6 +372,13 @@
                     \mathbf{x}(t) = e^{at}(c_1(\mathbf{w}_1\cos bt - \mathbf{w}_2\sin bt) + c_2(\mathbf{w}_1\sin bt + \mathbf{w}_2\cos bt)) \in\mathbb{R},
                 \] ただし, ここでは $c_1, c_2\in\mathbb{R}$ とする. 
                 このようにして, 実数係数の微分方程式の解となる実数値の関数が得られる. 
+                ちなみに, 複素ベクトル $\mathbf{z}\in\mathbb{C}^n$ に対し, 
+                \[
+                    \mathbf{z} = \mathbf{a} + i\mathbf{b} \quad (\mathbf{a}, \mathbf{b}\in\mathbb{R}^n)
+                \] であるときに, 
+                \[
+                    \operatorname{Re}(\mathbf{z}) = \mathbf{a},\quad \operatorname{Im}(\mathbf{z}) = \mathbf{b}
+                \] と表記することにすると, 
             </p>
             <p>なお, $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1$ に注目すると 
                 \[
