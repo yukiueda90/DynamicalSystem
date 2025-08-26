@@ -40,7 +40,7 @@
                 ここで, 写像 $\mathbf{f}:\mathbb{R}^n\to\mathbb{R}$ が線形であるとは, 任意の $c_1, c_2\in\mathbb{R}$ および $\mathbf{x}_1, \mathbf{x}_2\in\mathbb{R}^n$ に対し
                 \[
                     \mathbf{f}(c_1\mathbf{x}_1 + c_2\mathbf{x}_2) = c_1\mathbf{f}(\mathbf{x}_1) + c_2\mathbf{f}(\mathbf{x}_2)
-                \] が成り立つことであり, 従って $\mathbf{x}$ を標準規定 $\mathbf{e}_1, \dots, \mathbf{e}_n$ の線型結合により 
+                \] が成り立つことであり, 従って $\mathbf{x}$ を標準基底 $\mathbf{e}_1, \dots, \mathbf{e}_n$ の線型結合により 
                 \[
                     \mathbf{x} = \begin{pmatrix} 
                         x_1 \cr 
@@ -57,7 +57,7 @@
                 ここで, $(\mathbf{f}(\mathbf{e}_1), \dots, \mathbf{f}(\mathbf{e}_n)) \in\mathbb{R}^{n\times n}$ なので, この行列を $A$ とおくと, 線形力学系とは
                 \[
                     \mathbf{x}' = A\mathbf{x} \tag{1.1}
-                \] と表される力学系のことに他ならない. 
+                \] と表される力学系 (特に自励系) のことに他ならない. 
             </p>
             <p>線形力学系の解についての性質を確認しておこう:
             </p>
@@ -191,7 +191,7 @@
                 \[
                     \mathbf{x}(t) = e^{tA}\mathbf{x}_0 = c_1e^{tA}\mathbf{v}_1 + c_2e^{tA}\mathbf{v}_2 = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2
                 \] と計算することもできる. 
-                いずれにしても, 一般解の表記において初期条件に応じた $c_1$, $c_2$ を指定したものが特殊解となることが確かめられる. 
+                いずれにしても, 一般解の表記において初期条件に応じて $c_1$, $c_2$ を決定したものが特殊解となることが確かめられる. 
             </p>
             <p>さらに, このとき行列 $A$ を対角化すると
                 \[
@@ -268,9 +268,9 @@
                         \mathbf{x}(t) &= c_1e^{\lambda t}\mathbf{v}_1 + c_2(te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2) \cr 
                         &= (c_1e^{\lambda t} + c_2te^{\lambda t})\mathbf{v}_1 + c_2e^{\lambda t}\mathbf{v}_2.
                     \end{array}
-                \] なお, $te^{\lambda t}\mathbf{v}_1$ という部分を考えるのは, 本質的に $1$ 階線形微分方程式の未定係数法による. 
-                また, $P=(\mathbf{v}_1, \mathbf{v}_2)$ を用いることで, 与えられた初期条件に対する特殊解を得ることができる. 
-                実際に, 上の一般固有ベクトル $\mathbf{v}_2$ に対して
+                \] ここで $te^{\lambda t}\mathbf{v}_1$ という部分を考えるのは, 本質的に $1$ 階線形微分方程式の未定係数法による. 
+                また, $P=(\mathbf{v}_1, \mathbf{v}_2)$ を用いて $\mathbf{x}_0 = c_1\mathbf{v}_1 + c_2\mathbf{v}_2$ なる $c_1$, $c_2$ を求めることで, 与えられた初期条件に対する特殊解を得ることができる. 
+                なお, 上の一般固有ベクトル $\mathbf{v}_2$ に対して
                 \[
                     \begin{array}{rl} 
                         e^{tA}\mathbf{v}_2 &= \displaystyle\sum_{k=0}^{\infty} \dfrac{(tA)^k}{k!}\mathbf{v}_2 \cr
@@ -280,7 +280,8 @@
                 \] であることに注意すれば, $\mathbf{x}_0 = c_1\mathbf{v}_1 + c_2\mathbf{v}_2$ なる $c_1$, $c_2$ に対し, 確かに 
                 \[
                     \begin{array}{rl} 
-                        \mathbf{x}(t) &= c_1e^{tA}\mathbf{v}_1 + c_2e^{tA}\mathbf{v}_2 \cr 
+                        \mathbf{x}(t) &= e^{tA}\mathbf{x}_0 \cr 
+                        &= c_1e^{tA}\mathbf{v}_1 + c_2e^{tA}\mathbf{v}_2 \cr 
                         &= c_1e^{\lambda t}\mathbf{v}_1 + c_2(te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2)
                     \end{array} 
                 \] を得ることができる.
@@ -319,37 +320,63 @@
 
             <p>最後に, 異なる二つの固有値 $\lambda_1$, $\lambda_2\in\mathbb{C}\backslash\mathbb{R}$ が存在する場合を考える. 
                 これらは実数係数 $2$ 次方程式の解であるため, $\lambda_1=\overline{\lambda}_2$ である. 
-                対応する固有ベクトル $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{C}^2\backslash\mathbb{R}^{2}$ について, 
+                対応する固有ベクトル $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{C}^2$ について, 
                 \[
                     \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 \in\mathbb{C}^2
                 \] が (任意の $c_1, c_2\in\mathbb{C}$ に対して) $\mathbf{x}' = A\mathbf{x}$ を満たすことは確かだが, 一般に実数係数の微分方程式の解としては実数値の関数がほしい. 
                 そこで, 
                 \[
-                    A\overline{\mathbf{v}}_2 = \overline{\lambda_2\mathbf{v}_2} = \lambda_1\overline{\mathbf{v}}_2
-                \] であることに注目し, 特に $\mathbf{v}_1 = \overline{\mathbf{v}}_2$ である状況を考えることにする (固有ベクトル $\mathbf{v}_1$, $\mathbf{v}_2$ のスケールを調整することで可能である). 
-                いま, 
-                \[
                     \lambda_1 = a+ib,\quad \mathbf{v}_1 = \mathbf{w}_1 + i\mathbf{w}_2
-                \] とおく, ここで $a, b\in\mathbb{R}$, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^2$ とする, また $i$ は虚数単位である. 
-                このとき, $\lambda_1\in\mathbb{C}\backslash\mathbb{R}$ より $b\neq0$ であり, $\mathbf{v}_1\in\mathbb{C}^2\backslash\mathbb{R}^2$ より $\mathbf{w}_2\neq\mathbf{0}$ であることに注意. 
+                \] とおき, これら $a, b\in\mathbb{R}$, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^2$ を用いて一般解を表現してみよう, ここで $i$ は虚数単位である. 
+                なお, $\lambda_1\in\mathbb{C}\backslash\mathbb{R}$ より $b\neq0$ であることに注意. 
             </p>
-            <p>このとき, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^2$ は線型独立である. 
-                このことは背理法で以下のように証明できる: もしも線型独立で無いならば, $\mathbf{w}_1 = c\mathbf{w}_2$ となる $c\in\mathbb{R}$ が存在するため, 
-                \[
-                    \begin{array}{rl} 
-                        (c+i)A\mathbf{w}_2 &= A(\mathbf{w}_1+i\mathbf{w}_2) \cr 
-                        &= A\mathbf{v}_1 \cr 
-                        &= \lambda_1\mathbf{v}_1 \cr 
-                        &= (a+ib)(c+i)\mathbf{w}_2
-                    \end{array}
-                \] となるが, $c\in\mathbb{R}$ より $c+i\neq0$ であり, 従って 
-                \[
-                    A\mathbf{w}_2 = (a+ib)\mathbf{w}_2 
-                \] が成立する. この左辺は実ベクトルであり, 右辺は $b\neq0$, $\mathbf{w}_2\neq\mathbf{0}$ より実ベクトルでは無いため矛盾する. 
-                従って, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^2$ は線型独立である. 
+            <p>まず, 以下の性質を確認しよう:
             </p>
-            <p>このようにして, 固有ベクトルと密接に関連する $2$ つの線型独立な実ベクトル $\mathbf{w}_1$, $\mathbf{w}_2$ が得られるので, これらを用いて一般解の表現を試みる. 
-                まず, <b>オイラーの公式</b>  
+            
+            <div class="lemma">
+                <p>行列 $A\in\mathbb{R}^{n\times n}$ のある固有値 $\lambda$ が $\lambda\in\mathbb{C}\backslash\mathbb{R}$ を満たすとする. 
+                    このとき, 以下が成立する:
+                </p>
+                <ul>
+                    <li>対応する固有ベクトル $\mathbf{v}$ を $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ を用いて $\mathbf{v} = \mathbf{w}_1 + i\mathbf{w}_2$ と表したとき, $\mathbf{w}_2\neq\mathbf{0}$ である. 
+                        つまり $\mathbf{v}\in \mathbb{C}^n\backslash\mathbb{R}^n$ である. </li>
+                    <li>上の表記において, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ は線型独立である.</li>
+                    <li>$\overline{\lambda}$ は行列 $A$ の固有値であり, また $\overline{\mathbf{v}}$ は対応する固有ベクトルである.</li>
+                </ul>
+            </div><!-- /lemma -->
+
+            <div class="proof">
+                <ul>
+                    <li>もしも $\mathbf{w}_2=\mathbf{0}$ ならば (つまり $\mathbf{v}_1\in\mathbb{R}^n$ ならば), $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1$ の左辺は実ベクトルであり, 一方で固有ベクトル $\mathbf{v}_1$ は $\mathbf{0}$ では無いことから右辺は実ベクトルでは無い, 従って矛盾する. 
+                    </li>
+                    <li>$\lambda = a + ib$ とおく, ただし $a, b\in\mathbb{R}$ であり, $\lambda\in\mathbb{C}\backslash\mathbb{R}$ より $b\neq0$. 
+                        もしも $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ が線型独立で無いならば, $\mathbf{w}_1 = c\mathbf{w}_2$ となる $c\in\mathbb{R}$ が存在するため, 
+                        \[
+                            \begin{array}{rl} 
+                                (c+i)A\mathbf{w}_2 &= A(\mathbf{w}_1+i\mathbf{w}_2) \cr 
+                                &= A\mathbf{v} \cr 
+                                &= \lambda\mathbf{v} \cr 
+                                &= (a+ib)(c+i)\mathbf{w}_2
+                            \end{array}
+                        \] となるが, $c\in\mathbb{R}$ より $c+i\neq0$ であり, 従って 
+                        \[
+                            A\mathbf{w}_2 = (a+ib)\mathbf{w}_2 
+                        \] が成立する. この左辺は実ベクトルであり, 右辺は $b\neq0$, $\mathbf{w}_2\neq\mathbf{0}$ より実ベクトルでは無いため矛盾する. 
+                    </li>
+                    <li>$A\in\mathbb{R}^{n\times n}$ より $\overline{A}=A$ であることを用いると, $A\overline{\mathbf{v}} = \overline{A}\overline{\mathbf{v}} = \overline{A\mathbf{v}} = \overline{\lambda\mathbf{v}} = \overline{\lambda}\overline{\mathbf{v}}$ となる.</li>
+                </ul>
+            </div><!-- /proof -->
+
+            <p>これらの性質は $n=2$ の場合にも成立するため, 固有値 $\lambda_1$ に対応する固有ベクトル $\mathbf{w}_1 = \mathbf{w}_1 + i\mathbf{w}_2$ および固有値 $\lambda_2 = \overline{\lambda_1}$ に対応する固有ベクトル $\mathbf{v}_2 = \overline{\mathbf{v}}_1$ を考えることができる.  
+                また固有ベクトルと密接に関連する $2$ つの線型独立な実ベクトル $\mathbf{w}_1$, $\mathbf{w}_2$ が得られることになるため, これらを用いて一般解の表現を試みよう. 以下では, 複素ベクトル $\mathbf{z}\in\mathbb{C}^n$ に対し, 
+                \[
+                    \mathbf{z} = \mathbf{a} + i\mathbf{b} \quad (\mathbf{a}, \mathbf{b}\in\mathbb{R}^n)
+                \] であるときに, 
+                \[
+                    \operatorname{Re}(\mathbf{z}) = \mathbf{a},\quad \operatorname{Im}(\mathbf{z}) = \mathbf{b}
+                \] と表記することにする. 
+            </p>
+            <p> まず, <b>オイラーの公式</b>  
                 \[
                     e^{iz} = \cos z + i\sin z \quad\text{ for all }\quad z\in\mathbb{C}
                 \] を用いて 
@@ -364,21 +391,31 @@
                 \] である. これらを用いると, 
                 \[
                     \begin{array}{rl}
-                        \mathbf{x}(t) &= \dfrac{1}{2}e^{\lambda_1 t}\mathbf{v}_1 + \dfrac{1}{2}e^{\lambda_2 t}\mathbf{v}_2 = e^{at}(\mathbf{w}_1\cos bt - \mathbf{w}_2\sin bt) \in \mathbb{R}, \cr  
-                        \mathbf{x}(t) &= -\dfrac{i}{2}e^{\lambda_1 t}\mathbf{v}_1 + \dfrac{i}{2}e^{\lambda_2 t}\mathbf{v}_2 = e^{at}(\mathbf{w}_1\sin bt + \mathbf{w}_2\cos bt) \in \mathbb{R} 
+                        \mathbf{x}(t) &= \operatorname{Re}(e^{\lambda_1 t}\mathbf{v}_1) = \dfrac{1}{2}e^{\lambda_1 t}\mathbf{v}_1 + \dfrac{1}{2}e^{\lambda_2 t}\mathbf{v}_2 = e^{at}(\mathbf{w}_1\cos bt - \mathbf{w}_2\sin bt) \in \mathbb{R}, \cr  
+                        \mathbf{x}(t) &= \operatorname{Im}(e^{\lambda_1 t}\mathbf{v}_1) = \dfrac{i}{2}e^{\lambda_1 t}\mathbf{v}_1 - \dfrac{i}{2}e^{\lambda_2 t}\mathbf{v}_2 = e^{at}(\mathbf{w}_1\sin bt + \mathbf{w}_2\cos bt) \in \mathbb{R} 
                     \end{array} 
                 \] はどちらも $\mathbf{x}' = A\mathbf{x}$ を満たし, 実はこれらの線型結合で一般解が得られる: 
                 \[
-                    \mathbf{x}(t) = e^{at}(c_1(\mathbf{w}_1\cos bt - \mathbf{w}_2\sin bt) + c_2(\mathbf{w}_1\sin bt + \mathbf{w}_2\cos bt)) \in\mathbb{R},
-                \] ただし, ここでは $c_1, c_2\in\mathbb{R}$ とする. 
+                    \mathbf{x}(t) = e^{at}(\widetilde{c}_1(\mathbf{w}_1\cos bt - \mathbf{w}_2\sin bt) + \widetilde{c}_2(\mathbf{w}_1\sin bt + \mathbf{w}_2\cos bt)) \in\mathbb{R},
+                \] ただし, $\widetilde{c}_1, \widetilde{c}_2\in\mathbb{R}$ である. 
                 このようにして, 実数係数の微分方程式の解となる実数値の関数が得られる. 
-                ちなみに, 複素ベクトル $\mathbf{z}\in\mathbb{C}^n$ に対し, 
+                なお, $\mathbf{v}_2 = \overline{\mathbf{v}}_1$ であることに注意すると, 初期条件 $\mathbf{x}_0\in\mathbb{R}^2$ が与えられたときに 
                 \[
-                    \mathbf{z} = \mathbf{a} + i\mathbf{b} \quad (\mathbf{a}, \mathbf{b}\in\mathbb{R}^n)
-                \] であるときに, 
+                    \mathbf{x}_0 = \widetilde{c}_1\mathbf{w}_1 + \widetilde{c}_2\mathbf{w}_2
+                \] なる $\widetilde{c}_1, \widetilde{c}_2\in\mathbb{R}$ に対して, $c_1 = \widetilde{c}_1 - i\widetilde{c}_2$, $c_2 = \overline{c}_1$ とおくと 
                 \[
-                    \operatorname{Re}(\mathbf{z}) = \mathbf{a},\quad \operatorname{Im}(\mathbf{z}) = \mathbf{b}
-                \] と表記することにすると, 
+                    \mathbf{x}_0 = \widetilde{c}_1\mathbf{w}_1 + \widetilde{c}_2\mathbf{w}_2 = \operatorname{Re}(c_1\mathbf{v}_1) = \dfrac{1}{2} c_1\mathbf{v}_1 + \dfrac{1}{2} c_2\mathbf{v}_2
+                \]
+                である. これと $\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ であることから, 
+                \[
+                    \begin{array}{rl} 
+                        \mathbf{x}(t) &= \dfrac{1}{2}e^{tA}(c_1\mathbf{v}_1 + c_2\mathbf{v}_2) \cr 
+                        &= \dfrac{1}{2} (c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2) \cr 
+                        &= \operatorname{Re}(c_1 e^{\lambda_1 t}\mathbf{v}_1) \cr 
+                        &= \widetilde{c}_1 \operatorname{Re}(e^{\lambda_1 t}\mathbf{v}_1) + \widetilde{c}_2 \operatorname{Im}(e^{\lambda_1 t}\mathbf{v}_1)
+                    \end{array}
+                \] が得られる. 
+                これは, 上の一般解の表記において $\widetilde{c}_1, \widetilde{c}_2\in\mathbb{R}$ を指定したものになっている. 
             </p>
             <p>なお, $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1$ に注目すると 
                 \[
@@ -406,31 +443,7 @@
                         -b & a 
                     \end{pmatrix}
                 \] が得られる.
-<!--                 
-                . 
-                記号の簡単のため, 右辺の行列を $\widehat{A}$ とおく. 
-                このことは, このパターンに対する一般解が 
-                \[
-                    \widehat{\mathbf{x}}' = \widehat{A}\widehat{\mathbf{x}}
-                \] の一般解 $\widehat{\mathbf{x}}$ に対して $\mathbf{x} = P\widehat{\mathbf{x}}$ となることを意味している. 
-            </p>
-            <p>それでは $\widehat{\mathbf{x}}$ の具体的な形を考えよう. 
-                行列 $\widehat{A}$ は $A$ と相似なので, 固有値は共通で $\lambda_1 = a+ib$, $\lambda_2= a-ib$ である (当然, $\det(\lambda I-\widehat{A})=0$ を解いても同じ結果が得られる). 
-                対応する固有ベクトルは 
-                \[
-                    \widehat{\mathbf{v}}_1 = \begin{pmatrix} 
-                        1 \cr 
-                        i 
-                    \end{pmatrix}, \quad \widehat{\mathbf{v}}_2 = \begin{pmatrix} 
-                        1 \cr 
-                        -i 
-                    \end{pmatrix}
-                \] なので, $\widehat{\mathbf{x}}' = \widehat{A}\widehat{\mathbf{x}}$ を満たすような $\widehat{\mathbf{x}}$ として, 
-                \[
-                    e^{\lambda_1 t}\widehat{\mathbf{v}}_1,\quad e^{\lambda_2 t}\widehat{\mathbf{v}}_2
-                \] の $2$ つが考えられるが, $\overline{e^{\lambda_2 t}\widehat{\mathbf{v}}_2} = e^{\lambda_1 t}\widehat{\mathbf{v}}_1$ なので一方だけ考えれば十分だろう.  -->
-                
-            このことは, $A$ が異なる $2$ つの複素固有値を持つパターンに対する式 $(1.2)$ の解は
+                このことは, $A$ が異なる $2$ つの複素固有値を持つパターンに対する式 $(1.2)$ の解は
                 \[
                     \left\{\begin{array}{rl} 
                         \widehat{\mathbf{x}}' &= \begin{pmatrix} 
@@ -443,15 +456,18 @@
                 実際, 一般解を考えると 
                 \[
                     \widehat{\mathbf{x}}(t) = \begin{pmatrix} 
-                        c_1e^{at}(\cos bt + \sin bt) \cr 
-                        c_2e^{\lambda_2 t} 
+                        e^{at}(\widetilde{c}_1\cos bt + \widetilde{c}_2\sin bt) \cr 
+                        e^{at}(-\widetilde{c}_1\sin bt + \widetilde{c}_2\cos bt) 
                     \end{pmatrix}
                 \] が得られ, 確かに 
                 \[
-                    \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 = (\mathbf{v}_1, \mathbf{v}_2) \begin{pmatrix} 
-                        c_1e^{\lambda_1 t} \cr 
-                        c_2e^{\lambda_2 t} 
-                    \end{pmatrix} = P\widehat{\mathbf{x}}(t)
+                    \begin{array}{rl}
+                        \mathbf{x}(t) &= e^{at}(\widetilde{c}_1(\mathbf{w}_1\cos bt - \mathbf{w}_2\sin bt) + \widetilde{c}_2(\mathbf{w}_1\sin bt + \mathbf{w}_2\cos bt)) \cr 
+                        &= (\mathbf{w}_1, \mathbf{w}_2) \begin{pmatrix} 
+                            e^{at}(\widetilde{c}_1\cos bt + \widetilde{c}_2\sin bt) \cr 
+                        e^{at}(-\widetilde{c}_1\sin bt + \widetilde{c}_2\cos bt)
+                        \end{pmatrix} = P\widehat{\mathbf{x}}(t)
+                    \end{array}
                 \] となっている. 
             </p>
             
