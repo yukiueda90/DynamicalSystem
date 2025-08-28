@@ -65,6 +65,7 @@
             <div class="lemma">
                 線形力学系 $(1.1)$ について, 
                 <ul>
+                    <li>$\mathbf{x}(t) = \mathbf{0}$ は解となる. </li>
                     <li>行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
                         \[
                             \mathbf{x}(t) = e^{\lambda_i t}\mathbf{v}_i
@@ -79,6 +80,7 @@
 
             <div class="proof">
                 <ul>
+                    <li>$\mathbf{x}(t) = \mathbf{0}$ が $\mathbf{x}' = A\mathbf{x}$ を満たすことは明らかである. </li>
                     <li>$A\mathbf{v}_i = \lambda_i\mathbf{v}_i$ より, $\mathbf{x}(t) = e^{\lambda_i t}\mathbf{v}_i$ は
                         \[
                             \mathbf{x}' = \lambda_ie^{\lambda_i t}\mathbf{v}_i = e^{\lambda_i t}A\mathbf{v}_i = A \mathbf{x}
@@ -105,7 +107,7 @@
                         \mathbf{x}' &= A\mathbf{x}, \cr 
                         \mathbf{x}(0) &= \mathbf{x}_0 
                     \end{array}\right. \tag{1.2}
-                \] を考えてみよう, ただし, $\mathbf{x}_0\in\mathbb{R}^n$ は与えられたベクトルであり, $\mathbf{x}(0) = \mathbf{x}_0$ は $t=0$ における $\mathbf{x}$ を指定する条件である (特に変数 $t$ が時刻を表す場合には <b>初期条件</b> と呼ばれる). 
+                \] を考えてみよう, ただし, $\mathbf{x}_0\in\mathbb{R}^n$ は与えられたベクトルであり, $\mathbf{x}(0) = \mathbf{x}_0$ は $t=0$ における $\mathbf{x}$ を指定する条件である (特に変数 $t$ が時刻を表す場合には <b>初期条件</b> と呼ばれ, このとき $\mathbf{x}_0$ は <b>初期値</b> と呼ばれる). 
                 このとき, 線形力学系 $(1.2)$ の解 $\mathbf{x}: \mathbb{R}\to\mathbb{R}^n$ は 
                 \[
                     \mathbf{x}(t) = e^{tA}\mathbf{x}_0 
@@ -123,18 +125,17 @@
             </div><!-- /exercise -->
 
             <div class="answer">
-                <ul>
-                    まず, 
-                        \[
-                            \begin{array}{rl} 
-                                \mathbf{x}' &= \dfrac{d}{dt}\displaystyle\sum_{k=0}^{\infty}\dfrac{(tA)^k}{k!}\mathbf{x}_0 \cr 
-                                &= \displaystyle\sum_{k=1}^{\infty}\dfrac{t^{k-1}A^i}{(k-1)!}\mathbf{x}_0 \cr 
-                                &= Ae^{tA}\mathbf{x}_0 = A\mathbf{x}
-                            \end{array}
-                        \] となる. 
-                        また, $\mathbf{x}(0) = I\mathbf{x}_0 = \mathbf{x}_0$ である. 
-                </ul>
-            </div>
+                <p>まず, 
+                    \[
+                        \begin{array}{rl} 
+                            \mathbf{x}' &= \dfrac{d}{dt}\displaystyle\sum_{k=0}^{\infty}\dfrac{(tA)^k}{k!}\mathbf{x}_0 \cr 
+                            &= \displaystyle\sum_{k=1}^{\infty}\dfrac{t^{k-1}A^i}{(k-1)!}\mathbf{x}_0 \cr 
+                            &= Ae^{tA}\mathbf{x}_0 = A\mathbf{x}
+                        \end{array}
+                    \] となる. 
+                    また, $\mathbf{x}(0) = I\mathbf{x}_0 = \mathbf{x}_0$ である. 
+                </p>
+            </div><!-- /answer -->
 
             <p>具体例として, 
                 \[
@@ -177,7 +178,7 @@
                         c_2 
                     \end{pmatrix}
                 \] を満たす $c_1$, $c_2\in\mathbb{R}$ が得られれば, 式 $(1.2)$ の解 (初期条件下での特殊解) が得られる. 
-                具体的には, $\mathbf{v}_1$, $\mathbf{v}_2$ が線型独立であることから, 
+                具体的には, $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{R}^2$ が線型独立であることから (つまり $\mathbf{v}_1, \mathbf{v}_2$ が $\mathbb{R}^2$ の基底であることから), 
                 \[
                     P = (\mathbf{v}_1, \mathbf{v}_2)\in\mathbb{R}^{2\times 2}
                 \] は正則行列であり, 従って 
@@ -238,8 +239,19 @@
             
             <p>次に, 固有値が $1$ つの実数のみの場合は, 固有値 $\lambda\in\mathbb{R}$ に対応する (線型独立な) 固有ベクトルが複数ある場合と $1$ つしか無い場合と $2$ つのケースが考えられる.  
             </p>
-            <p>固有値 $\lambda$ に対応する複数の固有ベクトルが存在する場合は, 少なくとも $2$ つの線型独立な固有ベクトルが存在するため, それらを $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{R}^2$ とおく. 
-                このとき, $\mathbb{R}^2$ の全てのベクトル $\mathbf{v}$ は $\mathbb{R}^2$ の基底 $\mathbf{v}_1, \mathbf{v}_2$ の線型結合で表現できる: 
+            <p>固有値 $\lambda$ に対応する複数の固有ベクトルが存在する場合は, 任意のベクトル $\mathbf{v}\in\mathbb{R}^2$ に対して
+                \[
+                    \mathbf{x}(t) = ce^{\lambda t}\mathbf{v}
+                \] が $\mathbf{x}' = A\mathbf{x}$ の一般解であり, 初期条件 $\mathbf{x}(0) = \mathbf{x}_0$ を満たす特殊解は $\mathbf{x}(t) = e^{\lambda t}\mathbf{x}_0$ である. 
+            </p>
+
+            <div class="exercise">
+                このことを証明せよ.
+            </div><!-- /exercise -->
+
+            <div class="answer">
+                <p>固有値 $\lambda$ に対応する複数の固有ベクトルが存在するなら, 少なくとも $2$ つの線型独立な固有ベクトルが存在するため, それらを $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{R}^2$ とおくと, これらは $\mathbf{R}^2$ の基底となる. 
+                従って, $\mathbb{R}^2$ の全てのベクトル $\mathbf{v}$ は $\mathbf{v}_1, \mathbf{v}_2$ の線型結合で表現できる: 
                 \[
                     \mathbf{v} = c_1\mathbf{v}_1 + c_2\mathbf{v}_2
                 \] 
@@ -247,11 +259,14 @@
                 \[
                     A\mathbf{v} = A(c_1\mathbf{v}_1 + c_2\mathbf{v}_2) = \lambda(c_1\mathbf{v}_1 + c_2\mathbf{v}_2) = \lambda\mathbf{v}
                 \] となることから, 任意の $\mathbf{0}$ でないベクトル $\mathbf{v}\in\mathbb{R}^2$ は, 行列 $A\in\mathbb{R}^{2\times 2}$ の固有値 $\lambda$ に対応する固有ベクトルになる (なお, このような行列 $A\in\mathbb{R}^{2\times 2}$ は $A=\lambda I$ しか存在しない). 
-                このときは, 任意のベクトル $\mathbf{v}\in\mathbb{R}^2$ に対して
+                あとは線形力学系の性質を用いると, 
                 \[
                     \mathbf{x}(t) = ce^{\lambda t}\mathbf{v}
-                \] が $\mathbf{x}' = A\mathbf{x}$ の一般解であり, 初期条件を満たす特殊解は $\mathbf{x}(t) = e^{\lambda t}\mathbf{x}_0$ である. 
-            </p>
+                \] が $\mathbf{x}' = A\mathbf{x}$ の一般解であることがわかる. 
+                また, 初期条件 $\mathbf{x}(0) = \mathbf{x}_0$ を満たす特殊解は $\mathbf{x}(t) = e^{\lambda t}\mathbf{x}_0$ であることは明らかである. 
+                </p>
+            </div><!-- /answer -->
+                
             <p>ただ一つの固有値 $\lambda$ に対応する固有ベクトルが (スカラー倍を除き) 一つしか無い場合は, 行列 $A$ は固有ベクトルを用いて対角化することはできないが, 代わりに一般固有空間の元 (一般固有ベクトル) を用いてジョルダン標準形にすることができる. 
                 いま, $\lambda$ は固有方程式の $2$ 重解であるため, $\lambda$ に対応する固有ベクトル $\mathbf{v}_1$ に対して, 例えば
                 \[
@@ -327,7 +342,7 @@
                 そこで, 
                 \[
                     \lambda_1 = a+ib,\quad \mathbf{v}_1 = \mathbf{w}_1 + i\mathbf{w}_2
-                \] とおき, これら $a, b\in\mathbb{R}$, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^2$ を用いて一般解を表現してみよう, ここで $i$ は虚数単位である. 
+                \] とおき, これら $a, b\in\mathbb{R}$, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^2$ を用いて一般解を表現したい, ここで $i$ は虚数単位である. 
                 なお, $\lambda_1\in\mathbb{C}\backslash\mathbb{R}$ より $b\neq0$ であることに注意. 
             </p>
             <p>まず, 以下の性質を確認しよう:
@@ -349,7 +364,7 @@
                 <ul>
                     <li>もしも $\mathbf{w}_2=\mathbf{0}$ ならば (つまり $\mathbf{v}_1\in\mathbb{R}^n$ ならば), $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1$ の左辺は実ベクトルであり, 一方で固有ベクトル $\mathbf{v}_1$ は $\mathbf{0}$ では無いことから右辺は実ベクトルでは無い, 従って矛盾する. 
                     </li>
-                    <li>$\lambda = a + ib$ とおく, ただし $a, b\in\mathbb{R}$ であり, $\lambda\in\mathbb{C}\backslash\mathbb{R}$ より $b\neq0$. 
+                    <li>$\lambda = a + ib$ とおく, ただし $a, b\in\mathbb{R}$ であり, $\lambda\in\mathbb{C}\backslash\mathbb{R}$ より $b\neq0$ である. 
                         もしも $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ が線型独立で無いならば, $\mathbf{w}_1 = c\mathbf{w}_2$ となる $c\in\mathbb{R}$ が存在するため, 
                         \[
                             \begin{array}{rl} 
@@ -368,7 +383,8 @@
             </div><!-- /proof -->
 
             <p>これらの性質は $n=2$ の場合にも成立するため, 固有値 $\lambda_1$ に対応する固有ベクトル $\mathbf{w}_1 = \mathbf{w}_1 + i\mathbf{w}_2$ および固有値 $\lambda_2 = \overline{\lambda_1}$ に対応する固有ベクトル $\mathbf{v}_2 = \overline{\mathbf{v}}_1$ を考えることができる.  
-                また固有ベクトルと密接に関連する $2$ つの線型独立な実ベクトル $\mathbf{w}_1$, $\mathbf{w}_2$ が得られることになるため, これらを用いて一般解の表現を試みよう. 以下では, 複素ベクトル $\mathbf{z}\in\mathbb{C}^n$ に対し, 
+                また固有ベクトルと密接に関連する $2$ つの線型独立な実ベクトル $\mathbf{w}_1$, $\mathbf{w}_2\in\mathbb{R}^2$ が得られることになるため, $\mathbf{w}_1, \mathbf{w}_2$ は $\mathbb{R}^2$ の基底となる. 
+                これらを用いて一般解の表現を試みよう. 以下では, 複素ベクトル $\mathbf{z}\in\mathbb{C}^n$ に対し, 
                 \[
                     \mathbf{z} = \mathbf{a} + i\mathbf{b} \quad (\mathbf{a}, \mathbf{b}\in\mathbb{R}^n)
                 \] であるときに, 
@@ -415,7 +431,7 @@
                         &= \widetilde{c}_1 \operatorname{Re}(e^{\lambda_1 t}\mathbf{v}_1) + \widetilde{c}_2 \operatorname{Im}(e^{\lambda_1 t}\mathbf{v}_1)
                     \end{array}
                 \] が得られる. 
-                これは, 上の一般解の表記において $\widetilde{c}_1, \widetilde{c}_2\in\mathbb{R}$ を指定したものになっている. 
+                これは, 上の一般解の表記において $\widetilde{c}_1, \widetilde{c}_2\in\mathbb{R}$ を与えられた初期条件に応じて指定したものになっている. 
             </p>
             <p>なお, $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1$ に注目すると 
                 \[
@@ -470,6 +486,89 @@
                     \end{array}
                 \] となっている. 
             </p>
+        </section>
+
+        <section id="section1-2"><h2>1.2: 力学系の諸概念</h2>
+            <p>ここから, 力学系の解の性質や解の図示に関連していくつかの概念を導入する. 
+                具体例としては, 解を明示的に表示できる線形力学系を考えるが, ここで述べる概念は, むしろ解が明示的に表現できない場合にこそ有効なテクニックとして機能する. 
+            </p>
+
+            <div class="definition" data-name="平衡解">
+                力学系の解 $\mathbf{x}(t)$ であって, 特に定数関数であるものを <b>平衡解</b> (もしくは <b>平衡点</b>) という. 
+            </div><!-- /definition -->
+
+            <div class="example">
+                <p>$\mathbf{x}(t) = \mathbf{0}$ は線形力学系 $\mathbf{x}' = A\mathbf{x}$ の解であり, また定数関数なので平衡解である. 
+                </p>
+            </div><!-- /example -->
+
+            <div class="definition" data-name="ベクトル場と方向場">
+                <ul>
+                    <li>ベクトル値関数 $\mathbf{f}: X \to \mathbb{R}^m$ を <b>ベクトル場</b> という, ただし $X\subset\mathbb{R}^n$ とする. 
+                        ベクトル場 $\mathbf{f}$ は $\mathbb{R}^n$ 上のいくつかの点 $\mathbf{x}\in X$ を始点とし, ベクトル $\mathbf{f}(\mathbf{x})\in\mathbb{R}^m$ に対応した矢印を描いたものとして図示される.  
+                    </li>
+                    <li>ベクトル場を図示する際に, 代わりに各点を始点とするベクトルの向きを保ったまま適当に矢印のスケールを調整したものを <b>方向場</b> という (もしくはこれもベクトル場の図示であると言及されることがある).
+                    </li>
+                </ul>
+            </div><!-- /definition -->
+
+            <div class="example">
+                <p>ベクトル場 $\mathbf{f}:\mathbb{R}^2 \to \mathbb{R}^2$ として, 
+                    \[
+                        \mathbf{f}(x,y) = \begin{pmatrix} 
+                            y \cr 
+                            -x 
+                        \end{pmatrix}
+                    \] を考える. このベクトル場の図示と対応する方向場は, 例えば以下のようになる: 
+                </p>
+                <div class="resize"><img src='./images/vector_field-1.png'></div>
+				<div class="resize"><img src='./images/direction_field-1.png'></div>
+                <p>ベクトル場の図示において, 例えば $(x, y) = (1, 1)$ を始点とする矢印は $\mathbf{f}(1, 1) = (1, -1)$ に対応している (つまり始点が $(1,1)$, 終点が $(2,0)$ である矢印として表されている).
+                    一方で, 方向場において $(x, y) = (1, 1)$ を始点とする矢印は $\mathbf{f}(1, 1) = (1, -1)$ に対応する方向を指しているが, スケールについては適当に調整されている. 
+                </p>
+            </div><!-- /example -->
+
+            <div class="remark">
+                <p>ベクトル場を図示した場合, 上の例のように複数の矢印が交わって見にくくなることが多い. 
+                    これを回避するために, 矢印の長さについては適当に調整し, ベクトル場の向きにのみ注目したものが方向場である. 
+                </p>
+            </div><!-- /remark -->
+
+            <div class="definition" data-name="相空間と軌道">
+                <ul>
+                    <li>力学系 $\mathbf{x}' = \mathbf{f}(t, \mathbf{x})$ の解 $\mathbf{x}(t)$ が取り得る全ての状態からなる空間を <b>相空間</b> (もしくは <b>状態空間</b>) という. 
+                    </li>
+                    <li>ある力学系の相空間を $X$ とおき, 力学系の解 $\mathbf{x}(t)$ が, 初期値 $\mathbf{x}_0$ に依存することを強調して
+                        \[
+                            \mathbf{x}(t) = \varphi(t, \mathbf{x}_0)
+                        \] と表す. このとき関数 $\varphi: \mathbb{R}\times X \to X$ を, この力学系の <b>流れ</b> (もしくは <b>フロー</b>) という. 
+                    </li>
+                    <li>ある力学系の解 $\mathbf{x}(t)$ に対して (初期値 $\mathbf{x}_0$ に依存することを強調するために流れ $\varphi$ を用いて $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ と表すとき), 
+                        \[
+                            \{\varphi(t, \mathbf{x}_0) : t\in \mathbb{R}\} \subset X
+                        \] を, (初期値 $\mathbf{x}_0$ に対する) <b>軌道</b> (もしくは <b>解軌道</b>) という. 
+                    </li>
+                    <li>ある力学系の (様々な初期値に対する) 軌道の概略を相空間上に表した図を <b>相図</b> という. </li>
+                </ul>
+            </div><!-- /definition -->
+
+            <div class="remark">
+                <ul>
+                    <li>数学における流れ (および軌道) は, 本来は力学系とは無関係に定義されるものであり, そのアイデアを力学系にも応用できると説明されるべきものであるが, ここではこれ以上深入りしない. 
+                    </li>
+                    <li>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ においては, $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ が時間経過に伴いどのように動くか, という情報が $\mathbf{f}(\mathbf{x})$ として (時間に無関係なベクトル場として) 与えられることになる. 
+                        従って, ベクトル場 $\mathbf{f}(\mathbf{x})$ (もしくは方向場) を図示することで, $\mathbf{x}(t)$ が時間経過により相空間上をどの向きに動くかをイメージできる, つまり軌道の概形がわかる. 
+                    </li>
+                    <li>力学系の平衡解は時間経過により動かないような解であり, 軌道が一点からなるような初期値に対応している. 
+                        また, $\widehat{\mathbf{x}}(t)$ が自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡解であることは, $\mathbf{f}(\widehat{\mathbf{x}}) = \mathbf{0}$ であることと同値である. 
+                    </li>
+                    <li>力学系の軌道は初期値の違いにより異なる挙動を示すことがある. 
+                        この挙動の違いをわかりやすく図で表すものが相図であり, 解を明示的に表示できない場合に特に有用である.  
+                    </li>
+                </ul>
+            </div><!-- /remark -->
+
+
             
     
     <!-- 
