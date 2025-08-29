@@ -1,0 +1,29 @@
+% !TEX TS-program = pdfLaTeX+shellescape
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{multido}
+
+\begin{document}
+    \begin{tikzpicture}[baseline]
+        \begin{axis}[
+            scale=0.6, % scale
+            xmin=-0.08,xmax=4.08,ymin=-0.08,ymax=4.08, % range of plot
+            % legend style={at={(axis cs: 1,0)}, anchor=south east}, % position of legends
+            unit vector ratio = {1, 1}, % aspect ratio
+            % axis lines = box, % middle or box
+            %axis x line = bottom, % top, middle, bottom, none: axis x line* = ... removes arrow heads
+            %axis y line = left, % left, center, right, none: axis y line* = ... removes arrow heads
+            %xlabel = {$x$}, ylabel = {$y$}, % axis labels 
+        ]
+            % \multido{\i=0+1}{7}{
+            \foreach \i in {0, 1, ..., 6}{
+                \addplot gnuplot [raw gnuplot, mark=none, thick, solid, blue] {
+                    plot 'data_RotkaVolterra.txt' index \i
+                };
+            }
+        \end{axis}
+    \end{tikzpicture}
+\end{document}
