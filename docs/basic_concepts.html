@@ -116,7 +116,7 @@
                     e^{tA} = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!} = I + tA + \dfrac{(tA)^2}{2} + \dfrac{(tA)^3}{3!} + \dots
                 \] と定義される行列である. 特に, 行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
                 \[
-                    e^{tA}\mathbf{v}_i = e^{\lambda_i t}\mathbf{v}_i
+                    e^{tA}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(\lambda_i t)^k}{k!}\mathbf{v}_i = e^{\lambda_i t}\mathbf{v}_i
                 \] が成立する (つまり $\mathbf{v}_i$ は行列 $e^{tA}\in\mathbb{R}^{n\times n}$ の固有値 $e^{\lambda_i t}$ に対応する固有ベクトルになっている).  
             </p>
 
@@ -129,7 +129,7 @@
                     \[
                         \begin{array}{rl} 
                             \mathbf{x}' &= \dfrac{d}{dt}\displaystyle\sum_{k=0}^{\infty}\dfrac{(tA)^k}{k!}\mathbf{x}_0 \cr 
-                            &= \displaystyle\sum_{k=1}^{\infty}\dfrac{t^{k-1}A^i}{(k-1)!}\mathbf{x}_0 \cr 
+                            &= \displaystyle\sum_{k=1}^{\infty}\dfrac{t^{k-1}A^k}{(k-1)!}\mathbf{x}_0 \cr 
                             &= Ae^{tA}\mathbf{x}_0 = A\mathbf{x}
                         \end{array}
                     \] となる. 
@@ -250,7 +250,7 @@
             </div><!-- /exercise -->
 
             <div class="answer">
-                <p>固有値 $\lambda$ に対応する複数の固有ベクトルが存在するなら, 少なくとも $2$ つの線型独立な固有ベクトルが存在するため, それらを $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{R}^2$ とおくと, これらは $\mathbf{R}^2$ の基底となる. 
+                <p>固有値 $\lambda$ に対応する複数の固有ベクトルが存在するなら, 少なくとも $2$ つの線型独立な固有ベクトルが存在するため, それらを $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{R}^2$ とおくと, これらは $\mathbb{R}^2$ の基底となる. 
                 従って, $\mathbb{R}^2$ の全てのベクトル $\mathbf{v}$ は $\mathbf{v}_1, \mathbf{v}_2$ の線型結合で表現できる: 
                 \[
                     \mathbf{v} = c_1\mathbf{v}_1 + c_2\mathbf{v}_2
@@ -263,7 +263,7 @@
                 \[
                     \mathbf{x}(t) = ce^{\lambda t}\mathbf{v}
                 \] が $\mathbf{x}' = A\mathbf{x}$ の一般解であることがわかる. 
-                また, 初期条件 $\mathbf{x}(0) = \mathbf{x}_0$ を満たす特殊解は $\mathbf{x}(t) = e^{\lambda t}\mathbf{x}_0$ であることは明らかである. 
+                また, 初期条件 $\mathbf{x}(0) = \mathbf{x}_0$ を満たす特殊解が $\mathbf{x}(t) = e^{\lambda t}\mathbf{x}_0$ であることは明らかである. 
                 </p>
             </div><!-- /answer -->
                 
@@ -486,19 +486,41 @@
                     \end{array}
                 \] となっている. 
             </p>
+
+            <hr>
+            <p>上で見た例では, いずれの場合も解 $\mathbf{x}(t)$ の表示において, 行列 $A$ の固有値 $\lambda$ を用いて $e^{\lambda t}$ (もしくは $e^{\operatorname{Re}(\lambda) t}$) と表される部分が含まれる.  
+                この部分は, $\lambda \gt0$ (もしくは $\operatorname{Re}(\lambda)\gt 0$) ならば $t\to\infty$ のとき無限大に発散し, $\lambda \lt0$ (もしくは $\operatorname{Re}(\lambda)\lt 0$) ならば $t\to\infty$ のとき $0$ に収束する. 
+                上では $2$ 次方程式の解の公式に基づき $3$ つの場合分けを考えたが, 固有値 (の実部) の符号 (つまり $T = \operatorname{tr}A$ の符号) も解の挙動を知る際に重要な情報となる. 
+            </p>
+            <p>また, 上では $2$ 次元の線形力学系のみを例として考えたが, 一般に $n$ 次元の場合であっても, 線形力学系 $(1.2)$ の解は $\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ と表され, 行列 $A$ の固有値と固有ベクトルを求めることで行列の指数関数を用いない表示を得ることができる. 
+                その際には, やはり行列 $A$ の固有値 $\lambda_i$ が実数であるか否か, 固有値 $\lambda_i$ の重複度, $\operatorname{Re}\lambda_i$ の符号などが, 解のおおまかな挙動を調べるための重要な手掛かりとなる. 
+            </p>
+
         </section>
 
-        <section id="section1-2"><h2>1.2: 力学系の諸概念</h2>
-            <p>ここから, 力学系の解の性質や解の図示に関連していくつかの概念を導入する. 
-                具体例としては, 解を明示的に表示できる線形力学系を考えるが, ここで述べる概念は, むしろ解が明示的に表現できない場合にこそ有効なテクニックとして機能する. 
+        <section id="section1-2"><h2>1.2: 平衡解の性質, 分類</h2>
+            <p>ここから, 力学系の平衡解の性質や解の図示に関連していくつかの概念を導入する. 
+                具体例としては, 解を明示的に表示できる線形力学系を考えるが, ここで述べる概念は, むしろ解が明示的に表現できない場合にこそ, 解のおおまかな挙動を知るために有効なテクニックとして機能する. 
             </p>
 
             <div class="definition" data-name="平衡解">
-                力学系の解 $\mathbf{x}(t)$ であって, 特に定数関数であるものを <b>平衡解</b> (もしくは <b>平衡点</b>) という. 
+                力学系の解 $\mathbf{x}(t)$ であって, 特に $\mathbf{x}' = \mathbf{0}$ を満たすもの (つまり定数関数であるもの) を <b>平衡解</b> (もしくは <b>平衡点</b>) という. 
             </div><!-- /definition -->
+
+            <div class="remark">
+                <p>変数 $t$ が時間を表している場合, 力学系の平衡解は時間経過により動かない点であると解釈することができる. 
+                    力学系の平衡解は <b>不動点</b> (<b>fixed point</b>) と呼ばれることもある.
+                </p>
+            </div><!-- /remark -->
 
             <div class="example">
                 <p>$\mathbf{x}(t) = \mathbf{0}$ は線形力学系 $\mathbf{x}' = A\mathbf{x}$ の解であり, また定数関数なので平衡解である. 
+                </p>
+                <p>なお, 線形力学系の平衡解 $\mathbf{x}(t)$ は $A\mathbf{x} = \mathbf{0}$ を満たすものに限られる. 
+                    もしも行列 $A$ が正則ならば, そのような $\mathbf{x}$ は 
+                    \[
+                        \mathbf{x} = A^{-1}\mathbf{0} = \mathbf{0}
+                    \] 以外には存在しない. 
                 </p>
             </div><!-- /example -->
 
@@ -554,7 +576,7 @@
 
             <div class="remark">
                 <ul>
-                    <li>数学における流れ (および軌道) は, 本来は力学系とは無関係に定義されるものであり, そのアイデアを力学系にも応用できると説明されるべきものであるが, ここではこれ以上深入りしない. 
+                    <li>数学における流れ (および軌道) は, 本来は力学系とは別に定義されるものであり, そのアイデアを力学系にも応用できると説明されるべきものであるが, ここではこれ以上深入りしない. 
                     </li>
                     <li>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ においては, $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ が時間経過に伴いどのように動くか, という情報が $\mathbf{f}(\mathbf{x})$ として (時間に無関係なベクトル場として) 与えられることになる. 
                         従って, ベクトル場 $\mathbf{f}(\mathbf{x})$ (もしくは方向場) を図示することで, $\mathbf{x}(t)$ が時間経過により相空間上をどの向きに動くかをイメージできる, つまり軌道の概形がわかる. 
@@ -567,6 +589,135 @@
                     </li>
                 </ul>
             </div><!-- /remark -->
+
+            <div class="example">
+                <p>線形力学系 
+                    \[
+                        \begin{pmatrix} 
+                            x' \cr 
+                            y' 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            0 & 1 \cr 
+                            -1 & 0 
+                        \end{pmatrix}\begin{pmatrix} 
+                            x \cr 
+                            y 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            y \cr 
+                            -x 
+                        \end{pmatrix}
+                    \] を考える. この右辺のベクトル場 
+                    \[
+                        \mathbf{f}(x, y) = \begin{pmatrix} 
+                            y \cr 
+                            -x 
+                        \end{pmatrix}
+                    \] に対応する方向場が, 
+                    \[
+                        \mathbf{x}(t) = \begin{pmatrix} 
+                            x(t) \cr 
+                            y(t) 
+                        \end{pmatrix} 
+                    \] が時間経過によりどのように動くかを表していることになるため, 初期値を与えたときの軌道を (ある程度ではあるが) 予想することができる. 
+                    <div class="resize"><img src='./images/expected_orbit-1.png'></div>
+                    実際, 一般解を計算すると 
+                    \[
+                        \mathbf{x}(t) = \begin{pmatrix} 
+                            \widetilde{c}_1\cos t + \widetilde{c}_2\sin t \cr 
+                            -\widetilde{c}_1\sin t + \widetilde{c}_2\cos t 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            r\sin(t+\alpha) \cr 
+                            r\cos(t+\alpha) 
+                        \end{pmatrix}
+                    \] と表すことができる, ただし $r = \sqrt{\widetilde{c}_1^2 + \widetilde{c}_2^2}$ であり, $\alpha$ は 
+                    \[
+                        \sin\alpha = \dfrac{\widetilde{c}_1}{r},\quad \cos\alpha = \dfrac{\widetilde{c}_2}{r}
+                    \] を満たすものである. 
+                    このことは, $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ は (初期値 $\mathbf{x}_0$ に対応した) 円周上を動くことを意味しており, 方向場の矢印の指す方向に動いていることがわかる. 
+                    以下に, この線形力学系に対する相図の例を掲載する:
+                </p>
+                <div class="resize"><img src='./images/spiral-1.png'></div>
+                <p>相図に描かれている各曲線 (今回は円周) が, 初期値を適当に指定した際の軌道 (つまりこの力学系の解 $\mathbf{x}(t)$ の時間経過による動き) を表している.</p>
+
+            </div><!-- /example -->
+
+            <hr> 
+
+            <p>上の例では各軌道が原点, つまりこの力学系の平衡点を中心とする円を描いている. 
+                このような平衡点は <b>渦心点</b> (もしくは <b>センター</b>) であると言われる.
+            </p>
+            <p>平衡点の近傍で解の軌道がどのようになっているか調べることは, 力学系の解の挙動を知る際に重要となる. 
+                そのため, 近傍での軌道が特徴的な振る舞いを示す平衡点には, その性質により様々な名前が付けられ分類される. 
+                以下, ($2$ 次元線形力学系を具体例に) 平衡点の性質や分類を紹介する:
+            </p>
+
+            <div class="definition" data-name="安定性">
+                <ul>
+                    <li>平衡点に十分近い点を初期値としたとき, 全ての $t\ge 0$ に対して解 $\mathbf{x}(t)$ がその平衡点の近傍にとどまり続けるならば, 平衡点は <b>リアプノフ安定</b> (<b>Lyapunov stable</b>) である (もしくは単に <b>安定</b> である) という. 
+                        安定でない平衡点は <b>不安定</b> であるという. 
+                    </li>
+                    <li>平衡点に十分近い点を初期値としたとき, $t\to\infty$ のときに $\mathbf{x}(t)$ がその平衡点に収束するならば, 平衡点は <b>吸引的</b> (<b>attracting</b>) であるという.</li>
+                    <li>リアプノフ安定かつ吸引的な平衡点は <b>漸近安定</b> であるという.</li>
+                    <!-- <li>リアプノフ安定だが吸引的でない平衡点は <b>中立安定</b> であるという.</li> -->
+                </ul>
+            </div><!-- /definition -->
+            
+            <div class="example">
+
+            </div><!-- /example -->
+
+            <p>力学系が線形ならば, 
+            </p>
+
+            <div class="definition" data-name="線形安定性解析">
+
+            </div><!-- /definition -->
+
+            <div class="definition" data-name="源点, 沈点, 鞍点">
+                <ul>
+                    <li>平衡点の近傍で, 全ての軌道がその平衡点から離れていくとき, その平衡点は <b>源点</b> (<b>source</b>) であるという.</li>
+                    <li>平衡点の近傍で, 全ての軌道がその平衡点に近づいていくとき (つまり平衡点が吸引的であるとき), その平衡点は <b>沈点</b> (<b>sink</b>) であるという.</li>
+                    <li>平衡点の近傍で, その平衡点に近づいていく軌道と離れていく軌道の両方が存在するとき, その平衡点は <b>鞍点</b> (<b>saddle</b>) であるという.</li>
+                    <li>源点もしくは沈点である平衡点を <b>ノード</b> と呼ぶことがある</li>
+                </ul>
+            </div><!-- /definition -->
+
+
+
+            <div class="definition" data-name="ポアンカレ写像">
+
+            </div>
+
+            <div class="exercise">
+                <p>非線形力学系 
+                    \[
+                        \begin{pmatrix} 
+                            x' \cr 
+                            y' 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            x - xy \cr 
+                            xy - y 
+                        \end{pmatrix}
+                    \] の $x\gt 0$, $y\gt 0$ における相図の概形を描画せよ. 
+                </p>
+            </div><!-- /exercise -->
+
+            <div class="answer">
+                <p>この力学系は非線形であり, 解の明示的な表示を与えることは困難である. 
+                    ただし自励系であるため, 右辺のベクトル場に対応する方向場を考えれば各初期値に対する軌道の概形を予想できる. 
+                    いくつかの点において具体的に計算することが望ましいが, 大雑把には $x\gt 0$, $y\gt 0$ において
+                </p>
+                <ul>
+                    <li>$0\lt x\lt 1$ のとき $y'\lt 0$, </li>
+                    <li>$x=1$ のとき $y'=0$, </li>
+                    <li>$1\lt x$ のとき $y'\gt 0$, </li>
+                    <li>$0\lt y\lt 1$ のとき $x'\gt 0$, </li>
+                    <li>$y=1$ のとき $x'=0$, </li>
+                    <li>$1\lt y$ のとき $x'\lt 0$</li>
+                </ul>
+                <p>であることに注目すれば, 方向場における各点での矢印の向きはおおよそ決定できる (なお, このベクトル場は連続であり勾配も大きくならないため, $x$ や $y$ が多少変化しても矢印の向きが急激に変化する心配はない).        
+                </p>
+            </div><!-- /answer -->
 
 
             
