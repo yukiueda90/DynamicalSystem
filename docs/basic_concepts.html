@@ -100,7 +100,7 @@
 
             <p>上の性質を用いることで, 線形力学系 $(1.1)$ の一般解は, 行列 $A$ の固有値, 固有ベクトルおよび線型結合を用いて表現することができる. 
             </p>
-            <p>さらに, 例えば $t=0$ で与えられた条件を満たす特殊解については, 簡単に具体的表記を与えることができる. 
+            <p>さらに, 例えば $t=0$ で与えられた条件を満たす特殊解については, 簡単に表記を与えることができる. 
                 ここでは, 
                 \[
                     \left\{\begin{array}{rl} 
@@ -111,10 +111,10 @@
                 このとき, 線形力学系 $(1.2)$ の解 $\mathbf{x}: \mathbb{R}\to\mathbb{R}^n$ は 
                 \[
                     \mathbf{x}(t) = e^{tA}\mathbf{x}_0 
-                \] と表すことができる. ここで, $e^{tA}$ は 
+                \] と表すことができる. ここで, $e^{tA}$ は <b>行列指数関数</b> であり, 具体的には
                 \[
                     e^{tA} = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!} = I + tA + \dfrac{(tA)^2}{2} + \dfrac{(tA)^3}{3!} + \dots
-                \] と定義される行列である. 特に, 行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
+                \] と定義される行列である ($A^k$ の各成分の絶対値を上から評価することで, この級数は任意の $A$ に対して収束することがわかる). 特に, 行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
                 \[
                     e^{tA}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(\lambda_i t)^k}{k!}\mathbf{v}_i = e^{\lambda_i t}\mathbf{v}_i
                 \] が成立する (つまり $\mathbf{v}_i$ は行列 $e^{tA}\in\mathbb{R}^{n\times n}$ の固有値 $e^{\lambda_i t}$ に対応する固有ベクトルになっている).  
@@ -125,15 +125,14 @@
             </div><!-- /exercise -->
 
             <div class="answer">
-                <p>まず, 
+                <p>$\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ ならば
                     \[
                         \begin{array}{rl} 
                             \mathbf{x}' &= \dfrac{d}{dt}\displaystyle\sum_{k=0}^{\infty}\dfrac{(tA)^k}{k!}\mathbf{x}_0 \cr 
                             &= \displaystyle\sum_{k=1}^{\infty}\dfrac{t^{k-1}A^k}{(k-1)!}\mathbf{x}_0 \cr 
                             &= Ae^{tA}\mathbf{x}_0 = A\mathbf{x}
                         \end{array}
-                    \] となる. 
-                    また, $\mathbf{x}(0) = I\mathbf{x}_0 = \mathbf{x}_0$ である. 
+                    \] となり, また $\mathbf{x}(0) = I\mathbf{x}_0 = \mathbf{x}_0$ である. 
                 </p>
             </div><!-- /answer -->
 
