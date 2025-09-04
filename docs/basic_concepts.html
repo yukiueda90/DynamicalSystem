@@ -28,15 +28,95 @@
     
     <!-- main -->
     <main role="main"><article id="section1"><h1>力学系の諸概念</h1>
-        <p>まず, 力学系の理論を説明するために必要な概念を紹介する. 
-        具体例としては, ひとまず線形力学系のみを扱うことにするが, ここで導入する様々なアイデアはより一般の状況を考える際にも重要となるものである.</p>
+        <p>まず, 力学系の具体例のいくつかに触れた後に, 力学系の理論を説明するために必要な概念を紹介する. 
+        具体例としては, ひとまず $1$ 次元の場合と線形力学系のみを扱うことにするが, ここで導入する様々なアイデアはより一般の状況を考える際にも重要となるものである.</p>
+
+        <section id="section1-1"><h2>1.1: $1$ 次元力学系</h2>
+            <p>まずは常微分方程式 
+                \[
+                    x' = f(t, x)
+                \] を考えることにしよう. 
+                このとき, $x(t) \in \mathbb{R}$ であり, このような力学系を $1$ 次元力学系と呼ぶ. 
+            </p>
+            <p>簡単な例として, $f(t,x) = ax$ である場合を考える, ただし $a\in\mathbb{R}$ は定数であるとする. 
+                このとき, 
+                \[
+                    x' = ax
+                \] の解が $x(t) = C e^{at}$ であることは容易にわかる, ただし $C$ は積分定数である. 
+                念のため確認しておくと, この $e$ は <b>ネイピア数</b> と呼ばれる数学定数の一つであり, 
+                \[
+                    \dfrac{d}{dt}e^t = e^t
+                \] を満たす. 
+                また, テイラー展開により 
+                \[
+                    e^{at} = \sum_{k=0}^{\infty}\dfrac{(at)^k}{k!}
+                \] が得られる. 
+            </p>
+            <p>もしも解 $x(t)$ が満たすべき条件が追加で与えられているならば, その条件が満たされるように $C$ を決定, 積分定数の任意性を排除し特殊解が得られる. 
+                常微分方程式に対しては, 多くの場合 $t=0$ における $x$ の値が与えられた数 $x_0$ であること (つまり $x(0) = x_0$) を条件として課す. 
+                このような条件は, 変数 $t$ が時刻を表す場合には <b>初期条件</b> と呼ばれ, $x_0$ は <b>初期値</b> と呼ばれる. 
+                例えば, 
+                \[
+                    \left\{\begin{array}{rl} 
+                        x' &= ax, \cr 
+                        x(0) &= x_0 
+                    \end{array}\right. 
+                \] の解は $x(t) = e^{at}x_0$ である. 
+            </p>
+            <p>上の例に解の表示を与えることは容易だが, 実際に各 $t$ に対し (つまり $t$ を動かした際に) $x(t)$ がどのように振る舞うかを考えようとすると, パラメータ $a$ が重要になることがわかる. 
+                ひとまず $x_0\gt 0$ の場合のみ考えることにすると, $a\gt 0$ ならば $t\to \infty$ としたときに $x(t)\to\infty$ となり, 一方で $a\lt 0$ ならば $x(t)\to 0$ となる. 
+                また, $a=0$ の場合は $x(t)$ は定数となり $t$ に依存しない. 
+                このように, 力学系の解は系に含まれるパラメータにより挙動が大きく異なることがある. 
+                このような変化は <b>分岐</b> と呼ばれるものであり, 力学系の重要な性質の一つである. 
+            </p>
+            <p>分岐について詳細に述べるためには, 平衡解や安定性といった概念が必要となるため, この資料では後にあらためて言及することにする.
+            </p>
+
+            <hr>
+
+            <p>さて, 上では $x$ の時間発展が関数 $f$ により与えられるという状況を考えたが, $x(t)$ から $x(t+1)$ を決定するルールが写像 $f$ により与えられるという状況を考えることもできる. 
+                このような状況も, $f$ が与えられていれば, 初期状態 $x(0)$ から将来の全ての状態 $x(1), x(2), \dots$ が決定されるとみなせるため, 力学系の一種である. 
+                このような力学系は <b>離散力学系</b> と呼ばれ, これに対して常微分方程式系で与えられる力学系は特に <b>連続力学系</b> であるということがある. 
+            </p>
+            <p>離散力学系について, もう少し厳密に説明する. 
+                以降, 離散力学系を考える場合は, $\mathbf{x}(0), \mathbf{x}(1), \mathbf{x}(2), \dots$ の代わりに $\mathbf{x}_0, \mathbf{x}_1, \mathbf{x}_2, \dots$ と表記することがある. 
+                いま, 与えられた写像 $f: \mathbb{R}^n\to\mathbb{R}^n$ と初期値 $\mathbf{x}_0$ に対して, 
+                \[
+                    \mathbf{x}(k+1) = f(\mathbf{x}(k)) \quad \mbox{もしくは}\quad \mathbf{x}_{k+1} = f(\mathbf{x}_k)
+                \] と表されるものを離散力学系という. 
+            </p>
+            <p>離散力学系は, 比較的単純な式から複雑な (カオス的) 振る舞いを生み出すことが知られている. 
+                例として, 
+                \[
+                    x_{k+1} = ax_k(1-x_k)
+                \] という $1$ 次元離散力学系を考える, ただし初期値は $0\lt x_0\lt 1$ であるとする.  
+                この解 $x_k$ に対して $k\to\infty$ としたときの振る舞いには, 連続力学系と同様にパラメータ $a$ が大きく影響することになる. 
+                例えば $0\lt a\lt 1$ であれば, 
+                \[
+                    0\lt x_{k+1} = ax_k(1-x_k) \lt ax_k \lt x_k
+                \] であるため, 点列 $\{x_k\}$ は単調に減少し, 特に $k\to\infty$ のとき $x_k\to 0$ となる. 
+                一方で $1\lt a$ の場合には, $1-a^{-1}\in (0,1)$ であることに注意すれば, $x_k \lt 1-a^{-1}$ ならば 
+                \[
+                    x_{k+1} \gt ax_k(1-(1-a^{-1})) = x_k 
+                \] となり, $x_k\gt 1-a^{-1}$ ならば同様にして $x_{k+1} \lt x_k$ となることがわかる. 
+                実は, $a$ が小さい内は $x_k\to 1-a^{-1}$ となるのだが, $a$ を大きくすると $\{x_k\}$ は $1-a^{-1}$ の前後を&quot;行ったり来たり&quot;するようになり収束しなくなってしまう. 
+                さらに $a$ を大きくした場合には, 点列 $\{x_k\}$ の振る舞いはますます複雑になり, 式の形で説明することは困難になる. 
+            </p>
+            <p>このように, 離散力学系はカオス的な挙動を説明する際に, 簡単な例としてしばしば取り上げられるものである. 
+                この資料では主に連続力学系を対象に議論を進めることにするが, その場合でも取り扱いを容易にするために, 対応する離散力学系に置き換えて考えることがある (このアイデアは後に <b>ポアンカレ写像</b> として改めて紹介する). 
+                そのため, 離散力学系についても多少は言及することになる.   
+            </p>
+
+        </section>
+
+        <hr>
         
-        <section id="section1-1"><h2>1.1: 線形力学系</h2>
-            <p>様々な概念について紹介する前に, まずは線形力学系について簡単に触れておく.</p>
+        <section id="section1-2"><h2>1.2: 線形力学系</h2>
+            <p>力学系の様々な概念について紹介する前に, $2$ 次元以上の力学系の例として, 線形力学系について紹介しよう.</p>
             <p>まず, 変数 $t$ と未知のベクトル値関数 $\mathbf{x}(t)\in\mathbb{R}^n$, 与えられた線形写像 $f: \mathbb{R}^{n}\to\mathbb{R}^n$ に対して,
                 \[
                     \mathbf{x}' = \mathbf{f}(\mathbf{x})
-                \] と表される力学系 (特に自励系である) を <b>線形力学系</b> (<b>linear dynamical system</b>) という. 
+                \] と表される連続力学系 (特に自励系である) を <b>線形力学系</b> (<b>linear dynamical system</b>) という. 
                 ここで, 写像 $\mathbf{f}:\mathbb{R}^n\to\mathbb{R}$ が線形であるとは, 任意の $c_1, c_2\in\mathbb{R}$ および $\mathbf{x}_1, \mathbf{x}_2\in\mathbb{R}^n$ に対し
                 \[
                     \mathbf{f}(c_1\mathbf{x}_1 + c_2\mathbf{x}_2) = c_1\mathbf{f}(\mathbf{x}_1) + c_2\mathbf{f}(\mathbf{x}_2)
@@ -57,7 +137,7 @@
                 ここで, $(\mathbf{f}(\mathbf{e}_1), \dots, \mathbf{f}(\mathbf{e}_n)) \in\mathbb{R}^{n\times n}$ なので, この行列を $A$ とおくと, 線形力学系とは
                 \[
                     \mathbf{x}' = A\mathbf{x} \tag{1.1}
-                \] と表される力学系 (特に自励系) のことに他ならない. 
+                \] と表される連続力学系 (特に自励系) のことに他ならない. 
             </p>
             <p>線形力学系の解についての性質を確認しておこう:
             </p>
@@ -100,21 +180,23 @@
 
             <p>上の性質を用いることで, 線形力学系 $(1.1)$ の一般解は, 行列 $A$ の固有値, 固有ベクトルおよび線型結合を用いて表現することができる. 
             </p>
-            <p>さらに, 例えば $t=0$ で与えられた条件を満たす特殊解については, 簡単に表記を与えることができる. 
+            <p>さらに, 初期条件が与えられた際の特殊解については, 簡単に表記を与えることができる. 
                 ここでは, 
                 \[
                     \left\{\begin{array}{rl} 
                         \mathbf{x}' &= A\mathbf{x}, \cr 
                         \mathbf{x}(0) &= \mathbf{x}_0 
                     \end{array}\right. \tag{1.2}
-                \] を考えてみよう, ただし, $\mathbf{x}_0\in\mathbb{R}^n$ は与えられたベクトルであり, $\mathbf{x}(0) = \mathbf{x}_0$ は $t=0$ における $\mathbf{x}$ を指定する条件である (特に変数 $t$ が時刻を表す場合には <b>初期条件</b> と呼ばれ, このとき $\mathbf{x}_0$ は <b>初期値</b> と呼ばれる). 
+                \] を考えてみよう, ただし, $\mathbf{x}_0\in\mathbb{R}^n$ は初期値として与えられたベクトルである. 
                 このとき, 線形力学系 $(1.2)$ の解 $\mathbf{x}: \mathbb{R}\to\mathbb{R}^n$ は 
                 \[
                     \mathbf{x}(t) = e^{tA}\mathbf{x}_0 
                 \] と表すことができる. ここで, $e^{tA}$ は <b>行列指数関数</b> であり, 具体的には
                 \[
                     e^{tA} = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!} = I + tA + \dfrac{(tA)^2}{2} + \dfrac{(tA)^3}{3!} + \dots
-                \] と定義される行列である ($A^k$ の各成分の絶対値を上から評価することで, この級数は任意の $A$ に対して収束することがわかる). 特に, 行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
+                \] と定義される行列である ($e^{at}$ のテイラー展開と比較すれば, 自然な定義であることがわかる). 
+                ここでは詳しく説明しないが, $A^k$ の各成分の絶対値を上から評価することで, この級数は任意の $A$ に対して収束することがわかる. 
+                また, 行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
                 \[
                     e^{tA}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(\lambda_i t)^k}{k!}\mathbf{v}_i = e^{\lambda_i t}\mathbf{v}_i
                 \] が成立する (つまり $\mathbf{v}_i$ は行列 $e^{tA}\in\mathbb{R}^{n\times n}$ の固有値 $e^{\lambda_i t}$ に対応する固有ベクトルになっている).  
@@ -249,7 +331,7 @@
             </div><!-- /exercise -->
 
             <div class="answer">
-                <p>固有値 $\lambda$ に対応する複数の固有ベクトルが存在するなら, 少なくとも $2$ つの線型独立な固有ベクトルが存在するため, それらを $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{R}^2$ とおくと, これらは $\mathbb{R}^2$ の基底となる. 
+                <p>固有値 $\lambda$ に対応する複数の線型独立な固有ベクトルが存在するなら, 少なくとも $2$ つの線型独立な固有ベクトルが存在するため, それらを $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{R}^2$ とおくと, これらは $\mathbb{R}^2$ の基底となる. 
                 従って, $\mathbb{R}^2$ の全てのベクトル $\mathbf{v}$ は $\mathbf{v}_1, \mathbf{v}_2$ の線型結合で表現できる: 
                 \[
                     \mathbf{v} = c_1\mathbf{v}_1 + c_2\mathbf{v}_2
@@ -333,7 +415,7 @@
             <hr>
 
             <p>最後に, 異なる二つの固有値 $\lambda_1$, $\lambda_2\in\mathbb{C}\backslash\mathbb{R}$ が存在する場合を考える. 
-                これらは実数係数 $2$ 次方程式の解であるため, $\lambda_1=\overline{\lambda}_2$ である. 
+                これらは実数係数 $2$ 次方程式の解であるため, $\lambda_1=\overline{\lambda}_2$ ($\lambda_2$ の複素共役) である. 
                 対応する固有ベクトル $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{C}^2$ について, 
                 \[
                     \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 \in\mathbb{C}^2
@@ -364,11 +446,10 @@
                     <li>もしも $\mathbf{w}_2=\mathbf{0}$ ならば (つまり $\mathbf{v}_1\in\mathbb{R}^n$ ならば), $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1$ の左辺は実ベクトルであり, 一方で固有ベクトル $\mathbf{v}_1$ は $\mathbf{0}$ では無いことから右辺は実ベクトルでは無い, 従って矛盾する. 
                     </li>
                     <li>$\lambda = a + ib$ とおく, ただし $a, b\in\mathbb{R}$ であり, $\lambda\in\mathbb{C}\backslash\mathbb{R}$ より $b\neq0$ である. 
-                        もしも $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ が線型独立で無いならば, $\mathbf{w}_1 = c\mathbf{w}_2$ となる $c\in\mathbb{R}$ が存在するため, 
+                        もしも $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ が線型独立で無いならば, $\mathbf{w}_1 = c\mathbf{w}_2$ (つまり $\mathbf{v} = (c+i)\mathbf{w}_2$) となる $c\in\mathbb{R}$ が存在するため, 
                         \[
                             \begin{array}{rl} 
-                                (c+i)A\mathbf{w}_2 &= A(\mathbf{w}_1+i\mathbf{w}_2) \cr 
-                                &= A\mathbf{v} \cr 
+                                (c+i)A\mathbf{w}_2 &= A\mathbf{v} \cr 
                                 &= \lambda\mathbf{v} \cr 
                                 &= (a+ib)(c+i)\mathbf{w}_2
                             \end{array}
@@ -381,7 +462,7 @@
                 </ul>
             </div><!-- /proof -->
 
-            <p>これらの性質は $n=2$ の場合にも成立するため, 固有値 $\lambda_1$ に対応する固有ベクトル $\mathbf{w}_1 = \mathbf{w}_1 + i\mathbf{w}_2$ および固有値 $\lambda_2 = \overline{\lambda_1}$ に対応する固有ベクトル $\mathbf{v}_2 = \overline{\mathbf{v}}_1$ を考えることができる.  
+            <p>これらの性質は $n=2$ の場合にも成立するため, 固有値 $\lambda_1$ に対応する固有ベクトル $\mathbf{v}_1 = \mathbf{w}_1 + i\mathbf{w}_2$ および固有値 $\lambda_2 = \overline{\lambda_1}$ に対応する固有ベクトル $\mathbf{v}_2 = \overline{\mathbf{v}}_1$ を考えることができる.  
                 また固有ベクトルと密接に関連する $2$ つの線型独立な実ベクトル $\mathbf{w}_1$, $\mathbf{w}_2\in\mathbb{R}^2$ が得られることになるため, $\mathbf{w}_1, \mathbf{w}_2$ は $\mathbb{R}^2$ の基底となる. 
                 これらを用いて一般解の表現を試みよう. 以下では, 複素ベクトル $\mathbf{z}\in\mathbb{C}^n$ に対し, 
                 \[
@@ -417,16 +498,16 @@
                 なお, $\mathbf{v}_2 = \overline{\mathbf{v}}_1$ であることに注意すると, 初期条件 $\mathbf{x}_0\in\mathbb{R}^2$ が与えられたときに 
                 \[
                     \mathbf{x}_0 = \widetilde{c}_1\mathbf{w}_1 + \widetilde{c}_2\mathbf{w}_2
-                \] なる $\widetilde{c}_1, \widetilde{c}_2\in\mathbb{R}$ に対して, $c_1 = \widetilde{c}_1 - i\widetilde{c}_2$, $c_2 = \overline{c}_1$ とおくと 
+                \] なる $\widetilde{c}_1, \widetilde{c}_2\in\mathbb{R}$ に対して, $c_1 = \dfrac{\widetilde{c}_1 - i\widetilde{c}_2}{2}$, $c_2 = \overline{c}_1$ とおくと 
                 \[
-                    \mathbf{x}_0 = \widetilde{c}_1\mathbf{w}_1 + \widetilde{c}_2\mathbf{w}_2 = \operatorname{Re}(c_1\mathbf{v}_1) = \dfrac{1}{2} c_1\mathbf{v}_1 + \dfrac{1}{2} c_2\mathbf{v}_2
+                    \mathbf{x}_0 = \widetilde{c}_1\mathbf{w}_1 + \widetilde{c}_2\mathbf{w}_2 = 2\operatorname{Re}(c_1\mathbf{v}_1) = c_1\mathbf{v}_1 + c_2\mathbf{v}_2
                 \]
                 である. これと $\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ であることから, 
                 \[
                     \begin{array}{rl} 
-                        \mathbf{x}(t) &= \dfrac{1}{2}e^{tA}(c_1\mathbf{v}_1 + c_2\mathbf{v}_2) \cr 
-                        &= \dfrac{1}{2} (c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2) \cr 
-                        &= \operatorname{Re}(c_1 e^{\lambda_1 t}\mathbf{v}_1) \cr 
+                        \mathbf{x}(t) &= e^{tA}(c_1\mathbf{v}_1 + c_2\mathbf{v}_2) \cr 
+                        &= c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 \cr 
+                        &= 2\operatorname{Re}(c_1 e^{\lambda_1 t}\mathbf{v}_1) \cr 
                         &= \widetilde{c}_1 \operatorname{Re}(e^{\lambda_1 t}\mathbf{v}_1) + \widetilde{c}_2 \operatorname{Im}(e^{\lambda_1 t}\mathbf{v}_1)
                     \end{array}
                 \] が得られる. 
@@ -467,7 +548,7 @@
                         \end{pmatrix}\widehat{\mathbf{x}}, \cr 
                         \widehat{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
                     \end{array}\right. 
-                \] の解 $\widehat{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widehat{\mathbf{x}}$ により説明できることを意味している ($\lambda_1=a+ib$, $\lambda_2=a-ib$ に注意). 
+                \] の解 $\widehat{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widehat{\mathbf{x}}$ により説明できることを意味している ($\lambda_1=a+ib$, $\lambda_2=a-ib$, $b\neq 0$ に注意). 
                 実際, 一般解を考えると 
                 \[
                     \widehat{\mathbf{x}}(t) = \begin{pmatrix} 
@@ -489,28 +570,27 @@
             <hr>
             <p>上で見た例では, いずれの場合も解 $\mathbf{x}(t)$ の表示において, 行列 $A$ の固有値 $\lambda$ を用いて $e^{\lambda t}$ (もしくは $e^{\operatorname{Re}(\lambda) t}$) と表される部分が含まれる.  
                 この部分は, $\lambda \gt0$ (もしくは $\operatorname{Re}(\lambda)\gt 0$) ならば $t\to\infty$ のとき無限大に発散し, $\lambda \lt0$ (もしくは $\operatorname{Re}(\lambda)\lt 0$) ならば $t\to\infty$ のとき $0$ に収束する. 
-                上では $2$ 次方程式の解の公式に基づき $3$ つの場合分けを考えたが, 固有値 (の実部) の符号 (つまり $T = \operatorname{tr}A$ の符号) も解の挙動を知る際に重要な情報となる. 
+                上では $2$ 次方程式の解の公式に基づき $3$ つの場合分けを考えたが, 固有値 (の実部) の符号 (つまり $T = \operatorname{tr}A$ の符号) による場合わけも解の挙動を説明する際に重要となる. 
             </p>
             <p>また, 上では $2$ 次元の線形力学系のみを例として考えたが, 一般に $n$ 次元の場合であっても, 線形力学系 $(1.2)$ の解は $\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ と表され, 行列 $A$ の固有値と固有ベクトルを求めることで行列の指数関数を用いない表示を得ることができる. 
-                その際には, やはり行列 $A$ の固有値 $\lambda_i$ が実数であるか否か, 固有値 $\lambda_i$ の重複度, $\operatorname{Re}\lambda_i$ の符号などが, 解のおおまかな挙動を調べるための重要な手掛かりとなる. 
+                その際には, やはり行列 $A$ の固有値 $\lambda_i$ が実数であるか否か, 固有値 $\lambda_i$ の重複度, $\operatorname{Re}(\lambda_i)$ の符号などが, 解のおおまかな挙動を調べるための重要な手掛かりとなる. 
             </p>
 
         </section>
 
-        <section id="section1-2"><h2>1.2: 平衡解の性質, 分類</h2>
+        <hr>
+
+        <section id="section1-3"><h2>1.3: 平衡解の性質, 分類</h2>
             <p>ここから, 力学系の平衡解の性質や解の図示に関連していくつかの概念を導入する. 
                 具体例としては, 解を明示的に表示できる線形力学系を考えるが, ここで述べる概念は, むしろ解が明示的に表現できない場合にこそ, 解のおおまかな挙動を知るために有効なテクニックとして機能する. 
             </p>
 
             <div class="definition" data-name="平衡解">
-                力学系の解 $\mathbf{x}(t)$ であって, 特に $\mathbf{x}' = \mathbf{0}$ を満たすもの (つまり定数関数であるもの) を <b>平衡解</b> (もしくは <b>平衡点</b>) という. 
+                <ul>
+                    <li>連続力学系 $\mathbf{x}' = \mathbf{f}(t, \mathbf{x})$ の解 $\mathbf{x}(t)$ であって, 特に $\mathbf{x}' = \mathbf{0}$ を満たすもの (つまり定数関数であるもの) を <b>平衡解</b> (もしくは <b>平衡点</b>, <b>不動点</b>) という. </li>
+                    <li>離散力学系 $\mathbf{x}_{k+1} = \mathbf{f}(\mathbf{x}_k)$ に対して, $\mathbf{x} = \mathbf{f}(\mathbf{x})$ となる点 (つまり $\mathbf{f}$ の不動点) を<b>平衡解</b> (もしくは <b>平衡点</b>) という. </li>
+                </ul>
             </div><!-- /definition -->
-
-            <div class="remark">
-                <p>変数 $t$ が時間を表している場合, 力学系の平衡解は時間経過により動かない点であると解釈することができる. 
-                    力学系の平衡解は <b>不動点</b> (<b>fixed point</b>) と呼ばれることもある.
-                </p>
-            </div><!-- /remark -->
 
             <div class="example">
                 <p>$\mathbf{x}(t) = \mathbf{0}$ は線形力学系 $\mathbf{x}' = A\mathbf{x}$ の解であり, また定数関数なので平衡解である. 
@@ -557,16 +637,16 @@
 
             <div class="definition" data-name="相空間と軌道">
                 <ul>
-                    <li>力学系 $\mathbf{x}' = \mathbf{f}(t, \mathbf{x})$ の解 $\mathbf{x}(t)$ が取り得る全ての状態からなる空間を <b>相空間</b> (もしくは <b>状態空間</b>) という. 
+                    <li>力学系の解 $\mathbf{x}(t)$ が取り得る全ての状態からなる空間を <b>相空間</b> (もしくは <b>状態空間</b>) という. 
                     </li>
                     <li>ある力学系の相空間を $X$ とおき, 力学系の解 $\mathbf{x}(t)$ が, 初期値 $\mathbf{x}_0$ に依存することを強調して
                         \[
                             \mathbf{x}(t) = \varphi(t, \mathbf{x}_0)
-                        \] と表す. このとき関数 $\varphi: \mathbb{R}\times X \to X$ を, この力学系の <b>流れ</b> (もしくは <b>フロー</b>) という. 
+                        \] と表す. このとき関数 $\varphi: \mathbb{R}\times X \to X$ (もしくは $\varphi: \mathbb{Z}\times X\to X$) を, この力学系の <b>流れ</b> (もしくは <b>フロー</b>) という. 
                     </li>
                     <li>ある力学系の解 $\mathbf{x}(t)$ に対して (初期値 $\mathbf{x}_0$ に依存することを強調するために流れ $\varphi$ を用いて $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ と表すとき), 
                         \[
-                            \{\varphi(t, \mathbf{x}_0) : t\in \mathbb{R}\} \subset X
+                            \{\varphi(t, \mathbf{x}_0) : t\in \mathbb{R}\} \subset X\quad (\mbox{もしくは }\{\varphi(t, \mathbf{x}_0) : t\in \mathbb{Z}\} \subset X)
                         \] を, (初期値 $\mathbf{x}_0$ に対する) <b>軌道</b> (もしくは <b>解軌道</b>) という. 
                     </li>
                     <li>ある力学系の (様々な初期値に対する) 軌道の概略を相空間上に表した図を <b>相図</b> という. </li>
@@ -635,7 +715,7 @@
                     このことは, $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ は (初期値 $\mathbf{x}_0$ に対応した) 円周上を動くことを意味しており, 方向場の矢印の指す方向に動いていることがわかる. 
                     以下に, この線形力学系に対する相図の例を掲載する:
                 </p>
-                <div class="resize"><img src='./images/spiral-1.png'></div>
+                <div class="resize"><img src='./images/center-1.png'></div>
                 <p>相図に描かれている各曲線 (今回は円周) が, 初期値を適当に指定した際の軌道 (つまりこの力学系の解 $\mathbf{x}(t)$ の時間経過による動き) を表している.</p>
 
             </div><!-- /example -->
@@ -652,40 +732,117 @@
 
             <div class="definition" data-name="安定性">
                 <ul>
-                    <li>平衡点に十分近い点を初期値としたとき, 全ての $t\ge 0$ に対して解 $\mathbf{x}(t)$ がその平衡点の近傍にとどまり続けるならば, 平衡点は <b>リアプノフ安定</b> (<b>Lyapunov stable</b>) である (もしくは単に <b>安定</b> である) という. 
+                    <li>平衡点のある近傍に含まれる<span class="wave">任意の</span>初期値に対し, 全ての $t\ge 0$ について解 $\mathbf{x}(t)$ がその近傍にとどまり続けるならば, 平衡点は <b>リアプノフ安定</b> (<b>Lyapunov stable</b>) である (もしくは単に <b>安定</b> である) という. 
                         安定でない平衡点は <b>不安定</b> であるという. 
                     </li>
-                    <li>平衡点に十分近い点を初期値としたとき, $t\to\infty$ のときに $\mathbf{x}(t)$ がその平衡点に収束するならば, 平衡点は <b>吸引的</b> (<b>attracting</b>) であるという.</li>
+                    <li>平衡点のある近傍に含まれる<span class="wave">任意の</span>初期値に対し, $t\to\infty$ のときに $\mathbf{x}(t)$ がその平衡点に収束するならば, 平衡点は <b>吸引的</b> (<b>attracting</b>) であるという.</li>
                     <li>リアプノフ安定かつ吸引的な平衡点は <b>漸近安定</b> であるという.</li>
-                    <!-- <li>リアプノフ安定だが吸引的でない平衡点は <b>中立安定</b> であるという.</li> -->
+                    <li>リアプノフ安定だが吸引的でない平衡点は <b>中立安定</b> であるという.</li>
                 </ul>
             </div><!-- /definition -->
             
             <div class="example">
+            <p>例として, 
+                \[
+                    A = \begin{pmatrix} 
+                        a & b \cr 
+                        -b & a 
+                    \end{pmatrix}
+                \] に対し線形力学系 $(1.1)$ を考える, ただし $b\neq0$ とする (このとき $A$ は正則であり, 線形力学系の平衡点は $\mathbf{x}=\mathbf{0}$ のみである). 
+                このとき, 行列 $A\in\mathbb{R}^{2\times 2}$ の固有値は
+                \[
+                    \lambda_1 = a+ib,\quad \lambda_2 = a-ib
+                \] であり, 従って $\operatorname{Re}\lambda_1 = \operatorname{Re}\lambda_2 = a$ である. 
+                さらに, 一般解は上で計算したように
+                \[
+                    \widehat{\mathbf{x}}(t) = \begin{pmatrix} 
+                        e^{at}(\widetilde{c}_1\cos bt + \widetilde{c}_2\sin bt) \cr 
+                        e^{at}(-\widetilde{c}_1\sin bt + \widetilde{c}_2\cos bt) 
+                    \end{pmatrix}
+                \] であり, 特に $e^{at}$ の部分に注目すると, 固有値の実部の符号によって $t\to\infty$ とした際の挙動が異なることが予想できる. 
+                実際, (全ての) 固有値の実部が $0$ 以下ならば平衡点は安定であり, 負ならば平衡点は吸引的である (実はこれは全ての線形力学系に共通する性質である). 
+            </p>
+            <p>この具体例として, </p>
+            <ul>
+                <li>$(a, b) = (-10^{-3}, 1)$ のとき (平衡点は漸近安定),</li>
+                <li>$(a, b) = (0, 1)$ のとき (平衡点は中立安定), </li>
+                <li>$(a, b) = (10^3, 1)$ のとき (平衡点は不安定)</li>
+            </ul>
+            <p>の相図を (一般解の表示から) 描画すると以下のようになる (特に平衡点 $\mathbf{x} = 0$ 周辺で, 平衡点に近づくか離れるかの違いに注意): 
+            </p>
+            <div class="resize"><img src='./images/spiral_sink-1.png'></div>
+            <div class="resize"><img src='./images/center-1.png'></div>
+            <div class="resize"><img src='./images/spiral_source-1.png'></div>
 
             </div><!-- /example -->
 
-            <p>力学系が線形ならば, 
-            </p>
-
-            <div class="definition" data-name="線形安定性解析">
-
-            </div><!-- /definition -->
+            <div class="remark">
+                <p>上の $1$ つ目および $3$ つ目の例のように, 解が時間経過により平衡点の周囲を渦巻くような挙動をするとき, 平衡点は <b>渦状点</b> (もしくは <b>スパイラル</b>) であるということがある. 
+                </p>
+            </div><!-- /remark -->
 
             <div class="definition" data-name="源点, 沈点, 鞍点">
                 <ul>
-                    <li>平衡点の近傍で, 全ての軌道がその平衡点から離れていくとき, その平衡点は <b>源点</b> (<b>source</b>) であるという.</li>
-                    <li>平衡点の近傍で, 全ての軌道がその平衡点に近づいていくとき (つまり平衡点が吸引的であるとき), その平衡点は <b>沈点</b> (<b>sink</b>) であるという.</li>
-                    <li>平衡点の近傍で, その平衡点に近づいていく軌道と離れていく軌道の両方が存在するとき, その平衡点は <b>鞍点</b> (<b>saddle</b>) であるという.</li>
+                    <li>平衡点が漸近安定であるとき、つまり平衡点の近傍で<span class="wave">全ての</span>軌道がその平衡点に近づいていくとき, その平衡点は <b>沈点</b> (<b>sink</b>) であるという.</li>
+                    <li>平衡点が不安定であって, 特に平衡点の近傍で<span class="wave">全ての</span>軌道がその平衡点から離れていくとき, その平衡点は <b>源点</b> (<b>source</b>) であるという.</li>
+                    <li>平衡点が不安定であって, 特に平衡点の近傍でその平衡点に近づいていく軌道と離れていく軌道の両方が存在するとき, その平衡点は <b>鞍点</b> (<b>saddle</b>) であるという.</li>
                     <li>源点もしくは沈点である平衡点を <b>ノード</b> と呼ぶことがある</li>
                 </ul>
             </div><!-- /definition -->
 
+            <div class="remark">
+                <ul>
+                    <li>(上の $1$ つ目の例のように) 渦状点でありかつ源点である平衡点を <b>渦状源点</b> と呼ぶことがある. </li>
+                    <li>(上の $3$ つ目の例のように) 渦状点でありかつ沈点である平衡点を <b>渦状沈点</b> と呼ぶことがある.</li>
+                </ul>
+            </div><!-- /remark -->
 
+            <div class="example">
+            <p>別の例として, 
+                \[
+                    A = \begin{pmatrix} 
+                        \lambda_1 & 0 \cr 
+                        0 & \lambda_2 
+                    \end{pmatrix}
+                \] に対し線形力学系 $(1.1)$ を考える, ただし $\lambda_1\neq \lambda_2$, $\lambda_1\neq0$, $\lambda_2\neq0$ とする (このとき $A$ は正則であり, 線形力学系の平衡点は $\mathbf{x}=\mathbf{0}$ のみである). 
+                このとき, 行列 $A\in\mathbb{R}^{2\times 2}$ の固有値は $\lambda_1$, $\lambda_2$ であり, また一般解は
+                \[
+                    \mathbf{x}(t) = \begin{pmatrix} 
+                        c_1e^{\lambda_1 t} \cr 
+                        c_2e^{\lambda_2 t} 
+                    \end{pmatrix} 
+                \] である. 
+                簡単のため, $\lambda_1\lt \lambda_2$ とすると,  
+            </p>
+            <ul>
+                <li>$\lambda_1 \lt \lambda_2 \lt 0$ のとき (平衡点は沈点となる), </li>
+                <li>$0\lt \lambda_1 \lt \lambda_2$ のとき (平衡点は源点となる), </li>
+                <li>$\lambda_1 \lt 0\lt \lambda_2$ のとき (平衡点は鞍点となる)</li>
+            </ul>
+            <p>の三つの場合を考えることができる. 
+                実際に, 一般解の表示から相図を描画することで平衡点 $\mathbf{x}=0$ がそれぞれ沈点, 源点, 鞍点となっていることを確認できる.
+            </p>
 
-            <div class="definition" data-name="ポアンカレ写像">
+            </div><!-- /example -->
 
+            <div class="exercise">
+                <p>上の例において, </p>
+                    <ul>
+                        <li>$(\lambda_1, \lambda_2) = (-2, -1)$, </li>
+                        <li>$(\lambda_1, \lambda_2) = (1, 2)$, </li>
+                        <li>$(\lambda_1, \lambda_2) = (-1, 1)$</li>
+                    </ul>
+                <p>の $3$ つの状況に対応する相図の概形をそれぞれ描画せよ.</p>
             </div>
+
+            <div class="answer">
+
+            </div><!-- /answer -->
+
+
+            <!-- <div class="definition" data-name="ポアンカレ写像">
+
+            </div> -->
 
             <div class="exercise">
                 <p>非線形力学系 
