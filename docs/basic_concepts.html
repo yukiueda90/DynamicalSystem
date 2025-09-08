@@ -31,7 +31,7 @@
         <p>まず, 力学系の具体例のいくつかに触れた後に, 力学系の理論を説明するために必要な概念を紹介する. 
         具体例としては, ひとまず $1$ 次元の場合と線形力学系のみを扱うことにするが, ここで導入する様々なアイデアはより一般の状況を考える際にも重要となるものである.</p>
 
-        <section id="section1-1"><h2>1.1: $1$ 次元力学系</h2>
+        <section id="section1-1"><h2>1.1: 一次元力学系</h2>
             <p>まずは常微分方程式 
                 \[
                     x' = f(t, x)
@@ -44,6 +44,9 @@
                     x' = ax
                 \] の解が $x(t) = C e^{at}$ であることは容易にわかる, ただし $C$ は積分定数である. 
                 念のため確認しておくと, この $e$ は <b>ネイピア数</b> と呼ばれる数学定数の一つであり, 
+                \[
+                    e = \lim_{n\to\infty}\left(1+\dfrac{1}{n}\right)^n
+                \] で特徴づけられる数であり, 
                 \[
                     \dfrac{d}{dt}e^t = e^t
                 \] を満たす. 
@@ -69,7 +72,7 @@
                 このように, 力学系の解は系に含まれるパラメータにより挙動が大きく異なることがある. 
                 このような変化は <b>分岐</b> と呼ばれるものであり, 力学系の重要な性質の一つである. 
             </p>
-            <p>分岐について詳細に述べるためには, 平衡解や安定性といった概念が必要となるため, この資料では後にあらためて言及することにする.
+            <p>分岐について詳細に述べるためには, 平衡点や安定性といった概念が必要となるため, この資料では後にあらためて言及することにする.
             </p>
 
             <hr>
@@ -196,7 +199,10 @@
                     e^{tA} = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!} = I + tA + \dfrac{(tA)^2}{2} + \dfrac{(tA)^3}{3!} + \dots
                 \] と定義される行列である ($e^{at}$ のテイラー展開と比較すれば, 自然な定義であることがわかる). 
                 ここでは詳しく説明しないが, $A^k$ の各成分の絶対値を上から評価することで, この級数は任意の $A$ に対して収束することがわかる. 
-                また, 行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
+                なお, 定義より
+                \[
+                    e^{O} = I,\quad e^{tI} = e^t I 
+                \] であり, また行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
                 \[
                     e^{tA}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(\lambda_i t)^k}{k!}\mathbf{v}_i = e^{\lambda_i t}\mathbf{v}_i
                 \] が成立する (つまり $\mathbf{v}_i$ は行列 $e^{tA}\in\mathbb{R}^{n\times n}$ の固有値 $e^{\lambda_i t}$ に対応する固有ベクトルになっている).  
@@ -381,7 +387,20 @@
                         &= c_1e^{\lambda t}\mathbf{v}_1 + c_2(te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2)
                     \end{array} 
                 \] を得ることができる.
-                さらに 
+                別の解法として, ケーリー・ハミルトンの定理より 
+                \[
+                    (A-\lambda I)^2 = O 
+                \] となることに注目し, 
+                \[
+                    \begin{array}{rl} 
+                        e^{tA} &= e^{\lambda tI}e^{t(A-\lambda I)} \cr 
+                        &= e^{\lambda t}I\left(I + t(A-\lambda I) + \dfrac{(t(A-\lambda I))^2}{2} + \dfrac{(t(A-\lambda I))^3}{3!} + \dots \right) \cr 
+                        &= e^{\lambda t}\left(I + t(A-\lambda I)\right) \cr 
+                        &= (1-\lambda t)e^{\lambda t}I + te^{\lambda t}A
+                    \end{array}
+                \] と変形することで, $\mathbf{x}(t) = e^{tA}\mathbf{x}_0 = (1-\lambda t)e^{\lambda t}\mathbf{x}_0 + te^{\lambda t}A\mathbf{x}_0$ という特殊解の表示を得ることもできる. 
+                実際に, この式に $\mathbf{x}_0 = c_1\mathbf{v}_1 + c_2\mathbf{v}_2$ を代入すれば上と同じ結果が得られる. 
+                さらに, 上で定義した行列 $P$ を用いれば  
                 \[
                     P^{-1}AP = \begin{pmatrix} 
                         \lambda & 1 \cr 
@@ -580,28 +599,71 @@
 
         <hr>
 
-        <section id="section1-3"><h2>1.3: 平衡解の性質, 分類</h2>
-            <p>ここから, 力学系の平衡解の性質や解の図示に関連していくつかの概念を導入する. 
-                具体例としては, 解を明示的に表示できる線形力学系を考えるが, ここで述べる概念は, むしろ解が明示的に表現できない場合にこそ, 解のおおまかな挙動を知るために有効なテクニックとして機能する. 
+        <section id="section1-3"><h2>1.3: 平衡点の分類と軌道</h2>
+            <p>ここまでに力学系の具体例, 特に解を式の形で表現できる例をいくつか紹介したが, 一方で解を明示的に表すことができない力学系もある. 
+                そのような場合に, 解のおおまかな挙動を知るために有用な概念やテクニックを簡単に導入しよう. 
+                これら概念は, 線形力学系の解について具体的な図示により深く理解するにも有用となるため, 具体例として解を表示できる場合も考察することにする. 
+                ただし, いくつかの概念については数学的に厳密な説明を控えたり, 詳細な説明を後回しにするものもあることに注意が必要である. 
             </p>
 
-            <div class="definition" data-name="平衡解">
+            <div class="definition" data-name="平衡点">
                 <ul>
-                    <li>連続力学系 $\mathbf{x}' = \mathbf{f}(t, \mathbf{x})$ の解 $\mathbf{x}(t)$ であって, 特に $\mathbf{x}' = \mathbf{0}$ を満たすもの (つまり定数関数であるもの) を <b>平衡解</b> (もしくは <b>平衡点</b>, <b>不動点</b>) という. </li>
-                    <li>離散力学系 $\mathbf{x}_{k+1} = \mathbf{f}(\mathbf{x}_k)$ に対して, $\mathbf{x} = \mathbf{f}(\mathbf{x})$ となる点 (つまり $\mathbf{f}$ の不動点) を<b>平衡解</b> (もしくは <b>平衡点</b>) という. </li>
+                    <li>連続力学系 $\mathbf{x}' = \mathbf{f}(t, \mathbf{x})$ の解 $\mathbf{x}(t)$ であって, 特に $\mathbf{x}' = \mathbf{0}$ を満たすもの (つまり定数関数であるもの) を <b>平衡点</b> (もしくは <b>平衡解</b>, <b>不動点</b>) という. </li>
+                    <li>離散力学系 $\mathbf{x}_{k+1} = \mathbf{f}(\mathbf{x}_k)$ に対して, $\mathbf{x} = \mathbf{f}(\mathbf{x})$ となる点 (つまり $\mathbf{f}$ の不動点) を<b>平衡点</b> (もしくは <b>平衡解</b>) という. </li>
                 </ul>
             </div><!-- /definition -->
 
             <div class="example">
-                <p>$\mathbf{x}(t) = \mathbf{0}$ は線形力学系 $\mathbf{x}' = A\mathbf{x}$ の解であり, また定数関数なので平衡解である. 
+                <p>$\mathbf{x}(t) = \mathbf{0}$ は線形力学系 $\mathbf{x}' = A\mathbf{x}$ の解であり, また定数関数なので平衡点である. 
                 </p>
-                <p>なお, 線形力学系の平衡解 $\mathbf{x}(t)$ は $A\mathbf{x} = \mathbf{0}$ を満たすものに限られる. 
+                <p>なお, 線形力学系の平衡点 $\mathbf{x}(t)$ は $A\mathbf{x} = \mathbf{0}$ を満たすものに限られる. 
                     もしも行列 $A$ が正則ならば, そのような $\mathbf{x}$ は 
                     \[
                         \mathbf{x} = A^{-1}\mathbf{0} = \mathbf{0}
                     \] 以外には存在しない. 
                 </p>
             </div><!-- /example -->
+
+            <div class="exercise">
+                <p>$a\in\mathbb{R}$ をパラメータとする非線形力学系
+                    \[
+                        \begin{pmatrix} 
+                            x' \cr 
+                            y' 
+                        \end{pmatrix} = \begin{pmatrix}
+                            x^2 + y \cr 
+                            2x - y + a 
+                        \end{pmatrix}
+                    \] の平衡点を全て求めよ.
+                </p>
+            </div>
+
+            <div class="answer">
+                <p>パラメータ $a$ に対して, 右辺を $\mathbf{0}$ とする $(x, y)$ の組を全て求めれば良い. 
+                    第 $2$ 成分に注目すると 
+                    \[
+                        y = 2x+a
+                    \] でなければならない. 
+                    これを第 $1$ 成分に代入すると 
+                    \[
+                        x^2 + 2x + a = 0
+                    \] でなければならないが, これを満たす実数 $x$ の存在は $a$ に依るため, $a$ について場合分けする:  
+                </p>
+                <ul>
+                    <li>$a\lt 1$ ならば平衡点は
+                        \[
+                            (x, y) = \left(-1-\sqrt{1-a}, a-2-2\sqrt{1-a}\right), \quad \left(-1+\sqrt{1-a}, a-2+2\sqrt{1-a}\right).
+                        \]
+                    </li>
+                    <li>$a=1$ ならば平衡点は 
+                        \[
+                            (x, y) = (-1, -1).
+                        \] 
+                    </li>
+                    <li>$a\gt 1$ ならば平衡点は存在しない. </li>
+                </ul>
+                <p>なお, これは $a=1$ において分岐が発生していることを意味している. </p>
+            </div>
 
             <div class="definition" data-name="ベクトル場と方向場">
                 <ul>
@@ -660,8 +722,8 @@
                     <li>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ においては, $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ が時間経過に伴いどのように動くか, という情報が $\mathbf{f}(\mathbf{x})$ として (時間に無関係なベクトル場として) 与えられることになる. 
                         従って, ベクトル場 $\mathbf{f}(\mathbf{x})$ (もしくは方向場) を図示することで, $\mathbf{x}(t)$ が時間経過により相空間上をどの向きに動くかをイメージできる, つまり軌道の概形がわかる. 
                     </li>
-                    <li>力学系の平衡解は時間経過により動かないような解であり, 軌道が一点からなるような初期値に対応している. 
-                        また, $\widehat{\mathbf{x}}(t)$ が自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡解であることは, $\mathbf{f}(\widehat{\mathbf{x}}) = \mathbf{0}$ であることと同値である. 
+                    <li>力学系の平衡点は時間経過により動かないような解であり, 軌道が一点からなるような初期値に対応している. 
+                        また, $\widehat{\mathbf{x}}(t)$ が自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点であることは, $\mathbf{f}(\widehat{\mathbf{x}}) = \mathbf{0}$ であることと同値である. 
                     </li>
                     <li>力学系の軌道は初期値の違いにより異なる挙動を示すことがある. 
                         この挙動の違いをわかりやすく図で表すものが相図であり, 解を明示的に表示できない場合に特に有用である.  
@@ -731,15 +793,28 @@
             </p>
 
             <div class="definition" data-name="安定性">
+                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の初期値 $\mathbf{x}_0\in\mathbb{R}^n$ に対する解 $\mathbf{x}(t)$ と平衡点 $\widetilde{\mathbf{x}}\in \mathbb{R}^n$ について, </p>
                 <ul>
-                    <li>平衡点のある近傍に含まれる<span class="wave">任意の</span>初期値に対し, 全ての $t\ge 0$ について解 $\mathbf{x}(t)$ がその近傍にとどまり続けるならば, 平衡点は <b>リアプノフ安定</b> (<b>Lyapunov stable</b>) である (もしくは単に <b>安定</b> である) という. 
+                    <li>任意の $\varepsilon\gt 0$ に対して, ある $\delta\gt 0$ が存在し, 
+                        \[
+                            \|\mathbf{x}_0-\widetilde{\mathbf{x}}\| \lt \delta \implies \|\mathbf{x}(t) - \widetilde{\mathbf{x}}\|\lt \varepsilon\quad\text{for all}\quad t\ge 0
+                        \] が成立するとき, 平衡点は <b>リアプノフ安定</b> (<b>Lyapunov stable</b>) である (もしくは単に <b>安定</b> である) という. 
                         安定でない平衡点は <b>不安定</b> であるという. 
                     </li>
-                    <li>平衡点のある近傍に含まれる<span class="wave">任意の</span>初期値に対し, $t\to\infty$ のときに $\mathbf{x}(t)$ がその平衡点に収束するならば, 平衡点は <b>吸引的</b> (<b>attracting</b>) であるという.</li>
+                    <li>ある $\delta\gt 0$ が存在し, 
+                        \[
+                            \|\mathbf{x}_0-\widetilde{\mathbf{x}}\|\lt \delta \implies \lim_{t\to\infty}\|\mathbf{x}(t)-\widetilde{\mathbf{x}}\|=0
+                        \] が成立するとき, 平衡点は <b>吸引的</b> (<b>attracting</b>) であるという.
+                    </li>
                     <li>リアプノフ安定かつ吸引的な平衡点は <b>漸近安定</b> であるという.</li>
                     <li>リアプノフ安定だが吸引的でない平衡点は <b>中立安定</b> であるという.</li>
                 </ul>
             </div><!-- /definition -->
+
+            <div class="remark">
+                <p>直感的には, 平衡点に十分近い<span class="wave">任意の</span>初期値に対し, 全ての $t\ge 0$ について解 $\mathbf{x}(t)$ がある近傍にとどまり続けるならば, 平衡点は安定である. 
+                また, 平衡点に十分近い<span class="wave">任意の</span>初期値に対し, 解が $t\to\infty$ で平衡点に収束するとき, 平衡点は吸引的である. </p>
+            </div>
             
             <div class="example">
             <p>例として, 
@@ -780,6 +855,10 @@
                 <p>上の $1$ つ目および $3$ つ目の例のように, 解が時間経過により平衡点の周囲を渦巻くような挙動をするとき, 平衡点は <b>渦状点</b> (もしくは <b>スパイラル</b>) であるということがある. 
                 </p>
             </div><!-- /remark -->
+
+            <p>上の $3$ つの例のように, 軌道は平衡点に近づく, 離れるもしくは平衡点周りを周回するといった振る舞いをする. 
+                まず, 平衡点に近づく, 離れる場合について詳細な分類を確認する. 
+            </p>
 
             <div class="definition" data-name="源点, 沈点, 鞍点">
                 <ul>
@@ -823,28 +902,121 @@
                 実際に, 一般解の表示から相図を描画することで平衡点 $\mathbf{x}=0$ がそれぞれ沈点, 源点, 鞍点となっていることを確認できる.
             </p>
 
+            <div class="resize"><img src='./images/stable_star_node-1.png'></div>
+            <div class="resize"><img src='./images/unstable_star_node-1.png'></div>
+            <div class="resize"><img src='./images/saddle-1.png'></div>
+
             </div><!-- /example -->
 
             <div class="exercise">
-                <p>上の例において, </p>
-                    <ul>
-                        <li>$(\lambda_1, \lambda_2) = (-2, -1)$, </li>
-                        <li>$(\lambda_1, \lambda_2) = (1, 2)$, </li>
-                        <li>$(\lambda_1, \lambda_2) = (-1, 1)$</li>
-                    </ul>
-                <p>の $3$ つの状況に対応する相図の概形をそれぞれ描画せよ.</p>
+                <p>$\mathbf{x}(t)\in\mathbb{R}^2$ について, 線形力学系
+                    \[
+                        \mathbf{x}' = \begin{pmatrix}
+                            1 & 3 \cr 
+                            1 & -1 
+                        \end{pmatrix}\mathbf{x}
+                    \] を考える.
+                </p>
+                <ul>
+                    <li>一般解を求めよ.</li> 
+                    <li>初期条件 $\mathbf{x}(0) = \begin{pmatrix} 
+                            1 \cr 
+                            1 
+                        \end{pmatrix}$ を与えた際の特殊解 $\mathbf{x}_1(t)$ が, $t\to\infty$ としたときに収束するか否か答えよ.</li>
+                    <li>初期条件 $\mathbf{x}(0) = \begin{pmatrix} 
+                            -1 \cr 
+                            1 
+                        \end{pmatrix}$ を与えた際の特殊解 $\mathbf{x}_2(t)$ が, $t\to\infty$ としたときに収束するか否か答えよ.</li>    
+                </ul>
             </div>
 
             <div class="answer">
-
+                <ul>
+                    <li>行列 $A$ の固有値は $\lambda_1 = -2$, $\lambda_2 = 2$ であり, 対応する固有ベクトルは例えば 
+                        \[
+                            \mathbf{v}_1 = \begin{pmatrix} 
+                                1 \cr 
+                                -1 
+                            \end{pmatrix},\quad \mathbf{v}_2 = \begin{pmatrix} 
+                                3 \cr 
+                                1 
+                            \end{pmatrix}
+                        \] である. 
+                        従って, 一般解は 
+                        \[
+                            \begin{array}{rl}
+                                \mathbf{x}(t) &= c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 \cr 
+                                &= c_1e^{-2t}\begin{pmatrix} 
+                                    1 \cr 
+                                    -1 
+                                \end{pmatrix} + c_2e^{2t}\begin{pmatrix} 
+                                    3 \cr 
+                                    1 
+                                \end{pmatrix}
+                            \end{array}
+                        \] である. 
+                    </li>
+                    <li>初期条件 $\mathbf{x}(0) = \begin{pmatrix} 
+                            1 \cr 
+                            1 
+                        \end{pmatrix}$ を与えた際の特殊解 
+                        \[
+                            \mathbf{x}_1(t) = \widetilde{c}_1e^{-2t}\mathbf{v}_1 + \widetilde{c}_2e^{2t}\mathbf{v}_2
+                        \] について, $\mathbf{x}(0) = \widetilde{c}_1\mathbf{v}_1 + \widetilde{c}_2\mathbf{v}_2$ であることから $\widetilde{c}_2\neq0$ である. 
+                        従って, $\displaystyle\lim_{t\to\infty}\mathbf{x}_1(t)$ は収束しない.
+                    </li>
+                    <li>初期条件 $\mathbf{x}(0) = \begin{pmatrix} 
+                            -1 \cr 
+                            1 
+                        \end{pmatrix} = -\mathbf{v}_1$ を与えた際の特殊解は $\mathbf{x}_2(t) = -e^{-2t}\mathbf{v}_1$ なので $\displaystyle\lim_{t\to\infty}\mathbf{x}_2(t) = \mathbf{0}$.
+                    </li>
+                </ul>
             </div><!-- /answer -->
+
+            <p>平衡点が鞍点である場合, 時間経過により解 $\mathbf{x}(t)$ が平衡点に近づくか離れるかは初期値に依存することになる. 
+                どのような初期値に対して解が平衡点に近づくか, を表す概念の一つとして, 線形力学系に対する <b>安定部分空間</b> というアイデアがある:
+            </p>
+
+            <div class="definition" data-name="安定部分空間">
+                <p><span class="wave">線形</span>力学系 $\mathbf{x}' = A\mathbf{x}$ の相空間 $X$ およびフロー $\varphi$ に対して,</p>
+                <ul>
+                    <li>部分空間 $S\subset X$ が, 
+                        \[
+                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\in \mathbb{R}
+                        \] を満たすとき, $S$ を <b>不変部分空間</b> (<b>invariant subspace</b>) という. 
+                    </li>
+                    <li>$S\subset X$ が不変部分空間であって, 任意の $s\in S$ に対して $\varphi(t, s)$ が $t\to\infty$ のときにある平衡点に収束するとき, $S$ はその平衡点の <b>安定部分空間</b> であるという. 
+                    </li>
+                    <li>$S\subset X$ が不変部分空間であって, 任意の $s\in S$ に対して $\varphi(t, s)$ が $t\to-\infty$ のときにある平衡点に収束するとき, $S$ はその平衡点の <b>不安定部分空間</b> であるという. 
+                    </li>
+                </ul>
+            </div>
+
+            <p>このアイデアを<span class="wave">非線形</span>力学系に対して拡張することも可能である. 
+                これについては, 平衡点の安定性について深掘りした後に改めて解説する. 
+            </p>
+
+            <p>最後に, 解が平衡点の周りを周回する場合について述べる.</p>
+
+            <div class="definition" data-name="周期軌道">
+                <p>ある力学系の相空間 $X$ およびフロー $\varphi$ について, ある初期値 $\mathbf{x}_0$ に対して 
+                    \[
+                        \varphi(t+T, \mathbf{x}_0) = \varphi(t, \mathbf{x}_0)\quad \text{for all}\quad t\in\mathbb{R} \quad(\text{or }\mathbb{Z})
+                    \] を満たす $T$ が存在するならば, 軌道 $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}\subset X$ (もしくは $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{Z}\}\subset X$) は <b>周期軌道</b> であるという. 
+                    また, このとき $T$ を <b>周期</b> という. 
+                </p>
+            </div>
+
+            <div class="remark">
+                <p>連続力学系の周期軌道は, 相空間上の閉曲線になる. </p>
+            </div>
 
 
             <!-- <div class="definition" data-name="ポアンカレ写像">
 
             </div> -->
 
-            <div class="exercise">
+            <!-- <div class="exercise">
                 <p>非線形力学系 
                     \[
                         \begin{pmatrix} 
@@ -856,7 +1028,7 @@
                         \end{pmatrix}
                     \] の $x\gt 0$, $y\gt 0$ における相図の概形を描画せよ. 
                 </p>
-            </div><!-- /exercise -->
+            </div>
 
             <div class="answer">
                 <p>この力学系は非線形であり, 解の明示的な表示を与えることは困難である. 
@@ -873,7 +1045,8 @@
                 </ul>
                 <p>であることに注目すれば, 方向場における各点での矢印の向きはおおよそ決定できる (なお, このベクトル場は連続であり勾配も大きくならないため, $x$ や $y$ が多少変化しても矢印の向きが急激に変化する心配はない).        
                 </p>
-            </div><!-- /answer -->
+            </div> 
+            -->
 
 
             
