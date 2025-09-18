@@ -70,12 +70,13 @@
                     <li>$V(\widetilde{\mathbf{x}}) = 0$, </li>
                     <li>任意の $\mathbf{x}\neq \widetilde{\mathbf{x}}$ に対し $V(\mathbf{x}) \gt 0$ かつ $\nabla V(\mathbf{x})\cdot \mathbf{f}(\mathbf{x})\le 0$.</li>
                 </ul>
-                <p>また, 上の条件において $\nabla V(\mathbf{x})\cdot\mathbf{f}(\mathbf{x})\lt 0$ が満たされるならば, 平衡点 $\widetilde{\mathbf{x}}$ は漸近安定である </p>
+                <p>また, 上の条件において代わりに $\nabla V(\mathbf{x})\cdot\mathbf{f}(\mathbf{x})\lt 0$ が満たされるならば, 平衡点 $\widetilde{\mathbf{x}}$ は漸近安定である </p>
             </div>
 
             <div class="remark">
-                <p>条件を満たす関数 $V$ は (存在するならば) 平衡点 $\widetilde{\mathbf{x}}$ における <b>リアプノフ関数</b> という. 
-                    リアプノフ関数は以下の性質を満たしている:
+                <p>条件を満たす関数 $V$ は (存在するならば) 平衡点 $\widetilde{\mathbf{x}}$ における <b>リアプノフ関数</b> (<b>Lyapunov function</b>) という. 
+                    また, 代わりに $\nabla V(\mathbf{x})\cdot\mathbf{f}(\mathbf{x})\lt 0$ を満たすリアプノフ関数は <b>狭義リアプノフ関数</b> (<b>strict Lyapunov function</b>) と呼ばれることがある.
+                    リアプノフ関数 (狭義リアプノフ関数) は以下の性質を満たしている:
                 </p>
                 <ul>
                     <li>関数 $V$ は平衡点 $\widetilde{\mathbf{x}}$ の近傍で局所的に正値関数であり, また $\widetilde{\mathbf{x}}$ で最小値を達成する.</li>
@@ -87,7 +88,7 @@
                     <li>自励系の解 $\mathbf{x}(t)$ に対し, $\mathbf{x}(t)\in U\backslash\{\widetilde{\mathbf{x}}\}$ ならば
                         \[
                             \dfrac{d}{dt}V(\mathbf{x}(t)) = \nabla V\cdot \mathbf{x}' = \nabla V\cdot\mathbf{f} \le 0 \quad (\text{もしくは } \lt 0),
-                        \] つまり解 $\mathbf{x}(t)$ が時間経過により動くとき, $V$ の値は単調減少 (もしくは狭義単調減少) する.
+                        \] つまり解 $\mathbf{x}(t)$ が時間経過により動くとき, $V(\mathbf{x}(t))$ の値は $t$ について単調減少 (もしくは狭義単調減少) する.
                     </li>
                 </ul>
                 <p>この定理は安定性の十分条件を与えるものであって, 必要十分条件ではないことに注意. 
@@ -103,7 +104,7 @@
                         \[
                             V(\mathbf{x}) \lt \alpha\quad\text{for all}\quad \mathbf{x}\in B_{\delta}(\widetilde{\mathbf{x}})
                         \] が成立する. 
-                        いま, 初期値 $\mathbf{x}_0\in B_{\delta}(\widetilde{\mathbf{x}})$ に対する解 $\mathbf{x}(t)$ が時間経過により動くとき, $V$ の値は単調減少するため, 特に $V(\mathbf{x}(t))\ge\alpha$ となることはない. 
+                        いま, 初期値 $\mathbf{x}_0\in B_{\delta}(\widetilde{\mathbf{x}})$ に対する解 $\mathbf{x}(t)$ が時間経過により動くとき, $V(\mathbf{x}(t))$ の値は単調減少するため, 特に $V(\mathbf{x}(t))\ge\alpha$ となることはない. 
                         このことは, $\mathbf{x}(t)$ が $B_{\varepsilon}(\widetilde{\mathbf{x}})$ の境界に到達することはない ($\mathbf{x}(t)$ は $B_{\varepsilon}(\widetilde{\mathbf{x}})$ の内部にとどまり続ける), ということを意味しているため, 
                         \[
                             \|\mathbf{x}_0 - \widetilde{\mathbf{x}}\|\lt \delta \implies \|\mathbf{x}(t) - \widetilde{\mathbf{x}}\|\lt \varepsilon\quad\text{for all}\quad t\ge 0
