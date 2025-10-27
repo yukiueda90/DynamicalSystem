@@ -32,15 +32,32 @@
             より一般に, 数学において『安定性』という言葉は, &quot;わずかな変化 (摂動) の影響&quot; が十分に小さいと思える, という状況を表す. 
             力学系においては, 主に $t\to\infty$ としたときの挙動に対する摂動の影響を考えることになる. 
             線形力学系, 特に $2$ 次元の場合については, 行列固有値の実部の符号が重要となることに言及したが, ここではその議論を深掘りし, 非線形力学系に応用するテクニックを紹介する. 
-            また, 力学系に含まれるパラメータを動かした際の平衡点の安定性の変化を調べ, 分岐についても改めて紹介することにする.  
+            また, 力学系に含まれるパラメータを動かした際の平衡点の安定性の変化を調べ, 線形力学系の分岐の分類も紹介することにする.  
         </p>
 
         <section id="section1-1"><h2>2.1: リアプノフの安定性定理</h2>
+            <p>以前に線形力学系を具体例として安定性について解説したが, 非線形力学系に対しても, 同様に平衡点の安定性は重要となる. 
+                <!-- まず, 非線形力学系を想定して, いくつかの概念を追加で導入する: -->
+            </p>
+
+            <!-- <div class="definition" data-name="正不変部分集合">
+                <p>力学系の相空間 $X$ およびフロー $\varphi$ について, 
+                    部分集合 $S\subset X$ が, 
+                        \[
+                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\ge 0
+                        \] を満たすとき, $S$ を <b>正不変部分集合</b> (<b>positively invariant subset</b>) という. 
+                </p>
+            </div>
+
+            <div class="lemma" data-name="ラサールの不変原理">
+                自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}\in\mathbb{R}^n$ に対し, $\widetilde{\mathbf{x}}\in U$ を満たす開集合 $U\subset\mathbb{R}^n$ 
+            </div> -->
+
             <p>平衡点の安定性は, 解が任意の時刻において平衡点近傍にとどまり続けることと解釈されるが, 一般にこれを示そうとすると $t\to\infty$ における挙動を調べる必要があり面倒である. 
                 そこで, 安定性を証明するための手法として, しばしば以下の定理が用いられる: 
             </p>
 
-            <div class="definition" data-name="リアプノフ関数">
+            <!-- <div class="definition" data-name="リアプノフ関数">
                 <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}\in\mathbb{R}^n$ に対し, 微分可能な関数 $V:\mathbb{R}^n\to\mathbb{R}$ であって, 
                 </p>    
                 <ul>
@@ -61,16 +78,22 @@
                 <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}\in\mathbb{R}^n$ についてのリアプノフ関数 $V$ が存在するとする. 
                     このとき, 
                 </p>
-            </div>
+            </div> -->
 
             <div class="theorem" data-name="リアプノフの安定性定理">
-                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}\in\mathbb{R}^n$ に対し, 以下を満たす微分可能な関数 $V:\mathbb{R}^n\to\mathbb{R}$ が存在するならば, 平衡点 $\widetilde{\mathbf{x}}$ は安定である: 
+                <p>ベクトル場 $\mathbf{f}:\mathbb{R}^n\to\mathbb{R}^n$ は <span class="wave">連続</span> であるとする. このとき, <span class="wave">自励系</span> $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}\in\mathbb{R}^n$ に対し, 以下を満たす <span class="wave">微分可能な</span> 関数 $V:\mathbb{R}^n\to\mathbb{R}$ が存在するならば, 平衡点 $\widetilde{\mathbf{x}}$ は安定である: 
                 </p>
                 <ul>
                     <li>$V(\widetilde{\mathbf{x}}) = 0$, </li>
-                    <li>任意の $\mathbf{x}\neq \widetilde{\mathbf{x}}$ に対し $V(\mathbf{x}) \gt 0$ かつ $\nabla V(\mathbf{x})\cdot \mathbf{f}(\mathbf{x})\le 0$.</li>
+                    <li>任意の $\mathbf{x}\neq \widetilde{\mathbf{x}}$ に対し $V(\mathbf{x}) \gt 0$, </li> 
+                    <li>任意の $\mathbf{x}\neq \widetilde{\mathbf{x}}$ に対し $\nabla V(\mathbf{x})\cdot \mathbf{f}(\mathbf{x})\le 0$.</li>
                 </ul>
-                <p>また, 上の条件において代わりに $\nabla V(\mathbf{x})\cdot\mathbf{f}(\mathbf{x})\lt 0$ が満たされるならば, 平衡点 $\widetilde{\mathbf{x}}$ は漸近安定である </p>
+                <p>また, 上の $3$ つ目の条件の代わりに, 
+                </p>
+                <ul>
+                    <li>任意の $\mathbf{x}\neq \widetilde{\mathbf{x}}$ に対し $\nabla V(\mathbf{x})\cdot\mathbf{f}(\mathbf{x})\lt 0$</li>
+                </ul>    
+                <p>が満たされるならば, 平衡点 $\widetilde{\mathbf{x}}$ は漸近安定である. </p>
             </div>
 
             <div class="remark">
@@ -79,28 +102,31 @@
                     リアプノフ関数 (狭義リアプノフ関数) は以下の性質を満たしている:
                 </p>
                 <ul>
-                    <li>関数 $V$ は平衡点 $\widetilde{\mathbf{x}}$ の近傍で局所的に正値関数であり, また $\widetilde{\mathbf{x}}$ で最小値を達成する.</li>
+                    <li>関数 $V$ は平衡点 $\widetilde{\mathbf{x}}$ で最小値 $V(\widetilde{\mathbf{x}}) = 0$ を達成する.</li>
                     <li>$V$ は微分可能, 特に連続なので, 任意の $\alpha\gt 0$ に対しある $\delta\gt 0$ が存在し, 
                         \[
                             \|\mathbf{x} - \widetilde{\mathbf{x}}\|\lt \delta \implies |V(\mathbf{x}) - V(\widetilde{\mathbf{x}})| = V(\mathbf{x}) \lt \alpha.
                         \]
                     </li>
-                    <li>自励系の解 $\mathbf{x}(t)$ に対し, $\mathbf{x}(t)\in U\backslash\{\widetilde{\mathbf{x}}\}$ ならば
+                    <li>自励系の解 $\mathbf{x}(t)$ に対し, $\mathbf{x}(t)\in \mathbb{R}^n\backslash\{\widetilde{\mathbf{x}}\}$ ならば
                         \[
-                            \dfrac{d}{dt}V(\mathbf{x}(t)) = \nabla V\cdot \mathbf{x}' = \nabla V\cdot\mathbf{f} \le 0 \quad (\text{もしくは } \lt 0),
-                        \] つまり解 $\mathbf{x}(t)$ が時間経過により動くとき, $V(\mathbf{x}(t))$ の値は $t$ について単調減少 (もしくは狭義単調減少) する.
+                            \dfrac{d}{dt}V(\mathbf{x}(t)) = \nabla V(\mathbf{x}(t))\cdot \mathbf{x}'(t) = \nabla V(\mathbf{x}(t))\cdot\mathbf{f}(\mathbf{x}(t)) \le 0 \quad (\text{もしくは } \lt 0),
+                        \] つまり解 $\mathbf{x}(t)$ が時間経過により動くとき, $V(\mathbf{x}(t))$ の値は $t$ について単調減少 (もしくは狭義単調減少) する. 
+                        なお, $\mathbf{f}$ が連続かつ $V$ が微分可能であるため, 間数 $g(\mathbf{x}) := \nabla V(\mathbf{x})\cdot\mathbf{f}(\mathbf{x})$ も連続である.
                     </li>
                 </ul>
+                <p>このような関数 $V$ は, この自励系のエネルギー (ポテンシャル) に例えられる. 
+                    このエネルギーが平衡点において最小化を達成し, かつ解 $\mathbf{x}(t)$ の時間経過とともにエネルギーが増加しない (小さくなる) とき, 直感的には解 $\mathbf{x}(t)$ は平衡点付近に留まる (平衡点に近づいていく) ことを意味している. 
+                </p>
                 <p>この定理は安定性の十分条件を与えるものであって, 必要十分条件ではないことに注意. 
-                    直感的には, このような関数 $V$ を構成できるなら, 解 $\mathbf{x}(t)$ が $\widetilde{\mathbf{x}}$ から離れない (対偶を取ると, 解 $\mathbf{x}(t)$ が $\widetilde{\mathbf{x}}$ から離れる軌道が存在するならば, このような関数 $V$ は構成できない) と主張している. 
                 </p>
             </div>
 
             <div class="proof">
                 <ul>
                     <li>(安定性) 任意の $\varepsilon\gt 0$ に対し, 中心 $\widetilde{\mathbf{x}}$, 半径 $\varepsilon$ の開球 $B_{\varepsilon}(\widetilde{\mathbf{x}})$ を考える. 
-                        この境界上における関数 $V$ の最小値を $\alpha$ とおくと, 条件より $\alpha\gt 0$ である. 
-                        従って, ある $\delta\gt 0$ が存在し, 
+                        この境界上における関数 $V$ の最小値 (極値定理より存在する) を $\alpha$ とおくと, 条件より $\alpha\gt 0$ である. 
+                        従って, $V$ の性質より, ある $\delta\gt 0$ が存在し, 
                         \[
                             V(\mathbf{x}) \lt \alpha\quad\text{for all}\quad \mathbf{x}\in B_{\delta}(\widetilde{\mathbf{x}})
                         \] が成立する. 
@@ -110,9 +136,105 @@
                             \|\mathbf{x}_0 - \widetilde{\mathbf{x}}\|\lt \delta \implies \|\mathbf{x}(t) - \widetilde{\mathbf{x}}\|\lt \varepsilon\quad\text{for all}\quad t\ge 0
                         \] が得られる. 
                     </li>
-                    <li>(漸近安定性) ここでは省略する. 
+                    <li>(漸近安定性) 任意の $\mathbf{x}\neq \widetilde{\mathbf{x}}$ に対し, 代わりに $\nabla V(\mathbf{x})\cdot\mathbf{f}(\mathbf{x})\lt 0$ の成立を仮定した場合も, 上と同様に安定であることは良い. 
+                        あとは吸引的であること, つまりある $\widetilde{\delta}\gt 0$ が存在し, 任意の $\widetilde{\varepsilon}\gt 0$ に対しある $T\gt 0$ が存在し,
+                        \[
+                            \|\mathbf{x}_0-\widetilde{\mathbf{x}}\|\lt \widetilde{\delta} \implies \|\mathbf{x}(t)-\widetilde{\mathbf{x}}\|\lt \widetilde{\varepsilon}\quad \text{for all}\quad t\gt T
+                        \] を証明すれば良い (安定性の証明とは異なり, $\widetilde{\varepsilon}$ に依存しない $\widetilde{\delta}$ の存在を示す). 
+                        まず, 自励系の解 $\mathbf{x}(t)$ と流れ $\varphi$ には 
+                        \[
+                            \varphi(t, \mathbf{x}(s)) = \mathbf{x}(s+t)
+                        \] という関係が成り立つのだった, つまり任意の $s\ge0$ に対して $\mathbf{x}(s)$ を初期値として自励系の解の時間発展を考えることで, $t\gt s$ における $\mathbf{x}(t)$ が得られるのだった. 
+                        このことと安定性の証明と同様の手順により, 任意の $\widetilde{\varepsilon}\gt 0$ に対し, ある $\gamma\gt 0$ が存在し 
+                        \[
+                            \|\mathbf{x}(T)-\widetilde{\mathbf{x}}\|\lt \gamma \implies \|\mathbf{x}(t)-\widetilde{\mathbf{x}}\|\lt \widetilde{\varepsilon}\quad\text{for all}\quad t\gt T
+                        \]
+                        が成立する. 
+                        あとは, ある $\widetilde{\delta}\gt 0$ が存在し, 任意の $\widetilde{\gamma}\gt 0$ に対しある $T\gt 0$ が存在し
+                        \[
+                            \|\mathbf{x}_0-\widetilde{\mathbf{x}}\|\lt \widetilde{\delta} \implies \|\mathbf{x}(T) - \widetilde{\mathbf{x}}\|\lt \widetilde{\gamma}
+                        \] が成立することを示せば (特に $\widetilde{\gamma}$ が上のような $\gamma$ の場合も成立するため) 吸引的であることが証明される. 
+                        
+                        これを背理法で証明しよう: すなわち任意の $\widetilde{\delta}\gt0$ に対し,  
+                        \[
+                            \text{ある $\widetilde{\gamma}\gt 0$ が存在し, 任意の $T\gt 0$ に対し}\quad \|\mathbf{x}(T)-\widetilde{\mathbf{x}}\|\ge \widetilde{\gamma}
+                        \] を満たす $\mathbf{x}_0\in B_{\delta}(\widetilde{\mathbf{x}})$ の存在を仮定すると矛盾が生じることを示す. 
+                        まず, 微積分学の基本定理より
+                        \[
+                            \begin{array}{rl} 
+                                V(\mathbf{x}(t)) &= V(\mathbf{x}_0) + \displaystyle\int_0^t \dfrac{d}{ds}V(\mathbf{x}(t))~ds \cr 
+                                &= V(\mathbf{x}_0) + \displaystyle\int_0^t \nabla V(\mathbf{x}(s))\cdot\mathbf{f}(\mathbf{x}(s))~ds
+                            \end{array}
+                        \] が成立することに注意する. 
+                        いま $\widetilde{\delta}\gt 0$ を任意に固定し, $\mathbf{x}_0\in B_{\delta}(\widetilde{\mathbf{x}})$ に注目すると, $\mathbf{x}\neq \widetilde{\mathbf{x}}$ における $V$ の正値性よりある $\widetilde{\alpha}\gt 0$ が存在し $V(\mathbf{x}_0)\lt \widetilde{\alpha}$ である. 
+                        また, 任意の $\mathbf{x}\neq \widetilde{\mathbf{x}}$ に対し $\nabla V(\mathbf{x})\cdot \mathbf{f}(\mathbf{x})\lt 0$ であることから, 任意の $T\gt 0$ について $\|\mathbf{x}(T)-\widetilde{\mathbf{x}}\|\ge \widetilde{\gamma}$ を達成する初期値 $\mathbf{x}_0\in B_{\delta}(\widetilde{\mathbf{x}})$ に対し, ある $\widetilde{\beta}\gt 0$ が存在し 
+                        \[
+                            \nabla V(\mathbf{x}(t))\cdot\mathbf{f}(\mathbf{x}(t)) \lt -\widetilde{\beta}\quad \text{for all}\quad T\gt 0
+                        \] が成立する. 
+                        以上より, 任意の $T\gt 0$ に対し
+                        \[
+                            0\lt V(\mathbf{x}(T)) \lt \widetilde{\alpha} + \displaystyle\int_0^T (-\widetilde{\beta})~ds = \widetilde{\alpha}-T\widetilde{\beta}
+                        \] となる初期値 $\mathbf{x}_0\in B_{\delta}(\widetilde{\mathbf{x}})$ が存在することになるが, この不等式は $T \gt \widetilde{\alpha}/\widetilde{\beta}$ において成立しないため矛盾する. 
                     </li>
                 </ul>
+            </div>
+
+            <hr>
+
+            <p>この定理は自励系の右辺にあるベクトル場が非線形の場合にも適用できるものである. 
+                また, 当然だが線形力学系に対しても応用することが可能であり, 特に平衡点 $\mathbf{0}$ が漸近安定となる場合にはリアプノフ関数 $V$ の具体的な構成が知られている: 
+            </p>
+
+            <div class="lemma">
+                <p>行列 $A\in\mathbb{R}^{n\times n}$ を用いて表される線形力学系 $\mathbf{x}' = A\mathbf{x}$ に対して, 正定値対称行列 $P\in\mathbb{R}^{n\times n}$ であって, 
+                    \[
+                        -(PA + A^{\operatorname{T}}P) 
+                    \] を正定値対称行列とするものが存在するならば, この $P$ を用いて 
+                    \[
+                        V(\mathbf{x}) = \mathbf{x}^{\operatorname{T}}P\mathbf{x} 
+                    \] と定められる関数は, この線形力学系に対する狭義リアプノフ関数となり, 平衡点 $\mathbf{0}$ は漸近安定である. 
+                </p>
+            </div>
+
+            <div class="remark">
+                行列 $P\in\mathbb{R}^{n\times n}$ が <b>正定値対称行列</b> (<b>symmetric positive definite matrix</b>) であるとは, $P$ が対称行列であり (つまり $P=P^{\operatorname{T}}$ であり), $\mathbb{R}^n$ の任意の $\mathbf{x}\neq \mathbf{0}$ に対して 
+                \[
+                    \mathbf{x}^{\operatorname{T}}P\mathbf{x} \gt 0
+                \] が成立することを言う. 
+            </div>
+
+            <div class="proof">
+                <p>まず, $P = (P_{ij})$, $\mathbf{x} = (x_i)$ に対し, 
+                    \[
+                        V(\mathbf{x}) = \mathbf{x}^{\operatorname{T}}P\mathbf{x} = \sum_{i=1}^n\sum_{j=1}^nx_iP_{ij}x_j
+                    \] である. 
+                    $P$ が対称行列 (つまり $P_{ij} = P_{ji}$) であることに注意すると, $\nabla V\in\mathbb{R}^n$ の第 $k$ 成分は
+                    \[
+                        \dfrac{\partial V}{\partial x_k} = \sum_{j=1}^nP_{kj}x_j + \sum_{i=1}^nx_iP_{ik} = 2\sum_{j=1}^nP_{kj}x_j
+                    \] であり, 従って $\nabla V(\mathbf{x}) = 2P\mathbf{x}$ である. 
+                    このことに注意して, $V(\mathbf{x})$ が狭義リアプノフ関数の性質を満たしていることをひとつずつ確認する:
+                </p>
+                <ul>
+                    <li>$V(\mathbf{0}) = \mathbf{0}^{\operatorname{T}}P\mathbf{0} = 0$ は明らか. </li>
+                    <li>$\mathbf{x}\neq\mathbf{0}$ ならば, $P$ が正定値対称行列であることから $V(\mathbf{x})\gt 0$ である.</li>
+                    <li>いま, 
+                        \[
+                            \begin{array}{rl} 
+                                \mathbf{x}^{\operatorname{T}}(PA+A^{\operatorname{T}}P)\mathbf{x} &= 2(P\mathbf{x})^{\operatorname{T}}A\mathbf{x} \cr
+                                &= 2\mathbf{x}^{\operatorname{T}}PA\mathbf{x} \cr
+                                &= (2P\mathbf{x})\cdot (A\mathbf{x}) \cr
+                                &= \nabla V(\mathbf{x})\cdot (A\mathbf{x})
+                            \end{array}
+                        \] となるため, これと $-(PA+A^{\operatorname{T}}P)$ が正定値対称行列となることから, $\mathbf{x}\neq\mathbf{0}$ ならば $\nabla V(\mathbf{x})\cdot (A\mathbf{x})\lt 0$ となることが確かめられる. 
+                    </li>
+                </ul>
+            </div>
+
+            <p>さて, 第 $1$ 章において, 線形力学系 $\mathbf{x}' = A\mathbf{x}$ の安定性と行列 $A$ の固有値 (の実部) の符号との関係について言及したが, ここでは上の結果との関連について説明しよう.</p>
+
+            <div class="theorem" data-name="線形力学系の固有値">
+
+
             </div>
 
             <p>簡単な例として, $f(t,x) = ax$ である場合を考える, ただし $a\in\mathbb{R}$ は定数であるとする. 
