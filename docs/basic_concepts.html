@@ -27,7 +27,7 @@
     </div>
     
     <!-- main -->
-    <main role="main"><article id="section1"><h1>力学系の諸概念</h1>
+    <main role="main"><article id="section1"><h1>線形力学系と諸概念</h1>
         <p>まず, 力学系の具体例のいくつかに触れた後に, 力学系の理論を説明するために必要な概念を紹介する. 
         具体例としては, ひとまず $1$ 次元の場合と線形力学系のみを扱うことにするが, ここで導入する様々なアイデアはより一般の状況を考える際にも重要となるものである.</p>
 
@@ -170,6 +170,29 @@
                     \mathbf{x}' = A\mathbf{x} \tag{1.1}
                 \] と表される連続力学系 (特に自励系) のことに他ならない. 
             </p>
+
+            <div class="example">
+                <p>常微分方程式系
+                    \[
+                        \left\{\begin{array}{rl}
+                            x' &= x + 2y \cr 
+                            y' &= 3x + 4y 
+                        \end{array}\right.
+                    \] を考える. 
+                    いま, 
+                    \[
+                        \mathbf{x} = \begin{pmatrix} 
+                            x \cr 
+                            y 
+                        \end{pmatrix}, \quad A = \begin{pmatrix} 
+                            1 & 2 \cr 
+                            3 & 4 
+                        \end{pmatrix}
+                    \] とすると, $\mathbf{x}' = A\mathbf{x}$ となっているため, これは線形力学系である. 
+
+                </p>
+            </div>
+
             <p>線形力学系の解についての性質を確認しておこう:
             </p>
 
@@ -229,7 +252,7 @@
                 ここでは詳しく説明しないが, $A^k$ の各成分の絶対値を上から評価することで, この級数は任意の $A$ に対して収束することがわかる. 
                 なお, 定義より
                 \[
-                    e^{O} = I,\quad e^{tI} = e^t I 
+                    e^{O} = I,\quad e^{tI} = e^t I, \quad e^{sA}e^{tA} = e^{(s+t)A} 
                 \] であり, また行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
                 \[
                     e^{tA}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(\lambda_i t)^k}{k!}\mathbf{v}_i = e^{\lambda_i t}\mathbf{v}_i
@@ -694,7 +717,7 @@
                 <p>なお, これは $a=1$ において分岐が発生していることを意味している. </p>
             </div>
 
-            <div class="definition" data-name="ヌルクライン">
+            <!-- <div class="definition" data-name="ヌルクライン"> ヌルクラインについては非線形力学系の解説時に説明する
                 <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$, つまり 
                     \[
                         \begin{pmatrix} 
@@ -720,7 +743,7 @@
                     <li>$x_i$ のヌルクライン上の点では, $x_i' = 0$ が成立する, つまり時間経過により $x_i$ 方向には動かない.</li>
                     <li>すべてのヌルクラインの交点では, 時間経過によりどの方向にも動かない, つまりすべてのヌルクラインの交点は平衡点である.</li>
                 </ul>
-            </div>
+            </div> -->
 
             <div class="definition" data-name="ベクトル場と方向場">
                 <ul>
@@ -758,12 +781,12 @@
                 <ul>
                     <li>力学系の解 $\mathbf{x}(t)$ が取り得る全ての状態からなる空間を <b>相空間</b> (もしくは <b>状態空間</b>) という. 
                     </li>
-                    <li>ある力学系の相空間を $X$ とおき, 力学系の解 $\mathbf{x}(t)$ が, 初期値 $\mathbf{x}_0$ に依存することを強調して
+                    <li>ある自励系の相空間を $X$ とおき, その自励系の解 $\mathbf{x}(t)$ が, 初期値 $\mathbf{x}_0$ に依存することを強調して
                         \[
                             \mathbf{x}(t) = \varphi(t, \mathbf{x}_0)
-                        \] と表す. このとき関数 $\varphi: \mathbb{R}\times X \to X$ (もしくは $\varphi: \mathbb{Z}\times X\to X$) を, この力学系の <b>流れ</b> (もしくは <b>フロー</b>) という. 
+                        \] と表す. このとき関数 $\varphi: \mathbb{R}\times X \to X$ (もしくは $\varphi: \mathbb{Z}\times X\to X$) を, この自励系の <b>流れ</b> (もしくは <b>フロー</b>) という. 
                     </li>
-                    <li>ある力学系の解 $\mathbf{x}(t)$ に対して (初期値 $\mathbf{x}_0$ に依存することを強調するために流れ $\varphi$ を用いて $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ と表すとき), 
+                    <li>ある自励系の解 $\mathbf{x}(t)$ に対して (初期値 $\mathbf{x}_0$ に依存することを強調するために流れ $\varphi$ を用いて $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ と表すとき), 
                         \[
                             \{\varphi(t, \mathbf{x}_0) : t\in \mathbb{R}\} \subset X\quad (\mbox{もしくは }\{\varphi(t, \mathbf{x}_0) : t\in \mathbb{Z}\} \subset X)
                         \] を, (初期値 $\mathbf{x}_0$ に対する) <b>軌道</b> (<b>orbit</b>, <b>trajectory</b>) もしくは <b>解軌道</b> という. 
@@ -774,13 +797,27 @@
 
             <div class="remark">
                 <ul>
-                    <li>数学における流れ (および軌道) は, 本来は力学系とは別に定義されるものであり, そのアイデアを力学系にも応用できると説明されるべきものであるが, ここではこれ以上深入りしない. 
+                    <li>数学における流れ (および軌道) は, 本来は力学系とは別に定義されるものであり, そのアイデアを力学系にも応用できると説明されるべきものである. 
+                        また, 非自励系に対しても (時間依存する) 流れを考えることができるが, ここではこれ以上深入りしない. 
                     </li>
                     <li>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ においては, $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ が時間経過に伴いどのように動くか, という情報が $\mathbf{f}(\mathbf{x})$ として (時間に無関係なベクトル場として) 与えられることになる. 
                         従って, ベクトル場 $\mathbf{f}(\mathbf{x})$ (もしくは方向場) を図示することで, $\mathbf{x}(t)$ が時間経過により相空間上をどの向きに動くかをイメージできる, つまり軌道の概形がわかる. 
                     </li>
+                    <li>自励系の解 $\mathbf{x}(t)$ と流れ $\varphi$ は, 
+                        \[
+                            \varphi(t, \mathbf{x}(s)) = \mathbf{x}(s+t)
+                        \] を満たす. 
+                        つまり, $\mathbf{x}(s)$ を初期値として時刻 $t$ だけ進めた結果と, $\mathbf{x}(0)$ を初期値として時刻 $s+t$ だけ進めた結果が一致する.     
+                        <ul>
+                            <li>特に線形力学系 $\mathbf{x}' = A\mathbf{x}$ に対して, $\varphi(t, \mathbf{x}_0) = e^{tA}\mathbf{x}_0$ であり, また 
+                                \[
+                                    \varphi(t, \mathbf{x}(s)) = e^{tA}(e^{sA}\mathbf{x}_0) = e^{(s+t)A}\mathbf{x}_0 = \mathbf{x}(s+t)
+                                \] である. 
+                            </li>
+                        </ul>
+                    </li>
                     <li>力学系の平衡点は時間経過により動かないような解であり, 軌道が一点からなるような初期値に対応している. 
-                        また, $\widehat{\mathbf{x}}(t)$ が自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点であることは, $\mathbf{f}(\widehat{\mathbf{x}}) = \mathbf{0}$ であることと同値である. 
+                        また, $\widetilde{\mathbf{x}}(t)$ が自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点であることは, $\mathbf{f}(\widetilde{\mathbf{x}}) = \mathbf{0}$ であることと同値である. 
                     </li>
                     <li>力学系の軌道は初期値の違いにより異なる挙動を示すことがある. 
                         この挙動の違いをわかりやすく図で表すものが相図であり, 解を明示的に表示できない場合に特に有用である.  
@@ -841,7 +878,24 @@
                 </p>
             </div><!-- /example -->
 
-            <div class="example">
+            <p>上の例のように, 軌道が相空間上の閉曲線になる場合は, 解 $\mathbf{x}(t)$ がぐるぐる回り続けるような挙動をすることを意味している. 
+                このような軌道のことを <b>周期軌道</b> という.
+            </p>
+
+            <div class="definition" data-name="周期軌道">
+                <p>力学系の相空間 $X$ およびフロー $\varphi$ について, ある初期値 $\mathbf{x}_0$ に対して 
+                    \[
+                        \varphi(t+T, \mathbf{x}_0) = \varphi(t, \mathbf{x}_0)\quad \text{for all}\quad t\in\mathbb{R} \quad(\text{or }\mathbb{Z})
+                    \] を満たす $T$ が存在するならば, 軌道 $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}\subset X$ (もしくは $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{Z}\}\subset X$) は <b>周期軌道</b> であるという. 
+                    また, このとき $T$ を <b>周期</b> という. 
+                </p>
+            </div>
+
+            <div class="remark">
+                <p>線形力学系の場合は, 円周上 (球面上) の周期軌道しか現れないが, 非線形力学系の場合はより複雑な周期起動が現れることがある. </p>
+            </div>
+
+            <!-- <div class="example">
                 <p>非線形力学系 
                     \[
                         \begin{pmatrix} 
@@ -867,7 +921,7 @@
                 <p>以下に, この例に対するヌルクライン, 方向場および相図を掲載する. 
                     コンピュータを用いることで精密なプロットを得ることができるが, 手計算だけでもヌルクライン上の矢印の向きから相図の概形を得ることが可能である, ということが重要である. 
                 </p>
-            </div>
+            </div> -->
 
             <hr> 
 
@@ -918,14 +972,14 @@
                         e^{at}(\widetilde{c}_1\cos bt + \widetilde{c}_2\sin bt) \cr 
                         e^{at}(-\widetilde{c}_1\sin bt + \widetilde{c}_2\cos bt) 
                     \end{pmatrix}
-                \] であり, 特に $e^{at}$ の部分に注目すると, 固有値の実部の符号によって $t\to\infty$ とした際の挙動が異なることが予想できる. 
+                \] であり, 特に $e^{at}$ の部分に注目すると, 固有値の実部 (つまり $a$) の符号によって $t\to\infty$ とした際の挙動が異なることが予想できる. 
                 実際, (全ての) 固有値の実部が $0$ 以下ならば平衡点は安定であり, 負ならば平衡点は吸引的である (実はこれは全ての線形力学系に共通する性質である). 
             </p>
             <p>この具体例として, </p>
             <ul>
-                <li>$(a, b) = (-10^{-3}, 1)$ のとき (平衡点は漸近安定),</li>
-                <li>$(a, b) = (0, 1)$ のとき (平衡点は中立安定), </li>
-                <li>$(a, b) = (10^3, 1)$ のとき (平衡点は不安定)</li>
+                <li>$(a, b) = (-10^{-3}, 1)$ のとき ($a\lt 0$ であり, 平衡点は漸近安定),</li>
+                <li>$(a, b) = (0, 1)$ のとき ($a= 0$ であり, 平衡点は中立安定), </li>
+                <li>$(a, b) = (10^3, 1)$ のとき ($a\gt 0$ であり, 平衡点は不安定)</li>
             </ul>
             <p>の相図を (一般解の表示から) 描画すると以下のようになる (特に平衡点 $\mathbf{x} = 0$ 周辺で, 平衡点に近づくか離れるかの違いに注意): 
             </p>
@@ -1058,46 +1112,62 @@
             </div><!-- /answer -->
 
             <p>平衡点が鞍点である場合, 時間経過により解 $\mathbf{x}(t)$ が平衡点に近づくか離れるかは初期値に依存することになる. 
-                どのような初期値に対して解が平衡点に近づくか, を表す概念の一つとして, 線形力学系に対する <b>安定部分空間</b> というアイデアがある:
+                どのような初期値に対して解が平衡点に近づくか, を表す概念の一つとして, <b>安定部分集合</b> というアイデアがある:
             </p>
 
-            <div class="definition" data-name="安定部分空間">
-                <p><span class="wave">線形</span>力学系 $\mathbf{x}' = A\mathbf{x}$ の相空間 $X$ およびフロー $\varphi$ に対して,</p>
+            <div class="definition" data-name="安定部分集合">
+                <p>力学系の相空間 $X$ およびフロー $\varphi$ に対して,</p>
                 <ul>
-                    <li>部分空間 $S\subset X$ が, 
+                    <!-- <li>部分集合 $S\subset X$ が, 
                         \[
                             \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\in \mathbb{R}
-                        \] を満たすとき, $S$ を <b>不変部分空間</b> (<b>invariant subspace</b>) という. 
+                        \] を満たすとき, $S$ を <b>不変部分集合</b> (<b>invariant subset</b>) という. 
                     </li>
-                    <li>$S\subset X$ が不変部分空間であって, 任意の $s\in S$ に対して $\varphi(t, s)$ が $t\to\infty$ のときにある平衡点に収束するとき, $S$ はその平衡点の <b>安定部分空間</b> であるという. 
+                    <li>部分集合 $S\subset X$ が, 
+                        \[
+                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\ge 0
+                        \] を満たすとき, $S$ を <b>正不変部分集合</b> (<b>positively invariant subset</b>) という. 
                     </li>
-                    <li>$S\subset X$ が不変部分空間であって, 任意の $s\in S$ に対して $\varphi(t, s)$ が $t\to-\infty$ のときにある平衡点に収束するとき, $S$ はその平衡点の <b>不安定部分空間</b> であるという. 
+                    <li>$S\subset X$ が不変部分集合であって, 任意の $\mathbf{s}\in S$ に対して $\varphi(t, \mathbf{s})$ が $t\to\infty$ のときにある平衡点に収束するとき, $S$ はその平衡点の <b>安定部分集合</b> (<b>stable set</b>) であるという. 
+                    </li> -->
+                    <li>平衡点 $\widetilde{\mathbf{x}}$ に対して, 
+                        \[
+                            \{\mathbf{x}_0\in X : \varphi(t, \mathbf{x}_0) \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to\infty\}
+                        \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>安定集合</b> (<b>stable set</b>) もしくは <b>安定多様体</b> (<b>stable manifold</b>) という. 
+                    </li>
+                    <li>平衡点 $\widetilde{\mathbf{x}}$ に対して, 
+                        \[
+                            \{\mathbf{x}_0\in X : \varphi(-t, \mathbf{x}_0) \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to\infty\}
+                        \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>不安定集合</b> (<b>unstable set</b>) もしくは <b>不安定多様体</b> (<b>unstable manifold</b>) という. 
                     </li>
                 </ul>
             </div>
 
-            <p>実は, 行列 $A$ の固有値の内で実部が負であるものに対応する (一般) 固有ベクトルたちで張られる空間が安定部分空間となる. 
-                一方で, 実部が正の固有値に対応する (一般) 固有ベクトルたちで張られる空間が不安定部分空間となる. 
+            <p>線形力学系 $\mathbf{x}' = A\mathbf{x}$ に対しては, 安定集合および不安定集合は必ず線型部分空間になる (そのため, <b>安定部分空間</b>, <b>不安定部分空間</b> という言葉が用いられる). 
+                平衡点 $\mathbf{0}$ が鞍点となるのは, 安定部分空間と不安定部分空間が共に存在していることを意味している. 
+                初期値が安定部分空間上に存在していれば解 $\mathbf{x}(t)$ は平衡点 (原点) に収束し, 初期値が不安定部分空間上にあれば, 解 $\mathbf{x}(t)$ は原点から遠ざかるように動く. 
+                他の全ての解は, 時間に逆行すると安定部分空間に近づき, 時間経過により不安定部分空間に近づく. 
+            </p>
+            <p>また, $2$ 次元線形力学系において言及したように, 行列 $A$ の固有値および固有ベクトルは線形力学系の解の挙動を記述する重要な情報となる. 
+                この資料では詳細は割愛するが, $2$ 次元の場合と同様に固有値 (の実部) の正負や重複度, 固有ベクトルを調べることで, 一般の $n$ 次元線形力学系に対して以下の成立がわかる:
             </p>
 
-            <p>このアイデアを<span class="wave">非線形</span>力学系に対して拡張することも可能である. 
+            <div class="theorem" data-name="線形力学系の固有値と安定性">
+                行列 $A\in\mathbb{R}^{n\times n}$ を用いて表される線形力学系 $\mathbf{x}' = A\mathbf{x}$ について, 
+                <ul>
+                    <li>実部が負である固有値に対応する行列 $A$ の固有ベクトルたちにより張られる部分空間は, この線形力学系の安定部分空間である.</li> 
+                    <li>実部が正である固有値に対応する行列 $A$ の固有ベクトルたちにより張られる部分空間は, この線形力学系の不安定部分空間である.</li>
+                    <li>行列 $A$ の全ての固有値の実部が $0$ 以下であれば, 原点は安定な平衡点である.</li>
+                    <li>行列 $A$ の全ての固有値の実部が負であれば, 原点は漸近安定な平衡点である (沈点である).</li>
+                    <li>行列 $A$ の固有値に実部が正のものが存在するならば, 原点は不安定な平衡点である.</li>
+                    <li>行列 $A$ の全ての固有値の実部が正であれば, 原点は不安定な平衡点であり, 特に源点である.</li>
+                    <li>行列 $A$ の固有値に実部が正のものと負のものどちらも存在するならば, 原点は不安定な平衡点であり, 特に鞍点である.</li>
+                </ul>
+            </div>
+
+            <!-- <p>このアイデアを<span class="wave">非線形</span>力学系に対して拡張することも可能である. 
                 これについては, 平衡点の安定性について深掘りした後に改めて解説する. 
-            </p>
-
-            <p>最後に, 解が平衡点の周りを周回する場合について述べる.</p>
-
-            <div class="definition" data-name="周期軌道">
-                <p>ある力学系の相空間 $X$ およびフロー $\varphi$ について, ある初期値 $\mathbf{x}_0$ に対して 
-                    \[
-                        \varphi(t+T, \mathbf{x}_0) = \varphi(t, \mathbf{x}_0)\quad \text{for all}\quad t\in\mathbb{R} \quad(\text{or }\mathbb{Z})
-                    \] を満たす $T$ が存在するならば, 軌道 $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}\subset X$ (もしくは $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{Z}\}\subset X$) は <b>周期軌道</b> であるという. 
-                    また, このとき $T$ を <b>周期</b> という. 
-                </p>
-            </div>
-
-            <div class="remark">
-                <p>連続力学系の周期軌道は, 相空間上の閉曲線になる. </p>
-            </div>
+            </p> -->
 
             <!-- <p>さらに, <span class="wave">非線形</span>力学系に限り, 周辺の軌道がある周期軌道に収束するということが起こり得る. 
             </p>
