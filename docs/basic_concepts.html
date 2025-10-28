@@ -38,27 +38,32 @@
                 \] を考えることにしよう. 
                 このとき, $x(t) \in \mathbb{R}$ であり, このような力学系を $1$ 次元力学系と呼ぶ. 
             </p>
-            <p>簡単な例として, $f(t,x) = ax$ である場合を考える, ただし $a\in\mathbb{R}$ は定数であるとする. 
-                このとき, 
-                \[
-                    x' = ax
-                \] の解が $x(t) = C e^{at}$ であることは容易にわかる, ただし $C$ は積分定数である. 
-                念のため確認しておくと, この $e$ は <b>ネイピア数</b> と呼ばれる数学定数の一つであり, 
+
+            <div class="example">
+                <p>簡単な例として, $f(t,x) = ax$ である場合を考える, ただし $a\in\mathbb{R}$ は定数であるとする. 
+                    このとき, 
+                    \[
+                        x' = ax
+                    \] の解が $x(t) = C e^{at}$ であることは容易にわかる, ただし $C$ は積分定数である. 
+                </p>
+            </div>
+
+            <p>念のため確認しておくと, この $e$ は <b>ネイピア数</b> と呼ばれる数学定数の一つであり, 
                 \[
                     e = \lim_{n\to\infty}\left(1+\dfrac{1}{n}\right)^n
                 \] で特徴づけられる数であり, 
                 \[
-                    \dfrac{d}{dt}e^t = e^t
+                    e^{t} = \sum_{k=0}^{\infty}\dfrac{t^k}{k!}, \quad \dfrac{d}{dt}e^t = e^t
                 \] を満たす. 
-                また, テイラー展開により 
-                \[
-                    e^{at} = \sum_{k=0}^{\infty}\dfrac{(at)^k}{k!}
-                \] が得られる. 
             </p>
             <p>もしも解 $x(t)$ が満たすべき条件が追加で与えられているならば, その条件が満たされるように $C$ を決定, 積分定数の任意性を排除し特殊解が得られる. 
                 常微分方程式に対しては, 多くの場合 $t=0$ における $x$ の値が与えられた数 $x_0$ であること (つまり $x(0) = x_0$) を条件として課す. 
                 このような条件は, 変数 $t$ が時刻を表す場合には <b>初期条件</b> と呼ばれ, $x_0$ は <b>初期値</b> と呼ばれる. 
-                例えば, 
+                また, 初期条件が与えられた微分方程式を <b>初期値問題</b> という.
+            </p>
+            
+            <div class="example">
+                <p>例えば, 初期値問題
                 \[
                     \left\{\begin{array}{rl} 
                         x' &= ax, \cr 
@@ -66,6 +71,8 @@
                     \end{array}\right. 
                 \] の解は $x(t) = e^{at}x_0$ である. 
             </p>
+            </div>
+
             <p>上の例に解の表示を与えることは容易だが, 実際に各 $t$ に対し (つまり $t$ を動かした際に) $x(t)$ がどのように振る舞うかを考えようとすると, パラメータ $a$ が重要になることがわかる. 
                 ひとまず $x_0\gt 0$ の場合のみ考えることにすると, $a\gt 0$ ならば $t\to \infty$ としたときに $x(t)\to\infty$ となり, 一方で $a\lt 0$ ならば $x(t)\to 0$ となる. 
                 また, $a=0$ の場合は $x(t)$ は定数となり $t$ に依存しない. 
@@ -75,24 +82,59 @@
 
             <div class="resize"><img src='./images/exponential-1.png'></div>
 
-            <p>次に, 右辺が非線形になる例として
+            <div class="example">
+                <p>右辺が非線形になる常微分方程式の例として
                 \[
                     x' = (1-x)x - h
                 \] という式を考えてみよう. 
-                解の具体的な表記は, 例えば変数分離により形式的に 
+                まず, 変数分離により形式的に 
                 \[
-                    \int -\dfrac{1}{x^2-x+h}~dx = \int dt
-                \] を考え, もしも $x^2-x+h=0$ が異なる $2$ つの実数の解 $r_1 \lt r_2$ を持つならば 
-                \[
-                    \dfrac{1}{r_1-r_2}\left(\dfrac{1}{x-r_1} - \dfrac{1}{x-r_2}\right) = \dfrac{1}{(x-r_1)(x-r_2)} = \dfrac{1}{x^2-x+h}
-                \] となることを利用することで得ることができるが, ここでは解 $x(t)$ の $t$ の変化による大雑把な挙動にだけ注目することにする. 
+                    \int \dfrac{1}{\left(x-1/2\right)^2 + \left(h-1/4\right)}~dx = \int -\dfrac{1}{x^2-x+h}~dx = \int dt = t + C
+                \] とし, $h-1/4$ の符号による場合分けを考える: 
+                </p> 
+                <ul>
+                    <li>$h\gt 1/4$ のとき, $a = \sqrt{h-1/4}$ とおき, $x-1/2=a\tan\theta$ と変数変換すると 
+                        \[
+                            -(t+C) = \int\dfrac{1}{a^2\tan^2\theta+a^2}\dfrac{a}{\cos^2\theta}d\theta = \dfrac{\theta}{a}
+                        \] であることから 
+                        \[
+                            x(t) = \dfrac{1}{2} + a\tan\theta = \dfrac{1}{2} - a\tan\left(a(t+C)\right)
+                        \] が得られる. 
+                    </li>
+                    <li>$h=1/4$ のとき, 
+                        \[
+                            x(t) = \dfrac{1}{2} + \dfrac{1}{t+C}
+                        \] である. 
+                    </li>
+                    <li>$h\lt 1/4$ のとき, $b = \sqrt{1/4-h}$ とおくと, 
+                        \[
+                            \begin{array}{rl} 
+                                -(t+C) &= \displaystyle\int\dfrac{1}{\left(x-1/2-b\right)\left(x-1/2+b\right)}~dx \cr 
+                                &= \displaystyle\int\dfrac{1}{2b}\left(\dfrac{1}{x-1/2-b} - \dfrac{1}{x-1/2+b}\right)~dx \cr 
+                                &= \dfrac{1}{2b}\log\left|1-\dfrac{2b}{x-1/2+b}\right|
+                            \end{array}
+                        \] となるため, 
+                        \[
+                            \begin{array}{rl} 
+                                x(t) = \dfrac{1}{2} - b + \dfrac{2b}{1-e^{-2b(t+C)}}
+                            \end{array}
+                        \] が得られる. 
+                    </li>
+                </ul>
+            </div>
+            <p>さて, ここでは解 $x(t)$ の $t$ の変化による大雑把な挙動にだけ注目することにする. 
                 単純に, 右辺 
                 \[
                     f(x) = (1-x)x - h 
                 \] の符号が正ならば, $t$ の増加に伴い $x(t)$ は増加し, 逆に $f(x)$ の符号が負ならば $x(t)$ は減少する. 
                 ただし, $f(x)$ の符号は $x(t)$ 自身 (特に初期条件 $x(0)$) に依存し, さらにパラメータ $h$ 次第では常に負になり得る. 
-                具体的には, $x^2-x+h=0$ の判別式を考えることで, $h = 1/4$ を境に分岐が起きる ($h\lt 1/4$ ならば $r_1\lt x(0)\lt r_2$ に対する解は増加するが, $h\gt 1/4$ なら全ての初期値に対して解は狭義単調減少する) ということがわかる. 
-                この例では解の表示を具体的に得ることができたが, 仮にできないとしても, 解の大雑把な挙動を知ることや分岐により解の挙動がどのように変化するかを調べることは力学系の解析において重要となる. 
+                具体的には, $x^2-x+h=0$ の判別式を考えることで, $h = 1/4$ を境に分岐が起きる ($h\lt 1/4$ ならば $1/2-\sqrt{1/4-h}\lt x(0)\lt 1/2+\sqrt{1/4-h}$ に対して解 $x(t)$ は増加するが, $h\gt 1/4$ なら全ての初期値に対して解 $x(t)$ は狭義単調減少する) ということがわかる. 
+            </p>
+
+            <div class="resize"><img src='./images/logistic_phase-1.png'></div>
+
+            <p>この例では解の表示を具体的に得ることができたるため, 各初期値 $x(0)$ に対する $x(t)$ を直接プロットすることもできる (下図参照) し, また多くの場合は数値計算により, 解 $x(t)$ がどのように動くかを近似的に得ることができる. 
+                一方で, 仮にそうしたことができないとしても, 解の大雑把な挙動を知ることや分岐により解の挙動がどのように変化するかを調べることは力学系の解析において重要となる. 
             </p>
 
             <div class="resize"><img src='./images/logistic-1.png'></div>
@@ -108,34 +150,42 @@
             </p>
             <p>離散力学系について, もう少し厳密に説明する. 
                 以降, 離散力学系を考える場合は, $\mathbf{x}(0), \mathbf{x}(1), \mathbf{x}(2), \dots$ の代わりに $\mathbf{x}_0, \mathbf{x}_1, \mathbf{x}_2, \dots$ と表記することがある. 
-                いま, 与えられた写像 $f: \mathbb{R}^n\to\mathbb{R}^n$ と初期値 $\mathbf{x}_0$ に対して, 
+            </p>    
+            
+            <div class="definition" data-name="離散力学系"> 
+                <p>与えられた写像 $f: \mathbb{R}^n\to\mathbb{R}^n$ と初期値 $\mathbf{x}_0$ に対して, 
                 \[
                     \mathbf{x}(k+1) = f(\mathbf{x}(k)) \quad \mbox{もしくは}\quad \mathbf{x}_{k+1} = f(\mathbf{x}_k)
                 \] と表されるものを離散力学系という. 
             </p>
-            <p>離散力学系は, 比較的単純な式から複雑な (カオス的) 振る舞いを生み出すことが知られている. 
-                例として, 
-                \[
-                    x_{k+1} = ax_k(1-x_k)
-                \] という $1$ 次元離散力学系を考える, ただし初期値は $0\lt x_0\lt 1$ であるとする.  
-                この解 $x_k$ に対して $k\to\infty$ としたときの振る舞いには, 連続力学系と同様にパラメータ $a$ が大きく影響することになる. 
-                例えば $0\lt a\lt 1$ であれば, 
-                \[
-                    0\lt x_{k+1} = ax_k(1-x_k) \lt ax_k \lt x_k
-                \] であるため, 点列 $\{x_k\}$ は単調に減少し, 特に $k\to\infty$ のとき $x_k\to 0$ となる. 
-                一方で $1\lt a$ の場合には, $1-a^{-1}\in (0,1)$ であることに注意すれば, $x_k \lt 1-a^{-1}$ ならば 
-                \[
-                    x_{k+1} \gt ax_k(1-(1-a^{-1})) = x_k 
-                \] となり, $x_k\gt 1-a^{-1}$ ならば同様にして $x_{k+1} \lt x_k$ となることがわかる. 
-                実は, $a$ が小さい内は $x_k\to 1-a^{-1}$ となるのだが, $a$ を大きくすると $\{x_k\}$ は $1-a^{-1}$ の前後を&quot;行ったり来たり&quot;するようになり収束しなくなってしまう. 
-                さらに $a$ を大きくした場合には, 点列 $\{x_k\}$ の振る舞いはますます複雑になり, 明示的に説明することは困難になる. 
-            </p>
+            </div>
 
-            <div class="resize"><img src='./images/logistic_map-1.png'></div>
+            <p>離散力学系は, 比較的単純な式から複雑な (カオス的) 振る舞いを生み出すことが知られている. 
+            </p>
+                
+            <div class="example">
+                <p>例として, 
+                    \[
+                        x_{k+1} = ax_k(1-x_k)
+                    \] という $1$ 次元離散力学系を考える, ただし初期値は $0\lt x_0\lt 1$ であるとする.  
+                    この解 $x_k$ に対して $k\to\infty$ としたときの振る舞いには, 連続力学系と同様にパラメータ $a$ が大きく影響することになる. 
+                    例えば $0\lt a\lt 1$ であれば, 
+                    \[
+                        0\lt x_{k+1} = ax_k(1-x_k) \lt ax_k \lt x_k
+                    \] であるため, 点列 $\{x_k\}$ は単調に減少し, 特に $k\to\infty$ のとき $x_k\to 0$ となる. 
+                    一方で $1\lt a$ の場合には, $1-a^{-1}\in (0,1)$ であることに注意すれば, $x_k \lt 1-a^{-1}$ ならば 
+                    \[
+                        x_{k+1} \gt ax_k(1-(1-a^{-1})) = x_k 
+                    \] となり, $x_k\gt 1-a^{-1}$ ならば同様にして $x_{k+1} \lt x_k$ となることがわかる. 
+                    実は, $a$ が小さい内は $x_k\to 1-a^{-1}$ となるのだが, $a$ を大きくすると $\{x_k\}$ は $1-a^{-1}$ の前後を&quot;行ったり来たり&quot;するようになり収束しなくなってしまう. 
+                    さらに $a$ を大きくした場合には, 点列 $\{x_k\}$ の振る舞いはますます複雑になり, 明示的に説明することは困難になる. 
+                </p>
+                <div class="resize"><img src='./images/logistic_map-1.png'></div>
+            </div>
 
             <p>このように, 離散力学系はカオス的な挙動を説明する際に, 簡単な例としてしばしば取り上げられるものである. 
                 この資料では主に連続力学系を対象に議論を進めることにするが, その場合でも取り扱いを容易にするために, 対応する離散力学系に置き換えて考えることがある (このアイデアは後に <b>ポアンカレ写像</b> として改めて紹介する). 
-                そのため, 離散力学系についても多少は言及することになる.   
+                そのため, 離散力学系についても後ほど詳細に言及することになる.   
             </p>
 
         </section>
@@ -144,10 +194,14 @@
         
         <section id="section1-2"><h2>1.2: 線形力学系</h2>
             <p>力学系の様々な概念について紹介する前に, $2$ 次元以上の力学系の例として, 線形力学系について紹介しよう.</p>
-            <p>まず, 変数 $t$ と未知のベクトル値関数 $\mathbf{x}(t)\in\mathbb{R}^n$, 与えられた線形写像 $f: \mathbb{R}^{n}\to\mathbb{R}^n$ に対して,
-                \[
-                    \mathbf{x}' = \mathbf{f}(\mathbf{x})
-                \] と表される連続力学系 (特に自励系である) を <b>線形力学系</b> (<b>linear dynamical system</b>) という. 
+            
+            <div class="definition">
+                <p>変数 $t$, 未知のベクトル値関数 $\mathbf{x}(t)\in\mathbb{R}^n$, 与えられた <span class="wave">線形写像</span> $f: \mathbb{R}^{n}\to\mathbb{R}^n$ に対して,
+                    \[
+                        \mathbf{x}' = \mathbf{f}(\mathbf{x})
+                    \] と表される連続力学系 (特に自励系である) を <b>線形力学系</b> (<b>linear dynamical system</b>) という. 
+                </p>
+            </div>
                 ここで, 写像 $\mathbf{f}:\mathbb{R}^n\to\mathbb{R}$ が線形であるとは, 任意の $c_1, c_2\in\mathbb{R}$ および $\mathbf{x}_1, \mathbf{x}_2\in\mathbb{R}^n$ に対し
                 \[
                     \mathbf{f}(c_1\mathbf{x}_1 + c_2\mathbf{x}_2) = c_1\mathbf{f}(\mathbf{x}_1) + c_2\mathbf{f}(\mathbf{x}_2)
@@ -219,7 +273,7 @@
                         \[
                             \mathbf{x}' = \lambda_ie^{\lambda_i t}\mathbf{v}_i = e^{\lambda_i t}A\mathbf{v}_i = A \mathbf{x}
                         \] を満たす. </li>
-                    <li>$\mathbf{x}_1' = A\mathbf{x}$ かつ $\mathbf{x}_2' = A\mathbf{x}_2$ より, $\mathbf{x}(t) = c_1\mathbf{x}_1(t) + c_2\mathbf{x}_2(t)$ は
+                    <li>$\mathbf{x}_1' = A\mathbf{x}_1$ かつ $\mathbf{x}_2' = A\mathbf{x}_2$ であるとき, $\mathbf{x}(t) = c_1\mathbf{x}_1(t) + c_2\mathbf{x}_2(t)$ は
                         \[
                             \begin{array}{rl}
                                 \mathbf{x}' &= (c_1\mathbf{x}_1 + c_2\mathbf{x}_2)' \cr 
@@ -245,33 +299,72 @@
                 このとき, 線形力学系 $(1.2)$ の解 $\mathbf{x}: \mathbb{R}\to\mathbb{R}^n$ は 
                 \[
                     \mathbf{x}(t) = e^{tA}\mathbf{x}_0 
-                \] と表すことができる. ここで, $e^{tA}$ は <b>行列指数関数</b> であり, 具体的には
-                \[
-                    e^{tA} = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!} = I + tA + \dfrac{(tA)^2}{2} + \dfrac{(tA)^3}{3!} + \dots
-                \] と定義される行列である ($e^{at}$ のテイラー展開と比較すれば, 自然な定義であることがわかる). 
-                ここでは詳しく説明しないが, $A^k$ の各成分の絶対値を上から評価することで, この級数は任意の $A$ に対して収束することがわかる. 
-                なお, 定義より
+                \] と表すことができる. ここで, $e^{tA}$ は <b>行列指数関数</b> であり, 具体的には以下で定義される: 
+                </p>
+
+                <div class="definition" data-name="行列指数関数">
+                    <p>正方行列 $A$ に対し, 
+                        \[
+                            e^{A} = \sum_{k=0}^\infty \dfrac{A^k}{k!} = I + A + \dfrac{A^2}{2} + \dfrac{A^3}{3!} + \dots
+                        \] を <b>行列指数関数</b> という. 
+                    </p>
+                </div>
+
+                <div class="remark">
+                    <ul>
+                        <li>上の定義より, 
+                            \[
+                                e^{tA} = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!} = I + tA + \dfrac{(tA)^2}{2} + \dfrac{(tA)^3}{3!} + \dots
+                            \] である. $e^{at}$ のテイラー展開
+                            \[
+                                e^{at} = \sum_{k=0}^{\infty}\dfrac{(at)^k}{k!}
+                            \] と比較すれば, 自然な定義であることがわかる</li>
+                        <li>なお, $A = (a_{ij})\in\mathbb{R}^{n\times n}$ に対し $A^k = (a_{ij}(k))$, $a=\max|a_{ij}|$ とすると, 
+                            \[
+                                |a_{ij}(k)| \le n^{k-1}a^k
+                            \] となるため, $e^{A}$ の $ij$ 成分は
+                            \[
+                                \left|\displaystyle\sum_{k=0}^{\infty}\dfrac{a_{ij}(k)}{k!}\right| \le \displaystyle\sum_{k=0}^\infty \dfrac{n^{k-1}a^k}{k!} \le e^{na} 
+                            \] と上から評価することができる, つまり任意の $A\in\mathbb{R}^{n\times n}$ に対し, $e^{A}\in\mathbb{R}^{n\times n}$ は well-defined である. 
+                        </li>
+                    </ul>
+                </div>
+                <p>定義より
                 \[
                     e^{O} = I,\quad e^{tI} = e^t I, \quad e^{sA}e^{tA} = e^{(s+t)A} 
                 \] であり, また行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
                 \[
                     e^{tA}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(\lambda_i t)^k}{k!}\mathbf{v}_i = e^{\lambda_i t}\mathbf{v}_i
-                \] が成立する (つまり $\mathbf{v}_i$ は行列 $e^{tA}\in\mathbb{R}^{n\times n}$ の固有値 $e^{\lambda_i t}$ に対応する固有ベクトルになっている).  
+                \] が成立する (つまり行列 $A$ の固有値 $\lambda_i$ に対応する固有ベクトル $\mathbf{v}_i$ は, 行列 $e^{tA}\in\mathbb{R}^{n\times n}$ の固有値 $e^{\lambda_i t}$ に対応する固有ベクトルになっている). 
+                さらに, $t$ を変数とする関数列 
+                \[
+                    f_{\ell}(t) = \sum_{k=0}^\ell \dfrac{(tA)^k}{k!}
+                \] は (行列ノルムを用いることで) 一様収束することを確かめることができ, 従って項別微分ができるため
+                \[
+                    \begin{array}{rl} 
+                        \dfrac{d}{dt}e^{tA} &= \dfrac{d}{dt}\displaystyle\sum_{k=0}^{\infty}\dfrac{(tA)^k}{k!} \cr 
+                        &= \displaystyle\sum_{k=1}^{\infty}\dfrac{t^{k-1}A^k}{(k-1)!} \cr 
+                        &= Ae^{tA} 
+                    \end{array}
+                \] が成立する. 
             </p>
 
             <div class="exercise">
-                $\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ が式 $(1.2)$ を満たすことを確認せよ.
+                <p>$\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ が
+                    \[
+                        \left\{\begin{array}{rl} 
+                            \mathbf{x}' &= A\mathbf{x}, \cr 
+                            \mathbf{x}(0) &= \mathbf{x}_0 
+                        \end{array}\right. 
+                    \] を満たすことを確認せよ.
+                </p>
             </div><!-- /exercise -->
 
             <div class="answer">
                 <p>$\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ ならば
                     \[
-                        \begin{array}{rl} 
-                            \mathbf{x}' &= \dfrac{d}{dt}\displaystyle\sum_{k=0}^{\infty}\dfrac{(tA)^k}{k!}\mathbf{x}_0 \cr 
-                            &= \displaystyle\sum_{k=1}^{\infty}\dfrac{t^{k-1}A^k}{(k-1)!}\mathbf{x}_0 \cr 
-                            &= Ae^{tA}\mathbf{x}_0 = A\mathbf{x}
-                        \end{array}
-                    \] となり, また $\mathbf{x}(0) = I\mathbf{x}_0 = \mathbf{x}_0$ である. 
+                        \mathbf{x}' = \dfrac{d}{dt}e^{tA}\mathbf{x}_0 = Ae^{tA}\mathbf{x}_0 = A\mathbf{x}
+                    \] となり, また $\mathbf{x}(0) = e^O\mathbf{x}_0 = I\mathbf{x}_0 = \mathbf{x}_0$ である. 
                 </p>
             </div><!-- /answer -->
 
@@ -438,7 +531,7 @@
                         &= c_1e^{\lambda t}\mathbf{v}_1 + c_2(te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2)
                     \end{array} 
                 \] を得ることができる.
-                別の解法として, ケーリー・ハミルトンの定理より 
+                別の解法として, (例えばケーリー・ハミルトンの定理などから) 
                 \[
                     (A-\lambda I)^2 = O 
                 \] となることに注目し, 
@@ -791,7 +884,7 @@
                             \{\varphi(t, \mathbf{x}_0) : t\in \mathbb{R}\} \subset X\quad (\mbox{もしくは }\{\varphi(t, \mathbf{x}_0) : t\in \mathbb{Z}\} \subset X)
                         \] を, (初期値 $\mathbf{x}_0$ に対する) <b>軌道</b> (<b>orbit</b>, <b>trajectory</b>) もしくは <b>解軌道</b> という. 
                     </li>
-                    <li>ある力学系の (様々な初期値に対する) 軌道の概略を相空間上に表した図を <b>相図</b> という. </li>
+                    <li>ある力学系の (様々な初期値に対する) 軌道の概略を相空間上に表した図を <b>相図</b> (<b>phase portrait</b>) という. </li>
                 </ul>
             </div><!-- /definition -->
 
@@ -816,12 +909,15 @@
                             </li>
                         </ul>
                     </li>
+                    <li>自励系の相図において, 各軌道は平衡点以外の点において他の軌道や自身と交差することはない (もし平衡点でないある点で交差するならば, その点を初期値とした解 $\mathbf{x}(t)$ が複数存在することになってしまい矛盾する). 
+                    </li>
                     <li>力学系の平衡点は時間経過により動かないような解であり, 軌道が一点からなるような初期値に対応している. 
                         また, $\widetilde{\mathbf{x}}(t)$ が自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点であることは, $\mathbf{f}(\widetilde{\mathbf{x}}) = \mathbf{0}$ であることと同値である. 
                     </li>
                     <li>力学系の軌道は初期値の違いにより異なる挙動を示すことがある. 
                         この挙動の違いをわかりやすく図で表すものが相図であり, 解を明示的に表示できない場合に特に有用である.  
                     </li>
+                    
                 </ul>
             </div><!-- /remark -->
 
@@ -981,7 +1077,7 @@
                 <li>$(a, b) = (0, 1)$ のとき ($a= 0$ であり, 平衡点は中立安定), </li>
                 <li>$(a, b) = (10^3, 1)$ のとき ($a\gt 0$ であり, 平衡点は不安定)</li>
             </ul>
-            <p>の相図を (一般解の表示から) 描画すると以下のようになる (特に平衡点 $\mathbf{x} = 0$ 周辺で, 平衡点に近づくか離れるかの違いに注意): 
+            <p>の相図を (一般解の表示から) 描画すると以下のようになる (特に平衡点 $\mathbf{x} = 0$ 周辺で, 平衡点に近づくか離れるか, もしくは近づきも離れもしないかの違いに注意): 
             </p>
             <div class="resize"><img src='./images/spiral_sink-1.png'></div>
             <div class="resize"><img src='./images/center-1.png'></div>
@@ -1144,15 +1240,51 @@
             </div>
 
             <p>線形力学系 $\mathbf{x}' = A\mathbf{x}$ に対しては, 安定集合および不安定集合は必ず線型部分空間になる (そのため, <b>安定部分空間</b>, <b>不安定部分空間</b> という言葉が用いられる). 
-                平衡点 $\mathbf{0}$ が鞍点となるのは, 安定部分空間と不安定部分空間が共に存在していることを意味している. 
-                初期値が安定部分空間上に存在していれば解 $\mathbf{x}(t)$ は平衡点 (原点) に収束し, 初期値が不安定部分空間上にあれば, 解 $\mathbf{x}(t)$ は原点から遠ざかるように動く. 
+                線形力学系の平衡点 $\mathbf{0}$ が鞍点となるのは, 安定部分空間と不安定部分空間が共に存在していることを意味している. 
+                初期値が安定部分空間上に存在していれば解 $\mathbf{x}(t)$ は平衡点 $\mathbf{0}$ に収束し, 初期値が不安定部分空間上にあれば, 解 $\mathbf{x}(t)$ は $\mathbf{0}$ から遠ざかるように動く. 
                 他の全ての解は, 時間に逆行すると安定部分空間に近づき, 時間経過により不安定部分空間に近づく. 
+                この性質は, 鞍点を持つ力学系に対し相図の概形を描く際にも有用である.
             </p>
-            <p>また, $2$ 次元線形力学系において言及したように, 行列 $A$ の固有値および固有ベクトルは線形力学系の解の挙動を記述する重要な情報となる. 
+
+            <div class="exercise">
+                <p>線形力学系 
+                    \[
+                        \mathbf{x}' = \begin{pmatrix} 
+                            1 & 3 \cr 
+                            1 & -1 
+                        \end{pmatrix}\mathbf{x}
+                    \] の相図の概形を描け. 
+                </p>
+            </div>
+
+            <div class="answer">
+                <p>行列 $A$ の固有値は $\lambda_1 = -2$, $\lambda_2 = 2$ であり, 対応する固有ベクトルは例えば 
+                    \[
+                        \mathbf{v}_1 = \begin{pmatrix} 
+                            1 \cr 
+                            -1 
+                        \end{pmatrix},\quad \mathbf{v}_2 = \begin{pmatrix} 
+                            3 \cr 
+                            1 
+                        \end{pmatrix}
+                    \] である. 
+                    従って, $\mathbf{v}_1$ で張られる部分空間が不安定部分空間であり, $\mathbf{v}_2$ で張られる部分空間が安定部分空間である. 
+                    安定部分空間上の点は平衡点 $\mathbf{0}$ に収束し, 不安定部分空間上の点は $\mathbf{0}$ から遠ざかるように動く. 
+                    他の全ての解は, 時間に逆行すると安定部分空間に近づき, 時間経過により不安定部分空間に近づく. 
+                    これだけの情報から, 以下のような相図となっていることを推測できる: 
+                </p>
+
+                <div class="resize"><img src='./images/saddle2-1.png'></div>
+
+                        
+            </div><!-- /answer -->
+
+
+            <p>$2$ 次元線形力学系を具体例に言及したように, 行列 $A$ の固有値および固有ベクトルは線形力学系の解の挙動を記述する重要な情報となる. 
                 この資料では詳細は割愛するが, $2$ 次元の場合と同様に固有値 (の実部) の正負や重複度, 固有ベクトルを調べることで, 一般の $n$ 次元線形力学系に対して以下の成立がわかる:
             </p>
 
-            <div class="theorem" data-name="線形力学系の固有値と安定性">
+            <div class="theorem" data-name="線形力学系の固有値と安定性" id="thm_eigenvalue_and_stability">
                 行列 $A\in\mathbb{R}^{n\times n}$ を用いて表される線形力学系 $\mathbf{x}' = A\mathbf{x}$ について, 
                 <ul>
                     <li>実部が負である固有値に対応する行列 $A$ の固有ベクトルたちにより張られる部分空間は, この線形力学系の安定部分空間である.</li> 
@@ -1164,6 +1296,13 @@
                     <li>行列 $A$ の固有値に実部が正のものと負のものどちらも存在するならば, 原点は不安定な平衡点であり, 特に鞍点である.</li>
                 </ul>
             </div>
+
+            <p>特に 
+                \[
+                    \text{行列 $A$ の全ての固有値の実部が負} \iff e^{tA}\to 0 \text{ as }t\to\infty \iff \text{$\mathbf{x}' = A\mathbf{x}$ について $\mathbf{0}$ は漸近安定な平衡点}
+                \] は, 線形力学系の安定性の議論においてしばしば用いられるものである. 
+                全ての固有値の実部が負である正方行列を, 特に <b>フルヴィッツ安定行列</b> (<b>Hurwitz stable matrix</b>) と呼ぶことがある. 
+            </p>
 
             <!-- <p>このアイデアを<span class="wave">非線形</span>力学系に対して拡張することも可能である. 
                 これについては, 平衡点の安定性について深掘りした後に改めて解説する. 
