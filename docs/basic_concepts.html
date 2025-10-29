@@ -28,8 +28,10 @@
     
     <!-- main -->
     <main role="main"><article id="section1"><h1>線形力学系と諸概念</h1>
-        <p>まず, 力学系の具体例のいくつかに触れた後に, 力学系の理論を説明するために必要な概念を紹介する. 
-        具体例としては, ひとまず $1$ 次元の場合と線形力学系のみを扱うことにするが, ここで導入する様々なアイデアはより一般の状況を考える際にも重要となるものである.</p>
+        <p>まず, 力学系の中でも取り扱いの容易な $1$ 次元の場合と線形力学系のみ具体例として解説し, 力学系の性質, 数学理論を説明するために必要な概念を紹介する. 
+            ここで導入する様々なアイデアは, 非線形力学系を含むより一般の状況を考える際にも重要となるものである. 
+            ただし, 線形力学系において現れない現象に関連する概念については, 後ほど改めて言及することとし, ここでは初等的なものに限り説明する. 
+        </p>
 
         <section id="section1-1"><h2>1.1: 一次元力学系</h2>
             <p>まずは常微分方程式 
@@ -73,11 +75,11 @@
             </p>
             </div>
 
-            <p>上の例に解の表示を与えることは容易だが, 実際に各 $t$ に対し (つまり $t$ を動かした際に) $x(t)$ がどのように振る舞うかを考えようとすると, パラメータ $a$ が重要になることがわかる. 
+            <p>上の例について, 解の表示を与えることは容易だが, 実際に各 $t$ に対し (つまり $t$ を動かした際に) $x(t)$ がどのように振る舞うかを考えると (例えば大雑把にプロットしようとすると), パラメータ $a$ が重要になることがわかる. 
                 ひとまず $x_0\gt 0$ の場合のみ考えることにすると, $a\gt 0$ ならば $t\to \infty$ としたときに $x(t)\to\infty$ となり, 一方で $a\lt 0$ ならば $x(t)\to 0$ となる. 
                 また, $a=0$ の場合は $x(t)$ は定数となり $t$ に依存しない. 
                 このように, 力学系の解は系に含まれるパラメータにより挙動が大きく異なることがある. 
-                このような変化は <b>分岐</b> と呼ばれるものであり, 力学系の重要な性質の一つである. 
+                パラメータの変化により発生するこのような変化は <b>分岐</b> (<b>bifurcation</b>) と呼ばれるものであり, 力学系の重要な性質の一つである. 
             </p>
 
             <div class="resize"><img src='./images/exponential-1.png'></div>
@@ -133,8 +135,8 @@
 
             <div class="resize"><img src='./images/logistic_phase-1.png'></div>
 
-            <p>この例では解の表示を具体的に得ることができたるため, 各初期値 $x(0)$ に対する $x(t)$ を直接プロットすることもできる (下図参照) し, また多くの場合は数値計算により, 解 $x(t)$ がどのように動くかを近似的に得ることができる. 
-                一方で, 仮にそうしたことができないとしても, 解の大雑把な挙動を知ることや分岐により解の挙動がどのように変化するかを調べることは力学系の解析において重要となる. 
+            <p>この例では解の表示を具体的に得ることができたるため, 各初期値 $x(0)$ に対する $x(t)$ を直接プロットすることもできる (下図参照), また多くの場合は数値計算により, 解 $x(t)$ がどのように動くかを近似的に得ることができる. 
+                一方で, 仮に解を明示的に求めることができないとしても, 解の大雑把な挙動を知ることや分岐により解の挙動がどのように変化するかを調べることは力学系の解析において重要となる. 
             </p>
 
             <div class="resize"><img src='./images/logistic-1.png'></div>
@@ -531,7 +533,8 @@
                         &= c_1e^{\lambda t}\mathbf{v}_1 + c_2(te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2)
                     \end{array} 
                 \] を得ることができる.
-                別の解法として, (例えばケーリー・ハミルトンの定理などから) 
+            </p>
+            <p>別の解法として, (例えばケーリー・ハミルトンの定理などから) 
                 \[
                     (A-\lambda I)^2 = O 
                 \] となることに注目し, 
@@ -544,7 +547,8 @@
                     \end{array}
                 \] と変形することで, $\mathbf{x}(t) = e^{tA}\mathbf{x}_0 = (1-\lambda t)e^{\lambda t}\mathbf{x}_0 + te^{\lambda t}A\mathbf{x}_0$ という特殊解の表示を得ることもできる. 
                 実際に, この式に $\mathbf{x}_0 = c_1\mathbf{v}_1 + c_2\mathbf{v}_2$ を代入すれば上と同じ結果が得られる. 
-                さらに, 上で定義した行列 $P$ を用いれば  
+            </p>    
+            <p>さらに, 上で定義した行列 $P$ を用いれば  
                 \[
                     P^{-1}AP = \begin{pmatrix} 
                         \lambda & 1 \cr 
@@ -585,9 +589,9 @@
                 \] が (任意の $c_1, c_2\in\mathbb{C}$ に対して) $\mathbf{x}' = A\mathbf{x}$ を満たすことは確かだが, 一般に実数係数の微分方程式の解としては実数値の関数がほしい. 
                 そこで, 
                 \[
-                    \lambda_1 = a+ib,\quad \mathbf{v}_1 = \mathbf{w}_1 + i\mathbf{w}_2
-                \] とおき, これら $a, b\in\mathbb{R}$, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^2$ を用いて一般解を表現したい, ここで $i$ は虚数単位である. 
-                なお, $\lambda_1\in\mathbb{C}\backslash\mathbb{R}$ より $b\neq0$ であることに注意. 
+                    \lambda_1 = \alpha+i\beta,\quad \mathbf{v}_1 = \mathbf{w}_1 + i\mathbf{w}_2
+                \] とおき, これら $\alpha, \beta\in\mathbb{R}$, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^2$ を用いて一般解を表現したい, ここで $i$ は虚数単位である. 
+                なお, $\lambda_1\in\mathbb{C}\backslash\mathbb{R}$ より $\beta\neq0$ であることに注意. 
             </p>
             <p>まず, 以下の性質を確認しよう:
             </p>
@@ -608,29 +612,29 @@
                 <ul>
                     <li>もしも $\mathbf{w}_2=\mathbf{0}$ ならば (つまり $\mathbf{v}_1\in\mathbb{R}^n$ ならば), $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1$ の左辺は実ベクトルであり, 一方で固有ベクトル $\mathbf{v}_1$ は $\mathbf{0}$ では無いことから右辺は実ベクトルでは無い, 従って矛盾する. 
                     </li>
-                    <li>$\lambda = a + ib$ とおく, ただし $a, b\in\mathbb{R}$ であり, $\lambda\in\mathbb{C}\backslash\mathbb{R}$ より $b\neq0$ である. 
+                    <li>$\lambda = \alpha + i\beta$ とおく, ただし $\alpha, \beta\in\mathbb{R}$ であり, $\lambda\in\mathbb{C}\backslash\mathbb{R}$ より $\beta\neq0$ である. 
                         もしも $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ が線型独立で無いならば, $\mathbf{w}_1 = c\mathbf{w}_2$ (つまり $\mathbf{v} = (c+i)\mathbf{w}_2$) となる $c\in\mathbb{R}$ が存在するため, 
                         \[
                             \begin{array}{rl} 
                                 (c+i)A\mathbf{w}_2 &= A\mathbf{v} \cr 
                                 &= \lambda\mathbf{v} \cr 
-                                &= (a+ib)(c+i)\mathbf{w}_2
+                                &= (\alpha+i\beta)(c+i)\mathbf{w}_2
                             \end{array}
                         \] となるが, $c\in\mathbb{R}$ より $c+i\neq0$ であり, 従って 
                         \[
-                            A\mathbf{w}_2 = (a+ib)\mathbf{w}_2 
-                        \] が成立する. この左辺は実ベクトルであり, 右辺は $b\neq0$, $\mathbf{w}_2\neq\mathbf{0}$ より実ベクトルでは無いため矛盾する. 
+                            A\mathbf{w}_2 = (\alpha+i\beta)\mathbf{w}_2 
+                        \] が成立する. この左辺は実ベクトルであり, 右辺は $\beta\neq0$, $\mathbf{w}_2\neq\mathbf{0}$ より実ベクトルでは無いため矛盾する. 
                     </li>
                     <li>$A\in\mathbb{R}^{n\times n}$ より $\overline{A}=A$ であることを用いると, $A\overline{\mathbf{v}} = \overline{A}\overline{\mathbf{v}} = \overline{A\mathbf{v}} = \overline{\lambda\mathbf{v}} = \overline{\lambda}\overline{\mathbf{v}}$ となる.</li>
                 </ul>
             </div><!-- /proof -->
 
             <p>これらの性質は $n=2$ の場合にも成立するため, 固有値 $\lambda_1$ に対応する固有ベクトル $\mathbf{v}_1 = \mathbf{w}_1 + i\mathbf{w}_2$ および固有値 $\lambda_2 = \overline{\lambda_1}$ に対応する固有ベクトル $\mathbf{v}_2 = \overline{\mathbf{v}}_1$ を考えることができる.  
-                また固有ベクトルと密接に関連する $2$ つの線型独立な実ベクトル $\mathbf{w}_1$, $\mathbf{w}_2\in\mathbb{R}^2$ が得られることになるため, $\mathbf{w}_1, \mathbf{w}_2$ は $\mathbb{R}^2$ の基底となる. 
+                このように両方の固有ベクトルと密接に関連する $2$ つの実ベクトル $\mathbf{w}_1$, $\mathbf{w}_2\in\mathbb{R}^2$ が得られるが, これらは線型独立であるため $\mathbb{R}^2$ の基底となる. 
                 これらを用いて一般解の表現を試みよう. 以降, 複素ベクトル $\mathbf{z}\in\mathbb{C}^n$ に対し, 
                 \[
                     \mathbf{z} = \mathbf{a} + i\mathbf{b} \quad (\mathbf{a}, \mathbf{b}\in\mathbb{R}^n)
-                \] であるときに, 
+                \] であるときに, ベクトル $\mathbf{z}$ の実部および虚部を
                 \[
                     \operatorname{Re}(\mathbf{z}) = \mathbf{a},\quad \operatorname{Im}(\mathbf{z}) = \mathbf{b}
                 \] と表記することにする. 
@@ -638,27 +642,34 @@
             <p> まず, <b>オイラーの公式</b>  
                 \[
                     e^{iz} = \cos z + i\sin z \quad\text{ for all }\quad z\in\mathbb{C}
-                \] を用いて 
+                \] を用いると 
                 \[
-                    e^{\lambda_1 t} = e^{(a+ib)t} = e^{at}(\cos bt + i\sin bt)
+                    e^{\lambda_1 t} = e^{(\alpha+i\beta)t} = e^{\alpha t}(\cos \beta t + i\sin \beta t)
                 \] が得られる. 従って 
                 \[
-                    e^{\lambda_1 t}\mathbf{v}_1 = e^{at}((\mathbf{w}_1\cos bt - \mathbf{w}_2\sin bt) + i(\mathbf{w}_1\sin bt + \mathbf{w}_2\cos bt))
+                    e^{\lambda_1 t}\mathbf{v}_1 = e^{\alpha t}((\mathbf{w}_1\cos \beta t - \mathbf{w}_2\sin \beta t) + i(\mathbf{w}_1\sin \beta t + \mathbf{w}_2\cos \beta t))
                 \] であり, また 
                 \[
                     e^{\lambda_2 t}\mathbf{v}_2 = \overline{e^{\lambda_1 t}\mathbf{v}_1}
                 \] である. これらを用いると, 
                 \[
                     \begin{array}{rl}
-                        \mathbf{x}(t) &= \operatorname{Re}(e^{\lambda_1 t}\mathbf{v}_1) = \dfrac{1}{2}e^{\lambda_1 t}\mathbf{v}_1 + \dfrac{1}{2}e^{\lambda_2 t}\mathbf{v}_2 = e^{at}(\mathbf{w}_1\cos bt - \mathbf{w}_2\sin bt) \in \mathbb{R}, \cr  
-                        \mathbf{x}(t) &= \operatorname{Im}(e^{\lambda_1 t}\mathbf{v}_1) = \dfrac{i}{2}e^{\lambda_1 t}\mathbf{v}_1 - \dfrac{i}{2}e^{\lambda_2 t}\mathbf{v}_2 = e^{at}(\mathbf{w}_1\sin bt + \mathbf{w}_2\cos bt) \in \mathbb{R} 
+                        \mathbf{x}(t) &= \operatorname{Re}(e^{\lambda_1 t}\mathbf{v}_1) = \dfrac{1}{2}e^{\lambda_1 t}\mathbf{v}_1 + \dfrac{1}{2}e^{\lambda_2 t}\mathbf{v}_2 = e^{\alpha t}(\mathbf{w}_1\cos \beta t - \mathbf{w}_2\sin \beta t) \in \mathbb{R}, \cr  
+                        \mathbf{x}(t) &= \operatorname{Im}(e^{\lambda_1 t}\mathbf{v}_1) = \dfrac{i}{2}e^{\lambda_1 t}\mathbf{v}_1 - \dfrac{i}{2}e^{\lambda_2 t}\mathbf{v}_2 = e^{\alpha t}(\mathbf{w}_1\sin \beta t + \mathbf{w}_2\cos \beta t) \in \mathbb{R} 
                     \end{array} 
-                \] はどちらも $\mathbf{x}' = A\mathbf{x}$ を満たし, 実はこれらの線型結合で一般解が得られる: 
+                \] はどちらも $\mathbf{x}' = A\mathbf{x}$ を満たし, これらの線型結合で一般解が得られる: 
                 \[
-                    \mathbf{x}(t) = e^{at}(\widetilde{c}_1(\mathbf{w}_1\cos bt - \mathbf{w}_2\sin bt) + \widetilde{c}_2(\mathbf{w}_1\sin bt + \mathbf{w}_2\cos bt)) \in\mathbb{R},
+                    \mathbf{x}(t) = e^{\alpha t}(\widetilde{c}_1(\mathbf{w}_1\cos \beta t - \mathbf{w}_2\sin \beta t) + \widetilde{c}_2(\mathbf{w}_1\sin \beta t + \mathbf{w}_2\cos \beta t)) \in\mathbb{R},
                 \] ただし, $\widetilde{c}_1, \widetilde{c}_2\in\mathbb{R}$ である. 
-                このようにして, 実数係数の微分方程式の解となる実数値の関数が得られる. 
-                なお, $\mathbf{v}_2 = \overline{\mathbf{v}}_1$ であることに注意すると, 初期条件 $\mathbf{x}_0\in\mathbb{R}^2$ が与えられたときに 
+            </p>
+            <p>少し整理してもう一度説明すると, $2$ 次元線形力学系 $\mathbf{x}' = A\mathbf{x}$ の解は, 複素数値関数を許せば
+                \[
+                    \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 \in\mathbb{C}^2\quad (c_1, c_2\in\mathbb{C})
+                \] と表すことができる. 
+                もしも $\lambda_1\in\mathbb{C}\backslash\mathbb{R}$ ならば, $2$ つの固有値, 固有ベクトルは複素共役となるため, どちらか一方 (例えば $\lambda_1\in\mathbb{C}\backslash\mathbb{R}$ と $\mathbf{v}_1\in\mathbb{C}^2\backslash\mathbb{R}^2$) に注目し, それらの実部と虚部とを求めれば必要な情報は手に入る. 
+                具体的には, $e^{\lambda_1 t}\mathbf{v}_1$ の実部と虚部との線型結合により, 実数係数の微分方程式の解となる実数値の関数が得られるのである.
+            </p>
+            <p>なお, $\mathbf{v}_2 = \overline{\mathbf{v}}_1$ であることに注意すると, 初期条件 $\mathbf{x}_0\in\mathbb{R}^2$ が与えられたときに 
                 \[
                     \mathbf{x}_0 = \widetilde{c}_1\mathbf{w}_1 + \widetilde{c}_2\mathbf{w}_2
                 \] なる $\widetilde{c}_1, \widetilde{c}_2\in\mathbb{R}$ に対して, $c_1 = \dfrac{\widetilde{c}_1 - i\widetilde{c}_2}{2}$, $c_2 = \overline{c}_1$ とおくと 
@@ -676,55 +687,55 @@
                 \] が得られる. 
                 これは, 上の一般解の表記において $\widetilde{c}_1, \widetilde{c}_2\in\mathbb{R}$ を与えられた初期条件に応じて指定したものになっている. 
             </p>
-            <p>なお, $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1$ に注目すると 
+            <p>なお, $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1 = (\alpha + i\beta)(\mathbf{w}_1+i\mathbf{w}_2)$ に注目すると 
                 \[
                     \begin{array}{rl}
-                        A(\mathbf{w}_1 + i\mathbf{w}_2) &= (a+ib)(\mathbf{w}_1 + i\mathbf{w}_2) \cr 
-                        &= a\mathbf{w}_1 - b\mathbf{w}_2 + i(b\mathbf{w}_1 + a\mathbf{w}_2)
+                        A(\mathbf{w}_1 + i\mathbf{w}_2) &= (\alpha+i\beta)(\mathbf{w}_1 + i\mathbf{w}_2) \cr 
+                        &= \alpha\mathbf{w}_1 - \beta\mathbf{w}_2 + i(\beta\mathbf{w}_1 + \alpha\mathbf{w}_2)
                     \end{array}
                 \] となるため, 実部と虚部とをそれぞれ比較することで
                 \[
                     \left\{\begin{array}{rl} 
-                        A\mathbf{w}_1 &= a\mathbf{w}_1 - b\mathbf{w}_2, \cr 
-                        A\mathbf{w}_2 &= b\mathbf{w}_1 + a\mathbf{w}_2  
+                        A\mathbf{w}_1 &= \alpha\mathbf{w}_1 - \beta\mathbf{w}_2, \cr 
+                        A\mathbf{w}_2 &= \beta\mathbf{w}_1 + \alpha\mathbf{w}_2  
                     \end{array}\right.
                 \] が得られる ($A\mathbf{v}_2 = \lambda_2\mathbf{v}_2$ に注目して実部と虚部とをそれぞれ比較しても同じ結果が得られる). 
                 従って, 
                 \[
                     A(\mathbf{w}_1, \mathbf{w}_2) = (\mathbf{w}_1, \mathbf{w}_2)\begin{pmatrix} 
-                        a & b \cr 
-                        -b & a 
+                        \alpha & \beta \cr 
+                        -\beta & \alpha 
                     \end{pmatrix}
                 \] となり, $P=(\mathbf{w}_1, \mathbf{w}_2)$ とおくことで, 
                 \[
                     P^{-1}AP = \begin{pmatrix} 
-                        a & b \cr 
-                        -b & a 
+                        \alpha & \beta \cr 
+                        -\beta & \alpha 
                     \end{pmatrix}
                 \] が得られる.
                 このことは, $A$ が異なる $2$ つの複素固有値を持つパターンに対する式 $(1.2)$ の解は
                 \[
                     \left\{\begin{array}{rl} 
                         \widehat{\mathbf{x}}' &= \begin{pmatrix} 
-                            a & b \cr 
-                            -b & a 
+                            \alpha & \beta \cr 
+                            -\beta & \alpha 
                         \end{pmatrix}\widehat{\mathbf{x}}, \cr 
                         \widehat{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
                     \end{array}\right. 
-                \] の解 $\widehat{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widehat{\mathbf{x}}$ により説明できることを意味している ($\lambda_1=a+ib$, $\lambda_2=a-ib$, $b\neq 0$ に注意). 
+                \] の解 $\widehat{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widehat{\mathbf{x}}$ により説明できることを意味している ($\lambda_1=\alpha+i\beta$, $\lambda_2=\alpha-i\beta$, $\beta\neq 0$ に注意). 
                 実際, 一般解を考えると 
                 \[
                     \widehat{\mathbf{x}}(t) = \begin{pmatrix} 
-                        e^{at}(\widetilde{c}_1\cos bt + \widetilde{c}_2\sin bt) \cr 
-                        e^{at}(-\widetilde{c}_1\sin bt + \widetilde{c}_2\cos bt) 
+                        e^{\alpha t}(\widetilde{c}_1\cos \beta t + \widetilde{c}_2\sin \beta t) \cr 
+                        e^{\alpha t}(-\widetilde{c}_1\sin \beta t + \widetilde{c}_2\cos \beta t) 
                     \end{pmatrix}
                 \] が得られ, 確かに 
                 \[
                     \begin{array}{rl}
-                        \mathbf{x}(t) &= e^{at}(\widetilde{c}_1(\mathbf{w}_1\cos bt - \mathbf{w}_2\sin bt) + \widetilde{c}_2(\mathbf{w}_1\sin bt + \mathbf{w}_2\cos bt)) \cr 
+                        \mathbf{x}(t) &= e^{\alpha t}(\widetilde{c}_1(\mathbf{w}_1\cos \beta t - \mathbf{w}_2\sin \beta t) + \widetilde{c}_2(\mathbf{w}_1\sin \beta t + \mathbf{w}_2\cos \beta t)) \cr 
                         &= (\mathbf{w}_1, \mathbf{w}_2) \begin{pmatrix} 
-                            e^{at}(\widetilde{c}_1\cos bt + \widetilde{c}_2\sin bt) \cr 
-                        e^{at}(-\widetilde{c}_1\sin bt + \widetilde{c}_2\cos bt)
+                            e^{\alpha t}(\widetilde{c}_1\cos \beta t + \widetilde{c}_2\sin \beta t) \cr 
+                        e^{\alpha t}(-\widetilde{c}_1\sin \beta t + \widetilde{c}_2\cos \beta t)
                         \end{pmatrix} = P\widehat{\mathbf{x}}(t)
                     \end{array}
                 \] となっている. 
@@ -745,10 +756,10 @@
 
         <section id="section1-3"><h2>1.3: 平衡点の分類と軌道</h2>
             <p>ここまでに力学系の具体例, 特に解を式の形で表現できる例をいくつか紹介したが, 一方で解を明示的に表すことができない力学系もある. 
-                そのような場合に, 解のおおまかな挙動を知るために有用な概念やテクニックを簡単に導入しよう. 
+                そのような場合に, 解のおおまかな挙動を知るために有用な概念を導入しよう. 
                 <!-- これら概念は, 線形力学系の解について具体的な図示により深く理解するにも有用となるため, 具体例として解を表示できる場合も考察することにする.  -->
-                ただし, いくつかの概念については数学的に厳密な説明を控えたり, 詳細な説明を後回しにするものもある. 
-                また, 非線形力学系に特有の概念については, 後に説明することにするが, ここで説明する概念のほとんどは非線形力学系にも応用することができるものである. 
+                <!-- ただし, いくつかの概念については数学的に厳密な説明を控えたり, 詳細な説明を後回しにするものもある.  -->
+                <!-- 非線形力学系に特有の概念については, 後に説明することにするが, ここで説明する概念は非線形力学系にも応用することができるものである.  -->
             </p>
 
             <div class="definition" data-name="平衡点">
@@ -882,7 +893,7 @@
                     <li>ある自励系の解 $\mathbf{x}(t)$ に対して (初期値 $\mathbf{x}_0$ に依存することを強調するために流れ $\varphi$ を用いて $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ と表すとき), 
                         \[
                             \{\varphi(t, \mathbf{x}_0) : t\in \mathbb{R}\} \subset X\quad (\mbox{もしくは }\{\varphi(t, \mathbf{x}_0) : t\in \mathbb{Z}\} \subset X)
-                        \] を, (初期値 $\mathbf{x}_0$ に対する) <b>軌道</b> (<b>orbit</b>, <b>trajectory</b>) もしくは <b>解軌道</b> という. 
+                        \] を, (初期値 $\mathbf{x}_0$ に対する) <b>軌道</b> (<b>trajectory</b>) もしくは <b>解軌道</b> という. 
                     </li>
                     <li>ある力学系の (様々な初期値に対する) 軌道の概略を相空間上に表した図を <b>相図</b> (<b>phase portrait</b>) という. </li>
                 </ul>
@@ -896,6 +907,9 @@
                     <li>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ においては, $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ が時間経過に伴いどのように動くか, という情報が $\mathbf{f}(\mathbf{x})$ として (時間に無関係なベクトル場として) 与えられることになる. 
                         従って, ベクトル場 $\mathbf{f}(\mathbf{x})$ (もしくは方向場) を図示することで, $\mathbf{x}(t)$ が時間経過により相空間上をどの向きに動くかをイメージできる, つまり軌道の概形がわかる. 
                     </li>
+                    <ul>
+                        <li>より直感的には, 自励系の解は $\mathbf{f}$ により与えられた向きと大きさに従い, 時間経過により相空間上を流れる点であるとイメージすることができる.</li>
+                    </ul>
                     <li>自励系の解 $\mathbf{x}(t)$ と流れ $\varphi$ は, 
                         \[
                             \varphi(t, \mathbf{x}(s)) = \mathbf{x}(s+t)
@@ -988,7 +1002,7 @@
             </div>
 
             <div class="remark">
-                <p>線形力学系の場合は, 円周上 (球面上) の周期軌道しか現れないが, 非線形力学系の場合はより複雑な周期起動が現れることがある. </p>
+                <p>線形力学系の場合は単純な形の周期軌道しか現れないが, 非線形力学系の場合はより複雑な周期軌道が現れることがある. </p>
             </div>
 
             <!-- <div class="example">
@@ -1090,8 +1104,8 @@
                 </p>
             </div><!-- /remark -->
 
-            <p>上の $3$ つの例のように, 軌道は平衡点に近づく, 離れるもしくは平衡点周りを周回するといった振る舞いをする. 
-                まず, 平衡点に近づく, 離れる場合について詳細な分類を確認する. 
+            <p>上の例のように, 軌道は平衡点に近づく, 離れる (もしくは平衡点周りを周回する) といった振る舞いをする. 
+                ここで, 平衡点に近づく, 離れる場合について詳細な分類を紹介する. 
             </p>
 
             <div class="definition" data-name="源点, 沈点, 鞍点">
@@ -1128,9 +1142,9 @@
                 簡単のため, $\lambda_1\lt \lambda_2$ とすると,  
             </p>
             <ul>
-                <li>$\lambda_1 \lt \lambda_2 \lt 0$ のとき (平衡点は沈点となる), </li>
-                <li>$0\lt \lambda_1 \lt \lambda_2$ のとき (平衡点は源点となる), </li>
-                <li>$\lambda_1 \lt 0\lt \lambda_2$ のとき (平衡点は鞍点となる)</li>
+                <li>$\lambda_1 \lt \lambda_2 \lt 0$ のとき (このとき平衡点は沈点となる), </li>
+                <li>$0\lt \lambda_1 \lt \lambda_2$ のとき (このとき平衡点は源点となる), </li>
+                <li>$\lambda_1 \lt 0\lt \lambda_2$ のとき (このとき平衡点は鞍点となる)</li>
             </ul>
             <p>の三つの場合を考えることができる. 
                 実際に, 一般解の表示から相図を描画することで平衡点 $\mathbf{x}=0$ がそれぞれ沈点, 源点, 鞍点となっていることを確認できる.
@@ -1156,17 +1170,17 @@
                     <li>初期条件 $\mathbf{x}(0) = \begin{pmatrix} 
                             1 \cr 
                             1 
-                        \end{pmatrix}$ を与えた際の特殊解 $\mathbf{x}_1(t)$ が, $t\to\infty$ としたときに収束するか否か答えよ.</li>
+                        \end{pmatrix}$ を与えた際の特殊解 $\mathbf{x}_1(t)$ が, $t\to\infty$ としたときに平衡点 $\mathbf{0}$ に収束するか否か答えよ.</li>
                     <li>初期条件 $\mathbf{x}(0) = \begin{pmatrix} 
                             -1 \cr 
                             1 
-                        \end{pmatrix}$ を与えた際の特殊解 $\mathbf{x}_2(t)$ が, $t\to\infty$ としたときに収束するか否か答えよ.</li>    
+                        \end{pmatrix}$ を与えた際の特殊解 $\mathbf{x}_2(t)$ が, $t\to\infty$ としたときに平衡点 $\mathbf{0}$ に収束するか否か答えよ.</li>    
                 </ul>
             </div>
 
             <div class="answer">
                 <ul>
-                    <li>行列 $A$ の固有値は $\lambda_1 = -2$, $\lambda_2 = 2$ であり, 対応する固有ベクトルは例えば 
+                    <li>線形力学系の行列の固有値は $\lambda_1 = -2$, $\lambda_2 = 2$ であり, 対応する固有ベクトルは例えば 
                         \[
                             \mathbf{v}_1 = \begin{pmatrix} 
                                 1 \cr 
@@ -1197,13 +1211,15 @@
                         \[
                             \mathbf{x}_1(t) = \widetilde{c}_1e^{-2t}\mathbf{v}_1 + \widetilde{c}_2e^{2t}\mathbf{v}_2
                         \] について, $\mathbf{x}(0) = \widetilde{c}_1\mathbf{v}_1 + \widetilde{c}_2\mathbf{v}_2$ であることから $\widetilde{c}_2\neq0$ である. 
-                        従って, $\displaystyle\lim_{t\to\infty}\mathbf{x}_1(t)$ は収束しない.
+                        従って, $\displaystyle\lim_{t\to\infty}\mathbf{x}_1(t)\neq\mathbf{0}$.
                     </li>
                     <li>初期条件 $\mathbf{x}(0) = \begin{pmatrix} 
                             -1 \cr 
                             1 
                         \end{pmatrix} = -\mathbf{v}_1$ を与えた際の特殊解は $\mathbf{x}_2(t) = -e^{-2t}\mathbf{v}_1$ なので $\displaystyle\lim_{t\to\infty}\mathbf{x}_2(t) = \mathbf{0}$.
                     </li>
+                    <li>このように, 平衡点に近づく軌道と離れる軌道が両立している. 
+                        実は, この平衡点 $\mathbf{0}$ は鞍点となっている. </li>
                 </ul>
             </div><!-- /answer -->
 
@@ -1229,23 +1245,215 @@
                     <li>平衡点 $\widetilde{\mathbf{x}}$ に対して, 
                         \[
                             \{\mathbf{x}_0\in X : \varphi(t, \mathbf{x}_0) \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to\infty\}
-                        \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>安定集合</b> (<b>stable set</b>) もしくは <b>安定多様体</b> (<b>stable manifold</b>) という. 
+                        \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>安定集合</b> (<b>stable set</b>), 多様体の構造を持つなら <b>安定多様体</b> (<b>stable manifold</b>) という. 
                     </li>
                     <li>平衡点 $\widetilde{\mathbf{x}}$ に対して, 
                         \[
                             \{\mathbf{x}_0\in X : \varphi(-t, \mathbf{x}_0) \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to\infty\}
-                        \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>不安定集合</b> (<b>unstable set</b>) もしくは <b>不安定多様体</b> (<b>unstable manifold</b>) という. 
+                        \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>不安定集合</b> (<b>unstable set</b>), 多様体の構造を持つなら <b>不安定多様体</b> (<b>unstable manifold</b>) という. 
                     </li>
                 </ul>
             </div>
 
-            <p>線形力学系 $\mathbf{x}' = A\mathbf{x}$ に対しては, 安定集合および不安定集合は必ず線型部分空間になる (そのため, <b>安定部分空間</b>, <b>不安定部分空間</b> という言葉が用いられる). 
-                線形力学系の平衡点 $\mathbf{0}$ が鞍点となるのは, 安定部分空間と不安定部分空間が共に存在していることを意味している. 
-                初期値が安定部分空間上に存在していれば解 $\mathbf{x}(t)$ は平衡点 $\mathbf{0}$ に収束し, 初期値が不安定部分空間上にあれば, 解 $\mathbf{x}(t)$ は $\mathbf{0}$ から遠ざかるように動く. 
-                他の全ての解は, 時間に逆行すると安定部分空間に近づき, 時間経過により不安定部分空間に近づく. 
-                この性質は, 鞍点を持つ力学系に対し相図の概形を描く際にも有用である.
+            <div class="remark">
+                <p>線形力学系 $\mathbf{x}' = A\mathbf{x}$ に対しては, 安定集合および不安定集合は必ず $\mathbb{R}^n$ の線型部分空間になる. 
+                    そのため, <b>安定部分空間</b> (<b>stable subspace</b>), <b>不安定部分空間</b> (<b>unstable subspace</b>) という言葉が用いられる. 
+                </p>
+            </div>
+
+            <div class="example">
+                <p>線形力学系 
+                    \[
+                        \mathbf{x}' = \begin{pmatrix} 
+                            -1 & 2 \cr 
+                            0 & 1 
+                        \end{pmatrix}\mathbf{x}
+                    \] を考える. 
+                    行列の固有値および対応する固有ベクトルは
+                    \[
+                        \lambda_1 = -1,\quad \lambda_2 = 1,\quad \mathbf{v}_1 = \begin{pmatrix} 
+                            1  \cr 
+                            0 
+                        \end{pmatrix}, \quad \mathbf{v}_2 = \begin{pmatrix} 
+                            1 \cr 
+                            1 
+                        \end{pmatrix}
+                    \] であり, 従って一般解は 
+                    \[
+                        \mathbf{x}(t) = c_1e^{-t}\begin{pmatrix} 
+                            1 \cr 
+                            0 
+                        \end{pmatrix} + c_2e^t\begin{pmatrix} 
+                            1 \cr 
+                            1 
+                        \end{pmatrix}
+                    \] である. 
+                    これを元に相図を描くと, $\{(x, y)\in\mathbb{R}^2 : y=0\}$ (つまり $x$ 軸上の部分, $\mathbf{v}_1$ で張られる部分空間) が安定部分空間となっていることがわかる. 
+                    同様に, $\{(x,y)\in\mathbb{R}^2 : y=x\}$ (つまり $\mathbf{v}_2$ で張られる部分空間) が不安定部分空間である. 
+                </p>
+                <div class="resize"><img src='./images/saddle3-1.png'></div>
+            </div>
+
+            <p>$2$ 次元線形力学系を具体例に言及したように, 行列 $A$ の固有値および固有ベクトルは線形力学系の解の挙動を記述する重要な情報となる. 
+                実際に, 上の例では安定部分空間および不安定部分空間が固有ベクトルと関連していることを確認できるが, これは偶然ではない.
+                この資料では詳細は割愛するが, $2$ 次元の場合と同様に固有値 (の実部) の正負や重複度, 固有ベクトルを調べることで, 一般の $n$ 次元線形力学系に対して以下の成立がわかる:
             </p>
 
+            <div class="theorem" data-name="線形力学系の固有値と安定性" id="thm_eigenvalue_and_stability">
+                行列 $A\in\mathbb{R}^{n\times n}$ を用いて表される線形力学系 $\mathbf{x}' = A\mathbf{x}$ について, 
+                <ul>
+                    <li>実部が負である固有値に対応する行列 $A$ の (一般固有ベクトルを含む) 固有ベクトルたちの実部および虚部により張られる部分空間は, この線形力学系の安定部分空間である.</li> 
+                    <li>実部が正である固有値に対応する行列 $A$ の (一般固有ベクトルを含む) 固有ベクトルたちの実部および虚部により張られる部分空間は, この線形力学系の不安定部分空間である.</li>
+                    <li>行列 $A$ の全ての固有値の実部が $0$ 以下であれば, 原点は安定な平衡点である.</li>
+                    <li>行列 $A$ の全ての固有値の実部が負であれば, 原点は漸近安定な平衡点である (沈点である).</li>
+                    <li>行列 $A$ の固有値に実部が正のものが存在するならば, 原点は不安定な平衡点である.</li>
+                    <li>行列 $A$ の全ての固有値の実部が正であれば, 原点は不安定な平衡点であり, 特に源点である.</li>
+                    <li>行列 $A$ の固有値に実部が正のものと負のものどちらも存在するならば, 原点は不安定な平衡点であり, 特に鞍点である.</li>
+                </ul>
+            </div>
+
+            <div class="remark">
+                <p>特に 
+                    \[
+                        \text{行列 $A$ の全ての固有値の実部が負} \iff e^{tA}\to 0 \text{ as }t\to\infty \iff \text{$\mathbf{x}' = A\mathbf{x}$ について $\mathbf{0}$ は漸近安定な平衡点}
+                    \] は, 線形力学系の安定性の議論においてしばしば用いられるものである. 
+                    全ての固有値の実部が負である正方行列を, 特に <b>フルヴィッツ安定行列</b> (<b>Hurwitz stable matrix</b>) と呼ぶことがある. 
+                </p>
+            </div>
+
+            <p>固有値実部の正負により, 対応する固有ベクトルたちにより張られる空間が線形力学系の安定部分空間, 不安定部分空間になる. 
+                同様に, 実部が $0$ である固有値に対応する固有ベクトルにより張られる線形部分空間を考えよう.
+            </p>
+
+            <div class="definition" data-name="中心部分空間">
+                <p>行列 $A\in\mathbb{R}^{n\times n}$ を用いて表される線形力学系 $\mathbf{x}' = A\mathbf{x}$ について, 行列 $A$ が実部が $0$ である固有値を持つならば, 対応する (一般固有ベクトルを含む) 固有ベクトルたちの実部および虚部で張られる $\mathbb{R}^n$ の線形部分空間を <b>中心部分空間</b> (<b>center subspace</b>) という.</p>
+            </div>
+
+            <div class="remark">
+                <p>非線形力学系に対しては <b>中心多様体</b> (<b>center manifold</b>) を考えることができ, これは非線形力学系の解析において重要な役割を担う概念であるが, その定義は非線形力学系を扱う際に改めて紹介する.
+                </p>
+            </div>
+
+            <p>上で述べた性質は, 固有値が実数でない場合, 固有ベクトルが実ベクトルでない場合も含めて考慮している. 
+                これを整理し直感的に説明しなおすとともに, 線形力学系の相図の概形について改めてまとめよう: 
+            </p>
+            <ul>
+                <li>線形力学系の固有値を調べることで, 対応する固有ベクトルから安定部分空間, 不安定部分空間, 中心部分空間をそれぞれ得ることができる. </li>
+                <ul>
+                    <li>以下, それぞれ $E^s$, $E^u$, $E^c$ と表すことにすると, $\mathbb{R}^n$ をこれらの直和で表すことができる: 
+                        \[
+                            \mathbb{R}^n = E^s \oplus E^u \oplus E^c.
+                        \]</li>
+                </ul>
+                <li>初期値が安定部分空間上に存在するならば, 解 $\mathbf{x}(t)$ は時間経過とともに線形力学系の平衡点 $\mathbf{0}$ に近づいていく. </li>
+                    <ul>
+                        <li>特に, $E^s = \mathbb{R}^n$ の場合 (不安定部分空間も中心部分空間も空集合である場合), 全ての解は平衡点に近づくことになり, つまり原点は漸近安定である. </li>
+                    </ul>
+                <li>初期値が不安定部分空間上に存在するならば, 解 $\mathbf{x}(t)$ は時間に逆行したときに線形力学系の平衡点 $\mathbf{0}$ に近づいていく. </li>
+                    <ul>
+                        <li>特に, $E^u = \mathbb{R}^n$ の場合 (安定部分空間も中心部分空間も空集合である場合), 全ての解は時間に逆行したとき平衡点に近づくことになり, つまり原点は源点である. </li>
+                    </ul>
+                <li>中心部分空間上の点が, 時間経過とともにどのように振る舞うかに関してはさまざまなパターンがある得る.</li>
+                    <ul>
+                        <li>最もシンプルな挙動は単純に回転するものだが, 例えば $2$ 次元線形力学系でも固有値が $0$ のみ (重複度 $2$) の場合などはその限りではない.</li>
+                    </ul>
+                <li>安定部分空間と不安定部分空間の両方が存在する場合, 原点は鞍点となり, 解の軌道は時間に逆行すると安定部分空間に近づき, 時間経過により不安定部分空間に近づく.</li>
+            </ul>
+
+            <div class="example">
+                <p>線形力学系 
+                    \[
+                        \mathbf{x}' = \begin{pmatrix} 
+                            -1 & 1 \cr 
+                            0 & -1 
+                        \end{pmatrix} 
+                    \] を考える. 
+                    行列の固有値は $-1$ (重複度 $2$) であり, 全ての固有値 (の実部) の符号が負であるため, 安定部分空間は $\mathbb{R}^2$ 全体であり, 原点は漸近安定である. 
+                    実際に, 一般解が 
+                    \[
+                        \mathbf{x}(t) = c_1e^{-t}\begin{pmatrix} 
+                            1 \cr 
+                            0 
+                        \end{pmatrix} + c_2e^{-t}\begin{pmatrix} 
+                            t \cr 
+                            1 
+                        \end{pmatrix}
+                    \] となることから, 相図を描くと下のようになり, 原点が沈点となっていることがわかる.
+
+                </p>
+                <div class="resize"><img src='./images/sink_multiple_eigenvalue-1.png'></div>
+            </div>
+
+            <div class="example">
+                <p>線形力学系 
+                    \[
+                        \mathbf{x}' = \begin{pmatrix} 
+                            -0.1 & 1 & 0 \cr 
+                            -1 & -0.1 & 0 \cr 
+                            0 & 0 & 0.1 
+                        \end{pmatrix}\mathbf{x}
+                    \] を考える. 
+                    これは $3$ 次元線形力学系であるが, 実は $2$ 次元の場合と同様に行列の固有値 $0.1$, $-0.1\pm i$ および対応する固有ベクトル 
+                    \[
+                        \begin{pmatrix} 
+                            0 \cr 
+                            0 \cr 
+                            1 
+                        \end{pmatrix}, \quad \begin{pmatrix} 
+                            1 \cr 
+                            \pm i \cr 
+                            0 
+                        \end{pmatrix}
+                    \] を用いて一般解を表すことができる. 
+                    具体的には,  
+                    \[
+                        \begin{array}{rl} 
+                            \mathbf{x}(t) &= c_1e^{0.1t}\begin{pmatrix} 
+                                0 \cr 
+                                0 \cr 
+                                1 
+                            \end{pmatrix} + c_2\operatorname{Re}\left(e^{(-0.1+i)t}\begin{pmatrix} 
+                                1 \cr 
+                                i \cr 
+                                0 
+                            \end{pmatrix}\right) + c_3\operatorname{Im}\left(e^{(-0.1+i)t}\begin{pmatrix} 
+                                1 \cr 
+                                i \cr 
+                                0 
+                            \end{pmatrix}\right) \cr 
+                            &= c_1e^{0.1 t}\begin{pmatrix} 
+                                0 \cr 
+                                0 \cr 
+                                1 
+                            \end{pmatrix} + c_2e^{-0.1 t}\begin{pmatrix} 
+                                \cos t \cr 
+                                -\sin t \cr 
+                                0 
+                            \end{pmatrix} + c_3e^{-0.1 t}\begin{pmatrix} 
+                                \sin t \cr 
+                                \cos t \cr
+                                0 
+                            \end{pmatrix}
+                        \end{array}
+                    \] となる. 
+                    とはいえ, 仮にこのような表示が得られなかったとしても, 固有値 $-0.1\pm i$ に対応する固有ベクトルの実部と虚部, つまり 
+                    \[
+                        \begin{pmatrix} 
+                            1 \cr 
+                            0 \cr 
+                            0 
+                        \end{pmatrix}, \quad \begin{pmatrix} 
+                            0 \cr 
+                            1 \cr 
+                            0 
+                        \end{pmatrix}
+                    \] により張られる空間 ($xyz$ 空間内の $xy$ 平面) が安定部分空間であり, 一方で固有値 $0.1$ に対応する固有ベクトルで張られる空間 ($xyz$ 空間内の $z$ 軸) が不安定部分空間である. 
+                    従って, 原点は鞍点となり, 安定部分空間上にも不安定部分空間上にも無い点は, 時間経過と共に $z$ 軸に近づくような挙動をすることがわかる. 
+                    実際に, 適当な初期値に対する軌道をプロットしたものは以下のようになる:
+                </p>
+                <div class="resize"><img src='./images/spiral_3D-1.png'></div>
+            </div>
+            
             <div class="exercise">
                 <p>線形力学系 
                     \[
@@ -1267,42 +1475,19 @@
                             3 \cr 
                             1 
                         \end{pmatrix}
-                    \] である. 
-                    従って, $\mathbf{v}_1$ で張られる部分空間が不安定部分空間であり, $\mathbf{v}_2$ で張られる部分空間が安定部分空間である. 
+                    \] である.
+                    ここまで計算すれば一般解を明示的に表すことで相図を精密に描くこともできるが, ここでは概形のみを考える. 
+                </p>
+                <p>まず, $\mathbf{v}_1$ で張られる部分空間が不安定部分空間であり, $\mathbf{v}_2$ で張られる部分空間が安定部分空間である. 
                     安定部分空間上の点は平衡点 $\mathbf{0}$ に収束し, 不安定部分空間上の点は $\mathbf{0}$ から遠ざかるように動く. 
                     他の全ての解は, 時間に逆行すると安定部分空間に近づき, 時間経過により不安定部分空間に近づく. 
-                    これだけの情報から, 以下のような相図となっていることを推測できる: 
+                    (自励系の軌道は交差しないという性質も併せて) これだけの情報から, 以下のような相図となっていることを推測できる: 
                 </p>
 
                 <div class="resize"><img src='./images/saddle2-1.png'></div>
 
                         
             </div><!-- /answer -->
-
-
-            <p>$2$ 次元線形力学系を具体例に言及したように, 行列 $A$ の固有値および固有ベクトルは線形力学系の解の挙動を記述する重要な情報となる. 
-                この資料では詳細は割愛するが, $2$ 次元の場合と同様に固有値 (の実部) の正負や重複度, 固有ベクトルを調べることで, 一般の $n$ 次元線形力学系に対して以下の成立がわかる:
-            </p>
-
-            <div class="theorem" data-name="線形力学系の固有値と安定性" id="thm_eigenvalue_and_stability">
-                行列 $A\in\mathbb{R}^{n\times n}$ を用いて表される線形力学系 $\mathbf{x}' = A\mathbf{x}$ について, 
-                <ul>
-                    <li>実部が負である固有値に対応する行列 $A$ の固有ベクトルたちにより張られる部分空間は, この線形力学系の安定部分空間である.</li> 
-                    <li>実部が正である固有値に対応する行列 $A$ の固有ベクトルたちにより張られる部分空間は, この線形力学系の不安定部分空間である.</li>
-                    <li>行列 $A$ の全ての固有値の実部が $0$ 以下であれば, 原点は安定な平衡点である.</li>
-                    <li>行列 $A$ の全ての固有値の実部が負であれば, 原点は漸近安定な平衡点である (沈点である).</li>
-                    <li>行列 $A$ の固有値に実部が正のものが存在するならば, 原点は不安定な平衡点である.</li>
-                    <li>行列 $A$ の全ての固有値の実部が正であれば, 原点は不安定な平衡点であり, 特に源点である.</li>
-                    <li>行列 $A$ の固有値に実部が正のものと負のものどちらも存在するならば, 原点は不安定な平衡点であり, 特に鞍点である.</li>
-                </ul>
-            </div>
-
-            <p>特に 
-                \[
-                    \text{行列 $A$ の全ての固有値の実部が負} \iff e^{tA}\to 0 \text{ as }t\to\infty \iff \text{$\mathbf{x}' = A\mathbf{x}$ について $\mathbf{0}$ は漸近安定な平衡点}
-                \] は, 線形力学系の安定性の議論においてしばしば用いられるものである. 
-                全ての固有値の実部が負である正方行列を, 特に <b>フルヴィッツ安定行列</b> (<b>Hurwitz stable matrix</b>) と呼ぶことがある. 
-            </p>
 
             <!-- <p>このアイデアを<span class="wave">非線形</span>力学系に対して拡張することも可能である. 
                 これについては, 平衡点の安定性について深掘りした後に改めて解説する. 
@@ -1353,6 +1538,14 @@
             -->
 
             <hr>
+        <section><h2>まとめ</h2>
+            <p>簡単な例として $1$ 次元力学系および線形力学系を紹介した後, 力学系の解の挙動を説明する際に有用な概念をいくつか導入した. 
+                線形力学系においては, 行列固有値および固有ベクトルを調べることで, (解の明示的な表現を与えることも可能だが) 平衡解付近で解がおおよそどのように動くかを知ることができる. 
+                このアイデアは後に, 線形安定性解析において, 非線形力学系の解析においても有用であることに言及する. 
+                ただし, 力学系に関連する概念はここで述べたことが全てでは無く, 特に非線形力学系の平衡解付近における解析に向けて, 以降も追加の概念を導入する. 
+
+            </p>
+        </section>
 
 
             
