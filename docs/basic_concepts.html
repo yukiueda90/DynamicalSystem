@@ -290,6 +290,9 @@
 
             <p>上の性質を用いることで, 線形力学系 $(1.1)$ の一般解は, 行列 $A$ の固有値, 固有ベクトルおよび線型結合を用いて表現することができる. 
             </p>
+
+            <hr>
+
             <p>さらに, 初期条件が与えられた際の特殊解については, 簡単に表記を与えることができる. 
                 ここでは, 
                 \[
@@ -301,7 +304,14 @@
                 このとき, 線形力学系 $(1.2)$ の解 $\mathbf{x}: \mathbb{R}\to\mathbb{R}^n$ は 
                 \[
                     \mathbf{x}(t) = e^{tA}\mathbf{x}_0 
-                \] と表すことができる. ここで, $e^{tA}$ は <b>行列指数関数</b> であり, 具体的には以下で定義される: 
+                \] と表すことができる (これは, 
+                \[
+                    \left\{\begin{array}{rl} 
+                        x' &= ax, \cr 
+                        x(0) &= x_0 
+                    \end{array}\right. 
+                \] の解が $x(t) = e^{at}x_0$ であることと自然に対応している). 
+                ここで, $e^{tA}$ は <b>行列指数関数</b> であり, 具体的には以下で定義される: 
                 </p>
 
                 <div class="definition" data-name="行列指数関数">
@@ -333,7 +343,7 @@
                 </div>
                 <p>定義より
                 \[
-                    e^{O} = I,\quad e^{tI} = e^t I, \quad e^{sA}e^{tA} = e^{(s+t)A} 
+                    e^{O} = I,\quad e^{tI} = e^t I, \quad (e^{A})^{\operatorname{T}} = e^{A^{\operatorname{T}}} ,\quad e^{sA}e^{tA} = e^{(s+t)A} 
                 \] であり, また行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
                 \[
                     e^{tA}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(\lambda_i t)^k}{k!}\mathbf{v}_i = e^{\lambda_i t}\mathbf{v}_i
@@ -346,13 +356,13 @@
                     \begin{array}{rl} 
                         \dfrac{d}{dt}e^{tA} &= \dfrac{d}{dt}\displaystyle\sum_{k=0}^{\infty}\dfrac{(tA)^k}{k!} \cr 
                         &= \displaystyle\sum_{k=1}^{\infty}\dfrac{t^{k-1}A^k}{(k-1)!} \cr 
-                        &= Ae^{tA} 
+                        &= Ae^{tA} = e^{tA}A
                     \end{array}
                 \] が成立する. 
             </p>
 
             <div class="exercise">
-                <p>$\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ が
+                <p>上の性質を用いて, $\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ が
                     \[
                         \left\{\begin{array}{rl} 
                             \mathbf{x}' &= A\mathbf{x}, \cr 
@@ -370,13 +380,160 @@
                 </p>
             </div><!-- /answer -->
 
-            <p>具体例として, 
+            <p>線形力学系の話を続ける前に, 行列指数関数について後に用いる性質についてもここで紹介しておこう:
+            </p>
+
+            <div class="lemma" data-name="行列指数関数のジョルダン標準形による表示" id="Lem_Jordan_exp">
+                <ul>
+                    <li>正方行列 $A\in\mathbb{R}^{n\times n}$ のジョルダン標準形 $J = P^{-1}AP\in\mathbb{C}^{n\times n}$ に対して, 
+                        \[
+                            e^{tA} = Pe^{tJ}P^{-1}
+                        \] である.
+                    </li>
+                    <li>ジョルダン標準形 $J$ を, $A$ の固有値 $\lambda_i$ に関するジョルダン細胞 
+                        \[
+                            J_{m_{ij}}(\lambda_i) = \begin{pmatrix} 
+                                \lambda_i & 1 & 0 & \dots & 0 \cr 
+                                0 & \lambda_i & 1 & \dots & 0 \cr 
+                                \vdots & &\ddots && \vdots \cr 
+                                0 & \dots & & \lambda_i & 1 \cr 
+                                0 & \dots & & 0 & \lambda_i 
+                            \end{pmatrix} \in \mathbb{C}^{m_{ij}\times m_{ij}}
+                        \] たちを対角成分にもつブロック行列対角として表したとき, 行列指数関数 $e^{tJ}$ は $e^{tJ_{m_{ij}}(\lambda_i)}$ たちを対角成分にもつブロック対角行列になる, ここで, 固有値 $\lambda_i$ に対応するジョルダン細胞が複数存在するとき, それらを $J_{m_{i1}}(\lambda_i), J_{m_{i2}}(\lambda_i), \dots$ と表記することにする.  
+                    </li>
+                    <li>$e^{tJ_{m_{ij}}(\lambda_i)}$ の全ての成分は $p_{m_{ij}}(t)e^{\lambda_i t}$ という形になる, ここで $p_{m_{ij}}(t)$ は $t$ について高々 $m_{ij}-1$ 次の多項式である.</li>
+                    <li>行列 $A$ の全ての固有値の実部が負であるならば, ある定数 $a\gt 0$ が存在し $\|e^{tJ}\|\le Ce^{-at}$ が成立する. 
+                        特に, このとき $e^{tA}\to 0$ as $t\to\infty$ である. 
+                    </li>
+                </ul>
+            </div>
+
+            <div class="proof">
+                <ul>
+                    <li>行列指数関数の定義と, 
+                        \[
+                            A^k = P\underbrace{(P^{-1}AP)\dots(P^{-1}AP)}_{k\text{個}}P^{-1}
+                        \] であることから従う.</li>
+                    <li>ジョルダン標準形 $J$ が
+                        \[
+                            J = \begin{pmatrix} 
+                                J_{m_{11}}(\lambda_1) & \dots & 0 \cr 
+                                \vdots & \ddots & \vdots \cr 
+                                0 & \dots & J_{m_{ij}}(\lambda_i) 
+                            \end{pmatrix}
+                        \] というブロック対角行列であるとき, 
+                        \[
+                            J^k = \begin{pmatrix} 
+                                J_{m_{11}}(\lambda_1)^k & \dots & 0 \cr 
+                                \vdots & \ddots & \vdots \cr 
+                                0 & \dots & J_{m_{ij}}(\lambda_i)^k 
+                            \end{pmatrix}
+                        \] であり, 従って 
+                        \[
+                            e^{tJ} = \sum_{k=0}^\infty\dfrac{(tJ)^k}{k!} = \begin{pmatrix} 
+                                \displaystyle\sum_{k=0}^\infty\dfrac{(tJ_{m_{11}}(\lambda_1))^k}{k!} & \dots & 0 \cr 
+                                \vdots & \ddots & \vdots \cr 
+                                0 & \dots & \displaystyle\sum_{k=0}^\infty\dfrac{(tJ_{m_{ij}}(\lambda_i))^k}{k!} 
+                            \end{pmatrix} = \begin{pmatrix} 
+                                e^{tJ_{m_{11}}(\lambda_1)} & \dots & 0 \cr 
+                                \vdots & \ddots & \vdots \cr 
+                                0 & \dots & e^{tJ_{m_{ij}}(\lambda_i)} 
+                            \end{pmatrix}
+                        \] である. 
+                    </li>
+                    <li>いま, 行列 $U^r = (u^r_{ij})$ を, 
+                        \[
+                            u^r_{ij} = \left\{\begin{array}{rl}
+                                1 & \text{if }j-i = r, \cr 
+                                0 & \text{otherwise} 
+                            \end{array}\right.
+                        \] により定めると, $J_{m_{ij}}(\lambda_i) = \lambda_i I + U^1$ 
+                        \[
+                            J_{m_{ij}}(\lambda_i) = \begin{pmatrix} 
+                                \lambda_i & 1 & 0 & \dots & 0 \cr 
+                                0 & \lambda_i & 1 & \dots & 0 \cr 
+                                \vdots & &\ddots && \vdots \cr 
+                                0 & \dots & & \lambda_i & 1 \cr 
+                                0 & \dots & & 0 & \lambda_i 
+                            \end{pmatrix} = \begin{pmatrix} 
+                                \lambda_i & 0 & 0 & \dots & 0 \cr 
+                                0 & \lambda_i & 0 & \dots & 0 \cr 
+                                \vdots & &\ddots && \vdots \cr 
+                                0 & \dots & & \lambda_i & 0 \cr 
+                                0 & \dots & & 0 & \lambda_i 
+                            \end{pmatrix} + \begin{pmatrix} 
+                                0 & 1 & 0 & \dots & 0 \cr 
+                                0 & 0 & 1 & \dots & 0 \cr 
+                                \vdots & &\ddots && \vdots \cr 
+                                0 & \dots & & 0 & 1 \cr 
+                                0 & \dots & & 0 & 0 
+                            \end{pmatrix}= \lambda_i I + U^1
+                        \]
+                        であり, また 
+                        \[
+                            (U^1)^k = \left\{\begin{array}{rl}
+                                U^k & \text{if }k\lt m_{ij}, \cr 
+                                O & \text{if }k\ge m_{ij} 
+                            \end{array}\right.
+                        \] である. 
+                        これを用いて,
+                        \[
+                            \begin{array}{rl}
+                                e^{tJ_{m_{ij}}(\lambda_i)} &= \displaystyle\sum_{k=0}^\infty \dfrac{(tJ_{m_{ij}}(\lambda_i))^k}{k!} \cr 
+                                &= \displaystyle\sum_{k=0}^\infty \dfrac{t^k}{k!}(\lambda_i I + U^1)^k \cr 
+                                &= \displaystyle\sum_{k=0}^\infty \dfrac{t^k}{k!}\sum_{\ell=0}^k {}_kC_{\ell}\lambda_i^{k-\ell} (U^1)^{\ell} \cr
+                                &= \displaystyle\sum_{k=0}^\infty \sum_{\ell=0}^{\max\{k, m_{ij}-1\}} \dfrac{t^\ell}{\ell!}\cdot\dfrac{(t\lambda_i)^{k-\ell}}{(k-\ell)!} U^{\ell} \cr 
+                                &= \displaystyle\sum_{\ell=0}^{m_{ij}-1}\sum_{k-\ell=0}^{\infty} \dfrac{t^\ell}{\ell!}\cdot\dfrac{(t\lambda_i)^{k-\ell}}{(k-\ell)!} U^{\ell} \cr 
+                                &= \displaystyle\sum_{\ell=0}^{m_{ij}-1}\dfrac{t^\ell}{\ell!}e^{t\lambda_i}U^{\ell} \cr 
+                                &= \begin{pmatrix} 
+                                    e^{t\lambda_i} & te^{t\lambda_i} & \dots & \dfrac{t^{m_{ij}-1}}{(m_{ij-1})!}e^{t\lambda_i} \cr 
+                                    0 & e^{t\lambda_i} & \ddots & \vdots \cr 
+                                    \vdots & & \ddots & te^{t\lambda_i} \cr 
+                                    0 & 0 & \dots & e^{t\lambda_i}
+                                \end{pmatrix}.  
+                            \end{array}
+                        \] </li>
+                    <li>いま, オイラーの公式
+                        \[
+                            e^{iz} = \cos z + i\sin z \quad\text{ for all }\quad z\in\mathbb{C}
+                        \] より $|e^{t\lambda_i}| = e^{t\operatorname{Re}\lambda_i}$ であることに注意すると, もしも $\lambda_i$ の実部が負ならば $e^{tJ_{m_ij}(\lambda_i)}$ の全ての成分の絶対値は適当な負の指数をもつ指数関数で上から抑えられる. 
+                        従って, 全ての固有値の実部が負であれば, $e^{tJ}$ の全ての成分の絶対値は適当な定数 $a\gt 0$ を用いて $Ce^{-at}$ で抑えられる. 
+                        行列ノルムの影響も定数に含めることで $\|e^{tJ}\|\le Ce^{-at}$ という評価が得られる. 
+                    </li>
+                </ul>
+            </div>
+
+            <p>
+                特に, 最後の結果については以下の形で引用することがある: 
+            </p>
+
+            <div class="theorem">
+                行列 $A\in\mathbb{R}^{n\times n}$ について, 
+                \[
+                    \text{$A$ の全ての固有値の実部が負}\iff e^{tA}\to 0 \text{ as }t\to\infty.
+                \]
+            </div>
+
+            <div class="proof">
+                <ul>
+                    <li>$\implies)$: 先ほど証明した. 
+                    </li>
+                    <li>$\impliedby)$: $A$ の固有値を $\lambda_i$ とすると, 行列 $e^{tA}$ の固有値は $e^{t\lambda_i}$ であった. 
+                        従って, $e^{tA}\to0$ のとき, この行列の全ての固有値も $e^{t\lambda_i}\to 0$ となる. 
+                        オイラーの公式より, これは全ての固有値 $\lambda_i$ の実部が負であることを意味する. 
+                    </li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <p>ここからは, 具体例として 
                 \[
                     A = \begin{pmatrix} 
                         a & b \cr 
                         c & d 
                     \end{pmatrix} \in\mathbb{R}^{2\times 2}
-                \] であるときに, 線形力学系 $(1.1)$ の一般解と $(1.2)$ の特殊解それぞれの表記を考えてみよう.
+                \] を考え, 線形力学系 $(1.1)$ の一般解と $(1.2)$ の特殊解それぞれの表記を考えてみよう.
             </p>
 
             <p>まず, 記号の簡単のために, 
@@ -639,7 +796,7 @@
                     \operatorname{Re}(\mathbf{z}) = \mathbf{a},\quad \operatorname{Im}(\mathbf{z}) = \mathbf{b}
                 \] と表記することにする. 
             </p>
-            <p> まず, <b>オイラーの公式</b>  
+            <p> まず, オイラーの公式  
                 \[
                     e^{iz} = \cos z + i\sin z \quad\text{ for all }\quad z\in\mathbb{C}
                 \] を用いると 
@@ -747,7 +904,7 @@
                 上では $2$ 次方程式の解の公式に基づき $3$ つの場合分けを考えたが, 固有値 (の実部) の符号 (つまり $T = \operatorname{tr}A$ の符号) による場合分けも解の挙動を説明する際に重要となる. 
             </p>
             <p>また, 上では $2$ 次元の線形力学系のみを例として考えたが, 一般に $n$ 次元の場合であっても, 線形力学系 $(1.2)$ の解は $\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ と表され, 行列 $A$ の固有値と固有ベクトルを求めることで行列の指数関数を用いない表示を得ることができる. 
-                その際には, やはり行列 $A$ の固有値 $\lambda_i$ が実数であるか否か, 固有値 $\lambda_i$ の重複度, $\operatorname{Re}(\lambda_i)$ の符号などが, 解のおおまかな挙動を調べるための重要な手掛かりとなる. 
+                その際には, やはり行列 $A$ の固有値 $\lambda_i$ が実数であるか否か, 固有値 $\lambda_i$ の重複度, $\operatorname{Re}(\lambda_i)$ の符号などが, 解の挙動に大きく影響を与えることになる. 
             </p>
 
         </section>
@@ -756,7 +913,7 @@
 
         <section id="section1-3"><h2>1.3: 平衡点の分類と軌道</h2>
             <p>ここまでに力学系の具体例, 特に解を式の形で表現できる例をいくつか紹介したが, 一方で解を明示的に表すことができない力学系もある. 
-                そのような場合に, 解のおおまかな挙動を知るために有用な概念を導入しよう. 
+                そのような場合の解析に向け, 解のおおまかな挙動を知るために有用な概念を導入しよう. 
                 <!-- これら概念は, 線形力学系の解について具体的な図示により深く理解するにも有用となるため, 具体例として解を表示できる場合も考察することにする.  -->
                 <!-- ただし, いくつかの概念については数学的に厳密な説明を控えたり, 詳細な説明を後回しにするものもある.  -->
                 <!-- 非線形力学系に特有の概念については, 後に説明することにするが, ここで説明する概念は非線形力学系にも応用することができるものである.  -->
@@ -1230,18 +1387,6 @@
             <div class="definition" data-name="安定部分集合">
                 <p>力学系の相空間 $X$ およびフロー $\varphi$ に対して,</p>
                 <ul>
-                    <!-- <li>部分集合 $S\subset X$ が, 
-                        \[
-                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\in \mathbb{R}
-                        \] を満たすとき, $S$ を <b>不変部分集合</b> (<b>invariant subset</b>) という. 
-                    </li>
-                    <li>部分集合 $S\subset X$ が, 
-                        \[
-                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\ge 0
-                        \] を満たすとき, $S$ を <b>正不変部分集合</b> (<b>positively invariant subset</b>) という. 
-                    </li>
-                    <li>$S\subset X$ が不変部分集合であって, 任意の $\mathbf{s}\in S$ に対して $\varphi(t, \mathbf{s})$ が $t\to\infty$ のときにある平衡点に収束するとき, $S$ はその平衡点の <b>安定部分集合</b> (<b>stable set</b>) であるという. 
-                    </li> -->
                     <li>平衡点 $\widetilde{\mathbf{x}}$ に対して, 
                         \[
                             \{\mathbf{x}_0\in X : \varphi(t, \mathbf{x}_0) \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to\infty\}
@@ -1296,7 +1441,7 @@
 
             <p>$2$ 次元線形力学系を具体例に言及したように, 行列 $A$ の固有値および固有ベクトルは線形力学系の解の挙動を記述する重要な情報となる. 
                 実際に, 上の例では安定部分空間および不安定部分空間が固有ベクトルと関連していることを確認できるが, これは偶然ではない.
-                この資料では詳細は割愛するが, $2$ 次元の場合と同様に固有値 (の実部) の正負や重複度, 固有ベクトルを調べることで, 一般の $n$ 次元線形力学系に対して以下の成立がわかる:
+                この資料では詳細は割愛するが, $2$ 次元の場合と同様に固有値 (の実部) の正負や重複度, 固有ベクトルを調べることで, 一般の $n$ 次元線形力学系の一般解が得られ, 特に以下の成立がわかる:
             </p>
 
             <div class="theorem" data-name="線形力学系の固有値と安定性" id="thm_eigenvalue_and_stability">
@@ -1393,34 +1538,32 @@
                             0 & 0 & 0.1 
                         \end{pmatrix}\mathbf{x}
                     \] を考える. 
-                    これは $3$ 次元線形力学系であるが, 実は $2$ 次元の場合と同様に行列の固有値 $0.1$, $-0.1\pm i$ および対応する固有ベクトル 
+                    これは $3$ 次元線形力学系であるが, $2$ 次元の場合と同様に行列の固有値 
                     \[
-                        \begin{pmatrix} 
+                        \lambda_1 = 0.1,\quad \lambda_2 = -0.1+ i,\quad \lambda_3 = -0.1-i 
+                    \] および対応する固有ベクトル 
+                    \[
+                        \mathbf{v}_1 = \begin{pmatrix} 
                             0 \cr 
                             0 \cr 
                             1 
-                        \end{pmatrix}, \quad \begin{pmatrix} 
+                        \end{pmatrix}, \quad \mathbf{v}_2 = \begin{pmatrix} 
                             1 \cr 
-                            \pm i \cr 
+                            i \cr 
+                            0 
+                        \end{pmatrix},\quad \mathbf{v}_3 = \begin{pmatrix} 
+                            1 \cr 
+                            -i \cr 
                             0 
                         \end{pmatrix}
                     \] を用いて一般解を表すことができる. 
-                    具体的には,  
+                    具体的には, 複素数値関数を許すならば 
+                    \[
+                        \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 + c_3e^{\lambda_3 t}\mathbf{v}_3 \quad (c_1, c_2, c_3\in\mathbb{C})
+                    \] であるが, $2$ 次元線形力学系のときと同様に, 実数値となるものだけを取り出すと
                     \[
                         \begin{array}{rl} 
-                            \mathbf{x}(t) &= c_1e^{0.1t}\begin{pmatrix} 
-                                0 \cr 
-                                0 \cr 
-                                1 
-                            \end{pmatrix} + c_2\operatorname{Re}\left(e^{(-0.1+i)t}\begin{pmatrix} 
-                                1 \cr 
-                                i \cr 
-                                0 
-                            \end{pmatrix}\right) + c_3\operatorname{Im}\left(e^{(-0.1+i)t}\begin{pmatrix} 
-                                1 \cr 
-                                i \cr 
-                                0 
-                            \end{pmatrix}\right) \cr 
+                            \mathbf{x}(t) &= c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2\operatorname{Re}\left(e^{\lambda_2 t}\mathbf{v}_2\right) + c_3\operatorname{Im}\left(e^{\lambda_2 t}\mathbf{v}_3\right) \cr 
                             &= c_1e^{0.1 t}\begin{pmatrix} 
                                 0 \cr 
                                 0 \cr 
@@ -1433,10 +1576,10 @@
                                 \sin t \cr 
                                 \cos t \cr
                                 0 
-                            \end{pmatrix}
+                            \end{pmatrix} \quad (c_1, c_2, c_3\in\mathbb{R})
                         \end{array}
                     \] となる. 
-                    とはいえ, 仮にこのような表示が得られないとしても, 解の軌道の大まかな振る舞いは知ることができる:
+                    とはいえ, このような解の表示を得ることなく, 解の軌道の大まかな振る舞いを知ることも可能である:
                     固有値 $-0.1\pm i$ に対応する固有ベクトルの実部と虚部, つまり 
                     \[
                         \begin{pmatrix} 
@@ -1448,7 +1591,7 @@
                             1 \cr 
                             0 
                         \end{pmatrix}
-                    \] により張られる空間 ($xyz$ 空間内の $xy$ 平面) が安定部分空間であり, 一方で固有値 $0.1$ に対応する固有ベクトルで張られる空間 ($xyz$ 空間内の $z$ 軸) が不安定部分空間である. 
+                    \] により張られる空間 ($xyz$ 空間内の $xy$ 平面) が安定部分空間であり, 一方で固有値 $0.1$ に対応する固有ベクトル $\mathbf{v}_1$ で張られる空間 ($xyz$ 空間内の $z$ 軸) が不安定部分空間である. 
                     従って, 原点は鞍点となり, 安定部分空間上にも不安定部分空間上にも無い点は, 時間経過と共に $z$ 軸に近づくような挙動をすることがわかる. 
                     実際に, 適当な初期値に対する軌道をプロットしたものは以下のようになる:
                 </p>
@@ -1540,11 +1683,13 @@
 
             <hr>
         <section><h2>まとめ</h2>
-            <p>簡単な例として $1$ 次元力学系および線形力学系を紹介した後, 力学系の解の挙動を説明する際に有用な概念をいくつか導入した. 
-                線形力学系においては, 行列固有値および固有ベクトルを調べることで, (解の明示的な表現を与えることも可能だが) 平衡解付近で解がおおよそどのように動くかを知ることができる. 
-                このアイデアは後に, 線形安定性解析において, 非線形力学系の解析においても有用であることに言及する. 
-                ただし, 力学系に関連する概念はここで述べたことが全てでは無く, 特に非線形力学系の平衡解付近における解析に向けて, 以降も追加の概念を導入する. 
-
+            <p>簡単な例として $1$ 次元力学系および線形力学系を紹介した後, 力学系の解の挙動を説明するための概念をいくつか導入した. 
+                具体的には, 線形力学系では行列固有値および固有ベクトルを調べることで一般解を明示的に表示し, また固有値, 固有ベクトルと平衡解付近での解の挙動との関連を説明した. 
+                現時点では, 具体例として一般解を手計算で得ることができる状況のみを考えているため, ここで紹介した概念の必要性は理解しづらいかもしれないが, 後に非線形力学系の解析において有用となることを紹介する. 
+                ただし, 力学系に関連する概念はここで述べたことが全てでは無く, 特に非線形力学系の平衡解付近における解析のために, 以降も追加の概念を導入する. 
+            </p>
+            <p>線形力学系に関する計算ができることも, もちろん重要ではあるが, この資料の目的は非線形力学系を扱うことである. 
+                ここで線形力学系に言及したのは, あくまで様々な概念を導入, 解説するための具体例として利用するためであったと思ってほしい. 
             </p>
         </section>
 
@@ -1568,6 +1713,36 @@
     キーワード : 力学系，安定性，不変集合，カオス，数理モデル 
     単純な線形微分方程式系については解析学Bですでにやっているはず. 
     -->
+
+        <section><h2>練習問題</h2>
+
+			<div class="problem">
+                <p>$a, b, c\in\mathbb{R}$ について, $bc\gt 0$ とする. 
+                    このとき, 線形力学系 
+                    \[
+                        \mathbf{x}' = \begin{pmatrix}   
+                            a & b \cr
+                            c & a 
+                        \end{pmatrix}\mathbf{x}
+                    \] の一般解 $\mathbf{x}(t)$ を求めよ.
+                </p> 
+            </div>
+
+            <div class="problem">
+                <p>$a, b\gt 0$ に対して, $2$ 階常微分方程式 $x'' + 2ax' + bx = 0$ を考える.</p>
+                <ul>
+                    <li>$y = x'$ とおくことで, 上の $2$ 階常微分方程式を 
+                        \[
+                            \mathbf{x} = \begin{pmatrix} 
+                                x \cr 
+                                y 
+                            \end{pmatrix}
+                        \] に関する線形力学系に置き換えよ.
+                    </li>
+                    <li>導出した線形力学系を解くことで, $2$ 階常微分方程式の一般解 $x(t)$ を求めよ. </li>
+                </ul>
+            </div>
+
     </main>
 
 
