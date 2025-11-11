@@ -359,7 +359,7 @@
                         \[
                             \left\{\begin{array}{l}
                                 \displaystyle\lim_{n\to\infty}t_n=\infty, \cr 
-                                \displaystyle\lim_{n\to\infty}\varphi(t, \mathbf{x}_0) = \mathbf{y} \quad\text{in } X
+                                \displaystyle\lim_{n\to\infty}\varphi(t_n, \mathbf{x}_0) = \mathbf{y} \quad\text{in } X
                             \end{array}\right.
                         \] が成立するとき, $\mathbf{y}\in X$ は $\mathbf{x}_0\in X$ の <b>$\omega$ 極限点</b> (<b>$\omega$-limit point</b>) であるという.
                     </li>
@@ -369,13 +369,13 @@
                             \omega(\mathbf{x}_0) = \{\mathbf{y}\in X : \text{ある数列 $\{t_n\}$ が存在し, }t_n\to \infty,\ \varphi(t_n, \mathbf{x}_0)\to\mathbf{y} \}
                         \]
                     </li>
-                    <li>点列 $\{t_n\}$ であって, 
+                    <li>ある点列 $\{t_n\}$ が存在し, 
                         \[
                             \left\{\begin{array}{l}
                                 \displaystyle\lim_{n\to\infty}t_n=-\infty, \cr 
-                                \displaystyle\lim_{n\to\infty}\varphi(t, \mathbf{x}_0) = \mathbf{y} \quad\text{in } X
+                                \displaystyle\lim_{n\to\infty}\varphi(t_n, \mathbf{x}_0) = \mathbf{y} \quad\text{in } X
                             \end{array}\right.
-                        \] を満たすものが存在するとき, $\mathbf{y}\in X$ は $\mathbf{x}_0\in X$ の <b>$\alpha$ 極限点</b> (<b>$\alpha$-limit point</b>) であるという.
+                        \] が成立するとき, $\mathbf{y}\in X$ は $\mathbf{x}_0\in X$ の <b>$\alpha$ 極限点</b> (<b>$\alpha$-limit point</b>) であるという.
                     </li>
                     <li>
                         点 $\mathbf{x}_0\in X$ の全ての $\alpha$ 極限点からなる集合を <b>$\alpha$ 極限集合</b> (<b>$\alpha$-limit set</b>) といい, $\alpha(\mathbf{x}_0)$ と表記する, つまり
@@ -386,23 +386,27 @@
                 </ul>
             </div>
 
+            <p>直感的には時刻 $t$ を大きくしたとき (もしくは小さくしたとき) に, 解 $\mathbf{x}(t)$ が &quot;どこに近づくか&quot; を表すものが極限点, 極限集合である. 
+                特に, 解 $\mathbf{x}(t)$ が収束しないという状況, 例えばある範囲を動き続けるという状況であっても, &quot;どこを動き続けるか&quot; を説明できる.</p>
+
             <div class="example">
-                線形力学系 
-                \[
-                    \mathbf{x}' = \begin{pmatrix} 
-                        -1 & 0 \cr 
-                        0 & -2 
-                    \end{pmatrix}\mathbf{x}
-                \] を考える. 
-                行列固有値は $-1$, $-2$ であり, 全ての固有値 (の実部) が負であるため, 平衡点 $\mathbf{0}$ は漸近安定である. 
-                つまり全ての点は時間経過により ($t_n\to\infty$ となる任意の点列 $\{t_n\}$ に対して) $\mathbf{0}$ に収束するため, 任意の $\mathbf{x}_0$ に対し 
-                \[
-                    \omega(\mathbf{x}_0) = \mathbf{0}
-                \] である. 
-                一方で, 全ての点は時間に逆行したとき ($t_n\to\infty$ となる任意の点列 $\{t_n\}$ に対して) 無限に発散するため, 任意の $\mathbf{x}_0$ に対し 
-                \[
-                    \alpha(\mathbf{x}_0) = \emptyset
-                \] である. 
+                <p>線形力学系 
+                    \[
+                        \mathbf{x}' = \begin{pmatrix} 
+                            -1 & 0 \cr 
+                            0 & -2 
+                        \end{pmatrix}\mathbf{x}
+                    \] を考える. 
+                    行列固有値は $-1$, $-2$ であり, 全ての固有値 (の実部) が負であるため, 平衡点 $\mathbf{0}$ は漸近安定である. 
+                    つまり全ての点は時間経過により ($t_n\to\infty$ となる任意の点列 $\{t_n\}$ に対して) $\mathbf{0}$ に収束するため, 任意の $\mathbf{x}_0$ に対し 
+                    \[
+                        \omega(\mathbf{x}_0) = \{\mathbf{0}\}
+                    \] である. 
+                    一方で, 全ての点は時間に逆行したとき ($t_n\to\infty$ となる任意の点列 $\{t_n\}$ に対して) 無限に発散するため, 任意の $\mathbf{x}_0$ に対し 
+                    \[
+                        \alpha(\mathbf{x}_0) = \emptyset
+                    \] である. 
+                </p>
             </div>
 
             <div class="example">
