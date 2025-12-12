@@ -27,10 +27,10 @@
     </div>
     
     <!-- main -->
-    <main role="main"><article id="section1"><h1>線形力学系と諸概念</h1>
-        <p>まず, 力学系の中でも取り扱いの容易な $1$ 次元の場合と線形力学系のみ具体例として解説し, 力学系の性質, 数学理論を説明するために必要な概念を紹介する. 
-            ここで導入する様々なアイデアは, 非線形力学系を含むより一般の状況を考える際にも重要となるものである. 
-            ただし, 線形力学系において現れない現象に関連する概念については, 後ほど改めて言及することとし, ここでは初等的なものに限り説明する. 
+    <main role="main"><article id="section1"><h1>1. 一次元力学系と線形力学系</h1>
+        <p>まず, 力学系の中でも取り扱いの容易な $1$ 次元の場合と線形力学系のみ具体例として解説する. 
+            ここでは, 主に解を明示的に表現できる場合を取り上げることにする. 
+            以降に説明する力学系の諸概念をイメージする足掛かりとしてして欲しい.
         </p>
 
         <section id="section1-1"><h2>1.1: 一次元力学系</h2>
@@ -191,11 +191,11 @@
 
         <hr>
         
-        <section id="section1-2"><h2>1.2: 線形力学系</h2>
+        <section id="section1-2"><h2>1.2: 線形力学系と行列指数関数</h2>
             <p>力学系の様々な概念について紹介する前に, $2$ 次元以上の力学系の例として, 線形力学系について紹介しよう.</p>
             
             <div class="definition">
-                <p>変数 $t$, 未知のベクトル値関数 $\mathbf{x}(t)\in\mathbb{R}^n$, 与えられた <span class="wave">線形写像</span> $f: \mathbb{R}^{n}\to\mathbb{R}^n$ に対して,
+                <p>変数 $t$, 未知のベクトル値関数 $\mathbf{x}(t)\in\mathbb{R}^n$, 与えられた <span class="wave">線形写像</span> $\mathbf{f}: \mathbb{R}^{n}\to\mathbb{R}^n$ に対して,
                     \[
                         \mathbf{x}' = \mathbf{f}(\mathbf{x})
                     \] と表される連続力学系 (特に自励系である) を <b>線形力学系</b> (<b>linear dynamical system</b>) という. 
@@ -258,7 +258,7 @@
                             \mathbf{x}(t) = e^{\lambda_i t}\mathbf{v}_i
                         \] は解となる.
                     </li>
-                    <li>$\mathbf{x}_1(t)$, $\mathbf{x}_2(t)$ が解ならば, それら線型結合で与えられる関数
+                    <li>$\mathbf{x}_1(t)$, $\mathbf{x}_2(t)$ が解ならば, それらの線型結合で与えられる関数
                         \[
                             \mathbf{x}(t) = c_1\mathbf{x}_1(t) + c_2\mathbf{x}_2(t) 
                         \] も解となる.</li>
@@ -290,7 +290,7 @@
 
             <hr>
 
-            <p>さらに, 初期条件が与えられた際の特殊解については, 簡単に表記を与えることができる. 
+            <p>さらに, 初期条件が与えられた際の特殊解については, 簡単な表記を与えることができる. 
                 ここでは, 
                 \[
                     \left\{\begin{array}{rl} 
@@ -328,35 +328,57 @@
                             \[
                                 e^{at} = \sum_{k=0}^{\infty}\dfrac{(at)^k}{k!}
                             \] と比較すれば, 自然な定義であることがわかる</li>
-                        <li>なお, $A = (a_{ij})\in\mathbb{R}^{n\times n}$ に対し $A^k = (a_{ij}(k))$, $a=\max|a_{ij}|$ とすると, 
+                        <!-- <li>なお, $A = (a_{ij})\in\mathbb{R}^{n\times n}$ に対し $A^k$ の第 $ij$ 成分を $a_{ij}(k)$ と表し, また $a=\max|a_{ij}|$ とすると, 
                             \[
                                 |a_{ij}(k)| \le n^{k-1}a^k
-                            \] となるため, $e^{A}$ の $ij$ 成分は
+                            \] となるため, $e^{A}$ の第 $ij$ 成分は
                             \[
                                 \left|\displaystyle\sum_{k=0}^{\infty}\dfrac{a_{ij}(k)}{k!}\right| \le \displaystyle\sum_{k=0}^\infty \dfrac{n^{k-1}a^k}{k!} \le e^{na} 
                             \] と上から評価することができる, つまり任意の $A\in\mathbb{R}^{n\times n}$ に対し, $e^{A}\in\mathbb{R}^{n\times n}$ は well-defined である. 
+                        </li> -->
+                        <li>なお, 
+                            \[
+                                \|e^{A}\| = \left\|\displaystyle\sum_{k=0}^\infty \dfrac{A^k}{k!}\right\| \le \displaystyle\sum_{k=0}^\infty \dfrac{\|A\|^k}{k!} = e^{\|A\|}
+                            \] であることから, 任意の $A\in\mathbb{R}^{n\times n}$ に対し $e^{A}\in\mathbb{R}^{n\times n}$ は well-defined である. 
                         </li>
                     </ul>
                 </div>
-                <p>定義より
-                \[
-                    e^{O} = I,\quad e^{tI} = e^t I, \quad (e^{A})^{\operatorname{T}} = e^{A^{\operatorname{T}}} ,\quad e^{sA}e^{tA} = e^{(s+t)A} 
-                \] であり, また行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して, 
-                \[
-                    e^{tA}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(\lambda_i t)^k}{k!}\mathbf{v}_i = e^{\lambda_i t}\mathbf{v}_i
-                \] が成立する (つまり行列 $A$ の固有値 $\lambda_i$ に対応する固有ベクトル $\mathbf{v}_i$ は, 行列 $e^{tA}\in\mathbb{R}^{n\times n}$ の固有値 $e^{\lambda_i t}$ に対応する固有ベクトルになっている). 
-                さらに, $t$ を変数とする関数列 
-                \[
-                    f_{\ell}(t) = \sum_{k=0}^\ell \dfrac{(tA)^k}{k!}
-                \] は (行列ノルムを用いることで) 一様収束することを確かめることができ, 従って項別微分ができるため
-                \[
-                    \begin{array}{rl} 
-                        \dfrac{d}{dt}e^{tA} &= \dfrac{d}{dt}\displaystyle\sum_{k=0}^{\infty}\dfrac{(tA)^k}{k!} \cr 
-                        &= \displaystyle\sum_{k=1}^{\infty}\dfrac{t^{k-1}A^k}{(k-1)!} \cr 
-                        &= Ae^{tA} = e^{tA}A
-                    \end{array}
-                \] が成立する. 
-            </p>
+
+                <p>行列指数関数の性質をいくつかまとめておこう:</p>
+
+                <div class="lemma">
+                    <p>正方行列 $A$ に対し, 以下が成立する:</p>
+                    <ol>
+                        <li>$e^{O} = I,\quad e^{tI} = e^t I, \quad (e^{A})^{\operatorname{T}} = e^{A^{\operatorname{T}}} ,\quad e^{sA}e^{tA} = e^{(s+t)A}$. </li>
+                        <li>$\dfrac{d}{dt}e^{tA} = Ae^{tA} = e^{tA}A$.</li>
+                        <li>行列 $A$ の固有値 $\lambda_i$ に対応する固有ベクトル $\mathbf{v}_i$ は, 行列 $e^{tA}$ の固有値 $e^{\lambda_i t}$ に対応する固有ベクトルになる. </li>
+                    </ol>
+                </div>
+
+                <div class="proof">
+                    <ol>
+                        <li>証明略.</li>
+                        <li>$t$ を変数とする関数列 
+                            \[
+                                f_{\ell}(t) = \sum_{k=0}^\ell \dfrac{(tA)^k}{k!}
+                            \] は $e^{tA}$ に広義一様収束する, 従って項別微分ができるため
+                            \[
+                                \begin{array}{rl} 
+                                    \dfrac{d}{dt}e^{tA} &= \dfrac{d}{dt}\displaystyle\sum_{k=0}^{\infty}\dfrac{(tA)^k}{k!} \cr 
+                                    &= \displaystyle\sum_{k=1}^{\infty}\dfrac{t^{k-1}A^k}{(k-1)!} \cr 
+                                    &= Ae^{tA} = e^{tA}A
+                                \end{array}
+                            \] が得られる. </li>
+                        <li>行列 $A$ の固有値 $\lambda_i$ および対応する固有ベクトル $\mathbf{v}_i$ に対して 
+                            \[
+                                A^k\mathbf{v}_i = A^{k-1}(A\mathbf{v}_i) = \lambda_iA^{k-1}\mathbf{v}_i = \dots = \lambda_i^{k}\mathbf{v}_i
+                            \] であることに注意すれば, 
+                            \[
+                                e^{tA}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(tA)^k}{k!}\mathbf{v}_i = \sum_{k=0}^\infty \dfrac{(\lambda_i t)^k}{k!}\mathbf{v}_i = e^{\lambda_i t}\mathbf{v}_i
+                            \] が得られる. 
+                        </li>
+                    </ol>
+                </div>
 
             <div class="exercise">
                 <p>上の性質を用いて, $\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ が
@@ -377,11 +399,8 @@
                 </p>
             </div><!-- /answer -->
 
-            <p>線形力学系の話を続ける前に, 行列指数関数について後に用いる性質についてもここで紹介しておこう:
-            </p>
-
             <div class="lemma" data-name="行列指数関数のジョルダン標準形による表示" id="Lem_Jordan_exp">
-                <ul>
+                <ol>
                     <li>正方行列 $A\in\mathbb{R}^{n\times n}$ のジョルダン標準形 $J = P^{-1}AP\in\mathbb{C}^{n\times n}$ に対して, 
                         \[
                             e^{tA} = Pe^{tJ}P^{-1}
@@ -400,16 +419,16 @@
                     </li>
                     <li>$e^{tJ_{m_{ij}}(\lambda_i)}$ の全ての成分は $p_{m_{ij}}(t)e^{\lambda_i t}$ という形になる, ここで $p_{m_{ij}}(t)$ は $t$ について高々 $m_{ij}-1$ 次の多項式である.</li>
                     <li>行列 $A$ の全ての固有値の実部が負であるならば, ある定数 $a\gt 0$ が存在し $\|e^{tJ}\|\le Ce^{-at}$ が成立する. 
-                        特に, このとき $e^{tA}\to 0$ as $t\to\infty$ である. 
+                        従って $e^{tA}\to 0$ as $t\to\infty$ である. 
                     </li>
-                </ul>
+                </ol>
             </div>
 
             <div class="proof">
-                <ul>
+                <ol>
                     <li>行列指数関数の定義と, 
                         \[
-                            A^k = P\underbrace{(P^{-1}AP)\dots(P^{-1}AP)}_{k\text{個}}P^{-1}
+                            A^k = P\underbrace{(P^{-1}AP)\dots(P^{-1}AP)}_{k\text{個}}P^{-1} = PJ^kP^{-1}
                         \] であることから従う.</li>
                     <li>ジョルダン標準形 $J$ が
                         \[
@@ -444,7 +463,7 @@
                                 1 & \text{if }j-i = r, \cr 
                                 0 & \text{otherwise} 
                             \end{array}\right.
-                        \] により定めると, $J_{m_{ij}}(\lambda_i) = \lambda_i I + U^1$ 
+                        \] により定めると,  
                         \[
                             J_{m_{ij}}(\lambda_i) = \begin{pmatrix} 
                                 \lambda_i & 1 & 0 & \dots & 0 \cr 
@@ -497,7 +516,7 @@
                         従って, 全ての固有値の実部が負であれば, $e^{tJ}$ の全ての成分の絶対値は適当な定数 $a\gt 0$ を用いて $Ce^{-at}$ で抑えられる. 
                         行列ノルムの影響も定数に含めることで $\|e^{tJ}\|\le Ce^{-at}$ という評価が得られる. 
                     </li>
-                </ul>
+                </ol>
             </div>
 
             <p>
@@ -507,7 +526,7 @@
             <div class="theorem">
                 行列 $A\in\mathbb{R}^{n\times n}$ について, 
                 \[
-                    \text{$A$ の全ての固有値の実部が負}\iff e^{tA}\to 0 \text{ as }t\to\infty.
+                    \text{$A$ の全ての固有値の実部が負}\iff e^{tA}\to 0 \quad \text{as}\quad t\to\infty.
                 \]
             </div>
 
@@ -515,14 +534,22 @@
                 <ul>
                     <li>$\implies)$: 先ほど証明した. 
                     </li>
-                    <li>$\impliedby)$: $A$ の固有値を $\lambda_i$ とすると, 行列 $e^{tA}$ の固有値は $e^{t\lambda_i}$ であった. 
+                    <li>$\impliedby)$: $A$ の固有値を $\lambda_i$ とすると, 行列 $e^{tA}$ の固有値は $e^{\lambda_i t}$ であった. 
                         従って, $e^{tA}\to0$ のとき, この行列の全ての固有値も $e^{t\lambda_i}\to 0$ となる. 
                         オイラーの公式より, これは全ての固有値 $\lambda_i$ の実部が負であることを意味する. 
                     </li>
                 </ul>
             </div>
 
+            <p>さて, 線形力学系 $(1.2)$ の解が $\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ と表されるのであった. 
+                これと上の結果を用いることで, 行列 $A$ の全ての固有値の実部が負であることと, 任意の初期値に対し線形力学系の解 $\mathbf{x}(t)$ が $\mathbf{0}$ に収束することとが同値となる. 
+                このことは, 後に <b>安定性</b> について紹介する際に改めて言及する. 
+            </p>
+
             <hr>
+        </section>
+
+        <section id="section1-3"><h2>1.3: 二次元線形力学系の分類</h2>
 
             <p>ここからは, 具体例として 
                 \[
@@ -542,1156 +569,401 @@
                 \] を解くことで得られる. 
                 ここで $2$ 次方程式の解の公式を用いると
             </p>
-            <ul>
+            <ol>
                 <li>$T^2-4D\gt 0$ ならば, 異なる二つの固有値 $\lambda_1$, $\lambda_2\in\mathbb{R}$ が存在する,</li>
                 <li>$T^2-4D = 0$ ならば, 固有値は重複した $1$ つの実数のみである,</li>
                 <li>$T^2-4D\lt 0$ ならば, 虚部が $0$ でない異なる二つの固有値 $\lambda_1$, $\lambda_2\in \mathbb{C}$ が存在し, $\lambda_1 = \overline{\lambda_2}$ である.</li>
-            </ul>
+            </ol>
             <p>上で挙げた $3$ つの状況について, 一つずつ考察していこう:
             </p>
             
             <hr>
             
-            <p>まず, 異なる二つの固有値 $\lambda_1$, $\lambda_2\in\mathbb{R}$ が存在する場合, それぞれに対応する固有ベクトル $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{R}^2$ が存在し, それらは線型独立である. 
-                これらを用いて, 
-                \[
-                    \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2
-                \] という線型結合で表される $\mathbf{x}(t)$ は $\mathbf{x}' = A\mathbf{x}$ の一般解である. 
-            </p>
-            <p>あとは, 与えられた $\mathbf{x}_0\in\mathbb{R}^2$ に対して
-                \[
-                    \mathbf{x}_0 = \mathbf{x}(0) = c_1\mathbf{v}_1 + c_2\mathbf{v}_2 = (\mathbf{v}_1,\mathbf{v}_2)\begin{pmatrix} 
-                        c_1 \cr 
-                        c_2 
-                    \end{pmatrix}
-                \] を満たす $c_1$, $c_2\in\mathbb{R}$ が得られれば, 式 $(1.2)$ の解 (初期条件下での特殊解) が得られる. 
-                具体的には, $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{R}^2$ が線型独立であることから (つまり $\mathbf{v}_1, \mathbf{v}_2$ が $\mathbb{R}^2$ の基底であることから), 
-                \[
-                    P = (\mathbf{v}_1, \mathbf{v}_2)\in\mathbb{R}^{2\times 2}
-                \] は正則行列であり, 従って 
-                \[
-                    \begin{pmatrix} 
-                        c_1 \cr 
-                        c_2 
-                    \end{pmatrix} = P^{-1}\mathbf{x}_0
-                \] を計算することで, 任意定数 $c_1$, $c_2$ の値が決定され特殊解が得られる. 
-                なお, このようにして得られる $c_1$, $c_2$ は $\mathbf{x}_0 = c_1\mathbf{v}_1 + c_2\mathbf{v}_2$ を満たすことに注意すると, $\mathbf{x} = e^{tA}\mathbf{x}_0$ に基づき
-                \[
-                    \mathbf{x}(t) = e^{tA}\mathbf{x}_0 = c_1e^{tA}\mathbf{v}_1 + c_2e^{tA}\mathbf{v}_2 = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2
-                \] と計算することもできる. 
-                いずれにしても, 一般解の表記において初期条件に応じて $c_1$, $c_2$ を決定したものが特殊解となることが確かめられる. 
-            </p>
-            <p>さらに, このとき行列 $A$ を対角化すると
-                \[
-                    P^{-1}AP = \begin{pmatrix} 
-                        \lambda_1 & 0 \cr 
-                        0 & \lambda_2 
-                    \end{pmatrix}
-                \] となるため, 式 $(1.1)$ の解 $\mathbf{x}$ に対して $\widehat{\mathbf{x}} = P^{-1}\mathbf{x}$ と定めると, 
-                \[
-                    \begin{array}{rl} 
-                        \begin{pmatrix} 
-                            \lambda_1 & 0 \cr 
-                            0 & \lambda_2 
-                        \end{pmatrix} \widehat{\mathbf{x}} &= P^{-1}AP\widehat{\mathbf{x}} \cr 
-                        &= P^{-1}A\mathbf{x} \cr 
-                        &= P^{-1}\mathbf{x}' = \widehat{\mathbf{x}}'
-                    \end{array}
-                \] となる. このことは, 式 $(1.2)$ の解は
-                \[
-                    \left\{\begin{array}{rl} 
-                        \widehat{\mathbf{x}}' &= \begin{pmatrix} 
-                            \lambda_1 & 0 \cr 
-                            0 & \lambda_2 
-                        \end{pmatrix}\widehat{\mathbf{x}}, \cr 
-                        \widehat{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
-                    \end{array}\right. 
-                \] の解 $\widehat{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widehat{\mathbf{x}}$ により説明できることを意味している. 
-                実際, 一般解を考えると 
-                \[
-                    \widehat{\mathbf{x}}(t) = \begin{pmatrix} 
-                        c_1e^{\lambda_1 t} \cr 
-                        c_2e^{\lambda_2 t} 
-                    \end{pmatrix}
-                \] が得られ, 確かに 
-                \[
-                    \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 = (\mathbf{v}_1, \mathbf{v}_2) \begin{pmatrix} 
-                        c_1e^{\lambda_1 t} \cr 
-                        c_2e^{\lambda_2 t} 
-                    \end{pmatrix} = P\widehat{\mathbf{x}}(t)
-                \] となっている. 
-            </p>
+            <ol>
+                <li>異なる二つの固有値 $\lambda_1$, $\lambda_2\in\mathbb{R}$ が存在する場合:
+                    <ul>
+                        <li>このとき, 二つの固有値それぞれに対応する固有ベクトル $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{R}^2$ が存在し, それらは線型独立である. 
+                            これらを用いて, 
+                            \[
+                                \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2
+                            \] という線型結合で表される $\mathbf{x}(t)$ は $\mathbf{x}' = A\mathbf{x}$ の一般解である. 
+                        </li>
+                        <li>あとは, 与えられた $\mathbf{x}_0\in\mathbb{R}^2$ に対して
+                            \[
+                                \mathbf{x}_0 = \mathbf{x}(0) = c_1\mathbf{v}_1 + c_2\mathbf{v}_2 = (\mathbf{v}_1,\mathbf{v}_2)\begin{pmatrix} 
+                                    c_1 \cr 
+                                    c_2 
+                                \end{pmatrix}
+                            \] を満たす $c_1$, $c_2\in\mathbb{R}$ が得られれば, 式 $(1.2)$ の解 (初期条件下での特殊解) が得られる. 
+                            <ul>
+                                <li>具体的には, $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{R}^2$ が線型独立であることから (つまり $\mathbf{v}_1, \mathbf{v}_2$ が $\mathbb{R}^2$ の基底であることから), 
+                                    \[
+                                        P = (\mathbf{v}_1, \mathbf{v}_2)\in\mathbb{R}^{2\times 2}
+                                    \] は正則行列であり, 従って 
+                                    \[
+                                        \begin{pmatrix} 
+                                            c_1 \cr 
+                                            c_2 
+                                        \end{pmatrix} = P^{-1}\mathbf{x}_0
+                                    \] を計算することで, 任意定数 $c_1$, $c_2$ の値が決定され特殊解が得られる. 
+                                </li>
+                            </ul>
+                        </li>
+                        <li>なお, このようにして得られる $c_1$, $c_2$ は $\mathbf{x}_0 = c_1\mathbf{v}_1 + c_2\mathbf{v}_2$ を満たすことに注意すると, $\mathbf{x} = e^{tA}\mathbf{x}_0$ に基づき
+                            \[
+                                \mathbf{x}(t) = e^{tA}\mathbf{x}_0 = c_1e^{tA}\mathbf{v}_1 + c_2e^{tA}\mathbf{v}_2 = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2
+                            \] と計算することもできる. 
+                            いずれにしても, 一般解の表記において初期条件に応じて $c_1$, $c_2$ を決定したものが特殊解となることが確かめられる. 
+                        </li>
+                        <li>さらに, このとき行列 $A$ を対角化すると
+                            \[
+                                P^{-1}AP = \begin{pmatrix} 
+                                    \lambda_1 & 0 \cr 
+                                    0 & \lambda_2 
+                                \end{pmatrix}
+                            \] となるため, 式 $(1.1)$ の解 $\mathbf{x}$ に対して $\widehat{\mathbf{x}} = P^{-1}\mathbf{x}$ と定めると, 
+                            \[
+                                \begin{array}{rl} 
+                                    \begin{pmatrix} 
+                                        \lambda_1 & 0 \cr 
+                                        0 & \lambda_2 
+                                    \end{pmatrix} \widehat{\mathbf{x}} &= P^{-1}AP\widehat{\mathbf{x}} \cr 
+                                    &= P^{-1}A\mathbf{x} \cr 
+                                    &= P^{-1}\mathbf{x}' = \widehat{\mathbf{x}}'
+                                \end{array}
+                            \] となる. このことは, 式 $(1.2)$ の解は
+                            \[
+                                \left\{\begin{array}{rl} 
+                                    \widehat{\mathbf{x}}' &= \begin{pmatrix} 
+                                        \lambda_1 & 0 \cr 
+                                        0 & \lambda_2 
+                                    \end{pmatrix}\widehat{\mathbf{x}}, \cr 
+                                    \widehat{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
+                                \end{array}\right. 
+                            \] の解 $\widehat{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widehat{\mathbf{x}}$ により説明できることを意味している. 
+                            <ul>
+                                <li>実際に, 上の一般解 $\widehat{\mathbf{x}}$ を求めると 
+                                    \[
+                                        \widehat{\mathbf{x}}(t) = \begin{pmatrix} 
+                                            c_1e^{\lambda_1 t} \cr 
+                                            c_2e^{\lambda_2 t} 
+                                        \end{pmatrix}
+                                    \] が得られ, 確かに 
+                                    \[
+                                        \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 = (\mathbf{v}_1, \mathbf{v}_2) \begin{pmatrix} 
+                                            c_1e^{\lambda_1 t} \cr 
+                                            c_2e^{\lambda_2 t} 
+                                        \end{pmatrix} = P\widehat{\mathbf{x}}(t)
+                                    \] となっている. 
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
                 
             <hr>
-            
-            <p>次に, 固有値が $1$ つの実数のみの場合は, 固有値 $\lambda\in\mathbb{R}$ に対応する (線型独立な) 固有ベクトルが複数ある場合と $1$ つしか無い場合と $2$ つのケースが考えられる.  
-            </p>
-            <p>固有値 $\lambda$ に対応する複数の固有ベクトルが存在する場合は, 任意のベクトル $\mathbf{v}\in\mathbb{R}^2$ に対して
-                \[
-                    \mathbf{x}(t) = ce^{\lambda t}\mathbf{v}
-                \] が $\mathbf{x}' = A\mathbf{x}$ の一般解であり, 初期条件 $\mathbf{x}(0) = \mathbf{x}_0$ を満たす特殊解は $\mathbf{x}(t) = e^{\lambda t}\mathbf{x}_0$ である. 
-            </p>
-
-            <div class="exercise">
-                このことを証明せよ.
-            </div><!-- /exercise -->
-
-            <div class="answer">
-                <p>固有値 $\lambda$ に対応する複数の線型独立な固有ベクトルが存在するなら, 少なくとも $2$ つの線型独立な固有ベクトルが存在するため, それらを $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{R}^2$ とおくと, これらは $\mathbb{R}^2$ の基底となる. 
-                従って, $\mathbb{R}^2$ の全てのベクトル $\mathbf{v}$ は $\mathbf{v}_1, \mathbf{v}_2$ の線型結合で表現できる: 
-                \[
-                    \mathbf{v} = c_1\mathbf{v}_1 + c_2\mathbf{v}_2
-                \] 
-                これを用いると, 
-                \[
-                    A\mathbf{v} = A(c_1\mathbf{v}_1 + c_2\mathbf{v}_2) = \lambda(c_1\mathbf{v}_1 + c_2\mathbf{v}_2) = \lambda\mathbf{v}
-                \] となることから, 任意の $\mathbf{0}$ でないベクトル $\mathbf{v}\in\mathbb{R}^2$ は, 行列 $A\in\mathbb{R}^{2\times 2}$ の固有値 $\lambda$ に対応する固有ベクトルになる (なお, このような行列 $A\in\mathbb{R}^{2\times 2}$ は $A=\lambda I$ しか存在しない). 
-                あとは線形力学系の性質を用いると, 
-                \[
-                    \mathbf{x}(t) = ce^{\lambda t}\mathbf{v}
-                \] が $\mathbf{x}' = A\mathbf{x}$ の一般解であることがわかる. 
-                また, 初期条件 $\mathbf{x}(0) = \mathbf{x}_0$ を満たす特殊解が $\mathbf{x}(t) = e^{\lambda t}\mathbf{x}_0$ であることは明らかである. 
-                </p>
-            </div><!-- /answer -->
-                
-            <p>ただ一つの固有値 $\lambda$ に対応する固有ベクトルが (スカラー倍を除き) 一つしか無い場合は, 行列 $A$ は固有ベクトルを用いて対角化することはできないが, 代わりに一般固有空間の元 (一般固有ベクトル) を用いてジョルダン標準形にすることができる. 
-                いま, $\lambda$ は固有方程式の $2$ 重解であるため, $\lambda$ に対応する固有ベクトル $\mathbf{v}_1$ に対して, 例えば
-                \[
-                    (\lambda I - A)\mathbf{v}_2 = -\mathbf{v}_1
-                \] となる (固有値 $\lambda$ に対する階数 $2$ の一般固有ベクトル) $\mathbf{v}_2$ を考えれれば良い. 
-                このとき, 確かに $(\lambda I - A)^2\mathbf{v}_2 = \mathbf{0}$ であり, $\mathbf{v}_1$ と $\mathbf{v}_2$ は線型独立であり, また $A\mathbf{v}_2 = \mathbf{v}_1 + \lambda\mathbf{v}_2$ となる.  
-            </p>
-            <p>これらを用いると, 
-                \[
-                    \mathbf{x}(t) = e^{\lambda t}\mathbf{v}_1,\quad \mathbf{x}(t) = te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2
-                \] はどちらも $\mathbf{x}' = A\mathbf{x}$ を満たし, 実はこれらの線型結合で一般解が得られる:
-                \[
-                    \begin{array}{rl}
-                        \mathbf{x}(t) &= c_1e^{\lambda t}\mathbf{v}_1 + c_2(te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2) \cr 
-                        &= (c_1e^{\lambda t} + c_2te^{\lambda t})\mathbf{v}_1 + c_2e^{\lambda t}\mathbf{v}_2.
-                    \end{array}
-                \] ここで $te^{\lambda t}\mathbf{v}_1$ という部分を考えるのは, 本質的に $1$ 階線形微分方程式の未定係数法による. 
-                また, $P=(\mathbf{v}_1, \mathbf{v}_2)$ を用いて $\mathbf{x}_0 = c_1\mathbf{v}_1 + c_2\mathbf{v}_2$ なる $c_1$, $c_2$ を求めることで, 与えられた初期条件に対する特殊解を得ることができる. 
-                なお, 上の一般固有ベクトル $\mathbf{v}_2$ に対して
-                \[
-                    \begin{array}{rl} 
-                        e^{tA}\mathbf{v}_2 &= \displaystyle\sum_{k=0}^{\infty} \dfrac{(tA)^k}{k!}\mathbf{v}_2 \cr
-                        &= \displaystyle\sum_{k=1}^{\infty}\dfrac{t^k}{k!}k\lambda^{k-1}\mathbf{v}_1 + \sum_{k=0}^{\infty}\dfrac{t^k}{k!}\lambda^k\mathbf{v}_2 \cr 
-                        &= te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2 
-                    \end{array} 
-                \] であることに注意すれば, $\mathbf{x}_0 = c_1\mathbf{v}_1 + c_2\mathbf{v}_2$ なる $c_1$, $c_2$ に対し, 確かに 
-                \[
-                    \begin{array}{rl} 
-                        \mathbf{x}(t) &= e^{tA}\mathbf{x}_0 \cr 
-                        &= c_1e^{tA}\mathbf{v}_1 + c_2e^{tA}\mathbf{v}_2 \cr 
-                        &= c_1e^{\lambda t}\mathbf{v}_1 + c_2(te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2)
-                    \end{array} 
-                \] を得ることができる.
-            </p>
-            <p>別の解法として, (例えばケーリー・ハミルトンの定理などから) 
-                \[
-                    (A-\lambda I)^2 = O 
-                \] となることに注目し, 
-                \[
-                    \begin{array}{rl} 
-                        e^{tA} &= e^{\lambda tI}e^{t(A-\lambda I)} \cr 
-                        &= e^{\lambda t}I\left(I + t(A-\lambda I) + \dfrac{(t(A-\lambda I))^2}{2} + \dfrac{(t(A-\lambda I))^3}{3!} + \dots \right) \cr 
-                        &= e^{\lambda t}\left(I + t(A-\lambda I)\right) \cr 
-                        &= (1-\lambda t)e^{\lambda t}I + te^{\lambda t}A
-                    \end{array}
-                \] と変形することで, $\mathbf{x}(t) = e^{tA}\mathbf{x}_0 = (1-\lambda t)e^{\lambda t}\mathbf{x}_0 + te^{\lambda t}A\mathbf{x}_0$ という特殊解の表示を得ることもできる. 
-                実際に, この式に $\mathbf{x}_0 = c_1\mathbf{v}_1 + c_2\mathbf{v}_2$ を代入すれば上と同じ結果が得られる. 
-            </p>    
-            <p>さらに, 上で定義した行列 $P$ を用いれば  
-                \[
-                    P^{-1}AP = \begin{pmatrix} 
-                        \lambda & 1 \cr 
-                        0 & \lambda 
-                    \end{pmatrix}
-                \] というジョルダン標準形が得られることから, このパターンに対する式 $(1.2)$ の解は 
-                \[
-                    \left\{\begin{array}{rl} 
-                        \widehat{\mathbf{x}}' &= \begin{pmatrix} 
-                            \lambda & 1 \cr 
-                            0 & \lambda 
-                        \end{pmatrix}\widehat{\mathbf{x}}, \cr 
-                        \widehat{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
-                    \end{array}\right. 
-                \] の解 $\widehat{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widehat{\mathbf{x}}$ により説明できる. 
-                実際, 一般解を考えると 
-                \[
-                    \widehat{\mathbf{x}}(t) = \begin{pmatrix} 
-                        c_1e^{\lambda t} + c_2te^{\lambda t} \cr 
-                        c_2e^{\lambda t} 
-                    \end{pmatrix}
-                \] が得られ, 確かに 
-                \[
-                    \mathbf{x}(t) = (c_1e^{\lambda t} + c_2te^{\lambda t})\mathbf{v}_1 + c_2e^{\lambda t}\mathbf{v}_2 = (\mathbf{v}_1, \mathbf{v}_2) \begin{pmatrix} 
-                        c_1e^{\lambda_1 t} + c_2te^{\lambda t} \cr 
-                        c_2e^{\lambda_2 t} 
-                    \end{pmatrix} = P\widehat{\mathbf{x}}(t)
-                \] となっている. 
-            </p>
-                
-            <hr>
-
-            <p>最後に, 異なる二つの固有値 $\lambda_1$, $\lambda_2\in\mathbb{C}\backslash\mathbb{R}$ が存在する場合を考える. 
-                これらは実数係数 $2$ 次方程式の解であるため, $\lambda_1=\overline{\lambda}_2$ ($\lambda_2$ の複素共役) である. 
-                対応する固有ベクトル $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{C}^2$ について, 
-                \[
-                    \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 \in\mathbb{C}^2
-                \] が (任意の $c_1, c_2\in\mathbb{C}$ に対して) $\mathbf{x}' = A\mathbf{x}$ を満たすことは確かだが, 一般に実数係数の微分方程式の解としては実数値の関数がほしい. 
-                そこで, 
-                \[
-                    \lambda_1 = \alpha+i\beta,\quad \mathbf{v}_1 = \mathbf{w}_1 + i\mathbf{w}_2
-                \] とおき, これら $\alpha, \beta\in\mathbb{R}$, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^2$ を用いて一般解を表現したい, ここで $i$ は虚数単位である. 
-                なお, $\lambda_1\in\mathbb{C}\backslash\mathbb{R}$ より $\beta\neq0$ であることに注意. 
-            </p>
-            <p>まず, 以下の性質を確認しよう:
-            </p>
-            
-            <div class="lemma">
-                <p>行列 $A\in\mathbb{R}^{n\times n}$ のある固有値 $\lambda$ が $\lambda\in\mathbb{C}\backslash\mathbb{R}$ を満たすとする. 
-                    このとき, 以下が成立する:
-                </p>
+                <li>固有値が重複した $1$ つの実数のみの場合: </li>
                 <ul>
-                    <li>対応する固有ベクトル $\mathbf{v}$ を $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ を用いて $\mathbf{v} = \mathbf{w}_1 + i\mathbf{w}_2$ と表したとき, $\mathbf{w}_2\neq\mathbf{0}$ である. 
-                        つまり $\mathbf{v}\in \mathbb{C}^n\backslash\mathbb{R}^n$ である. </li>
-                    <li>上の表記において, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ は線型独立である.</li>
-                    <li>$\overline{\lambda}$ は行列 $A$ の固有値であり, また $\overline{\mathbf{v}}$ は対応する固有ベクトルである.</li>
-                </ul>
-            </div><!-- /lemma -->
-
-            <div class="proof">
-                <ul>
-                    <li>もしも $\mathbf{w}_2=\mathbf{0}$ ならば (つまり $\mathbf{v}_1\in\mathbb{R}^n$ ならば), $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1$ の左辺は実ベクトルであり, 一方で固有ベクトル $\mathbf{v}_1$ は $\mathbf{0}$ では無いことから右辺は実ベクトルでは無い, 従って矛盾する. 
+                    <li>このときは, ただ一つの固有値 $\lambda\in\mathbb{R}$ に対応する (線型独立な) 固有ベクトルが複数ある場合と $1$ つしか無い場合と $2$ つのケースが考えられる. 
                     </li>
-                    <li>$\lambda = \alpha + i\beta$ とおく, ただし $\alpha, \beta\in\mathbb{R}$ であり, $\lambda\in\mathbb{C}\backslash\mathbb{R}$ より $\beta\neq0$ である. 
-                        もしも $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ が線型独立で無いならば, $\mathbf{w}_1 = c\mathbf{w}_2$ (つまり $\mathbf{v} = (c+i)\mathbf{w}_2$) となる $c\in\mathbb{R}$ が存在するため, 
+                    <li>固有値 $\lambda$ に対応する複数の固有ベクトルが存在する場合は, 任意のベクトル $\mathbf{v}\in\mathbb{R}^2$ に対して
+                        \[
+                            \mathbf{x}(t) = ce^{\lambda t}\mathbf{v}
+                        \] が $\mathbf{x}' = A\mathbf{x}$ の一般解であり, 初期条件 $\mathbf{x}(0) = \mathbf{x}_0$ を満たす特殊解は $\mathbf{x}(t) = e^{\lambda t}\mathbf{x}_0$ である. 
+                    </li>
+                    <div class="exercise">
+                        このことを証明せよ.
+                    </div><!-- /exercise -->
+
+                    <div class="answer">
+                        <p>固有値 $\lambda$ に対応する複数の線型独立な固有ベクトルが存在するなら, 少なくとも $2$ つの線型独立な固有ベクトルが存在するため, それらを $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{R}^2$ とおくと, これらは $\mathbb{R}^2$ の基底となる. 
+                        従って, $\mathbb{R}^2$ の全てのベクトル $\mathbf{v}$ は $\mathbf{v}_1, \mathbf{v}_2$ の線型結合で表現できる: 
+                        \[
+                            \mathbf{v} = c_1\mathbf{v}_1 + c_2\mathbf{v}_2
+                        \] 
+                        これを用いると, 
+                        \[
+                            A\mathbf{v} = A(c_1\mathbf{v}_1 + c_2\mathbf{v}_2) = \lambda(c_1\mathbf{v}_1 + c_2\mathbf{v}_2) = \lambda\mathbf{v}
+                        \] となることから, 任意の $\mathbf{0}$ でないベクトル $\mathbf{v}\in\mathbb{R}^2$ は, 行列 $A\in\mathbb{R}^{2\times 2}$ の固有値 $\lambda$ に対応する固有ベクトルになる (なお, このような行列 $A\in\mathbb{R}^{2\times 2}$ は $A=\lambda I$ しか存在しない). 
+                        あとは線形力学系の性質を用いると, 
+                        \[
+                            \mathbf{x}(t) = ce^{\lambda t}\mathbf{v}
+                        \] が $\mathbf{x}' = A\mathbf{x}$ の一般解であることがわかる. 
+                        また, 初期条件 $\mathbf{x}(0) = \mathbf{x}_0$ を満たす特殊解が $\mathbf{x}(t) = e^{\lambda t}\mathbf{x}_0$ であることは明らかである. 
+                        </p>
+                    </div><!-- /answer -->
+                    
+                    <li>ただ一つの固有値 $\lambda$ に対応する固有ベクトルが (スカラー倍を除き) 一つしか無い場合は, 行列 $A$ は固有ベクトルを用いて対角化することはできないが, 代わりに一般固有空間の元 (一般固有ベクトル) を用いてジョルダン標準形にすることができる. 
+                        いま, $\lambda$ は固有方程式の $2$ 重解であるため, $\lambda$ に対応する固有ベクトル $\mathbf{v}_1$ に対して, 例えば
+                        \[
+                            (\lambda I - A)\mathbf{v}_2 = -\mathbf{v}_1
+                        \] となる (固有値 $\lambda$ に対する階数 $2$ の一般固有ベクトル) $\mathbf{v}_2$ を考えれれば良い. 
+                        このとき, 確かに $(\lambda I - A)^2\mathbf{v}_2 = \mathbf{0}$ であり, $\mathbf{v}_1$ と $\mathbf{v}_2$ は線型独立であり, また $A\mathbf{v}_2 = \mathbf{v}_1 + \lambda\mathbf{v}_2$ となる.  
+                        これらを用いると, 
+                        \[
+                            \mathbf{x}(t) = e^{\lambda t}\mathbf{v}_1,\quad \mathbf{x}(t) = te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2
+                        \] はどちらも $\mathbf{x}' = A\mathbf{x}$ を満たし, 実はこれらの線型結合で一般解が得られる:
+                        \[
+                            \begin{array}{rl}
+                                \mathbf{x}(t) &= c_1e^{\lambda t}\mathbf{v}_1 + c_2(te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2) \cr 
+                                &= (c_1e^{\lambda t} + c_2te^{\lambda t})\mathbf{v}_1 + c_2e^{\lambda t}\mathbf{v}_2.
+                            \end{array}
+                        \] 
+                        <ul>
+                            <li>ここで $te^{\lambda t}\mathbf{v}_1$ という部分を考えるのは, 本質的に $1$ 階線形微分方程式の未定係数法による. 
+                            </li>
+                        </ul>
+                    </li>
+                    <li>また, $P=(\mathbf{v}_1, \mathbf{v}_2)$ を用いて $\mathbf{x}_0 = c_1\mathbf{v}_1 + c_2\mathbf{v}_2$ なる $c_1$, $c_2$ を求めることで, 与えられた初期条件に対する特殊解を得ることができる. 
+                    </li>
+                    <li>なお, 上の一般固有ベクトル $\mathbf{v}_2$ に対して
                         \[
                             \begin{array}{rl} 
-                                (c+i)A\mathbf{w}_2 &= A\mathbf{v} \cr 
-                                &= \lambda\mathbf{v} \cr 
-                                &= (\alpha+i\beta)(c+i)\mathbf{w}_2
-                            \end{array}
-                        \] となるが, $c\in\mathbb{R}$ より $c+i\neq0$ であり, 従って 
+                                e^{tA}\mathbf{v}_2 &= \displaystyle\sum_{k=0}^{\infty} \dfrac{(tA)^k}{k!}\mathbf{v}_2 \cr
+                                &= \displaystyle\sum_{k=1}^{\infty}\dfrac{t^k}{k!}k\lambda^{k-1}\mathbf{v}_1 + \sum_{k=0}^{\infty}\dfrac{t^k}{k!}\lambda^k\mathbf{v}_2 \cr 
+                                &= te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2 
+                            \end{array} 
+                        \] であることに注意すれば, $\mathbf{x}_0 = c_1\mathbf{v}_1 + c_2\mathbf{v}_2$ なる $c_1$, $c_2$ に対し, 確かに 
                         \[
-                            A\mathbf{w}_2 = (\alpha+i\beta)\mathbf{w}_2 
-                        \] が成立する. この左辺は実ベクトルであり, 右辺は $\beta\neq0$, $\mathbf{w}_2\neq\mathbf{0}$ より実ベクトルでは無いため矛盾する. 
+                            \begin{array}{rl} 
+                                \mathbf{x}(t) &= e^{tA}\mathbf{x}_0 \cr 
+                                &= c_1e^{tA}\mathbf{v}_1 + c_2e^{tA}\mathbf{v}_2 \cr 
+                                &= c_1e^{\lambda t}\mathbf{v}_1 + c_2(te^{\lambda t}\mathbf{v}_1 + e^{\lambda t}\mathbf{v}_2)
+                            \end{array} 
+                        \] を得ることができる.
                     </li>
-                    <li>$A\in\mathbb{R}^{n\times n}$ より $\overline{A}=A$ であることを用いると, $A\overline{\mathbf{v}} = \overline{A}\overline{\mathbf{v}} = \overline{A\mathbf{v}} = \overline{\lambda\mathbf{v}} = \overline{\lambda}\overline{\mathbf{v}}$ となる.</li>
+                    <li>別の解法として, (例えばケーリー・ハミルトンの定理などから) 
+                        \[
+                            (A-\lambda I)^2 = O 
+                        \] となることに注目し, 
+                        \[
+                            \begin{array}{rl} 
+                                e^{tA} &= e^{\lambda tI}e^{t(A-\lambda I)} \cr 
+                                &= e^{\lambda t}I\left(I + t(A-\lambda I) + \dfrac{(t(A-\lambda I))^2}{2} + \dfrac{(t(A-\lambda I))^3}{3!} + \dots \right) \cr 
+                                &= e^{\lambda t}\left(I + t(A-\lambda I)\right) \cr 
+                                &= (1-\lambda t)e^{\lambda t}I + te^{\lambda t}A
+                            \end{array}
+                        \] と変形することで, $\mathbf{x}(t) = e^{tA}\mathbf{x}_0 = (1-\lambda t)e^{\lambda t}\mathbf{x}_0 + te^{\lambda t}A\mathbf{x}_0$ という特殊解の表示を得ることもできる. 
+                        実際に, この式に $\mathbf{x}_0 = c_1\mathbf{v}_1 + c_2\mathbf{v}_2$ を代入すれば上と同じ結果が得られる. 
+                    </li>
+                    <li>さらに, 上で定義した行列 $P$ を用いれば  
+                        \[
+                            P^{-1}AP = \begin{pmatrix} 
+                                \lambda & 1 \cr 
+                                0 & \lambda 
+                            \end{pmatrix}
+                        \] というジョルダン標準形が得られることから, このパターンに対する式 $(1.2)$ の解は 
+                        \[
+                            \left\{\begin{array}{rl} 
+                                \widehat{\mathbf{x}}' &= \begin{pmatrix} 
+                                    \lambda & 1 \cr 
+                                    0 & \lambda 
+                                \end{pmatrix}\widehat{\mathbf{x}}, \cr 
+                                \widehat{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
+                            \end{array}\right. 
+                        \] の解 $\widehat{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widehat{\mathbf{x}}$ により説明できる. 
+                        <ul>
+                            <li>実際に, 上の一般解 $\widehat{\mathbf{x}}$ を求めると
+                                \[
+                                    \widehat{\mathbf{x}}(t) = \begin{pmatrix} 
+                                        c_1e^{\lambda t} + c_2te^{\lambda t} \cr 
+                                        c_2e^{\lambda t} 
+                                    \end{pmatrix}
+                                \] が得られ, 確かに 
+                                \[
+                                    \mathbf{x}(t) = (c_1e^{\lambda t} + c_2te^{\lambda t})\mathbf{v}_1 + c_2e^{\lambda t}\mathbf{v}_2 = (\mathbf{v}_1, \mathbf{v}_2) \begin{pmatrix} 
+                                        c_1e^{\lambda_1 t} + c_2te^{\lambda t} \cr 
+                                        c_2e^{\lambda_2 t} 
+                                    \end{pmatrix} = P\widehat{\mathbf{x}}(t)
+                                \] となっている. 
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
-            </div><!-- /proof -->
+                
+                <hr>
 
-            <p>これらの性質は $n=2$ の場合にも成立するため, 固有値 $\lambda_1$ に対応する固有ベクトル $\mathbf{v}_1 = \mathbf{w}_1 + i\mathbf{w}_2$ および固有値 $\lambda_2 = \overline{\lambda_1}$ に対応する固有ベクトル $\mathbf{v}_2 = \overline{\mathbf{v}}_1$ を考えることができる.  
-                このように両方の固有ベクトルと密接に関連する $2$ つの実ベクトル $\mathbf{w}_1$, $\mathbf{w}_2\in\mathbb{R}^2$ が得られるが, これらは線型独立であるため $\mathbb{R}^2$ の基底となる. 
-                これらを用いて一般解の表現を試みよう. 以降, 複素ベクトル $\mathbf{z}\in\mathbb{C}^n$ に対し, 
-                \[
-                    \mathbf{z} = \mathbf{a} + i\mathbf{b} \quad (\mathbf{a}, \mathbf{b}\in\mathbb{R}^n)
-                \] であるときに, ベクトル $\mathbf{z}$ の実部および虚部を
-                \[
-                    \operatorname{Re}(\mathbf{z}) = \mathbf{a},\quad \operatorname{Im}(\mathbf{z}) = \mathbf{b}
-                \] と表記することにする. 
-            </p>
-            <p> まず, オイラーの公式  
-                \[
-                    e^{iz} = \cos z + i\sin z \quad\text{ for all }\quad z\in\mathbb{C}
-                \] を用いると 
-                \[
-                    e^{\lambda_1 t} = e^{(\alpha+i\beta)t} = e^{\alpha t}(\cos \beta t + i\sin \beta t)
-                \] が得られる. 従って 
-                \[
-                    e^{\lambda_1 t}\mathbf{v}_1 = e^{\alpha t}((\mathbf{w}_1\cos \beta t - \mathbf{w}_2\sin \beta t) + i(\mathbf{w}_1\sin \beta t + \mathbf{w}_2\cos \beta t))
-                \] であり, また 
-                \[
-                    e^{\lambda_2 t}\mathbf{v}_2 = \overline{e^{\lambda_1 t}\mathbf{v}_1}
-                \] である. これらを用いると, 
-                \[
-                    \begin{array}{rl}
-                        \mathbf{x}(t) &= \operatorname{Re}(e^{\lambda_1 t}\mathbf{v}_1) = \dfrac{1}{2}e^{\lambda_1 t}\mathbf{v}_1 + \dfrac{1}{2}e^{\lambda_2 t}\mathbf{v}_2 = e^{\alpha t}(\mathbf{w}_1\cos \beta t - \mathbf{w}_2\sin \beta t) \in \mathbb{R}, \cr  
-                        \mathbf{x}(t) &= \operatorname{Im}(e^{\lambda_1 t}\mathbf{v}_1) = \dfrac{i}{2}e^{\lambda_1 t}\mathbf{v}_1 - \dfrac{i}{2}e^{\lambda_2 t}\mathbf{v}_2 = e^{\alpha t}(\mathbf{w}_1\sin \beta t + \mathbf{w}_2\cos \beta t) \in \mathbb{R} 
-                    \end{array} 
-                \] はどちらも $\mathbf{x}' = A\mathbf{x}$ を満たし, これらの線型結合で一般解が得られる: 
-                \[
-                    \mathbf{x}(t) = e^{\alpha t}(\widetilde{c}_1(\mathbf{w}_1\cos \beta t - \mathbf{w}_2\sin \beta t) + \widetilde{c}_2(\mathbf{w}_1\sin \beta t + \mathbf{w}_2\cos \beta t)) \in\mathbb{R},
-                \] ただし, $\widetilde{c}_1, \widetilde{c}_2\in\mathbb{R}$ である. 
-            </p>
-            <p>少し整理してもう一度説明すると, $2$ 次元線形力学系 $\mathbf{x}' = A\mathbf{x}$ の解は, 複素数値関数を許せば
-                \[
-                    \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 \in\mathbb{C}^2\quad (c_1, c_2\in\mathbb{C})
-                \] と表すことができる. 
-                もしも $\lambda_1\in\mathbb{C}\backslash\mathbb{R}$ ならば, $2$ つの固有値, 固有ベクトルは複素共役となるため, どちらか一方 (例えば $\lambda_1\in\mathbb{C}\backslash\mathbb{R}$ と $\mathbf{v}_1\in\mathbb{C}^2\backslash\mathbb{R}^2$) に注目し, それらの実部と虚部とを求めれば必要な情報は手に入る. 
-                具体的には, $e^{\lambda_1 t}\mathbf{v}_1$ の実部と虚部との線型結合により, 実数係数の微分方程式の解となる実数値の関数が得られるのである.
-            </p>
-            <p>なお, $\mathbf{v}_2 = \overline{\mathbf{v}}_1$ であることに注意すると, 初期条件 $\mathbf{x}_0\in\mathbb{R}^2$ が与えられたときに 
-                \[
-                    \mathbf{x}_0 = \widetilde{c}_1\mathbf{w}_1 + \widetilde{c}_2\mathbf{w}_2
-                \] なる $\widetilde{c}_1, \widetilde{c}_2\in\mathbb{R}$ に対して, $c_1 = \dfrac{\widetilde{c}_1 - i\widetilde{c}_2}{2}$, $c_2 = \overline{c}_1$ とおくと 
-                \[
-                    \mathbf{x}_0 = \widetilde{c}_1\mathbf{w}_1 + \widetilde{c}_2\mathbf{w}_2 = 2\operatorname{Re}(c_1\mathbf{v}_1) = c_1\mathbf{v}_1 + c_2\mathbf{v}_2
-                \]
-                である. これと $\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ であることから, 
-                \[
-                    \begin{array}{rl} 
-                        \mathbf{x}(t) &= e^{tA}(c_1\mathbf{v}_1 + c_2\mathbf{v}_2) \cr 
-                        &= c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 \cr 
-                        &= 2\operatorname{Re}(c_1 e^{\lambda_1 t}\mathbf{v}_1) \cr 
-                        &= \widetilde{c}_1 \operatorname{Re}(e^{\lambda_1 t}\mathbf{v}_1) + \widetilde{c}_2 \operatorname{Im}(e^{\lambda_1 t}\mathbf{v}_1)
-                    \end{array}
-                \] が得られる. 
-                これは, 上の一般解の表記において $\widetilde{c}_1, \widetilde{c}_2\in\mathbb{R}$ を与えられた初期条件に応じて指定したものになっている. 
-            </p>
-            <p>なお, $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1 = (\alpha + i\beta)(\mathbf{w}_1+i\mathbf{w}_2)$ に注目すると 
-                \[
-                    \begin{array}{rl}
-                        A(\mathbf{w}_1 + i\mathbf{w}_2) &= (\alpha+i\beta)(\mathbf{w}_1 + i\mathbf{w}_2) \cr 
-                        &= \alpha\mathbf{w}_1 - \beta\mathbf{w}_2 + i(\beta\mathbf{w}_1 + \alpha\mathbf{w}_2)
-                    \end{array}
-                \] となるため, 実部と虚部とをそれぞれ比較することで
-                \[
-                    \left\{\begin{array}{rl} 
-                        A\mathbf{w}_1 &= \alpha\mathbf{w}_1 - \beta\mathbf{w}_2, \cr 
-                        A\mathbf{w}_2 &= \beta\mathbf{w}_1 + \alpha\mathbf{w}_2  
-                    \end{array}\right.
-                \] が得られる ($A\mathbf{v}_2 = \lambda_2\mathbf{v}_2$ に注目して実部と虚部とをそれぞれ比較しても同じ結果が得られる). 
-                従って, 
-                \[
-                    A(\mathbf{w}_1, \mathbf{w}_2) = (\mathbf{w}_1, \mathbf{w}_2)\begin{pmatrix} 
-                        \alpha & \beta \cr 
-                        -\beta & \alpha 
-                    \end{pmatrix}
-                \] となり, $P=(\mathbf{w}_1, \mathbf{w}_2)$ とおくことで, 
-                \[
-                    P^{-1}AP = \begin{pmatrix} 
-                        \alpha & \beta \cr 
-                        -\beta & \alpha 
-                    \end{pmatrix}
-                \] が得られる.
-                このことは, $A$ が異なる $2$ つの複素固有値を持つパターンに対する式 $(1.2)$ の解は
-                \[
-                    \left\{\begin{array}{rl} 
-                        \widehat{\mathbf{x}}' &= \begin{pmatrix} 
-                            \alpha & \beta \cr 
-                            -\beta & \alpha 
-                        \end{pmatrix}\widehat{\mathbf{x}}, \cr 
-                        \widehat{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
-                    \end{array}\right. 
-                \] の解 $\widehat{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widehat{\mathbf{x}}$ により説明できることを意味している ($\lambda_1=\alpha+i\beta$, $\lambda_2=\alpha-i\beta$, $\beta\neq 0$ に注意). 
-                実際, 一般解を考えると 
-                \[
-                    \widehat{\mathbf{x}}(t) = \begin{pmatrix} 
-                        e^{\alpha t}(\widetilde{c}_1\cos \beta t + \widetilde{c}_2\sin \beta t) \cr 
-                        e^{\alpha t}(-\widetilde{c}_1\sin \beta t + \widetilde{c}_2\cos \beta t) 
-                    \end{pmatrix}
-                \] が得られ, 確かに 
-                \[
-                    \begin{array}{rl}
-                        \mathbf{x}(t) &= e^{\alpha t}(\widetilde{c}_1(\mathbf{w}_1\cos \beta t - \mathbf{w}_2\sin \beta t) + \widetilde{c}_2(\mathbf{w}_1\sin \beta t + \mathbf{w}_2\cos \beta t)) \cr 
-                        &= (\mathbf{w}_1, \mathbf{w}_2) \begin{pmatrix} 
-                            e^{\alpha t}(\widetilde{c}_1\cos \beta t + \widetilde{c}_2\sin \beta t) \cr 
-                        e^{\alpha t}(-\widetilde{c}_1\sin \beta t + \widetilde{c}_2\cos \beta t)
-                        \end{pmatrix} = P\widehat{\mathbf{x}}(t)
-                    \end{array}
-                \] となっている. 
-            </p>
+                <li>異なる二つの固有値 $\lambda_1$, $\lambda_2\in\mathbb{C}\backslash\mathbb{R}$ が存在する場合: 
+                </li>
+                <ul>
+                    <li>
+                        $\lambda_1$, $\lambda_2\in\mathbb{C}\backslash\mathbb{R}$ は実数係数 $2$ 次方程式の解であるため, $\lambda_1=\overline{\lambda}_2$ ($\lambda_2$ の複素共役) である. 
+                        対応する固有ベクトル $\mathbf{v}_1$, $\mathbf{v}_2\in\mathbb{C}^2$ について, 
+                        \[
+                            \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 \in\mathbb{C}^2
+                        \] が (任意の $c_1, c_2\in\mathbb{C}$ に対して) $\mathbf{x}' = A\mathbf{x}$ を満たすことは確かだが, 一般に実数係数の微分方程式の解としては実数値の関数がほしい.         
+                    </li>
+                    <li>
+                        そこで, 
+                        \[
+                            \lambda_1 = \alpha+i\beta,\quad \mathbf{v}_1 = \mathbf{w}_1 + i\mathbf{w}_2
+                        \] とおき, これら $\alpha, \beta\in\mathbb{R}$, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^2$ を用いて一般解を表現したい, ここで $i$ は虚数単位である. 
+                        なお, $\lambda_1\in\mathbb{C}\backslash\mathbb{R}$ より $\beta\neq0$ であることに注意.     
+                    </li>
+                    <li>
+                        まず, 以下の性質を確認しよう:
+                        <div class="lemma">
+                            <p>行列 $A\in\mathbb{R}^{n\times n}$ のある固有値 $\lambda$ が $\lambda\in\mathbb{C}\backslash\mathbb{R}$ を満たすとする. 
+                                このとき, 以下が成立する:
+                            </p>
+                            <ul>
+                                <li>対応する固有ベクトル $\mathbf{v}$ を $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ を用いて $\mathbf{v} = \mathbf{w}_1 + i\mathbf{w}_2$ と表したとき, $\mathbf{w}_2\neq\mathbf{0}$ である. 
+                                    つまり $\mathbf{v}\in \mathbb{C}^n\backslash\mathbb{R}^n$ である. </li>
+                                <li>上の表記において, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ は線型独立である.</li>
+                                <li>$\overline{\lambda}$ は行列 $A$ の固有値であり, また $\overline{\mathbf{v}}$ は対応する固有ベクトルである.</li>
+                            </ul>
+                        </div><!-- /lemma -->
+
+                        <div class="proof">
+                            <ul>
+                                <li>もしも $\mathbf{w}_2=\mathbf{0}$ ならば (つまり $\mathbf{v}_1\in\mathbb{R}^n$ ならば), $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1$ の左辺は実ベクトルであり, 一方で固有ベクトル $\mathbf{v}_1$ は $\mathbf{0}$ では無いことから右辺は実ベクトルでは無い, 従って矛盾する. 
+                                </li>
+                                <li>$\lambda = \alpha + i\beta$ とおく, ただし $\alpha, \beta\in\mathbb{R}$ であり, $\lambda\in\mathbb{C}\backslash\mathbb{R}$ より $\beta\neq0$ である. 
+                                    もしも $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ が線型独立で無いならば, $\mathbf{w}_1 = c\mathbf{w}_2$ (つまり $\mathbf{v} = (c+i)\mathbf{w}_2$) となる $c\in\mathbb{R}$ が存在するため, 
+                                    \[
+                                        \begin{array}{rl} 
+                                            (c+i)A\mathbf{w}_2 &= A\mathbf{v} \cr 
+                                            &= \lambda\mathbf{v} \cr 
+                                            &= (\alpha+i\beta)(c+i)\mathbf{w}_2
+                                        \end{array}
+                                    \] となるが, $c\in\mathbb{R}$ より $c+i\neq0$ であり, 従って 
+                                    \[
+                                        A\mathbf{w}_2 = (\alpha+i\beta)\mathbf{w}_2 
+                                    \] が成立する. この左辺は実ベクトルであり, 右辺は $\beta\neq0$, $\mathbf{w}_2\neq\mathbf{0}$ より実ベクトルでは無いため矛盾する. 
+                                </li>
+                                <li>$A\in\mathbb{R}^{n\times n}$ より $\overline{A}=A$ であることを用いると, $A\overline{\mathbf{v}} = \overline{A}\overline{\mathbf{v}} = \overline{A\mathbf{v}} = \overline{\lambda\mathbf{v}} = \overline{\lambda}\overline{\mathbf{v}}$ となる.</li>
+                            </ul>
+                        </div><!-- /proof -->
+                    </li>
+                    <li>
+                        これらの性質は $n=2$ の場合にも成立するため, 固有値 $\lambda_1$ に対応する固有ベクトル $\mathbf{v}_1 = \mathbf{w}_1 + i\mathbf{w}_2$ および固有値 $\lambda_2 = \overline{\lambda_1}$ に対応する固有ベクトル $\mathbf{v}_2 = \overline{\mathbf{v}}_1$ を考えることができる.  
+                        このように両方の固有ベクトルと密接に関連する $2$ つの実ベクトル $\mathbf{w}_1$, $\mathbf{w}_2\in\mathbb{R}^2$ が得られるが, これらは線型独立であるため $\mathbb{R}^2$ の基底となる. 
+                        これらを用いて一般解の表現を試みよう. 
+                    </li>
+                    <li>
+                        以降, 複素ベクトル $\mathbf{z}\in\mathbb{C}^n$ に対し, 
+                        \[
+                            \mathbf{z} = \mathbf{a} + i\mathbf{b} \quad (\mathbf{a}, \mathbf{b}\in\mathbb{R}^n)
+                        \] であるときに, ベクトル $\mathbf{z}$ の実部および虚部を
+                        \[
+                            \operatorname{Re}(\mathbf{z}) = \mathbf{a},\quad \operatorname{Im}(\mathbf{z}) = \mathbf{b}
+                        \] と表記することにする. 
+                    </li>
+                    <li>
+                        まず, オイラーの公式  
+                        \[
+                            e^{iz} = \cos z + i\sin z \quad\text{ for all }\quad z\in\mathbb{C}
+                        \] を用いると 
+                        \[
+                            e^{\lambda_1 t} = e^{(\alpha+i\beta)t} = e^{\alpha t}(\cos \beta t + i\sin \beta t)
+                        \] が得られる. 従って 
+                        \[
+                            e^{\lambda_1 t}\mathbf{v}_1 = e^{\alpha t}((\mathbf{w}_1\cos \beta t - \mathbf{w}_2\sin \beta t) + i(\mathbf{w}_1\sin \beta t + \mathbf{w}_2\cos \beta t))
+                        \] であり, また 
+                        \[
+                            e^{\lambda_2 t}\mathbf{v}_2 = \overline{e^{\lambda_1 t}\mathbf{v}_1}
+                        \] である. 
+                    </li>
+                    <li>
+                        これらを用いると, 
+                        \[
+                            \begin{array}{rl}
+                                \mathbf{x}(t) &= \operatorname{Re}(e^{\lambda_1 t}\mathbf{v}_1) = \dfrac{1}{2}e^{\lambda_1 t}\mathbf{v}_1 + \dfrac{1}{2}e^{\lambda_2 t}\mathbf{v}_2 = e^{\alpha t}(\mathbf{w}_1\cos \beta t - \mathbf{w}_2\sin \beta t) \in \mathbb{R}, \cr  
+                                \mathbf{x}(t) &= \operatorname{Im}(e^{\lambda_1 t}\mathbf{v}_1) = \dfrac{i}{2}e^{\lambda_1 t}\mathbf{v}_1 - \dfrac{i}{2}e^{\lambda_2 t}\mathbf{v}_2 = e^{\alpha t}(\mathbf{w}_1\sin \beta t + \mathbf{w}_2\cos \beta t) \in \mathbb{R} 
+                            \end{array} 
+                        \] はどちらも $\mathbf{x}' = A\mathbf{x}$ を満たし, これらの線型結合で一般解が得られる: 
+                        \[
+                            \mathbf{x}(t) = e^{\alpha t}(\widetilde{c}_1(\mathbf{w}_1\cos \beta t - \mathbf{w}_2\sin \beta t) + \widetilde{c}_2(\mathbf{w}_1\sin \beta t + \mathbf{w}_2\cos \beta t)) \in\mathbb{R},
+                        \] ただし, $\widetilde{c}_1, \widetilde{c}_2\in\mathbb{R}$ である. 
+                    </li>
+                    <li>
+                        少し整理してもう一度説明すると, $2$ 次元線形力学系 $\mathbf{x}' = A\mathbf{x}$ の解は, <span class="wave">複素数値関数を許せば</span>
+                        \[
+                            \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 \in\mathbb{C}^2\quad (c_1, c_2\in\mathbb{C})
+                        \] と表すことができる. 
+                        もしも $\lambda_1\in\mathbb{C}\backslash\mathbb{R}$ ならば, $2$ つの固有値, 固有ベクトルは複素共役となるため, どちらか一方 (例えば $\lambda_1\in\mathbb{C}\backslash\mathbb{R}$ と $\mathbf{v}_1\in\mathbb{C}^2\backslash\mathbb{R}^2$) に注目し, それらの実部と虚部とを求めれば必要な情報は手に入る. 
+                        具体的には, $e^{\lambda_1 t}\mathbf{v}_1$ の実部と虚部との線型結合により, 実数係数の微分方程式の解となる <span class="wave">実数値の</span> 関数が得られるのである.
+                    </li>
+                    <li>
+                        なお, $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1 = (\alpha + i\beta)(\mathbf{w}_1+i\mathbf{w}_2)$ に注目すると 
+                        \[
+                            \begin{array}{rl}
+                                A(\mathbf{w}_1 + i\mathbf{w}_2) &= (\alpha+i\beta)(\mathbf{w}_1 + i\mathbf{w}_2) \cr 
+                                &= \alpha\mathbf{w}_1 - \beta\mathbf{w}_2 + i(\beta\mathbf{w}_1 + \alpha\mathbf{w}_2)
+                            \end{array}
+                        \] となるため, 実部と虚部とをそれぞれ比較することで
+                        \[
+                            \left\{\begin{array}{rl} 
+                                A\mathbf{w}_1 &= \alpha\mathbf{w}_1 - \beta\mathbf{w}_2, \cr 
+                                A\mathbf{w}_2 &= \beta\mathbf{w}_1 + \alpha\mathbf{w}_2  
+                            \end{array}\right.
+                        \] が得られる ($A\mathbf{v}_2 = \lambda_2\mathbf{v}_2$ に注目して実部と虚部とをそれぞれ比較しても同じ結果が得られる). 
+                        従って, 
+                        \[
+                            A(\mathbf{w}_1, \mathbf{w}_2) = (\mathbf{w}_1, \mathbf{w}_2)\begin{pmatrix} 
+                                \alpha & \beta \cr 
+                                -\beta & \alpha 
+                            \end{pmatrix}
+                        \] となり, $P=(\mathbf{w}_1, \mathbf{w}_2)$ とおくことで, 
+                        \[
+                            P^{-1}AP = \begin{pmatrix} 
+                                \alpha & \beta \cr 
+                                -\beta & \alpha 
+                            \end{pmatrix}
+                        \] が得られる.
+                        このことは, $A$ が異なる $2$ つの複素固有値を持つパターンに対する式 $(1.2)$ の解は
+                        \[
+                            \left\{\begin{array}{rl} 
+                                \widehat{\mathbf{x}}' &= \begin{pmatrix} 
+                                    \alpha & \beta \cr 
+                                    -\beta & \alpha 
+                                \end{pmatrix}\widehat{\mathbf{x}}, \cr 
+                                \widehat{\mathbf{x}}(0) &= P^{-1}\mathbf{x}_0 
+                            \end{array}\right. 
+                        \] の解 $\widehat{\mathbf{x}}$ に対する線形変換 $\mathbf{x} = P\widehat{\mathbf{x}}$ により説明できることを意味している ($\lambda_1=\alpha+i\beta$, $\lambda_2=\alpha-i\beta$, $\beta\neq 0$ に注意). 
+                        <ul>
+                            <li>実際に, 一般解 $\widehat{\mathbf{x}}$ を考えると 
+                                \[
+                                    \widehat{\mathbf{x}}(t) = \begin{pmatrix} 
+                                        e^{\alpha t}(\widetilde{c}_1\cos \beta t + \widetilde{c}_2\sin \beta t) \cr 
+                                        e^{\alpha t}(-\widetilde{c}_1\sin \beta t + \widetilde{c}_2\cos \beta t) 
+                                    \end{pmatrix}
+                                \] が得られ, 確かに 
+                                \[
+                                    \begin{array}{rl}
+                                        \mathbf{x}(t) &= e^{\alpha t}(\widetilde{c}_1(\mathbf{w}_1\cos \beta t - \mathbf{w}_2\sin \beta t) + \widetilde{c}_2(\mathbf{w}_1\sin \beta t + \mathbf{w}_2\cos \beta t)) \cr 
+                                        &= (\mathbf{w}_1, \mathbf{w}_2) \begin{pmatrix} 
+                                            e^{\alpha t}(\widetilde{c}_1\cos \beta t + \widetilde{c}_2\sin \beta t) \cr 
+                                        e^{\alpha t}(-\widetilde{c}_1\sin \beta t + \widetilde{c}_2\cos \beta t)
+                                        \end{pmatrix} = P\widehat{\mathbf{x}}(t)
+                                    \end{array}
+                                \] となっている. 
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </ol>
 
             <hr>
             <p>上で見た例では, いずれの場合も解 $\mathbf{x}(t)$ の表示において, 行列 $A$ の固有値 $\lambda$ を用いて $e^{\lambda t}$ (もしくは $e^{\operatorname{Re}(\lambda) t}$) と表される部分が含まれる.  
                 この部分は, $\lambda \gt0$ (もしくは $\operatorname{Re}(\lambda)\gt 0$) ならば $t\to\infty$ のとき無限大に発散し, $\lambda \lt0$ (もしくは $\operatorname{Re}(\lambda)\lt 0$) ならば $t\to\infty$ のとき $0$ に収束する. 
+                特に, 全ての固有値の実部が負であれば, 解 $\mathbf{x}(t)$ は $\mathbf{0}$ に収束することも確かめれれる. 
                 上では $2$ 次方程式の解の公式に基づき $3$ つの場合分けを考えたが, 固有値 (の実部) の符号 (つまり $T = \operatorname{tr}A$ の符号) による場合分けも解の挙動を説明する際に重要となる. 
             </p>
             <p>また, 上では $2$ 次元の線形力学系のみを例として考えたが, 一般に $n$ 次元の場合であっても, 線形力学系 $(1.2)$ の解は $\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ と表され, 行列 $A$ の固有値と固有ベクトルを求めることで行列の指数関数を用いない表示を得ることができる. 
-                その際には, やはり行列 $A$ の固有値 $\lambda_i$ が実数であるか否か, 固有値 $\lambda_i$ の重複度, $\operatorname{Re}(\lambda_i)$ の符号などが, 解の挙動に大きく影響を与えることになる. 
+                その際には, やはり行列 $A$ の固有値 $\lambda_i$ が実数であるか否か, 固有値 $\lambda_i$ の重複度, $\operatorname{Re}(\lambda_i)$ の符号などが, 解の挙動を説明するために重要な情報となる. 
             </p>
 
         </section>
-
+        
         <hr>
-
-        <section id="section1-3"><h2>1.3: 平衡点の分類と軌道</h2>
-            <p>ここまでに力学系の具体例, 特に解を式の形で表現できる例をいくつか紹介したが, 一方で解を明示的に表すことができない力学系もある. 
-                そのような場合の解析に向け, 解のおおまかな挙動を知るために有用な概念を導入しよう. 
-                <!-- これら概念は, 線形力学系の解について具体的な図示により深く理解するにも有用となるため, 具体例として解を表示できる場合も考察することにする.  -->
-                <!-- ただし, いくつかの概念については数学的に厳密な説明を控えたり, 詳細な説明を後回しにするものもある.  -->
-                <!-- 非線形力学系に特有の概念については, 後に説明することにするが, ここで説明する概念は非線形力学系にも応用することができるものである.  -->
-            </p>
-
-            <div class="definition" data-name="平衡点">
-                <ul>
-                    <li>連続力学系 $\mathbf{x}' = \mathbf{f}(t, \mathbf{x})$ の解 $\mathbf{x}(t)$ であって, 特に $\mathbf{x}' = \mathbf{0}$ を満たすもの (つまり定数関数であるもの) を <b>平衡点</b> (<b>equilibrium point</b>), もしくは <b>平衡解</b> (<b>stationary solution</b>), <b>不動点</b> (<b>fixed point</b>) という. </li>
-                    <li>離散力学系 $\mathbf{x}_{k+1} = \mathbf{f}(\mathbf{x}_k)$ に対して, $\mathbf{x} = \mathbf{f}(\mathbf{x})$ となる点 (つまり $\mathbf{f}$ の不動点) を<b>平衡点</b> (もしくは <b>平衡解</b>) という. </li>
-                </ul>
-            </div><!-- /definition -->
-
-            <div class="example">
-                <p>$\mathbf{x}(t) = \mathbf{0}$ は線形力学系 $\mathbf{x}' = A\mathbf{x}$ の解であり, また定数関数なので平衡点である. 
-                </p>
-                <p>なお, 線形力学系の平衡点 $\mathbf{x}(t)$ は $A\mathbf{x} = \mathbf{0}$ を満たすものに限られる. 
-                    もしも行列 $A$ が正則ならば, そのような $\mathbf{x}$ は 
-                    \[
-                        \mathbf{x} = A^{-1}\mathbf{0} = \mathbf{0}
-                    \] 以外には存在しない. 
-                </p>
-            </div><!-- /example -->
-
-            <div class="exercise">
-                <p>$a\in\mathbb{R}$ をパラメータとする非線形力学系
-                    \[
-                        \begin{pmatrix} 
-                            x' \cr 
-                            y' 
-                        \end{pmatrix} = \begin{pmatrix}
-                            x^2 + y \cr 
-                            2x - y + a 
-                        \end{pmatrix}
-                    \] の平衡点を全て求めよ.
-                </p>
-            </div>
-
-            <div class="answer">
-                <p>パラメータ $a$ に対して, 右辺を $\mathbf{0}$ とする $(x, y)$ の組を全て求めれば良い. 
-                    第 $2$ 成分に注目すると 
-                    \[
-                        y = 2x+a
-                    \] でなければならない. 
-                    これを第 $1$ 成分に代入すると 
-                    \[
-                        x^2 + 2x + a = 0
-                    \] でなければならないが, これを満たす実数 $x$ の存在は $a$ に依るため, $a$ について場合分けする:  
-                </p>
-                <ul>
-                    <li>$a\lt 1$ ならば平衡点は
-                        \[
-                            (x, y) = \left(-1-\sqrt{1-a}, a-2-2\sqrt{1-a}\right), \quad \left(-1+\sqrt{1-a}, a-2+2\sqrt{1-a}\right).
-                        \]
-                    </li>
-                    <li>$a=1$ ならば平衡点は 
-                        \[
-                            (x, y) = (-1, -1).
-                        \] 
-                    </li>
-                    <li>$a\gt 1$ ならば平衡点は存在しない. </li>
-                </ul>
-                <p>なお, これは $a=1$ において分岐が発生していることを意味している. </p>
-            </div>
-
-            <!-- <div class="definition" data-name="ヌルクライン"> ヌルクラインについては非線形力学系の解説時に説明する
-                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$, つまり 
-                    \[
-                        \begin{pmatrix} 
-                            x_1' \cr 
-                            x_2' \cr 
-                            \vdots \cr 
-                            x_n' 
-                        \end{pmatrix} = \begin{pmatrix} 
-                            f_1(\mathbf{x}) \cr 
-                            f_2(\mathbf{x}) \cr 
-                            \vdots \cr 
-                            f_n(\mathbf{x}) 
-                        \end{pmatrix}
-                    \] を考える. このとき, 
-                    \[
-                        \{\mathbf{x}\in\mathbb{R}^n : f_i(\mathbf{x}) = 0\}
-                    \] を $x_i$ の<b>ヌルクライン (nullcline)</b> という.
-                </p>
-            </div>
-
-            <div class="remark">
-                <ul>
-                    <li>$x_i$ のヌルクライン上の点では, $x_i' = 0$ が成立する, つまり時間経過により $x_i$ 方向には動かない.</li>
-                    <li>すべてのヌルクラインの交点では, 時間経過によりどの方向にも動かない, つまりすべてのヌルクラインの交点は平衡点である.</li>
-                </ul>
-            </div> -->
-
-            <div class="definition" data-name="ベクトル場と方向場">
-                <ul>
-                    <li>ベクトル値関数 $\mathbf{f}: X \to \mathbb{R}^m$ を <b>ベクトル場</b> という, ただし $X\subset\mathbb{R}^n$ とする. 
-                        ベクトル場 $\mathbf{f}$ は $\mathbb{R}^n$ 上のいくつかの点 $\mathbf{x}\in X$ を始点とし, ベクトル $\mathbf{f}(\mathbf{x})\in\mathbb{R}^m$ に対応した矢印を描いたものとして図示される.  
-                    </li>
-                    <li>ベクトル場を図示する際に, 代わりに各点を始点とするベクトルの向きを保ったまま適当に矢印のスケールを調整したものを <b>方向場</b> という (もしくはこれもベクトル場の図示であると言及されることがある).
-                    </li>
-                </ul>
-            </div><!-- /definition -->
-
-            <div class="example">
-                <p>ベクトル場 $\mathbf{f}:\mathbb{R}^2 \to \mathbb{R}^2$ として, 
-                    \[
-                        \mathbf{f}(x,y) = \begin{pmatrix} 
-                            y \cr 
-                            -x 
-                        \end{pmatrix}
-                    \] を考える. このベクトル場の図示と対応する方向場は, 例えば以下のようになる: 
-                </p>
-                <div class="resize"><img src='./images/vector_field-1.png'></div>
-				<div class="resize"><img src='./images/direction_field-1.png'></div>
-                <p>ベクトル場の図示において, 例えば $(x, y) = (1, 1)$ を始点とする矢印は $\mathbf{f}(1, 1) = (1, -1)$ に対応している (つまり始点が $(1,1)$, 終点が $(2,0)$ である矢印として表されている).
-                    一方で, 方向場において $(x, y) = (1, 1)$ を始点とする矢印は $\mathbf{f}(1, 1) = (1, -1)$ に対応する方向を指しているが, スケールについては適当に調整されている. 
-                </p>
-            </div><!-- /example -->
-
-            <div class="remark">
-                <p>ベクトル場を図示した場合, 上の例のように複数の矢印が交わって見にくくなることが多い. 
-                    これを回避するために, 矢印の長さについては適当に調整し, ベクトル場の向きにのみ注目したものが方向場である. 
-                </p>
-            </div><!-- /remark -->
-
-            <div class="definition" data-name="相空間と軌道">
-                <ul>
-                    <li>力学系の解 $\mathbf{x}(t)$ が取り得る全ての状態からなる空間を <b>相空間</b> (もしくは <b>状態空間</b>) という. 
-                    </li>
-                    <li>ある自励系の相空間を $X$ とおき, その自励系の解 $\mathbf{x}(t)$ が, 初期値 $\mathbf{x}_0$ に依存することを強調して
-                        \[
-                            \mathbf{x}(t) = \varphi(t, \mathbf{x}_0)
-                        \] と表す. このとき関数 $\varphi: \mathbb{R}\times X \to X$ (もしくは $\varphi: \mathbb{Z}\times X\to X$) を, この自励系の <b>流れ</b> (もしくは <b>フロー</b>) という. 
-                    </li>
-                    <li>ある自励系の解 $\mathbf{x}(t)$ に対して (初期値 $\mathbf{x}_0$ に依存することを強調するために流れ $\varphi$ を用いて $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ と表すとき), 
-                        \[
-                            \{\varphi(t, \mathbf{x}_0) : t\in \mathbb{R}\} \subset X\quad (\mbox{もしくは }\{\varphi(t, \mathbf{x}_0) : t\in \mathbb{Z}\} \subset X)
-                        \] を, (初期値 $\mathbf{x}_0$ に対する) <b>軌道</b> (<b>trajectory</b>) もしくは <b>解軌道</b> という. 
-                    </li>
-                    <li>ある力学系の (様々な初期値に対する) 軌道の概略を相空間上に表した図を <b>相図</b> (<b>phase portrait</b>) という. </li>
-                </ul>
-            </div><!-- /definition -->
-
-            <div class="remark">
-                <ul>
-                    <li>数学における流れ (および軌道) は, 本来は力学系とは別に定義されるものであり, そのアイデアを力学系にも応用できると説明されるべきものである. 
-                        また, 非自励系に対しても (時間依存する) 流れを考えることができるが, ここではこれ以上深入りしない. 
-                    </li>
-                    <li>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ においては, $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ が時間経過に伴いどのように動くか, という情報が $\mathbf{f}(\mathbf{x})$ として (時間に無関係なベクトル場として) 与えられることになる. 
-                        従って, ベクトル場 $\mathbf{f}(\mathbf{x})$ (もしくは方向場) を図示することで, $\mathbf{x}(t)$ が時間経過により相空間上をどの向きに動くかをイメージできる, つまり軌道の概形がわかる. 
-                    </li>
-                    <ul>
-                        <li>より直感的には, 自励系の解は $\mathbf{f}$ により与えられた向きと大きさに従い, 時間経過により相空間上を流れる点であるとイメージすることができる.</li>
-                    </ul>
-                    <li>自励系の解 $\mathbf{x}(t)$ と流れ $\varphi$ は, 
-                        \[
-                            \varphi(t, \mathbf{x}(s)) = \mathbf{x}(s+t)
-                        \] を満たす. 
-                        つまり, $\mathbf{x}(s)$ を初期値として時刻 $t$ だけ進めた結果と, $\mathbf{x}(0)$ を初期値として時刻 $s+t$ だけ進めた結果が一致する.     
-                        <ul>
-                            <li>特に線形力学系 $\mathbf{x}' = A\mathbf{x}$ に対して, $\varphi(t, \mathbf{x}_0) = e^{tA}\mathbf{x}_0$ であり, また 
-                                \[
-                                    \varphi(t, \mathbf{x}(s)) = e^{tA}(e^{sA}\mathbf{x}_0) = e^{(s+t)A}\mathbf{x}_0 = \mathbf{x}(s+t)
-                                \] である. 
-                            </li>
-                        </ul>
-                    </li>
-                    <li>自励系の相図において, 各軌道は平衡点以外の点において他の軌道や自身と交差することはない (もし平衡点でないある点で交差するならば, その点を初期値とした解 $\mathbf{x}(t)$ が複数存在することになってしまい矛盾する). 
-                    </li>
-                    <li>力学系の平衡点は時間経過により動かないような解であり, 軌道が一点からなるような初期値に対応している. 
-                        また, $\widetilde{\mathbf{x}}(t)$ が自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点であることは, $\mathbf{f}(\widetilde{\mathbf{x}}) = \mathbf{0}$ であることと同値である. 
-                    </li>
-                    <li>力学系の軌道は初期値の違いにより異なる挙動を示すことがある. 
-                        この挙動の違いをわかりやすく図で表すものが相図であり, 解を明示的に表示できない場合に特に有用である.  
-                    </li>
-                    
-                </ul>
-            </div><!-- /remark -->
-
-            <div class="example">
-                <p>線形力学系 
-                    \[
-                        \begin{pmatrix} 
-                            x' \cr 
-                            y' 
-                        \end{pmatrix} = \begin{pmatrix} 
-                            0 & 1 \cr 
-                            -1 & 0 
-                        \end{pmatrix}\begin{pmatrix} 
-                            x \cr 
-                            y 
-                        \end{pmatrix} = \begin{pmatrix} 
-                            y \cr 
-                            -x 
-                        \end{pmatrix}
-                    \] を考える. この右辺のベクトル場 
-                    \[
-                        \mathbf{f}(x, y) = \begin{pmatrix} 
-                            y \cr 
-                            -x 
-                        \end{pmatrix}
-                    \] に対応する方向場が, 
-                    \[
-                        \mathbf{x}(t) = \begin{pmatrix} 
-                            x(t) \cr 
-                            y(t) 
-                        \end{pmatrix} 
-                    \] が時間経過によりどのように動くかを表していることになるため, 初期値を与えたときの軌道を (ある程度ではあるが) 予想することができる. 
-                    <div class="resize"><img src='./images/expected_orbit-1.png'></div>
-                    実際, 一般解を計算すると 
-                    \[
-                        \mathbf{x}(t) = \begin{pmatrix} 
-                            \widetilde{c}_1\cos t + \widetilde{c}_2\sin t \cr 
-                            -\widetilde{c}_1\sin t + \widetilde{c}_2\cos t 
-                        \end{pmatrix} = \begin{pmatrix} 
-                            r\sin(t+\alpha) \cr 
-                            r\cos(t+\alpha) 
-                        \end{pmatrix}
-                    \] と表すことができる, ただし $r = \sqrt{\widetilde{c}_1^2 + \widetilde{c}_2^2}$ であり, $\alpha$ は 
-                    \[
-                        \sin\alpha = \dfrac{\widetilde{c}_1}{r},\quad \cos\alpha = \dfrac{\widetilde{c}_2}{r}
-                    \] を満たすものである. 
-                    このことは, $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ は (初期値 $\mathbf{x}_0$ に対応した) 円周上を動くことを意味しており, 方向場の矢印の指す方向に動いていることがわかる. 
-                    以下に, この線形力学系に対する相図の例を掲載する:
-                </p>
-                <div class="resize"><img src='./images/center-1.png'></div>
-                <p>相図に描かれている各曲線 (今回は円周) が, 初期値を適当に指定した際の軌道 (つまりこの力学系の解 $\mathbf{x}(t)$ の時間経過による動き) を表している.</p>
-                <p>なお, この例では各軌道が原点, つまりこの力学系の平衡点を中心とする円を描いている. 
-                    このような平衡点は <b>渦心点</b> (もしくは <b>センター</b>) であると言われる.
-                </p>
-            </div><!-- /example -->
-
-            <p>上の例のように, 軌道が相空間上の閉曲線になる場合は, 解 $\mathbf{x}(t)$ がぐるぐる回り続けるような挙動をすることを意味している. 
-                このような軌道のことを <b>周期軌道</b> という.
-            </p>
-
-            <div class="definition" data-name="周期軌道">
-                <p>力学系の相空間 $X$ およびフロー $\varphi$ について, ある初期値 $\mathbf{x}_0$ に対して 
-                    \[
-                        \varphi(t+T, \mathbf{x}_0) = \varphi(t, \mathbf{x}_0)\quad \text{for all}\quad t\in\mathbb{R} \quad(\text{or }\mathbb{Z})
-                    \] を満たす $T$ が存在するならば, 軌道 $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}\subset X$ (もしくは $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{Z}\}\subset X$) は <b>周期軌道</b> であるという. 
-                    また, このとき $T$ を <b>周期</b> という. 
-                </p>
-            </div>
-
-            <div class="remark">
-                <p>線形力学系の場合は単純な形の周期軌道しか現れないが, 非線形力学系の場合はより複雑な周期軌道が現れることがある. </p>
-            </div>
-
-            <!-- <div class="example">
-                <p>非線形力学系 
-                    \[
-                        \begin{pmatrix} 
-                            x' \cr 
-                            y' 
-                        \end{pmatrix} = \begin{pmatrix} 
-                            y-x^2 \cr 
-                            x-2 
-                        \end{pmatrix}
-                    \] の相図を考える. 
-                </p>
-                <p>いま, $x$ のヌルクライン $y-x^2=0$ 上では $x'=0$ であるため, 方向場をプロットした際の矢印は $y-x^2=0$ 上では真上か真下を向いている. 
-                    より具体的には, $y-x^2=0$ かつ $y' = x-2\lt0$ ならば真下を, $y-x^2=0$ かつ $y' = x-2\gt0$ ならば真上を向いていることがわかる. 
-                </p>
-                <p>同様に, 方向場の矢印は $y$ のヌルクライン $x-2=0$ 上では水平方向を向いている. 
-                    さらに $x' = y-x^2$ の符号を調べることにより右か左かがわかる.  
-                </p>
-                <p>このことに加えて, 右辺のベクトル場が連続であることに注意すると, $x'=0$ や $y'=0$ を超えること無く $x'$ や $y'$ の符号が反転することは無い. 
-                    つまりヌルクラインで囲まれた領域内では, 方向場の矢印の上下左右は概ね同じ方向を向くことになる. 
-                    このことを利用すれば, ヌルクライン上の矢印の向きから, $\mathbb{R}^2$ 全体での方向場の概形を得ることができる. 
-                    そして方向場の概形から相図の概形を得ることができるのである.
-                </p>
-                <p>以下に, この例に対するヌルクライン, 方向場および相図を掲載する. 
-                    コンピュータを用いることで精密なプロットを得ることができるが, 手計算だけでもヌルクライン上の矢印の向きから相図の概形を得ることが可能である, ということが重要である. 
-                </p>
-            </div> -->
-
-            <hr> 
-
-            <p>平衡点の近傍で解の軌道がどのようになっているか調べることは, 力学系の解の挙動を知る際に重要となる. 
-                そのため, 近傍での軌道が特徴的な振る舞いを示す平衡点には, その性質により様々な名前が付けられ分類される. 
-                以下, ($2$ 次元線形力学系を具体例に) 平衡点の性質や分類を紹介する:
-            </p>
-
-            <div class="definition" data-name="安定性">
-                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の初期値 $\mathbf{x}_0\in\mathbb{R}^n$ に対する解 $\mathbf{x}(t)$ と平衡点 $\widetilde{\mathbf{x}}\in \mathbb{R}^n$ について, </p>
-                <ul>
-                    <li>任意の $\varepsilon\gt 0$ に対して, ある $\delta\gt 0$ が存在し, 
-                        \[
-                            \|\mathbf{x}_0-\widetilde{\mathbf{x}}\| \lt \delta \implies \|\mathbf{x}(t) - \widetilde{\mathbf{x}}\|\lt \varepsilon\quad\text{for all}\quad t\ge 0
-                        \] が成立するとき, 平衡点は <b>リアプノフ安定</b> (<b>Lyapunov stable</b>) である (もしくは単に <b>安定</b> である) という. 
-                        安定でない平衡点は <b>不安定</b> であるという. 
-                    </li>
-                    <li>ある $\delta\gt 0$ が存在し, 
-                        \[
-                            \|\mathbf{x}_0-\widetilde{\mathbf{x}}\|\lt \delta \implies \lim_{t\to\infty}\|\mathbf{x}(t)-\widetilde{\mathbf{x}}\|=0
-                        \] が成立するとき, 平衡点は <b>吸引的</b> (<b>attracting</b>) であるという.
-                    </li>
-                    <li>リアプノフ安定かつ吸引的な平衡点は <b>漸近安定</b> (<b>asymptotically stable</b>) であるという.</li>
-                    <li>リアプノフ安定だが吸引的でない平衡点は <b>中立安定</b> (<b>neutrally stable</b>) であるという.</li>
-                </ul>
-            </div><!-- /definition -->
-
-            <div class="remark">
-                <p>直感的には, 平衡点に十分近い<span class="wave">任意の</span>初期値に対し, 全ての $t\ge 0$ について解 $\mathbf{x}(t)$ がある近傍にとどまり続けるならば, 平衡点は安定である. 
-                また, 平衡点に十分近い<span class="wave">任意の</span>初期値に対し, 解が $t\to\infty$ で平衡点に収束するとき, 平衡点は吸引的である. </p>
-            </div>
-            
-            <div class="example">
-            <p>例として, 
-                \[
-                    A = \begin{pmatrix} 
-                        a & b \cr 
-                        -b & a 
-                    \end{pmatrix}
-                \] に対し線形力学系 $(1.1)$ を考える, ただし $b\neq0$ とする (このとき $A$ は正則であり, 線形力学系の平衡点は $\mathbf{x}=\mathbf{0}$ のみである). 
-                このとき, 行列 $A\in\mathbb{R}^{2\times 2}$ の固有値は
-                \[
-                    \lambda_1 = a+ib,\quad \lambda_2 = a-ib
-                \] であり, 従って $\operatorname{Re}\lambda_1 = \operatorname{Re}\lambda_2 = a$ である. 
-                さらに, 一般解は上で計算したように
-                \[
-                    \widehat{\mathbf{x}}(t) = \begin{pmatrix} 
-                        e^{at}(\widetilde{c}_1\cos bt + \widetilde{c}_2\sin bt) \cr 
-                        e^{at}(-\widetilde{c}_1\sin bt + \widetilde{c}_2\cos bt) 
-                    \end{pmatrix}
-                \] であり, 特に $e^{at}$ の部分に注目すると, 固有値の実部 (つまり $a$) の符号によって $t\to\infty$ とした際の挙動が異なることが予想できる. 
-                実際, (全ての) 固有値の実部が $0$ 以下ならば平衡点は安定であり, 負ならば平衡点は吸引的である (実はこれは全ての線形力学系に共通する性質である). 
-            </p>
-            <p>この具体例として, </p>
-            <ul>
-                <li>$(a, b) = (-10^{-3}, 1)$ のとき ($a\lt 0$ であり, 平衡点は漸近安定),</li>
-                <li>$(a, b) = (0, 1)$ のとき ($a= 0$ であり, 平衡点は中立安定), </li>
-                <li>$(a, b) = (10^3, 1)$ のとき ($a\gt 0$ であり, 平衡点は不安定)</li>
-            </ul>
-            <p>の相図を (一般解の表示から) 描画すると以下のようになる (特に平衡点 $\mathbf{x} = 0$ 周辺で, 平衡点に近づくか離れるか, もしくは近づきも離れもしないかの違いに注意): 
-            </p>
-            <div class="resize"><img src='./images/spiral_sink-1.png'></div>
-            <div class="resize"><img src='./images/center-1.png'></div>
-            <div class="resize"><img src='./images/spiral_source-1.png'></div>
-
-            </div><!-- /example -->
-
-            <div class="remark">
-                <p>上の $1$ つ目および $3$ つ目の例のように, 解が時間経過により平衡点の周囲を渦巻くような挙動をするとき, 平衡点は <b>渦状点</b> (もしくは <b>スパイラル</b>) であるということがある. 
-                </p>
-            </div><!-- /remark -->
-
-            <p>上の例のように, 軌道は平衡点に近づく, 離れる (もしくは平衡点周りを周回する) といった振る舞いをする. 
-                ここで, 平衡点に近づく, 離れる場合について詳細な分類を紹介する. 
-            </p>
-
-            <div class="definition" data-name="源点, 沈点, 鞍点">
-                <ul>
-                    <li>平衡点が漸近安定であるとき、つまり平衡点の近傍で<span class="wave">全ての</span>軌道がその平衡点に近づいていくとき, その平衡点は <b>沈点</b> (<b>sink</b>) であるという.</li>
-                    <li>平衡点が不安定であって, 特に平衡点の近傍で<span class="wave">全ての</span>軌道がその平衡点から離れていくとき, その平衡点は <b>源点</b> (<b>source</b>) であるという.</li>
-                    <li>平衡点が不安定であって, 特に平衡点の近傍でその平衡点に近づいていく軌道と離れていく軌道の両方が存在するとき, その平衡点は <b>鞍点</b> (<b>saddle</b>) であるという.</li>
-                    <li>源点もしくは沈点である平衡点を <b>ノード</b> と呼ぶことがある</li>
-                </ul>
-            </div><!-- /definition -->
-
-            <div class="remark">
-                <ul>
-                    <li>(上の $1$ つ目の例のように) 渦状点でありかつ源点である平衡点を <b>渦状源点</b> と呼ぶことがある. </li>
-                    <li>(上の $3$ つ目の例のように) 渦状点でありかつ沈点である平衡点を <b>渦状沈点</b> と呼ぶことがある.</li>
-                </ul>
-            </div><!-- /remark -->
-
-            <div class="example">
-            <p>別の例として, 
-                \[
-                    A = \begin{pmatrix} 
-                        \lambda_1 & 0 \cr 
-                        0 & \lambda_2 
-                    \end{pmatrix}
-                \] に対し線形力学系 $(1.1)$ を考える, ただし $\lambda_1\neq \lambda_2$, $\lambda_1\neq0$, $\lambda_2\neq0$ とする (このとき $A$ は正則であり, 線形力学系の平衡点は $\mathbf{x}=\mathbf{0}$ のみである). 
-                このとき, 行列 $A\in\mathbb{R}^{2\times 2}$ の固有値は $\lambda_1$, $\lambda_2$ であり, また一般解は
-                \[
-                    \mathbf{x}(t) = \begin{pmatrix} 
-                        c_1e^{\lambda_1 t} \cr 
-                        c_2e^{\lambda_2 t} 
-                    \end{pmatrix} 
-                \] である. 
-                簡単のため, $\lambda_1\lt \lambda_2$ とすると,  
-            </p>
-            <ul>
-                <li>$\lambda_1 \lt \lambda_2 \lt 0$ のとき (このとき平衡点は沈点となる), </li>
-                <li>$0\lt \lambda_1 \lt \lambda_2$ のとき (このとき平衡点は源点となる), </li>
-                <li>$\lambda_1 \lt 0\lt \lambda_2$ のとき (このとき平衡点は鞍点となる)</li>
-            </ul>
-            <p>の三つの場合を考えることができる. 
-                実際に, 一般解の表示から相図を描画することで平衡点 $\mathbf{x}=0$ がそれぞれ沈点, 源点, 鞍点となっていることを確認できる.
-            </p>
-
-            <div class="resize"><img src='./images/stable_star_node-1.png'></div>
-            <div class="resize"><img src='./images/unstable_star_node-1.png'></div>
-            <div class="resize"><img src='./images/saddle-1.png'></div>
-
-            </div><!-- /example -->
-
-            <div class="exercise">
-                <p>$\mathbf{x}(t)\in\mathbb{R}^2$ について, 線形力学系
-                    \[
-                        \mathbf{x}' = \begin{pmatrix}
-                            1 & 3 \cr 
-                            1 & -1 
-                        \end{pmatrix}\mathbf{x}
-                    \] を考える.
-                </p>
-                <ul>
-                    <li>一般解を求めよ.</li> 
-                    <li>初期条件 $\mathbf{x}(0) = \begin{pmatrix} 
-                            1 \cr 
-                            1 
-                        \end{pmatrix}$ を与えた際の特殊解 $\mathbf{x}_1(t)$ が, $t\to\infty$ としたときに平衡点 $\mathbf{0}$ に収束するか否か答えよ.</li>
-                    <li>初期条件 $\mathbf{x}(0) = \begin{pmatrix} 
-                            -1 \cr 
-                            1 
-                        \end{pmatrix}$ を与えた際の特殊解 $\mathbf{x}_2(t)$ が, $t\to\infty$ としたときに平衡点 $\mathbf{0}$ に収束するか否か答えよ.</li>    
-                </ul>
-            </div>
-
-            <div class="answer">
-                <ul>
-                    <li>線形力学系の行列の固有値は $\lambda_1 = -2$, $\lambda_2 = 2$ であり, 対応する固有ベクトルは例えば 
-                        \[
-                            \mathbf{v}_1 = \begin{pmatrix} 
-                                1 \cr 
-                                -1 
-                            \end{pmatrix},\quad \mathbf{v}_2 = \begin{pmatrix} 
-                                3 \cr 
-                                1 
-                            \end{pmatrix}
-                        \] である. 
-                        従って, 一般解は 
-                        \[
-                            \begin{array}{rl}
-                                \mathbf{x}(t) &= c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 \cr 
-                                &= c_1e^{-2t}\begin{pmatrix} 
-                                    1 \cr 
-                                    -1 
-                                \end{pmatrix} + c_2e^{2t}\begin{pmatrix} 
-                                    3 \cr 
-                                    1 
-                                \end{pmatrix}
-                            \end{array}
-                        \] である. 
-                    </li>
-                    <li>初期条件 $\mathbf{x}(0) = \begin{pmatrix} 
-                            1 \cr 
-                            1 
-                        \end{pmatrix}$ を与えた際の特殊解 
-                        \[
-                            \mathbf{x}_1(t) = \widetilde{c}_1e^{-2t}\mathbf{v}_1 + \widetilde{c}_2e^{2t}\mathbf{v}_2
-                        \] について, $\mathbf{x}(0) = \widetilde{c}_1\mathbf{v}_1 + \widetilde{c}_2\mathbf{v}_2$ であることから $\widetilde{c}_2\neq0$ である. 
-                        従って, $\displaystyle\lim_{t\to\infty}\mathbf{x}_1(t)\neq\mathbf{0}$.
-                    </li>
-                    <li>初期条件 $\mathbf{x}(0) = \begin{pmatrix} 
-                            -1 \cr 
-                            1 
-                        \end{pmatrix} = -\mathbf{v}_1$ を与えた際の特殊解は $\mathbf{x}_2(t) = -e^{-2t}\mathbf{v}_1$ なので $\displaystyle\lim_{t\to\infty}\mathbf{x}_2(t) = \mathbf{0}$.
-                    </li>
-                    <li>このように, 平衡点に近づく軌道と離れる軌道が両立している. 
-                        実は, この平衡点 $\mathbf{0}$ は鞍点となっている. </li>
-                </ul>
-            </div><!-- /answer -->
-
-            <p>平衡点が鞍点である場合, 時間経過により解 $\mathbf{x}(t)$ が平衡点に近づくか離れるかは初期値に依存することになる. 
-                どのような初期値に対して解が平衡点に近づくか, を表す概念の一つとして, <b>安定部分集合</b> というアイデアがある:
-            </p>
-
-            <div class="definition" data-name="安定部分集合">
-                <p>力学系の相空間 $X$ およびフロー $\varphi$ に対して,</p>
-                <ul>
-                    <li>平衡点 $\widetilde{\mathbf{x}}$ に対して, 
-                        \[
-                            \{\mathbf{x}_0\in X : \varphi(t, \mathbf{x}_0) \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to\infty\}
-                        \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>安定集合</b> (<b>stable set</b>), 多様体の構造を持つなら <b>安定多様体</b> (<b>stable manifold</b>) という. 
-                    </li>
-                    <li>平衡点 $\widetilde{\mathbf{x}}$ に対して, 
-                        \[
-                            \{\mathbf{x}_0\in X : \varphi(-t, \mathbf{x}_0) \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to\infty\}
-                        \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>不安定集合</b> (<b>unstable set</b>), 多様体の構造を持つなら <b>不安定多様体</b> (<b>unstable manifold</b>) という. 
-                    </li>
-                </ul>
-            </div>
-
-            <div class="remark">
-                <p>線形力学系 $\mathbf{x}' = A\mathbf{x}$ に対しては, 安定集合および不安定集合は必ず $\mathbb{R}^n$ の線型部分空間になる. 
-                    そのため, <b>安定部分空間</b> (<b>stable subspace</b>), <b>不安定部分空間</b> (<b>unstable subspace</b>) という言葉が用いられる. 
-                </p>
-            </div>
-
-            <div class="example">
-                <p>線形力学系 
-                    \[
-                        \mathbf{x}' = \begin{pmatrix} 
-                            -1 & 2 \cr 
-                            0 & 1 
-                        \end{pmatrix}\mathbf{x}
-                    \] を考える. 
-                    行列の固有値および対応する固有ベクトルは
-                    \[
-                        \lambda_1 = -1,\quad \lambda_2 = 1,\quad \mathbf{v}_1 = \begin{pmatrix} 
-                            1  \cr 
-                            0 
-                        \end{pmatrix}, \quad \mathbf{v}_2 = \begin{pmatrix} 
-                            1 \cr 
-                            1 
-                        \end{pmatrix}
-                    \] であり, 従って一般解は 
-                    \[
-                        \mathbf{x}(t) = c_1e^{-t}\begin{pmatrix} 
-                            1 \cr 
-                            0 
-                        \end{pmatrix} + c_2e^t\begin{pmatrix} 
-                            1 \cr 
-                            1 
-                        \end{pmatrix}
-                    \] である. 
-                    これを元に相図を描くと, $\{(x, y)\in\mathbb{R}^2 : y=0\}$ (つまり $x$ 軸上の部分, $\mathbf{v}_1$ で張られる部分空間) が安定部分空間となっていることがわかる. 
-                    同様に, $\{(x,y)\in\mathbb{R}^2 : y=x\}$ (つまり $\mathbf{v}_2$ で張られる部分空間) が不安定部分空間である. 
-                </p>
-                <div class="resize"><img src='./images/saddle3-1.png'></div>
-            </div>
-
-            <p>$2$ 次元線形力学系を具体例に言及したように, 行列 $A$ の固有値および固有ベクトルは線形力学系の解の挙動を記述する重要な情報となる. 
-                実際に, 上の例では安定部分空間および不安定部分空間が固有ベクトルと関連していることを確認できるが, これは偶然ではない.
-                この資料では詳細は割愛するが, $2$ 次元の場合と同様に固有値 (の実部) の正負や重複度, 固有ベクトルを調べることで, 一般の $n$ 次元線形力学系の一般解が得られ, 特に以下の成立がわかる:
-            </p>
-
-            <div class="theorem" data-name="線形力学系の固有値と安定性" id="thm_eigenvalue_and_stability">
-                行列 $A\in\mathbb{R}^{n\times n}$ を用いて表される線形力学系 $\mathbf{x}' = A\mathbf{x}$ について, 
-                <ul>
-                    <li>実部が負である固有値に対応する行列 $A$ の (一般固有ベクトルを含む) 固有ベクトルたちの実部および虚部により張られる部分空間は, この線形力学系の安定部分空間である.</li> 
-                    <li>実部が正である固有値に対応する行列 $A$ の (一般固有ベクトルを含む) 固有ベクトルたちの実部および虚部により張られる部分空間は, この線形力学系の不安定部分空間である.</li>
-                    <li>行列 $A$ の全ての固有値の実部が $0$ 以下であれば, 原点は安定な平衡点である.</li>
-                    <li>行列 $A$ の全ての固有値の実部が負であれば, 原点は漸近安定な平衡点である (沈点である).</li>
-                    <li>行列 $A$ の固有値に実部が正のものが存在するならば, 原点は不安定な平衡点である.</li>
-                    <li>行列 $A$ の全ての固有値の実部が正であれば, 原点は不安定な平衡点であり, 特に源点である.</li>
-                    <li>行列 $A$ の固有値に実部が正のものと負のものどちらも存在するならば, 原点は不安定な平衡点であり, 特に鞍点である.</li>
-                </ul>
-            </div>
-
-            <div class="remark">
-                <p>特に 
-                    \[
-                        \text{行列 $A$ の全ての固有値の実部が負} \iff e^{tA}\to 0 \text{ as }t\to\infty \iff \text{$\mathbf{x}' = A\mathbf{x}$ について $\mathbf{0}$ は漸近安定な平衡点}
-                    \] は, 線形力学系の安定性の議論においてしばしば用いられるものである. 
-                    全ての固有値の実部が負である正方行列を, 特に <b>フルヴィッツ安定行列</b> (<b>Hurwitz stable matrix</b>) と呼ぶことがある. 
-                </p>
-            </div>
-
-            <p>固有値実部の正負により, 対応する固有ベクトルたちにより張られる空間が線形力学系の安定部分空間, 不安定部分空間になる. 
-                同様に, 実部が $0$ である固有値に対応する固有ベクトルにより張られる線形部分空間を考えよう.
-            </p>
-
-            <div class="definition" data-name="中心部分空間">
-                <p>行列 $A\in\mathbb{R}^{n\times n}$ を用いて表される線形力学系 $\mathbf{x}' = A\mathbf{x}$ について, 行列 $A$ が実部が $0$ である固有値を持つならば, 対応する (一般固有ベクトルを含む) 固有ベクトルたちの実部および虚部で張られる $\mathbb{R}^n$ の線形部分空間を <b>中心部分空間</b> (<b>center subspace</b>) という.</p>
-            </div>
-
-            <div class="remark">
-                <p>非線形力学系に対しては <b>中心多様体</b> (<b>center manifold</b>) を考えることができ, これは非線形力学系の解析において重要な役割を担う概念であるが, その定義は非線形力学系を扱う際に改めて紹介する.
-                </p>
-            </div>
-
-            <p>上で述べた性質は, 固有値が実数でない場合, 固有ベクトルが実ベクトルでない場合も含めて考慮している. 
-                これを整理し直感的に説明しなおすとともに, 線形力学系の相図の概形について改めてまとめよう: 
-            </p>
-            <ul>
-                <li>線形力学系の固有値を調べることで, 対応する固有ベクトルから安定部分空間, 不安定部分空間, 中心部分空間をそれぞれ得ることができる. </li>
-                <ul>
-                    <li>以下, それぞれ $E^s$, $E^u$, $E^c$ と表すことにすると, $\mathbb{R}^n$ をこれらの直和で表すことができる: 
-                        \[
-                            \mathbb{R}^n = E^s \oplus E^u \oplus E^c.
-                        \]</li>
-                </ul>
-                <li>初期値が安定部分空間上に存在するならば, 解 $\mathbf{x}(t)$ は時間経過とともに線形力学系の平衡点 $\mathbf{0}$ に近づいていく. </li>
-                    <ul>
-                        <li>特に, $E^s = \mathbb{R}^n$ の場合 (不安定部分空間も中心部分空間も空集合である場合), 全ての解は平衡点に近づくことになり, つまり原点は漸近安定である. </li>
-                    </ul>
-                <li>初期値が不安定部分空間上に存在するならば, 解 $\mathbf{x}(t)$ は時間に逆行したときに線形力学系の平衡点 $\mathbf{0}$ に近づいていく. </li>
-                    <ul>
-                        <li>特に, $E^u = \mathbb{R}^n$ の場合 (安定部分空間も中心部分空間も空集合である場合), 全ての解は時間に逆行したとき平衡点に近づくことになり, つまり原点は源点である. </li>
-                    </ul>
-                <li>中心部分空間上の点が, 時間経過とともにどのように振る舞うかに関してはさまざまなパターンがある得る.</li>
-                    <ul>
-                        <li>最もシンプルな挙動は単純に回転するものだが, 例えば $2$ 次元線形力学系でも固有値が $0$ のみ (重複度 $2$) の場合などはその限りではない.</li>
-                    </ul>
-                <li>安定部分空間と不安定部分空間の両方が存在する場合, 原点は鞍点となり, 解の軌道は時間に逆行すると安定部分空間に近づき, 時間経過により不安定部分空間に近づく.</li>
-            </ul>
-
-            <div class="example">
-                <p>線形力学系 
-                    \[
-                        \mathbf{x}' = \begin{pmatrix} 
-                            -1 & 1 \cr 
-                            0 & -1 
-                        \end{pmatrix} 
-                    \] を考える. 
-                    行列の固有値は $-1$ (重複度 $2$) であり, 全ての固有値 (の実部) の符号が負であるため, 安定部分空間は $\mathbb{R}^2$ 全体であり, 原点は漸近安定である. 
-                    実際に, 一般解が 
-                    \[
-                        \mathbf{x}(t) = c_1e^{-t}\begin{pmatrix} 
-                            1 \cr 
-                            0 
-                        \end{pmatrix} + c_2e^{-t}\begin{pmatrix} 
-                            t \cr 
-                            1 
-                        \end{pmatrix}
-                    \] となることから, 相図を描くと下のようになり, 原点が沈点となっていることがわかる.
-
-                </p>
-                <div class="resize"><img src='./images/sink_multiple_eigenvalue-1.png'></div>
-            </div>
-
-            <div class="example">
-                <p>線形力学系 
-                    \[
-                        \mathbf{x}' = \begin{pmatrix} 
-                            -0.1 & 1 & 0 \cr 
-                            -1 & -0.1 & 0 \cr 
-                            0 & 0 & 0.1 
-                        \end{pmatrix}\mathbf{x}
-                    \] を考える. 
-                    これは $3$ 次元線形力学系であるが, $2$ 次元の場合と同様に行列の固有値 
-                    \[
-                        \lambda_1 = 0.1,\quad \lambda_2 = -0.1+ i,\quad \lambda_3 = -0.1-i 
-                    \] および対応する固有ベクトル 
-                    \[
-                        \mathbf{v}_1 = \begin{pmatrix} 
-                            0 \cr 
-                            0 \cr 
-                            1 
-                        \end{pmatrix}, \quad \mathbf{v}_2 = \begin{pmatrix} 
-                            1 \cr 
-                            i \cr 
-                            0 
-                        \end{pmatrix},\quad \mathbf{v}_3 = \begin{pmatrix} 
-                            1 \cr 
-                            -i \cr 
-                            0 
-                        \end{pmatrix}
-                    \] を用いて一般解を表すことができる. 
-                    具体的には, 複素数値関数を許すならば 
-                    \[
-                        \mathbf{x}(t) = c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2e^{\lambda_2 t}\mathbf{v}_2 + c_3e^{\lambda_3 t}\mathbf{v}_3 \quad (c_1, c_2, c_3\in\mathbb{C})
-                    \] であるが, $2$ 次元線形力学系のときと同様に, 実数値となるものだけを取り出すと
-                    \[
-                        \begin{array}{rl} 
-                            \mathbf{x}(t) &= c_1e^{\lambda_1 t}\mathbf{v}_1 + c_2\operatorname{Re}\left(e^{\lambda_2 t}\mathbf{v}_2\right) + c_3\operatorname{Im}\left(e^{\lambda_2 t}\mathbf{v}_3\right) \cr 
-                            &= c_1e^{0.1 t}\begin{pmatrix} 
-                                0 \cr 
-                                0 \cr 
-                                1 
-                            \end{pmatrix} + c_2e^{-0.1 t}\begin{pmatrix} 
-                                \cos t \cr 
-                                -\sin t \cr 
-                                0 
-                            \end{pmatrix} + c_3e^{-0.1 t}\begin{pmatrix} 
-                                \sin t \cr 
-                                \cos t \cr
-                                0 
-                            \end{pmatrix} \quad (c_1, c_2, c_3\in\mathbb{R})
-                        \end{array}
-                    \] となる. 
-                    とはいえ, このような解の表示を得ることなく, 解の軌道の大まかな振る舞いを知ることも可能である:
-                    固有値 $-0.1\pm i$ に対応する固有ベクトルの実部と虚部, つまり 
-                    \[
-                        \begin{pmatrix} 
-                            1 \cr 
-                            0 \cr 
-                            0 
-                        \end{pmatrix}, \quad \begin{pmatrix} 
-                            0 \cr 
-                            1 \cr 
-                            0 
-                        \end{pmatrix}
-                    \] により張られる空間 ($xyz$ 空間内の $xy$ 平面) が安定部分空間であり, 一方で固有値 $0.1$ に対応する固有ベクトル $\mathbf{v}_1$ で張られる空間 ($xyz$ 空間内の $z$ 軸) が不安定部分空間である. 
-                    従って, 原点は鞍点となり, 安定部分空間上にも不安定部分空間上にも無い点は, 時間経過と共に $z$ 軸に近づくような挙動をすることがわかる. 
-                    実際に, 適当な初期値に対する軌道をプロットしたものは以下のようになる:
-                </p>
-                <div class="resize"><img src='./images/spiral_3D-1.png'></div>
-            </div>
-            
-            <div class="exercise">
-                <p>線形力学系 
-                    \[
-                        \mathbf{x}' = \begin{pmatrix} 
-                            1 & 3 \cr 
-                            1 & -1 
-                        \end{pmatrix}\mathbf{x}
-                    \] の相図の概形を描け. 
-                </p>
-            </div>
-
-            <div class="answer">
-                <p>行列 $A$ の固有値は $\lambda_1 = -2$, $\lambda_2 = 2$ であり, 対応する固有ベクトルは例えば 
-                    \[
-                        \mathbf{v}_1 = \begin{pmatrix} 
-                            1 \cr 
-                            -1 
-                        \end{pmatrix},\quad \mathbf{v}_2 = \begin{pmatrix} 
-                            3 \cr 
-                            1 
-                        \end{pmatrix}
-                    \] である.
-                    ここまで計算すれば一般解を明示的に表すことで相図を精密に描くこともできるが, ここでは概形のみを考える. 
-                </p>
-                <p>まず, $\mathbf{v}_1$ で張られる部分空間が不安定部分空間であり, $\mathbf{v}_2$ で張られる部分空間が安定部分空間である. 
-                    安定部分空間上の点は平衡点 $\mathbf{0}$ に収束し, 不安定部分空間上の点は $\mathbf{0}$ から遠ざかるように動く. 
-                    他の全ての解は, 時間に逆行すると安定部分空間に近づき, 時間経過により不安定部分空間に近づく. 
-                    (自励系の軌道は交差しないという性質も併せて) これだけの情報から, 以下のような相図となっていることを推測できる: 
-                </p>
-
-                <div class="resize"><img src='./images/saddle2-1.png'></div>
-
-                        
-            </div><!-- /answer -->
-
-            <!-- <p>このアイデアを<span class="wave">非線形</span>力学系に対して拡張することも可能である. 
-                これについては, 平衡点の安定性について深掘りした後に改めて解説する. 
-            </p> -->
-
-            <!-- <p>さらに, <span class="wave">非線形</span>力学系に限り, 周辺の軌道がある周期軌道に収束するということが起こり得る. 
-            </p>
-
-            <div class="definition" data-name="リミットサイクル">
-                <p>力学系の周期起動が存在し, また $t\to\infty$ もしくは $t\to\infty$ としたときに, それに収束する軌道が存在するならば, そのような周期軌道を <b>リミットサイクル</b> という. </p>
-            </div> -->
-
-
-            <!-- <div class="definition" data-name="ポアンカレ写像">
-
-            </div> -->
-
-            <!-- <div class="exercise">
-                <p>非線形力学系 
-                    \[
-                        \begin{pmatrix} 
-                            x' \cr 
-                            y' 
-                        \end{pmatrix} = \begin{pmatrix} 
-                            x - xy \cr 
-                            xy - y 
-                        \end{pmatrix}
-                    \] の $x\gt 0$, $y\gt 0$ における相図の概形を描画せよ. 
-                </p>
-            </div>
-
-            <div class="answer">
-                <p>この力学系は非線形であり, 解の明示的な表示を与えることは困難である. 
-                    ただし自励系であるため, 右辺のベクトル場に対応する方向場を考えれば各初期値に対する軌道の概形を予想できる. 
-                    いくつかの点において具体的に計算することが望ましいが, 大雑把には $x\gt 0$, $y\gt 0$ において
-                </p>
-                <ul>
-                    <li>$0\lt x\lt 1$ のとき $y'\lt 0$, </li>
-                    <li>$x=1$ のとき $y'=0$, </li>
-                    <li>$1\lt x$ のとき $y'\gt 0$, </li>
-                    <li>$0\lt y\lt 1$ のとき $x'\gt 0$, </li>
-                    <li>$y=1$ のとき $x'=0$, </li>
-                    <li>$1\lt y$ のとき $x'\lt 0$</li>
-                </ul>
-                <p>であることに注目すれば, 方向場における各点での矢印の向きはおおよそ決定できる (なお, このベクトル場は連続であり勾配も大きくならないため, $x$ や $y$ が多少変化しても矢印の向きが急激に変化する心配はない).        
-                </p>
-            </div> 
-            -->
-
-            <hr>
         <section><h2>まとめ</h2>
-            <p>簡単な例として $1$ 次元力学系および線形力学系を紹介した後, 力学系の解の挙動を説明するための概念をいくつか導入した. 
-                具体的には, 線形力学系では行列固有値および固有ベクトルを調べることで一般解を明示的に表示し, また固有値, 固有ベクトルと平衡解付近での解の挙動との関連を説明した. 
-                現時点では, 具体例として一般解を手計算で得ることができる状況のみを考えているため, ここで紹介した概念の必要性は理解しづらいかもしれないが, 後に非線形力学系の解析において有用となることを紹介する. 
-                ただし, 力学系に関連する概念はここで述べたことが全てでは無く, 特に非線形力学系の平衡解付近における解析のために, 以降も追加の概念を導入する. 
+            <p>簡単な例として一次元力学系および線形力学系を紹介した.
+                特に, 線形力学系については, 行列指数関数を用いた解の表示だけで無く, (二次元線形力学系に限り) 固有値および固有ベクトルを用いた解の表示も紹介した. 
+                現時点では, 主に解を手計算で求めることができる場合を紹介しているが, 実際には明示的に解を表現できない場合に, どのように解の挙動や性質を調べるかが重要である. 
+                ここで一次元力学系と線形力学系に言及したのは, あくまで様々な概念を導入, 解説するための具体例として利用するためであると思ってほしい. 
             </p>
-            <p>線形力学系に関する計算ができることも, もちろん重要ではあるが, この資料の目的は非線形力学系を扱うことである. 
-                ここで線形力学系に言及したのは, あくまで様々な概念を導入, 解説するための具体例として利用するためであったと思ってほしい. 
-            </p>
-        </section>
-
-
-            
+        </section>       
     
     <!-- 
     授業の概要(授業の目標) : 力学系について入門的な講義を行う. 
