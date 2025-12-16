@@ -30,15 +30,17 @@
     <main role="main"><article id="section2"><h1>2. 平衡点の安定性</h1>
         <p>力学系の一般解 (もしくは特殊解) を明示的に表現できる場合は, その表現から解の時間発展に伴う挙動がわかる. 
             一方で, 多くの場合は解を表現できないときに, その挙動を調べることに興味がある. 
-            ここでは, 力学系の解の挙動を調べるための概念と, それらに関連する数学的性質を紹介する. 
-
+            ここでは, 力学系の解の挙動を調べるための概念として <b>安定性</b> を紹介し, それらに関連する数学的性質を紹介する. 
+        </p>
+    
+        <p>
             数学において『安定性』という言葉は, &quot;わずかな変化 (摂動) の影響&quot; が十分に小さいと思える, という状況を表す.
-            力学系の平衡点において, 安定性 (リアプノフ安定性) は平衡点近傍の点 (平衡点からわずかにずれた点) が時間経過により平衡点近傍にとどまり続けることと説明されるのであった.  
+            力学系において, 安定性はわずかな摂動の影響が時間経過により減少していくことと説明される.  
             線形力学系については, 行列固有値の実部の符号が重要となることに言及したが, ここでは非線形力学系にも応用できる, 安定性解析のテクニックを紹介する. 
-            また, 力学系に含まれるパラメータを動かした際の平衡点の安定性の変化を調べることで, 特に線形力学系の分岐の分類も紹介することにする.  
+            <!-- また, 力学系に含まれるパラメータを動かした際の平衡点の安定性の変化を調べることで, 特に線形力学系の分岐の分類も紹介することにする.   -->
         </p>
 
-        <section id="section2-1"><h2>2.1: 安定性と関連する諸概念</h2>
+        <section id="section2-1"><h2>2.1: 平衡点と軌道</h2>
             <p>力学系の <b>平衡点</b> は解の時間発展の挙動を考察するために重要な概念である. 
                 まずは, 力学系の平衡点および関連するアイデアについて, 一次元力学系や線形力学系を具体例に紹介する. 
                 ただし, これらの概念は非線形力学系の解析に応用するために導入するものであることを念頭において欲しい.
@@ -313,17 +315,22 @@
             </p>
 
             <div class="definition" data-name="周期軌道">
-                <p>力学系の相空間 $X$ およびフロー $\varphi$ について, ある初期値 $\mathbf{x}_0$ に対して 
+                <p>力学系の相空間 $X$ およびフロー $\varphi$ について, 平衡点でない初期値 $\mathbf{x}_0$ に対して 
                     \[
-                        \varphi(t+T, \mathbf{x}_0) = \varphi(t, \mathbf{x}_0)\quad \text{for all}\quad t\in\mathbb{R} \quad(\text{or }\mathbb{Z})
-                    \] を満たす $T$ が存在するならば, 軌道 $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}\subset X$ (もしくは $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{Z}\}\subset X$) は <b>周期軌道</b> であるという. 
+                        \varphi(t+T, \mathbf{x}_0) = \varphi(t, \mathbf{x}_0)\quad \text{for all}\quad t\in\mathbb{R} \quad(\text{離散力学系に対しては }\mathbb{Z})
+                    \] を満たす $T$ が存在するならば, 初期値 $\mathbf{x}_0$ に対する軌道 $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}\subset X$ (離散力学系に対しては $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{Z}\}\subset X$) は <b>周期軌道</b> であるという. 
                     また, このとき $T$ を <b>周期</b> という. 
                 </p>
             </div>
 
             <div class="remark">
-                <p>線形力学系の場合は単純な形の周期軌道しか現れないが, 非線形力学系の場合はより複雑な周期軌道が現れることがある. </p>
+                <ul>
+                    <li>ある初期値に対する連続力学系の周期軌道は, 存在するならば必ず閉曲線となる. </li>
+                    <li>線形力学系の場合は楕円形や楕円体上に巻き付くような形の周期軌道しか現れないが, 非線形力学系の場合はより複雑な周期軌道が現れることがある. </li>
+                </ul>
             </div>
+
+            
 
             <!-- <div class="example">
                 <p>非線形力学系 
@@ -353,41 +360,141 @@
                 </p>
             </div> -->
 
-            <hr> 
+            <p>ある初期値 $\mathbf{x}_0$ に対する力学系の周期軌道が存在するならば, 初期値 $\mathbf{x}_0$ から出発した解 $\mathbf{x}(t)$ はどれだけ $t\in\mathbb{R}$ を変化させても周期軌道はら外れることは無い. 
+                このことに関連する概念として, <b>不変集合</b> と <b>極限集合</b> を導入する.
+            </p>
 
+            <div class="definition" data-name="不変集合">
+                <p>力学系の相空間 $X$ およびフロー $\varphi$ に対して,</p>
+                <ul>
+                    <li>部分集合 $S\subset X$ が, 
+                        \[
+                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\in \mathbb{R}
+                        \] を満たすとき, $S$ を <b>不変集合</b> (<b>invariant set</b>) という. 
+                    </li>
+                    <li>部分集合 $S\subset X$ が, 
+                        \[
+                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\ge 0
+                        \] を満たすとき, $S$ を <b>正不変集合</b> (<b>positively invariant set</b>) という. 
+                    </li>
+                </ul>
+            </div>
+
+            <p>つまり, 不変集合内部を初期値として出発した点は, 時間経過により不変集合から出て行かない, ということを表している. 
+                周期軌道も不変集合の一種であると解釈できるが, 一般には周期軌道では無い不変集合を考えることになる. 
+            </p>
+
+            <div class="definition" data-name="極限点と極限集合">
+                <p>力学系の相空間 $X$ およびフロー $\varphi$ に対して,</p>
+                <ul>
+                    <li>ある点列 $\{t_n\}$ が存在し, 
+                        \[
+                            \left\{\begin{array}{l}
+                                \displaystyle\lim_{n\to\infty}t_n=\infty, \cr 
+                                \displaystyle\lim_{n\to\infty}\varphi(t_n, \mathbf{x}_0) = \mathbf{y} \quad\text{in } X
+                            \end{array}\right.
+                        \] が成立するとき, $\mathbf{y}\in X$ は $\mathbf{x}_0\in X$ の <b>$\omega$ 極限点</b> (<b>$\omega$-limit point</b>) であるという.
+                    </li>
+                    <li>
+                        点 $\mathbf{x}_0\in X$ の全ての $\omega$ 極限点からなる集合を <b>$\omega$ 極限集合</b> (<b>$\omega$-limit set</b>) といい, $\omega(\mathbf{x}_0)$ と表記する, つまり
+                        \[
+                            \omega(\mathbf{x}_0) = \{\mathbf{y}\in X : \text{ある数列 $\{t_n\}$ が存在し, }t_n\to \infty,\ \varphi(t_n, \mathbf{x}_0)\to\mathbf{y} \}
+                        \]
+                    </li>
+                    <li>ある点列 $\{t_n\}$ が存在し, 
+                        \[
+                            \left\{\begin{array}{l}
+                                \displaystyle\lim_{n\to\infty}t_n=-\infty, \cr 
+                                \displaystyle\lim_{n\to\infty}\varphi(t_n, \mathbf{x}_0) = \mathbf{y} \quad\text{in } X
+                            \end{array}\right.
+                        \] が成立するとき, $\mathbf{y}\in X$ は $\mathbf{x}_0\in X$ の <b>$\alpha$ 極限点</b> (<b>$\alpha$-limit point</b>) であるという.
+                    </li>
+                    <li>
+                        点 $\mathbf{x}_0\in X$ の全ての $\alpha$ 極限点からなる集合を <b>$\alpha$ 極限集合</b> (<b>$\alpha$-limit set</b>) といい, $\alpha(\mathbf{x}_0)$ と表記する, つまり
+                        \[
+                            \alpha(\mathbf{x}_0) = \{\mathbf{y}\in X : \text{ある数列 $\{t_n\}$ が存在し, }t_n\to -\infty,\ \varphi(t_n, \mathbf{x}_0)\to\mathbf{y} \}
+                        \]
+                    </li>
+                </ul>
+            </div>
+
+            <p>直感的には時刻 $t$ を大きくしたとき (もしくは小さくしたとき) に, 解 $\mathbf{x}(t)$ が &quot;どこに近づくか&quot; を表すものが極限点, 極限集合である. 
+                特に, 解 $\mathbf{x}(t)$ が収束しないという状況, 例えばある範囲を動き続けるという状況であっても, &quot;どこを動き続けるか&quot; を説明できる.</p>
+
+            <div class="example">
+                <p>線形力学系 
+                    \[
+                        \mathbf{x}' = \begin{pmatrix} 
+                            -1 & 0 \cr 
+                            0 & -2 
+                        \end{pmatrix}\mathbf{x}
+                    \] を考える. 
+                    行列固有値は $-1$, $-2$ であり, 全ての固有値 (の実部) が負であるため, 平衡点 $\mathbf{0}$ は漸近安定である. 
+                    つまり全ての点は時間経過により ($t_n\to\infty$ となる任意の点列 $\{t_n\}$ に対して) $\mathbf{0}$ に収束するため, 任意の $\mathbf{x}_0$ に対し 
+                    \[
+                        \omega(\mathbf{x}_0) = \{\mathbf{0}\}
+                    \] である. 
+                    一方で, 全ての点は時間に逆行したとき ($t_n\to\infty$ となる任意の点列 $\{t_n\}$ に対して) 無限に発散するため, 任意の $\mathbf{x}_0$ に対し 
+                    \[
+                        \alpha(\mathbf{x}_0) = \emptyset
+                    \] である. 
+                </p>
+            </div>
+
+            <div class="example">
+                線形力学系 
+                \[
+                    \mathbf{x}' = \begin{pmatrix} 
+                        0 & 1 \cr 
+                        -1 & 0 
+                    \end{pmatrix}\mathbf{x}
+                \] を考える. 
+                行列固有値は $\pm i$ であり, 初期値 $\mathbf{x}_0 = (r\cos\alpha, r\sin\alpha)$ に対する特殊解は 
+                \[
+                    \mathbf{x}(t) = \begin{pmatrix} 
+                        r\cos(t+\alpha) \cr 
+                        -r\sin(t+\alpha) 
+                    \end{pmatrix}
+                \] である (必要なら $\mathbf{x}'$ を計算したり $t=0$ を代入して確かめれば良い). 
+                このとき, 半径 $r=\|\mathbf{x}_0\|$ の円周上の任意の点 $\mathbf{y}$ に対して, 点列 $\{t_n\}$ を適切に取りさえすれば, $\varphi(t_n,\mathbf{x}_0) = \mathbf{x}(t_n) \to \mathbf{y}$ となるようにできる. 
+                つまり
+                \[
+                    \omega(\mathbf{x}_0) = \{\mathbf{y}\in\mathbb{R}^2 : \|\mathbf{y}\| = \|\mathbf{x}_0\|\}
+                \] である ($\alpha$ 極限集合についても同様である). 
+                このように, $\mathbf{x}(t)$ が一点に収束しない場合でも, 極限集合を考えることで解の挙動をわかりやすく説明できる. 
+            </div>
+
+        </section>
+
+        <hr> 
+
+        <section id="section2-2"><h2>2.2: 平衡点とリミットサイクルの安定性</h2>
             <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ を例とすると, 与えられたベクトル場 $\mathbf{f}$ の方向場を描くことで, 適当な初期値に対する軌道の概形が得られ, 複数の軌道を描くことで相図が得られる.
                 ただし, コンピュータを利用しない限り, 精密な方向場を描くのは大変であり, 一方でコンピュータを利用するならば近似解を計算することで相図をプロットできるため, この方法で解の挙動を調べることは現実的とは言い難い. 
             </p>
 
-            <p>実用上は, 平衡点の近傍に限り解がどのように振る舞うかを調べることで, (平衡点から離れた箇所も含めた) 力学系の解の挙動を推測することになる. 
+            <p>実用上は, 平衡点や周期軌道の近傍に限り解がどのように振る舞うかを調べることで, (平衡点や周期軌道から離れた箇所も含めた) 力学系の解の挙動を推測することになる. 
                 そのため, 近傍での軌道が特徴的な振る舞いを示す平衡点に, その性質により様々な名前が付けられ分類することで解の挙動の説明に利用することができる. 
-                以下, ($2$ 次元線形力学系を具体例に) 平衡点の性質や分類を紹介する:
+                まずは平衡点の安定性と, 安定性による平衡点の分類を紹介する:
             </p>
 
-            <div class="definition" data-name="安定性">
-                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の初期値 $\mathbf{x}_0\in\mathbb{R}^n$ に対する解 $\mathbf{x}(t)$ と平衡点 $\widetilde{\mathbf{x}}\in \mathbb{R}^n$ について, </p>
+            <div class="definition" data-name="平衡点の安定性">
+                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ を考える. </p>
                 <ul>
-                    <li>任意の $\varepsilon\gt 0$ に対して, ある $\delta\gt 0$ が存在し, 
-                        \[
-                            \|\mathbf{x}_0-\widetilde{\mathbf{x}}\| \lt \delta \implies \|\mathbf{x}(t) - \widetilde{\mathbf{x}}\|\lt \varepsilon\quad\text{for all}\quad t\ge 0
-                        \] が成立するとき, 平衡点は <b>リアプノフ安定</b> (<b>Lyapunov stable</b>) である (もしくは単に <b>安定</b> である) という. 
-                        安定でない平衡点は <b>不安定</b> (<b>unstable</b>) であるという. 
-                    </li>
-                    <li>ある $\delta\gt 0$ が存在し, 
-                        \[
-                            \|\mathbf{x}_0-\widetilde{\mathbf{x}}\|\lt \delta \implies \lim_{t\to\infty}\|\mathbf{x}(t)-\widetilde{\mathbf{x}}\|=0
-                        \] が成立するとき, 平衡点は <b>吸引的</b> (<b>attracting</b>) であるという.
-                    </li>
-                    <li>リアプノフ安定かつ吸引的な平衡点は <b>漸近安定</b> (<b>asymptotically stable</b>) であるという.</li>
-                    <li>リアプノフ安定だが吸引的でない平衡点は <b>中立安定</b> (<b>neutrally stable</b>) であるという.</li>
+                    <li>平衡点に十分近い初期値から出発した全ての解が平衡点の近くに留まり続けるとき, 平衡点は <b>リアプノフ安定</b> (<b>Lyapunov stable</b>) である, もしくは単に <b>安定</b> (<b>stable</b>) であるという. </li>
+                    <li>安定でない平衡点は <b>不安定</b> (<b>unstable</b>) であるという. </li>
+                    <li>平衡点に十分近い初期値から出発した全ての解が平衡点に収束するとき, 平衡点は <b>吸引的</b> (<b>attracting</b>) であるという. </li>
+                    <li>安定かつ吸引的な平衡点は <b>漸近安定</b> (<b>asymptotically stable</b>) であるという.</li>
+                    <li>安定だが吸引的でない平衡点は <b>中立安定</b> (<b>neutrally stable</b>) であるという.</li>
                 </ul>
             </div><!-- /definition -->
 
-            <div class="remark">
+            <!-- <div class="remark">
                 <p>直感的には, 平衡点に十分近い<span class="wave">任意の</span>初期値に対し, 解 $\mathbf{x}(t)$ がある近傍にとどまり続けるならば, 平衡点は安定である. 
                 また, 平衡点に十分近い<span class="wave">任意の</span>初期値に対し, 解が $t\to\infty$ で平衡点に収束するとき, 平衡点は吸引的である. </p>
             </div>
-            
+             -->
+
             <div class="example">
                 <p>例として一次元力学系
                     \[
@@ -866,52 +973,68 @@
             </div> 
             -->
 
+            <hr>
+
+            <p>さて, ここまででは解が平衡点に近づくか否かを考えたが, 非線形力学系では周期軌道に含まれない点を初期値とした際に, $t\to\infty$ としたときの解 (正確には $\omega$ 極限集合が) がある周期軌道に近づく, もしくはある周期起動から離れる, ということがある. 
+                このことを説明するために, <b>リミットサイクル</b> という概念を導入しよう. 
+                ただし, 詳細な定義は後回しとし, ここでは大雑把に説明するにとどめる.
+            </p>
+
+            <div class="definition" data-name="リミットサイクルの安定性">
+                <p>力学系の相空間 $X$ およびフロー $\varphi$ について, (ある初期値 $\mathbf{x}_0$ に対する) 周期軌道 $\Gamma = \{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}$ が存在するとする. 
+                    この周期軌道 $\Gamma$ について, 
+                </p>
+                <ul>
+                    <li>$\Gamma$ に十分近い任意の $\mathbf{x}_1\not\in \Gamma$ に対して
+                    \[
+                        \omega(\mathbf{x}_1) = \Gamma
+                    \]
+                    が成立するとき, $\Gamma$ は <b>安定なリミットサイクル</b> (<b>stable limit cycle</b>) であるという.</li>
+                    <li>$\Gamma$ に十分近い任意の $\mathbf{x}_1\not\in \Gamma$ に対して
+                    \[
+                        \alpha(\mathbf{x}_1) = \Gamma
+                    \]
+                    が成立するとき, $\Gamma$ は <b>不安定なリミットサイクル</b> (<b>unstable limit cycle</b>) であるという.</li>
+                </ul>
+            </div>
+
+            <p>平衡点の安定性と同様に, リミットサイクルも (もしも存在するならば) その安定性を調べることで解のおおまかな挙動を推測する重要な手掛かりとなる. 
+            </p>
+
         </section>
 
-        <section id="section2-2"><h2>2.2: リアプノフの安定性定理</h2>
+        <hr>
+
+        <section id="section2-3"><h2>2.3: リアプノフの安定性定理</h2>
             <p>線形力学系を具体例として安定性 (リアプノフ安定性) について解説したが, 非線形力学系に対しても平衡点が安定か否かを調べることは, 解のおおまかな挙動を知る上で重要な情報である. 
                 <!-- まず, 非線形力学系を想定して, いくつかの概念を追加で導入する: -->
             </p>
 
-            <!-- <div class="definition" data-name="正不変部分集合">
-                <p>力学系の相空間 $X$ およびフロー $\varphi$ について, 
-                    部分集合 $S\subset X$ が, 
-                        \[
-                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\ge 0
-                        \] を満たすとき, $S$ を <b>正不変部分集合</b> (<b>positively invariant subset</b>) という. 
-                </p>
-            </div>
-
-            <div class="lemma" data-name="ラサールの不変原理">
-                自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}\in\mathbb{R}^n$ に対し, $\widetilde{\mathbf{x}}\in U$ を満たす開集合 $U\subset\mathbb{R}^n$ 
-            </div> -->
-
-            <p>平衡点の安定性は, 解が任意の時刻において平衡点近傍にとどまり続けることと解釈されるが, 一般にこれを示そうとすると $t\to\infty$ における挙動を調べる必要があり面倒である. 
-                そこで, 安定性を証明するための手法として, しばしば以下の定理が用いられる: 
+            <p>まず, 上で言及した平衡点の安定性の定義を, 数学的に厳密な形で改めて述べる:
             </p>
 
-            <!-- <div class="definition" data-name="リアプノフ関数">
-                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}\in\mathbb{R}^n$ に対し, 微分可能な関数 $V:\mathbb{R}^n\to\mathbb{R}$ であって, 
-                </p>    
+            <div class="definition" data-name="平衡点の安定性">
+                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の初期値 $\mathbf{x}_0\in\mathbb{R}^n$ に対する解 $\mathbf{x}(t)$ を考える.</p>
                 <ul>
-                    <li>$V(\widetilde{\mathbf{x}}) = 0$, </li>
-                    <li>任意の $\mathbf{x}\neq \widetilde{\mathbf{x}}$ に対し $V(\mathbf{x}) \gt 0$ かつ $\nabla V(\mathbf{x})\cdot \mathbf{f}(\mathbf{x})\le 0$.</li> 
+                    <li>平衡点 $\widetilde{\mathbf{x}}\in \mathbb{R}^n$ について, 任意の $\varepsilon\gt 0$ に対して, ある $\delta\gt 0$ が存在し, 
+                        \[
+                            \|\mathbf{x}_0-\widetilde{\mathbf{x}}\| \lt \delta \implies \|\mathbf{x}(t) - \widetilde{\mathbf{x}}\|\lt \varepsilon\quad\text{for all}\quad t\ge 0
+                        \] が成立するとき, 平衡点 $\widetilde{\mathbf{x}}\in \mathbb{R}^n$ は <b>リアプノフ安定</b> (<b>Lyapunov stable</b>) である (もしくは単に <b>安定</b> である) という. 
+                    </li>
+                    <li>安定でない平衡点は <b>不安定</b> (<b>unstable</b>) であるという. 
+                    </li>
+                    <li>安定な平衡点 $\widetilde{\mathbf{x}}\in \mathbb{R}^n$ について, 
+                        \[
+                            \lim_{t\to\infty}\|\mathbf{x}(t)-\widetilde{\mathbf{x}}\|=0
+                        \] が成立するとき, 平衡点 $\widetilde{\mathbf{x}}\in \mathbb{R}^n$ は <b>吸引的</b> (<b>attracting</b>) である, もしくは <b>漸近安定</b> (<b>asymptotically stable</b>) であるという.
+                    </li>
+                    <li>リアプノフ安定だが吸引的でない平衡点は <b>中立安定</b> (<b>neutrally stable</b>) であるという.</li>
                 </ul>
-                <p>を満たすものが存在するならば, 関数 $V$ を平衡点 $\widetilde{\mathbf{x}}\in\mathbb{R}^n$ についての <b>リアプノフ関数</b> (<b>Lyapunov function</b>) という. 
-                </p>
-                <p>また, リアプノフ関数であって, 任意の $\mathbf{x}\neq \widetilde{\mathbf{x}}$ に対し $\nabla V(\mathbf{x})\cdot \mathbf{f}(\mathbf{x})\lt 0$ を満たすものは <b>狭義リアプノフ関数</b> (<b>strict Lyapunov function</b>) という. </p>
-            </div>
+            </div><!-- /definition -->
 
-            <div class="definition" data-name="不変集合">
-                <p>力学系</p>
-                <ul></ul>
-            </div>
-
-            <div class="lemma" data-name="ラサールの不変原理">
-                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}\in\mathbb{R}^n$ についてのリアプノフ関数 $V$ が存在するとする. 
-                    このとき, 
-                </p>
-            </div> -->
+            <p>平衡点の安定性は, 解が任意の時刻において平衡点近傍にとどまり続けることと解釈されるが, 一般にこれを示そうとすると $t\to\infty$ における挙動を調べる必要があり面倒である. 
+                そこで, 安定性を証明するための手法として, 以下の定理が用いられることがある: 
+            </p>
 
             <div class="theorem" data-name="リアプノフの安定性定理">
                 <p>ベクトル場 $\mathbf{f}:\mathbb{R}^n\to\mathbb{R}^n$ は <span class="wave">連続</span> であるとする. このとき, 自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}\in\mathbb{R}^n$ に対し, 以下を満たす <span class="wave">微分可能な</span> 関数 $V:\mathbb{R}^n\to\mathbb{R}$ が存在するならば, 平衡点 $\widetilde{\mathbf{x}}$ は安定である: 
@@ -1187,7 +1310,7 @@
                 その説明のために, いくつか追加の概念を導入しよう:
             </p>
 
-            <div class="definition" data-name="不変集合">
+            <!-- <div class="definition" data-name="不変集合">
                 <p>力学系の相空間 $X$ およびフロー $\varphi$ に対して,</p>
                 <ul>
                     <li>部分集合 $S\subset X$ が, 
@@ -1283,10 +1406,43 @@
                     \omega(\mathbf{x}_0) = \{\mathbf{y}\in\mathbb{R}^2 : \|\mathbf{y}\| = \|\mathbf{x}_0\|\}
                 \] である ($\alpha$ 極限集合についても同様である). 
                 このように, $\mathbf{x}(t)$ が一点に収束しない場合でも, 極限集合を考えることで解の挙動をわかりやすく説明できる. 
+            </div> -->
+
+            <div class="lemma" data-name="ラサールの不変原理">
+                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}\in\mathbb{R}^n$ についてのリアプノフ関数 $V$ が存在するとする. 
+                    このとき, 
+                </p>
             </div>
 
-        <section id="section2-2"><h2>2.3: 勾配系</h2>
-            <p>一次元力学系や線形力学系を例として安定性について解説したが, ここでは追加でリアプノフ関数と密接に関連する <b>勾配系</b> に限って非線形力学系を扱う. 
+        </section>
+         
+        <hr>    
+
+        <section id="section2-4"><h2>2.4: ポアンカレ-ベンディクソンの定理</h2>
+            
+            <p>まず, $\mathbb{R}^n$ 上の点 $\mathbf{p}$ と曲線 $\Gamma$ の距離は, 
+                \[
+                    d(\mathbf{p}, \Gamma) = \min_{\mathbf{r}\in\Gamma}\{\|\mathbf{p}-\mathbf{r}\|\}
+                \] と定義されることに注意しよう. これを用いて, リミットサイクルの定義を改めて述べる.
+            </p>
+
+            <div class="definition" data-name="リミットサイクルの安定性">
+                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ を考える. 
+                    ある初期値 $\mathbf{x}_0$ に対し, $\Gamma = \{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}$ が周期軌道であるとする. 
+                </p>
+                <ul>
+                    <li></li>
+                </ul>
+
+            </div>
+
+        </section>
+
+        <hr>
+
+        <section id="section2-2"><h2>2.3: 勾配系とハミルトン系</h2>
+            <p>ここまででは力学系の例として一次元力学系や線形力学系を解説したが, ここでは非線形力学系の具体例を紹介する.
+                より一般の非線形力学系やその性質など, 詳細は後に改めて解説するが, ここではリアプノフ関数のアイデアと関連する <b>勾配系</b> および <b>ハミルトン系</b> を紹介し, 本格的に非線形力学系を扱う準備としたい. 
             </p>
             
             <!-- <div class="definition">
