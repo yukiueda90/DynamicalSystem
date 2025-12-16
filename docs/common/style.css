@@ -100,7 +100,7 @@ main a {
 }
 
 nav a {
-    margin-left: 10px;
+    margin-left: 0px;
     margin-bottom: 5px;
     color: inherit; 
     text-decoration: none;
@@ -117,7 +117,7 @@ a:hover, a:focus {
 }
 
 .side ul li {
-    margin-left: 10px;
+    margin-left: 0px;
 }
 
 .side footer {
