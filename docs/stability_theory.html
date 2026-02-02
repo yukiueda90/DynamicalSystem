@@ -1001,6 +1001,10 @@
             <p>平衡点の安定性と同様に, リミットサイクルも (もしも存在するならば) その安定性を調べることで解のおおまかな挙動を推測する重要な手掛かりとなる. 
             </p>
 
+            <div class="remark">
+                <p>安定なリミットサイクル, もしくは不安定なリミットサイクルは非線形力学系でのみ現れる. </p>
+            </div>
+
         </section>
 
         <hr>
@@ -1151,6 +1155,32 @@
                         </ul>
                     </li>
                 </ol>
+            </div>
+
+            <div class="example">
+                <p>上の注意において, リアプノフ関数 $V$ はエネルギー (ポテンシャル) に例えられると言及した. 
+                    これについて少し掘り下げてみよう:
+                </p>
+                <p>スカラー値関数 $E: \mathbb{R}^n\to\mathbb{R}$ に対して, $E$ がある点 (少なくとも一点) $\widetilde{\mathbf{x}}$ で最小値 $E(\widetilde{\mathbf{x}}) = 0$ を達成することを仮定する. 
+                    いま, $\mathbf{f}(\mathbf{x}) = -\nabla E(\mathbf{x})$ のとき, つまり
+                    \[
+                        \mathbf{x}' = -\nabla E(\mathbf{x})
+                    \] という力学系を <b>勾配系</b> (<b>gradient system</b>) という.
+                    このとき, $E$ をエネルギー (ポテンシャル) と呼ぶことがある.
+                </p>
+                <p>勾配系の解は
+                    \[
+                        x_i' = -\dfrac{\partial E}{\partial x_i}(\mathbf{x})\quad\text{for all}\quad i=1,\dots, n
+                    \] を満たしていることから, 各 $x_i$ は $E$ を小さくする方向に時間発展することがわかる.  
+                    また, この勾配系に対し, 
+                    \[
+                        V(\mathbf{x}) = E(\mathbf{x})
+                    \] はリアプノフ関数である. 実際, $E$ が最小値 $E(\widetilde{\mathbf{x}}) = 0$ を達成するという仮定と, 
+                    \[
+                        \nabla V(\mathbf{x})\cdot \mathbf{f}(\mathbf{x}) = \nabla E(\mathbf{x})\cdot (-\nabla E(\mathbf{x})) = -\|\nabla E(\mathbf{x})\|^2 
+                    \] であることから従う. 
+                    ただし, 一般には狭義リアプノフ関数であるとは限らない. 
+                </p> 
             </div>
 
             <hr>
@@ -1418,6 +1448,83 @@
          
         <hr>    
 
+        <section><h2>線型安定性解析</h2>
+        <p>自励系 $\mathbf{x}'=\mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}$ に対し, 適切な (狭義) リアプノフ関数を構成することができれば, 平衡点の (漸近) 安定性を証明することができる. 
+            上で見たように, 線型力学系 $\mathbf{x}' = A\mathbf{x}$ の場合には (つまり $\mathbf{f}$ が線型であり $\mathbf{f}(\mathbf{x}) = A\mathbf{x}$ と表される場合には), 行列 $A$ の固有値実部と関連したリアプノフ関数の具体的な構成方法が知られている. 
+        </p>
+        <p>さて, 非線形力学系に対するリアプノフ関数を具体的に構成できるかというと, 一般には否である. 
+            そこで, 非線形力学系の安定性の判定に利用できる別のアイデアをもう一つ紹介する. 
+        </p>
+
+        <ul>
+            <li>まず, 例として $2$ 次元の連立常微分方程式系, 具体的には $2$ つの滑らかな関数 $f(x, y)$, $g(x, y)$ を用いて表される自励系
+            \[
+                \mathbf{x}' = \mathbf{f}(\mathbf{x}) = \begin{pmatrix} 
+                    f(x, y) \cr 
+                    g(x, y)
+                \end{pmatrix}
+            \] が平衡点 $\widetilde{\mathbf{x}} = (\widetilde{x}, \widetilde{y})$ を持つという状況を考えよう. 
+            </li>
+            <li>滑らかな関数 $f(x,y)$, $g(x,y)$ の $\widetilde{\mathbf{x}} = (\widetilde{x}, \widetilde{y})$ 周りでのテイラー展開を考えると 
+            \[
+                \begin{array}{rl} 
+                    f(x, y) &= f(\widetilde{\mathbf{x}}) + \dfrac{\partial f}{\partial x}(\widetilde{\mathbf{x}})(x-\widetilde{x}) + \dfrac{\partial f}{\partial y}(\widetilde{\mathbf{x}})(y-\widetilde{y}) + R_1, \cr
+                    g(x, y) &= g(\widetilde{\mathbf{x}}) + \dfrac{\partial g}{\partial x}(\widetilde{\mathbf{x}})(x-\widetilde{x}) + \dfrac{\partial g}{\partial y}(\widetilde{\mathbf{x}})(y-\widetilde{y}) + R_2
+                \end{array}
+            \] となる, ここで $R_1$, $R_2$ は剰余項である. 
+            </li>
+            <li>これを用いると, 自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}$ について ($\mathbf{f}(\widetilde{\mathbf{x}})=0$ に注意して)
+            \[
+                \mathbf{f}(\mathbf{x}) = D \mathbf{f}(\widetilde{\mathbf{x}}) (\mathbf{x}-\widetilde{\mathbf{x}}) + \mathbf{R}
+            \] が得られる, ここで 
+            \[
+                D\mathbf{f}(\widetilde{\mathbf{x}}) = \begin{pmatrix} 
+                    \dfrac{\partial f}{\partial x}(\widetilde{\mathbf{x}}) & \dfrac{\partial f}{\partial y}(\widetilde{\mathbf{x}}) \cr
+                    \dfrac{\partial g}{\partial x}(\widetilde{\mathbf{x}}) & \dfrac{\partial g}{\partial y}(\widetilde{\mathbf{x}})
+                \end{pmatrix}\in\mathbb{R}^{2\times 2}
+            \] はヤコビ行列である.      
+            </li>
+            <li>いま, 平衡点 $\widetilde{\mathbf{x}}$ の近くにある点 $\mathbf{x}(t)$ が, 時間経過でどのように振る舞うかを考えてみる. 
+                まず, テイラー展開の剰余項として現れる $\mathbf{R}$ の影響は十分に小さいとみなして良いだろう. 
+                従って, おおよそ 
+                \[
+                    \mathbf{x}' = D\mathbf{f}(\mathbf{\widetilde{x}})(\mathbf{x}-\widetilde{\mathbf{x}})
+                \] という式で表される挙動をするだろう. 
+                ここで $\mathbf{y} = \mathbf{x}-\widetilde{\mathbf{x}}$ と変数変換すると, $\mathbf{y}(t)$ は原点 $\mathbf{0}$ 近くの点であり, その時間経過による振る舞いは
+                \[
+                    \mathbf{y}' = \mathbf{x}' = D\mathbf{f}(\mathbf{\widetilde{x}})(\mathbf{x}-\widetilde{\mathbf{x}}) = D\mathbf{f}(\widetilde{\mathbf{x}})\mathbf{y}
+                \] で表される. 
+                ここで, $D\mathbf{f}(\widetilde{\mathbf{x}})\in\mathbb{R}^{2\times 2}$ であったことを思い出すと, 上の式は ($\mathbf{y}$ についての) 線型力学系に他ならない. 
+            </li>
+        </ul>
+
+        <hr> 
+
+        <p>ここまでの議論を整理すると, 線型力学系 $\mathbf{y}' = D\mathbf{f}(\widetilde{\mathbf{x}})\mathbf{y}$ の解 $\mathbf{y}(t)$ の原点近くでの挙動, つまり線型力学系の平衡点 $\mathbf{0}$ 近くでの挙動が得られれば, それを 
+            \[
+                \mathbf{x} = \mathbf{y}+\widetilde{\mathbf{x}}
+            \] と変換したものが, 自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}$ 付近での挙動に近いと思って良いだろう. 
+        </p>
+
+        <p>このアイデアに相当することを厳密に証明したものが, 以下に述べるハートマン=グロブマンの定理である.
+            ただし, ここでは以下の定理のステートメントも証明も詳細には説明しない:
+        </p>
+
+        <div class="theorem" data-name="ハートマン=グロブマンの定理">
+            ベクトル場 $\mathbf{f}:\mathbb{R}^n\to\mathbb{R}^n$ は $C^1$ 級であるとする.  
+            また, 自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}$ について, ヤコビ行列 $D\mathbf{f}(\mathbf{\widetilde{x}})$ の全ての固有値の実部が $0$ ではないとする. 
+            このとき, 
+            \[
+                \mathbf{x}' = \mathbf{f}(\mathbf{x}) 
+            \] が定める, 平衡点 $\widetilde{\mathbf{x}}$ の近傍における流れと, 
+            \[
+                \mathbf{y}' = D\mathbf{f}(\widetilde{\mathbf{x}})\mathbf{y}
+            \] が定める, 平衡点 $\mathbf{0}$ の近傍における流れは位相共役である. 
+        </div>
+
+        
+        </section>
+
         <section id="section2-4"><h2>2.4: ポアンカレ・ベンディクソンの定理</h2>
             
             <p>まず, $\mathbb{R}^n$ 上の点 $\mathbf{p}$ と曲線 $\Gamma$ の距離は, 
@@ -1426,14 +1533,45 @@
                 \] と定義されることに注意しよう. これを用いて, リミットサイクルの定義を改めて述べる.
             </p>
 
-            <div class="definition" data-name="リミットサイクルの安定性">
-                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ を考える. 
-                    ある初期値 $\mathbf{x}_0$ に対し, $\Gamma = \{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}$ が周期軌道であるとする. 
+            <div class="definition" data-name="リミットサイクル">
+                <p>力学系の相空間 $X$ およびフロー $\varphi$ について, (ある初期値 $\mathbf{x}_0$ に対する) 周期軌道 $\Gamma = \{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}$ が存在するとする. 
+                    この周期軌道 $\Gamma$ について, 
                 </p>
                 <ul>
-                    <li></li>
+                    <li>任意の $\varepsilon\gt 0$ に対して, ある $\delta\gt0$ が存在して, 
+                        \[
+                            d(\mathbf{x}_0, \Gamma)\lt \delta\implies d(\varphi(t, \mathbf{x}_0), \Gamma)\lt \varepsilon \quad\text{for all}\quad t\ge 0
+                        \] が成立するとき, $\Gamma$ は <b>安定</b> な周期解であるという. 
+                    </li>
+                    <li>安定でない周期解は <b>不安定</b> であるという.</li>
+                    <li>安定な周期解 $\Gamma$ について, 
+                        \[
+                            \lim_{t\to\infty}d(\varphi(t, \mathbf{x}_0), \Gamma) = 0
+                        \] となる $\mathbf{x}_0\not\in \Gamma$ が存在するとき, $\Gamma$ は <b>漸近安定なリミットサイクル</b> (もしくは単に <b>安定なリミットサイクル</b>) であるという. 
+                    </li>
+                    <li>不安定な周期解 $\Gamma$ について, 
+                        \[
+                            \lim_{t\to-\infty}d(\varphi(t, \mathbf{x}_0), \Gamma) = 0
+                        \] となる $\mathbf{x}_0\not\in \Gamma$ が存在するとき, $\Gamma$ は <b>不安定なリミットサイクル</b> であるという. 
+                    </li>
                 </ul>
+            </div>
 
+            <p>以前にも述べたように, 非線形力学系にリミットサイクルがもしも存在するならば, その安定性を調べることで (リミットサイクル周辺の) 解の大まかな挙動を推測することができる. 
+                従って, 解を明示的に表すことができない非線形力学系であっても, 平衡点やリミットサイクルを調べることで相図の概形が得られるのである. 
+            </p>
+
+            <p>さて, 与えられた非線形力学系に周期起動が存在することを厳密に証明することは一般には困難である. 
+                ただし, 平面上の相空間 $X\subset\mathbb{R}^2$ が得られる力学系 (つまり $2$ 次元の常微分方程式系) に限り, 初期値 $\mathbf{x}_0$ に対する $\omega$ 極限集合 $\omega(\mathbf{x}_0)$ を考えることで周期軌道が見つかることがある. 
+            </p>
+
+            <div class="theorem" data-name="ポアンカレ・ベンディクソンの定理">
+                <p>$C^1$ 級ベクトル値関数 $\mathbf{f}:\mathbb{R}^2\to\mathbb{R}^2$ に対し, 自励系 $\mathbf{x}'\in \mathbf{f}(\mathbf{x})$ を考える. 
+                    このとき, ある初期値 $\mathbf{x}_0$ に対し, 
+                    \[
+                        \{\varphi(t, \mathbf{x}_0) : t\ge0\}\subset\mathbb{R}^2
+                    \] が有界であり, かつ $\omega$ 極限集合 $\omega(\mathbf{x}_0)$ が平衡点を含まないならば, $\omega(\mathbf{x}_0)$ は周期軌道である. 
+                </p>
             </div>
 
         </section>
