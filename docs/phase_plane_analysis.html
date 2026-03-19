@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>力学系入門</title>
+    <!-- style -->
+    <link rel="stylesheet" href="./common/style.css">
+    <!-- mathjax -->
+    <script src="./common/import_mathjax.js"></script>
+</head>
+
+<body>
+    <header>
+        <!-- (no header) -->
+    </header>
+
+    <!-- contents -->
+    <div class="wrapper">
+
+    <!-- sidebar -->
+    <div class="side" id="sidebar"></div>
+
+    <div class="hamburger" onclick="toggleSidebar()">
+        ☰
+    </div>
+    
+    <!-- main -->
+    <main role="main"><article id="section3"><h1>3. 解軌道の幾何学的構造</h1>
+        <p>自励系の解 $\mathbf{x}(t)$ を相空間上の軌道として表す場合, 平衡点が漸近安定である場合は平衡点付近の点を初期値とする軌道は平衡点に向けて収束していく. 
+            それでは漸近安定でない平衡点付近の点を初期値とした場合, 自励系の解はどのような軌道を描くだろうか. 
+            平衡点が不安定ならば, 線形力学系の場合には (平衡点が源点であっても鞍点であっても) 無限遠に発散するような軌道しか現れない. 
+            一方で, 非線形力学系では, 不安定な平衡点付近の点を初期値とする軌道が必ずしも発散するとは限らない, 例えば他の漸近安定な平衡点に近づいたり, <b>リミットサイクル</b> に収束することが起こり得る.  
+            <!-- また, 平衡点が中立安定である (漸近安定ではないが安定である) という状況は, 線形力学系では実は平衡点が渦心点の場合しか無いが, 非線形力学系には様々な状況が存在する.  -->
+        </p>
+        <p>一般に, 非線形力学系の解には, 線形力学系では現れない挙動が見られる. 
+            非線形力学系の興味深い挙動を明らかにするために, 漸近安定でない平衡点付近も含め, 解の全体の構造を調べたい.  
+            そのような議論は一般には複雑なものになるが, 自励系が低次元の場合に限れば (特に $2$ 次元の場合, つまり <b>相平面</b> 上の解の挙動に限れば) 容易に幾何学的な取り扱いが可能である. 
+            これまでも力学系の具体例としては $2$ 次元のものを主に考え, 相図や軌道の図示により解の挙動を説明してきたが, ここではそうしたアイデアをさらに発展させ, <b>相平面解析</b> に代表される自励系の解軌道の幾何学的解釈を紹介する. 
+        </p>
+
+        <section id="section3-1"><h2>3.1: 平衡点付近での挙動</h2>
+            <p>まず, ここまでに紹介した様々な概念に追加で, 解軌道の性質を説明するためのアイデアを導入しよう. 
+                最初に紹介する <b>ヌルクライン</b> (<b>nullcline</b>) は, 相平面上でのおおよその解の挙動を把握する際に有用である:
+            </p>
+
+            <div class="definition" data-name="ヌルクライン"> 
+                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$, つまり 
+                    \[
+                        \begin{pmatrix} 
+                            x_1' \cr 
+                            x_2' \cr 
+                            \vdots \cr 
+                            x_n' 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            f_1(\mathbf{x}) \cr 
+                            f_2(\mathbf{x}) \cr 
+                            \vdots \cr 
+                            f_n(\mathbf{x}) 
+                        \end{pmatrix}
+                    \] を考える. 
+                    このとき, $i=1, 2, \dots n$ に対して
+                    \[
+                        \{\mathbf{x}\in\mathbb{R}^n : f_i(\mathbf{x}) = 0\}
+                    \] を $x_i$ の<b>ヌルクライン (nullcline)</b> という.
+                </p>
+            </div>
+
+            <div class="remark">
+                <ul>
+                    <li>$x_i$ のヌルクライン上の点では, $x_i' = 0$ が成立する, つまり時間経過により $x_i$ 方向には動かない.</li>
+                    <li>ベクトル場 $\mathbf{f}$ が連続ならば, ヌルクラインでのみ流れの &quot;向き&quot; が切り替わる可能性がある. 
+                        つまり, 方向場の矢印の &quot;向き&quot; ($2$ 次元の力学系なら右上, 右下, 左上, 左下) はヌルクラインで区切られた領域内で共通である.</li>
+                    <li>すべてのヌルクラインの交点では, 時間経過によりどの方向にも動かない, つまりすべてのヌルクラインの交点は平衡点である.</li>
+                    <li>あとはヌルクラインで区切られた各領域上でのおおよその方向場から, 相図の概形を描いたり平衡点の安定性の判定が (大雑把に) できる. </li>
+                    <li>ヌルクラインは一般に $n$ 次元力学系に対して定義されるが, これに基づく解軌道の解釈を $3$ 次元以上の力学系に応用することは, あまり実用的では無いだろう (少なくともコンピュータの利用は必須だろう). </li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <p>非線形力学系 
+                    \[
+                        \begin{pmatrix} 
+                            x' \cr 
+                            y' 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            4y-x^2 \cr 
+                            x-2 
+                        \end{pmatrix}
+                    \] を考える. 
+                    いま, $x$ のヌルクライン $4y-x^2=0$ 上では $x'=0$ であるため, 方向場をプロットした際の矢印は $4y-x^2=0$ 上では真上か真下を向いている. 
+                    より具体的には, $4y-x^2=0$ かつ $y' = x-2\lt0$ ならば真下を, $4y-x^2=0$ かつ $y' = x-2\gt0$ ならば真上を向いていることがわかる. 
+                </p>
+                <p>同様に, 方向場の矢印は $y$ のヌルクライン $x-2=0$ 上では水平方向を向いている. 
+                    さらに $x' = 4y-x^2$ の符号を調べることにより右か左かがわかる.  
+                </p>
+                <p>このことに加えて, 右辺のベクトル場が連続であることに注意すると, ヌルクラインで区切られた領域内部では方向場の矢印の向きが反転することは無い. 
+                    このことを利用すれば, ヌルクライン上の矢印の向きから, $\mathbb{R}^2$ 全体での方向場の概形を得ることができる. 
+                    そして方向場の概形から相図の概形を予測することができるのである.
+                </p>
+                <p>以下に, この例に対するヌルクライン, 方向場を掲載する. 
+                    この図だけから (線形安定性解析をするまでも無く), 平衡点 $(x, y) = (2, 1)$ が鞍点であると判断することができる. 
+                </p>
+                <div class="resize"><img src='./images/nullcline-1.png'></div>
+            </div>
+
+            <p>次に述べる <b>不変集合</b> のアイデアも, 解軌道のおおよその振る舞いを説明する際に重要なものである:</p>
+
+            <div class="definition" data-name="不変集合">
+                <p>力学系の相空間 $X$ およびフロー $\varphi$ を考える.</p>
+                <ul>
+                    <li>部分集合 $S\subset X$ が, 
+                        \[
+                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\in \mathbb{R}
+                        \] を満たすとき, $S$ を <b>不変集合</b> (<b>invariant set</b>) という. 
+                    </li>
+                    <li>部分集合 $S\subset X$ が, 
+                        \[
+                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\ge 0
+                        \] を満たすとき, $S$ を <b>正不変集合</b> (<b>positively invariant set</b>) という. 
+                    </li>
+                </ul>
+            </div>
+
+            <div class="remark">
+                <p>つまり, 不変集合 (正不変集合) 内部を初期値として出発した点は, 時間経過により不変集合から出て行かない, ということを表している. 
+                    また, 不変集合外部を初期値とする軌道が不変集合に入ることもない. 
+                    従って, 相空間全体での力学系の解の挙動は, 各不変集合上での解の挙動に分けて考えることができる (<a href="stability_theory.html#center_manifold_theory">中心多様体縮約</a> も, 不変集合である中心多様体上に限った解の挙動から平衡点の安定性を判定するものであった). 
+                </p>
+            </div>
+
+            <div class="example">
+                <p>非線形自励系の例として, ここでは <b>ロトカ・ヴォルテラ方程式</b>
+                    \[
+                        \begin{pmatrix} 
+                            x' \cr 
+                            y' 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            a (b-y)x \cr 
+                            -c (d-x)y 
+                        \end{pmatrix} 
+                    \] を考える. 
+                    この方程式は, 生物の捕食者, 被捕食者それぞれの個体数 $x$, $y$ の変動を表す数理モデルとして用いられるものである. 
+                    従って, 数理モデルとしては初期値 $(x_0, y_0)$ が領域 
+                    \[
+                        D = \{(x, y)\in\mathbb{R}^2: x\gt 0,\ y\gt 0\}\subset \mathbb{R}^2
+                    \] (つまり $xy$ 平面の第 $1$ 象限) に含まれているならば, 個体数を表す $x(t)$ や $y(t)$ は負にならないことが望ましい. 
+                    この方程式に対しては, 例えばヌルクラインを考えることで, 確かに解の軌道は領域 $D$ に留まり続け, また $D$ の外から $D$ に入ってくる軌道も存在しないことがわかる. 
+                    つまり $D$ はこの自励系の不変集合であることがわかり, 従ってロトカ・ヴォルテラ方程式を領域 $D$ に限って考えることができる. 
+                </p>
+            </div>
+
+            <p>実は <a href="stability_theory.html#stable_set">以前に紹介した</a> 安定集合, 不安定集合も不変集合の一種である. 
+                これらの定義を再掲しておこう:
+            </p>
+
+            <div class="definition" data-name="安定集合, 不安定集合">
+                <p>力学系の相空間 $X$ およびフロー $\varphi$ を考える. </p>
+                <ul>
+                    <li>平衡点 $\widetilde{\mathbf{x}}$ に対して, 
+                        \[
+                            W^s(\widetilde{\mathbf{x}}) = \{\mathbf{x}_0\in X : \varphi(t, \mathbf{x}_0) \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to\infty\}
+                        \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>安定集合</b> (<b>stable set</b>) という. 
+                        安定集合が多様体としての構造を持つなら <b>安定多様体</b> (<b>stable manifold</b>) と呼ばれる. 
+                    </li>
+                    <li>平衡点 $\widetilde{\mathbf{x}}$ に対して, 
+                        \[
+                            W^u(\widetilde{\mathbf{x}}) = \{\mathbf{x}_0\in X : \varphi(t, \mathbf{x}_0) \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to-\infty\}
+                        \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>不安定集合</b> (<b>unstable set</b>) という. 
+                        不安定集合が多様体としての構造を持つなら <b>不安定多様体</b> (<b>unstable manifold</b>) と呼ばれる. 
+                    </li>
+                </ul>
+            </div>
+
+            <div class="remark">
+                <ul>
+                    <li>中心多様体が線形化問題の中心部分空間に接する不変集合であったように, 安定多様体は線形化問題の安定部分空間に接する不変集合である. 
+                    また不安定多様体も同様である.
+                    </li> 
+                    <li>平衡点近傍でのみ安定多様体, 不安定多様体を考えることもできる. 
+                        これらは <b>局所安定多様体</b>, <b>局所不安定多様体</b> と呼ばれ, $W^s_{\mathrm{loc}}(\widetilde{\mathbf{x}})$, $W^u_{\mathrm{loc}}(\widetilde{\mathbf{x}})$ と表記されることがある. 
+                    </li>
+                    <li>線形力学系では, 安定部分空間と不安定部分空間からおおよその相図を得ることができていたが, 非線形力学系も同様に安定多様体と不安定多様体からおおよその相図を得ることができる. 
+                        実用上は逆に, 得られた解軌道がなぜそのようになるのか, を説明する際に安定多様体と不安定多様体に基づく幾何学的解釈がなされることがある. 
+                    </li>
+                    <li>与えられた非線形力学系の安定多様体, 不安定多様体を具体的に求めることは一般には困難である. 
+                        中心多様体と同様に, (平衡点周辺に限った) 多項式近似は可能ではあるが, 実用的ではないだろう. 
+                    </li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <p>先ほども考えた自励系 
+                    \[
+                        \begin{pmatrix} 
+                            x' \cr 
+                            y' 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            4y-x^2 \cr 
+                            x-2 
+                        \end{pmatrix}
+                    \] を例に, 数値計算によりいくつかの解の軌道を描くと下図のようになる. 
+                    平衡点 $(x,y) = (2,1)$ は鞍点であるが, これに対応して安定多様体 (緑の線) と不安定多様体 (赤の線) が存在している (ただし, この図では数値計算で近似的に求めた安定多様体, 不安定多様体をプロットしている). 
+                </p>
+                <div class="resize"><img src='./images/stable_manifold.png'></div>
+            </div>
+
+
+            <p>ところで, $t\to\infty$, $-\infty$ としたときに解が平衡点に収束するとは限らない. 
+                例えば, 線形力学系であっても, 解が平衡点の周辺をぐるぐる回り続けるようなものが存在する. 
+                そのような状況でも軌道の極限的な振る舞いを説明できる概念が, 以下に述べる <b>極限集合</b> である: 
+            </p>
+
+            <div class="definition" data-name="極限点と極限集合">
+                <p>力学系の相空間 $X$ およびフロー $\varphi$ を考える. </p>
+                <ul>
+                    <li>ある点列 $\{t_n\}$ が存在し, 
+                        \[
+                            \left\{\begin{array}{l}
+                                \displaystyle\lim_{n\to\infty}t_n=\infty, \cr 
+                                \displaystyle\lim_{n\to\infty}\varphi(t_n, \mathbf{x}_0) = \mathbf{y} \quad\text{in } X
+                            \end{array}\right.
+                        \] が成立するとき, $\mathbf{y}\in X$ は $\mathbf{x}_0\in X$ の <b>$\omega$ 極限点</b> (<b>$\omega$-limit point</b>) であるという.
+                    </li>
+                    <li>
+                        点 $\mathbf{x}_0\in X$ の全ての $\omega$ 極限点からなる集合を <b>$\omega$ 極限集合</b> (<b>$\omega$-limit set</b>) といい, $\omega(\mathbf{x}_0)$ と表記する, つまり
+                        \[
+                            \omega(\mathbf{x}_0) = \{\mathbf{y}\in X : t_n\to \infty,\ \varphi(t_n, \mathbf{x}_0)\to\mathbf{y} \text{ を満たす点列 $\{t_n\}$ が存在する}\}.
+                        \]
+                    </li>
+                    <li>ある点列 $\{t_n\}$ が存在し, 
+                        \[
+                            \left\{\begin{array}{l}
+                                \displaystyle\lim_{n\to\infty}t_n=-\infty, \cr 
+                                \displaystyle\lim_{n\to\infty}\varphi(t_n, \mathbf{x}_0) = \mathbf{y} \quad\text{in } X
+                            \end{array}\right.
+                        \] が成立するとき, $\mathbf{y}\in X$ は $\mathbf{x}_0\in X$ の <b>$\alpha$ 極限点</b> (<b>$\alpha$-limit point</b>) であるという.
+                    </li>
+                    <li>
+                        点 $\mathbf{x}_0\in X$ の全ての $\alpha$ 極限点からなる集合を <b>$\alpha$ 極限集合</b> (<b>$\alpha$-limit set</b>) といい, $\alpha(\mathbf{x}_0)$ と表記する, つまり
+                        \[
+                            \alpha(\mathbf{x}_0) = \{\mathbf{y}\in X : t_n\to -\infty,\ \varphi(t_n, \mathbf{x}_0)\to\mathbf{y} \text{ を満たす点列 $\{t_n\}$ が存在する}\}.
+                        \]
+                    </li>
+                </ul>
+            </div>
+
+            <p>直感的には時刻 $t$ を大きくしたとき (もしくは小さくしたとき) に, 解 $\mathbf{x}(t)$ が &quot;どこに近づくか&quot; を表すものが極限点, 極限集合である. 
+                特に, 解 $\mathbf{x}(t)$ が収束しないという状況, 例えばある範囲を動き続けるという状況であっても, &quot;どこを動き続けるか&quot; を説明できる. 
+                なお, 極限集合内の点を初期値とする軌道は極限集合内に留まる, つまり極限集合は不変集合である. 
+            </p>
+
+            <div class="example">
+                <p>線形力学系 
+                    \[
+                        \mathbf{x}' = \begin{pmatrix} 
+                            -1 & 0 \cr 
+                            0 & -2 
+                        \end{pmatrix}\mathbf{x}
+                    \] を考える. 
+                    行列固有値は $-1$, $-2$ であり, 全ての固有値 (の実部) が負であるため, 平衡点 $\mathbf{0}$ は漸近安定である. 
+                    つまり $\mathbf{0}$ はこの線形力学系の沈点であり, 全ての点は時間経過により ($t_n\to\infty$ となる任意の点列 $\{t_n\}$ に対して) $\mathbf{0}$ に収束する. 
+                    従って任意の $\mathbf{x}_0$ に対し 
+                    \[
+                        \omega(\mathbf{x}_0) = \{\mathbf{0}\}
+                    \] である. 
+                    一方で, 全ての点は時間に逆行したとき ($t_n\to\infty$ となる任意の点列 $\{t_n\}$ に対して) 発散するため, 任意の $\mathbf{x}_0$ に対し 
+                    \[
+                        \alpha(\mathbf{x}_0) = \emptyset
+                    \] である. 
+                </p>
+            </div>
+
+            <div class="example">
+                線形力学系 
+                \[
+                    \mathbf{x}' = \begin{pmatrix} 
+                        0 & 1 \cr 
+                        -1 & 0 
+                    \end{pmatrix}\mathbf{x}
+                \] を考える. 
+                行列固有値は $\pm i$ であり, 初期値 $\mathbf{x}_0 = (r\cos\alpha, r\sin\alpha)$ に対する特殊解は 
+                \[
+                    \mathbf{x}(t) = \begin{pmatrix} 
+                        r\cos(t+\alpha) \cr 
+                        -r\sin(t+\alpha) 
+                    \end{pmatrix}
+                \] である. 
+                このとき, 半径 $r=\|\mathbf{x}_0\|$ の円周上の任意の点 $\mathbf{y}$ に対して, 点列 $\{t_n\}$ を適切に取りさえすれば, $\varphi(t_n,\mathbf{x}_0) = \mathbf{x}(t_n) \to \mathbf{y}$ となるようにできる. 
+                つまり
+                \[
+                    \omega(\mathbf{x}_0) = \{\mathbf{y}\in\mathbb{R}^2 : \|\mathbf{y}\| = \|\mathbf{x}_0\|\}
+                \] である ($\alpha$ 極限集合についても同様である). 
+                このように, $\mathbf{x}(t)$ が一点に収束しない場合でも, 極限集合を考えることで解の挙動をわかりやすく説明できる. 
+            </div> 
+
+
+            <p>さらに関連する概念をいくつか述べるが, それらの定義は文献によって様々であるという印象であり, 以下の定義も厳密さには欠けるものであることに注意:</p>
+            
+            <div class="definition" data-name="アトラクター">
+                <p>力学系の相空間 $X$ およびフロー $\varphi$ を考える. 
+                    このフローについて, ある初期値に対する $\omega$ 極限集合となる不変集合 $A\subset X$ と, 
+                    \[
+                        \omega(\mathbf{x}_0) = A
+                    \] を満たす全ての点 $\mathbf{x}_0$ からなる集合 $B$ を考える. 
+                    もしも $B\supsetneq A$ であり $B$ の測度が $0$ でないならば, $B$ を不変集合 $A$ の <b>吸引領域</b> (<b>region of attraction</b>) もしくは <b>ベイスン</b> (<b>basin</b>) といい, $A$ を <b>アトラクター</b> (<b>attractor</b>) もしくは <b>吸引集合</b> という. 
+                </p>
+            </div>
+            
+            <div class="remark">
+                <p>$\omega$ 極限集合の定義より, 任意の $\mathbf{x}_0\in B$ に対し $t_n\to\infty$ なる点列 $\{t_n\}$ を適切に選べば, $\varphi(t_n, \mathbf{x}_0)$ の収束先がアトラクター $A$ の元となる. 
+                    アトラクターが $1$ 点からなる集合ならば, その点が漸近安定であることを意味しているが, そうでないならば吸引領域 $B$ に初期値を持つ全ての軌道は $A$ に &quot;引き寄せられ&quot;, $A$ の内部もしくは $A$ の限りなく近くを動き続けることになる. 
+                </p>
+            </div>
+
+            <!-- <p>別の具体例として 
+                \[
+                    \begin{pmatrix} 
+                            x' \cr 
+                            y' 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            y \cr 
+                            (1-x^2)y - x 
+                        \end{pmatrix}
+                \] を考えてみよう. 
+                このとき, ヌルクラインは 
+                \[
+                    y = 0,\quad y = \dfrac{x}{1-x^2}\quad (x\neq\pm 1)
+                \] となる. 
+            </p> -->
+
+        </section>
+
+        <section id="section3-3"><h2>3.3: ホモクリニック軌道, ヘテロクリニック軌道</h2>
+            <p>上で述べた概念の具体例を挙げつつ, それらが解のどのような挙動を説明しているかを考えていこう. 
+                ここでは, 安定多様体と不安定多様体が表す解の挙動の中でも特徴的なものを解説する. 
+                まず, ある平衡点の安定多様体と不安定多様体が合流する, という状況を紹介する:
+            </p>
+
+            <div class="definition" data-name="ホモクリニック軌道">
+                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}$ に対して, 
+                    \[
+                        \lim_{t\to-\infty}\mathbf{x}(t) = \lim_{t\to\infty}\mathbf{x}(t) = \widetilde{\mathbf{x}}
+                    \] を満たす解 $\mathbf{x}(t)$ の軌道 を <b>ホモクリニック軌道</b> (<b>homoclinic orbit</b>) という. 
+                </p>
+            </div>
+
+            <p>ホモクリニック軌道は, 安定多様体 $W^s(\widetilde{\mathbf{x}})$ と不安定多様体 $W^u(\widetilde{\mathbf{x}})$ を用いて 
+                \[
+                    W^s(\widetilde{\mathbf{x}}) \cap W^u(\widetilde{\mathbf{x}})
+                \] に含まれる軌道であると説明される. 
+            </p>
+
+            <div class="example">
+                <p>方程式 $x'' - x + x^3$ に対し, $y=x'$ を導入することで自励系 
+                    \[
+                        \begin{pmatrix} 
+                            x' \cr 
+                            y' 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            y \cr 
+                            x - x^3 
+                        \end{pmatrix}
+                    \] を考える. 
+                    平衡点は $\widetilde{\mathbf{x}}_1 = \mathbf{0}$, $\widetilde{\mathbf{x}}_2 = (-1,0)$, $\widetilde{\mathbf{x}}_1 = (1,0)$ の $3$ 点である. 
+                    右辺をベクトル場 $\mathbf{f}(\mathbf{x})$ とおくと, そのヤコビ行列は 
+                    \[
+                        D\mathbf{f}(\mathbf{x}) = \begin{pmatrix} 
+                            0 & 1 \cr 
+                            1-3x^2 & 0 
+                        \end{pmatrix}
+                    \] であることから, 線形安定性解析より平衡点 $\widetilde{\mathbf{x}}_1 = \mathbf{0}$ は不安定であることがわかる. 
+                </p>
+                <p>さて, 実はこの平衡点に対してはホモクリニック軌道が存在する. 
+                    ここでは厳密には説明しないが, 例えば数値計算において $\widetilde{\mathbf{x}}_1=\mathbf{0}$ 近くの初期値を適当に設定すると, 下図のような軌道を見つけることができる. 
+                    実際のホモクリニック軌道は, 平衡点から &quot;無限にゆっくり&quot; 離れ, ぐるりと回って &quot;無限にゆっくり&quot; 平衡点に近づくため, 数値計算により厳密に表現することはできないが, おおよその挙動としては下図のようになる. 
+                </p>
+                <div class="resize"><img src='./images/Duffing_equation.png'></div>
+                <p>ホモクリニック軌道は不安定平衡点から出発した点が同じ点に収束する軌道であり, その存在は直感的には奇妙なことに思える. 
+                    実際, このような軌道は安定多様体と不安定多様体が (平衡点以外に) 共通部分を持つ場合のみ存在する. 
+                    軌道は安定多様体に (不安定多様体にも) 完璧に重なっているため, 平衡点に収束することができるが, 少しでもずれるとこのような動きは実現できない. 
+                    例えば, 上の式に少しの摂動を加えると, 安定多様体と不安定多様体が共通部分を持たなくなり, ホモクリニック軌道も存在しなくなる: 
+                    \[
+                        \begin{pmatrix} 
+                            x' \cr 
+                            y' 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            y \cr 
+                            x - x^3 + 0.01 \cos(t)
+                        \end{pmatrix}
+                    \] ここでは, この摂動を加えた方程式の解の挙動について考えてみよう. 
+                    この力学系 (自励系では無いことに注意) の安定多様体と不安定多様体は, 先ほどのホモクリニック軌道から時刻に応じて少しづつずれたものである. 
+                    平衡点付近に初期値を設定すると, 不安定多様体に沿うようにして平衡点から離れ, 安定多様体に沿うようにして平衡点に近づいていく. 
+                    そして平衡点に近づくと, 再び不安定多様体の影響で平衡点から離れるように動くが, その向きが場合によって異なるため, この方程式の解は <b>カオス的挙動</b> を見せる (下図).  
+                </p>
+                <div class="resize"><img src='./images/Duffing_equation2.png'></div>
+                <p>このように, ホモクリニック軌道は少しの摂動でカオス的な挙動を導出するという興味深い構造を持つ. 
+                    なお, ここで例として挙げた方程式は <b>ダフィング方程式</b> と呼ばれるものである. 
+                </p>
+            </div>
+
+            <div class="definition" data-name="ヘテロクリニック軌道">
+                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の異なる $2$ つの平衡点 $\widetilde{\mathbf{x}}_1$, $\widetilde{\mathbf{x}}_2$ に対して, 
+                    \[
+                        \lim_{t\to-\infty}\mathbf{x}(t) = \widetilde{\mathbf{x}}_1,\quad \lim_{t\to\infty}\mathbf{x}(t) = \widetilde{\mathbf{x}}_2
+                    \] を満たす解 $\mathbf{x}$ の軌道を <b>ヘテロクリニック軌道</b> (<b>heteroclinic orbit</b>) という. 
+                </p>
+            </div>
+
+            <p>ヘテロクリニック軌道は, 安定多様体 $W^s(\widetilde{\mathbf{x}}_1)$ と不安定多様体 $W^u(\widetilde{\mathbf{x}}_2)$ を用いて 
+                \[
+                    W^s(\widetilde{\mathbf{x}}_1) \cap W^u(\widetilde{\mathbf{x}}_2)
+                \] に含まれる軌道であると説明される. 
+            </p>
+
+            <div class="example">
+                <p>例として
+                    \[
+                        \begin{pmatrix} 
+                            x' \cr 
+                            y' \cr 
+                            z' 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            x(1-x-ay), \cr 
+                            y(1-y-az), \cr 
+                            z(1-z-ax) 
+                        \end{pmatrix}
+                    \] を考えてみよう. 
+                    なお, これは先に挙げたロトカ・ヴォルテラ方程式の $3$ 次元への拡張であるとみなせるものである.  
+                </p>
+            </div>
+
+        </section>
+
+
+            <div class="definition" data-name="周期軌道とリミットサイクル">
+                <ul>
+                    <li>力学系の相空間 $X$ およびフロー $\varphi$ について, 平衡点でない初期値 $\mathbf{x}_0$ に対して 
+                        \[
+                            \varphi(t+T, \mathbf{x}_0) = \varphi(t, \mathbf{x}_0)\quad \text{for all}\quad t\in\mathbb{R} \quad(\text{離散力学系に対しては }\mathbb{Z})
+                        \] を満たす $T$ が存在するならば, 初期値 $\mathbf{x}_0$ に対する軌道 $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}\subset X$ (離散力学系に対しては $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{Z}\}\subset X$) は <b>周期軌道</b> であるという. 
+                        また, このとき $T$ を <b>周期</b> という. 
+                    </li>
+                    <li>力学系の周期起動が存在し, また $t\to\infty$ もしくは $t\to-\infty$ としたときに, それに収束する軌道が存在するならば, そのような周期軌道を <b>リミットサイクル</b> という. 
+                    </li>
+                </p>
+            </div>
+
+            <div class="remark">
+                <ul>
+                    <li>ある初期値に対する連続力学系の周期軌道は, 存在するならば必ず閉曲線となる. </li>
+                    <li>線形力学系の場合は楕円形や楕円体上に巻き付くような形の周期軌道しか現れないが, 非線形力学系の場合はより複雑な周期軌道が現れることがある. </li>
+                </ul>
+            </div>
+
+            <p>ある初期値 $\mathbf{x}_0$ に対する力学系の周期軌道が存在するならば, 初期値 $\mathbf{x}_0$ から出発した解 $\mathbf{x}(t)$ はどれだけ $t\in\mathbb{R}$ を変化させても周期軌道から外れることは無い. 
+                このことに関連する概念として, <b>不変集合</b> と <b>極限集合</b> を導入する.
+            </p>
+
+            <!-- <div class="definition" data-name="不変集合">
+                <p>力学系の相空間 $X$ およびフロー $\varphi$ に対して,</p>
+                <ul>
+                    <li>部分集合 $S\subset X$ が, 
+                        \[
+                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\in \mathbb{R}
+                        \] を満たすとき, $S$ を <b>不変集合</b> (<b>invariant set</b>) という. 
+                    </li>
+                    <li>部分集合 $S\subset X$ が, 
+                        \[
+                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\ge 0
+                        \] を満たすとき, $S$ を <b>正不変集合</b> (<b>positively invariant set</b>) という. 
+                    </li>
+                </ul>
+            </div>
+
+            <p>つまり, 不変集合内部を初期値として出発した点は, 時間経過により不変集合から出て行かない, ということを表している. 
+                周期軌道も不変集合の一種であると解釈できるが, 一般には周期軌道では無い不変集合を考えることになる. 
+                特に重要な不変集合の一種として, 以下に述べる極限集合はしばしば利用される:
+            </p> -->
+
+            
+            
+
+            <div class="definition" data-name="ポアンカレ写像">
+
+            </div> 
+
+            <div class="exercise">
+                <p>非線形力学系 
+                    \[
+                        \begin{pmatrix} 
+                            x' \cr 
+                            y' 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            x - xy \cr 
+                            xy - y 
+                        \end{pmatrix}
+                    \] の $x\gt 0$, $y\gt 0$ における相図の概形を描画せよ. 
+                </p>
+            </div>
+
+            <div class="answer">
+                <p>この力学系は非線形であり, 解の明示的な表示を与えることは困難である. 
+                    ただし自励系であるため, 右辺のベクトル場に対応する方向場を考えれば各初期値に対する軌道の概形を予想できる. 
+                    いくつかの点において具体的に計算することが望ましいが, 大雑把には $x\gt 0$, $y\gt 0$ において
+                </p>
+                <ul>
+                    <li>$0\lt x\lt 1$ のとき $y'\lt 0$, </li>
+                    <li>$x=1$ のとき $y'=0$, </li>
+                    <li>$1\lt x$ のとき $y'\gt 0$, </li>
+                    <li>$0\lt y\lt 1$ のとき $x'\gt 0$, </li>
+                    <li>$y=1$ のとき $x'=0$, </li>
+                    <li>$1\lt y$ のとき $x'\lt 0$</li>
+                </ul>
+                <p>であることに注目すれば, 方向場における各点での矢印の向きはおおよそ決定できる (なお, このベクトル場は連続であり勾配も大きくならないため, $x$ や $y$ が多少変化しても矢印の向きが急激に変化する心配はない).        
+                </p>
+            </div> 
+            
+
+            <p>さて, ここまででは解が平衡点に近づくか否かを考えたが, 非線形力学系では周期軌道に含まれない点を初期値とした際に, $t\to\infty$ としたときの解 (正確には $\omega$ 極限集合が) がある周期軌道に近づく, もしくはある周期起動から離れる, ということがある. 
+                このことを説明するために, <b>極限周期軌道</b> (もしくは <b>リミットサイクル</b>) という概念を導入しよう. 
+                ただし, 詳細な定義は後回しとし, ここでは大雑把に説明するにとどめる.
+            </p>
+
+            <div class="definition" data-name="周期軌道の安定性">
+                <p>力学系の相空間 $X$ およびフロー $\varphi$ について, (ある初期値 $\mathbf{x}_0$ に対する) 周期軌道 $\Gamma = \{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}$ が存在するとする. 
+                    この周期軌道 $\Gamma$ について, 
+                </p>
+                <ul>
+                    <li>$\Gamma$ に十分近い任意の $\mathbf{x}_1\not\in \Gamma$ に対して
+                    \[
+                        \omega(\mathbf{x}_1) = \Gamma
+                    \]
+                    が成立するとき, $\Gamma$ は <b>安定なリミットサイクル</b> であるという.</li>
+                    <li>$\Gamma$ に十分近い任意の $\mathbf{x}_1\not\in \Gamma$ に対して
+                    \[
+                        \alpha(\mathbf{x}_1) = \Gamma
+                    \]
+                    が成立するとき, $\Gamma$ は <b>不安定なリミットサイクル</b> であるという.</li>
+                </ul>
+            </div>
+
+            <p>平衡点の安定性と同様に, リミットサイクルも (もしも存在するならば) その安定性を調べることで解のおおまかな挙動を推測する重要な手掛かりとなる. 
+            </p>
+
+            <div class="remark">
+                <p>安定なリミットサイクル, もしくは不安定なリミットサイクルは非線形力学系でのみ現れる. </p>
+            </div>
+
+
+
+        </section>
+    </article>
+    </main>
+
+</body>
+
+<!-- javascript -->
+<script src="./common/create_statement_block.js"></script>
+<script src="./common/function_toggleSidebar.js"></script>
+<script src="./common/import_sidebar.js"></script>
+
+</html>
+
+
