@@ -78,7 +78,7 @@
             \[
                 \mathbf{x}' = \mathbf{f}(\mathbf{x})
             \] と表すことができる場合, この連続力学系を <b>自励系</b> (<b>autonomous system</b>) と呼ぶ. 
-            典型的には, 変数 $t\in\mathbb{R}$ は時刻であるとみなされ, $\mathbf{x}: \mathbb{R}\to\mathbb{R}^n$ はシステムの状態を表す変数 (<b>状態変数</b>) であり, <b>相空間</b> (<b>phase space</b>) もしくは <b>状態空間</b> 上の点と解釈される. 
+            典型的には, 変数 $t\in\mathbb{R}$ は時刻であるとみなされ, $\mathbf{x}: \mathbb{R}\to X$ はシステムの状態を表す変数 (<b>状態変数</b>) であり, <b>相空間</b> (<b>phase space</b>) もしくは <b>状態空間</b> $X$ 上の点と解釈される. 
             また $\mathbf{x}'(t)$ は $\mathbf{x}(t)$ の速度を表しているため, ある時刻 $t$ で位置 $\mathbf{x}(t)$ にある点は, 速度 $\mathbf{x}' = \mathbf{f}(t, \mathbf{x})$ の流れに従って移動するとみなすことができる.
             自励系においては, 位置 $\mathbf{x}$ にある点の &quot;速度&quot; $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ が, 現在の位置にしか依存しない (時刻に依存しない) ため取り扱いが比較的容易であり, $\mathbf{f}(\mathbf{x})$ の大域的構造を調べさえすればシステムの状態がどのように時間変化するかを決定することができる. 
         </p> 
@@ -98,32 +98,19 @@
             力学系の解の挙動を表現するために導入された概念たちは, コンピュータによる近似解の可視化が一般的なものとなった現在においても, 重要かつ意義深いものである. 
         </p>
         <p>本資料では, 変数 $t$ や 関数 $\mathbf{x}$ など, 特に言及の無い場合は実数のみを考えることにする. 
-            ただし, 複素数が現れないわけでは無いことに注意する必要がある: 例えば, 成分が全て実数の行列であっても, その固有値や固有ベクトルには虚数が現れることがある.
+            ただし, 虚数が現れないわけでは無いことに注意する必要がある: 例えば, 成分が全て実数の行列であっても, その固有値や固有ベクトルには実数でない複素数が現れることがある.
             線形代数や微積分など, 初歩的な内容については既知のものとして詳細は解説しないため, 必要ならば確認, 復習しながら読み進めること.</p>
         <p>なお, このWebページの内容(もしくはページ全体)は予告なく変更, 修正, 削除される可能性があることをご了承いただきたい.</p>
         
         <section><h2>補足</h2>
-            <p>この講義資料の内容に関連するものの, 詳細については言及しないものについて以下に列挙する.</p> 
-            
-            <div class="theorem" data-name="時間局所解の一意存在"> 
-                <p>常微分方程式系
-                    \[
-                        \left\{\begin{array}{rl} 
-                            \mathbf{x}' &= \mathbf{f}(\mathbf{x}) \cr 
-                            \mathbf{x}(0) &= \mathbf{x}_0 
-                        \end{array}\right.
-                    \] を考える. 
-                    領域 $D\subset\mathbb{R}^n$ について, $\mathbf{f}:D\to\mathbb{R}^n$ が Lipschitz 連続であり, $\mathbf{x}_0\in D$ とする. 
-                    このとき, ある $\delta\gt 0$ が存在し, 区間 $[-\delta, \delta]$ 上の関数 $\mathbf{x}$ で, 上の常微分方程式系の解となるものがただ一つ存在する.
-                </p>
-            </div>
+            <p>この資料の内容に関連するものの, 詳細については言及しないものについて以下に列挙する.</p> 
 
             <div class="definition" data-name="ベクトル, 行列のノルム">
-                <p>$\mathbb{R}^n$ 上のユークリッドノルムを 
+                <p>$\mathbb{R}^n$ 上のユークリッドノルム (ベクトルのノルム) を 
                     \[
                         \|\mathbf{v}\| = \sqrt{\sum_{k=1}^n v_i^2}
                     \] と表記する. 
-                    また, 対応する $\mathbb{R}^{n\times n}$ 上のノルムを 
+                    また, 対応する $\mathbb{R}^{n\times n}$ 上のノルム (行列ノルム) を 
                     \[
                         \|A\| = \sup_{\mathbf{v}\in\mathbb{R}^n,\ \mathbf{v}\neq \mathbf{0}} \dfrac{\|A\mathbf{v}\|}{\|\mathbf{v}\|}
                     \] と定義する.
@@ -151,7 +138,74 @@
                     </li>
                 </ol>
             </div>
+            
+            <div class="theorem" data-name="時間局所解の一意存在"> 
+                <p>与えられた $\mathbf{x}_0\in\mathbb{R}^n$ および $r\gt0$ に対し, $\mathbf{f}:B_r(\mathbf{x}_0)\to\mathbb{R}^n$ がリプシッツ連続であるとする.  
+                    このとき, 常微分方程式系
+                    \[
+                        \left\{\begin{array}{rl} 
+                            \mathbf{x}' &= \mathbf{f}(\mathbf{x}) \cr 
+                            \mathbf{x}(0) &= \mathbf{x}_0 
+                        \end{array}\right.
+                    \] について, ある $\delta\gt 0$ が存在し, 区間 $[-\delta, \delta]$ 上の関数 $\mathbf{x}(t)$ で, 上の常微分方程式系の解となるものがただ一つ存在する.
+                </p>
+            </div>
+            
+            <div class="proof">
+                <p>ここでは Picard の逐次近似法による構成を述べておく: 上の初期値問題は 
+                    \[
+                        \mathbf{x}(t) = \mathbf{x}_0 + \int_0^t \mathbf{f}(\mathbf{x}(s))~ds
+                    \] という積分方程式と同値なので, この近似関数列を 
+                    \[
+                        \mathbf{x}^{i+1}(t) = \mathbf{x}_0 + \int_0^t\mathbf{f}(\mathbf{x}^i(s))~ds
+                    \] と構成する, ただし $\mathbf{x}^0(t) = \mathbf{x}_0$ とする.  
+                    もしもこの $\mathbf{x}^i$ がある関数 $\mathbf{x}$ に一様収束するならば, 
+                    \[
+                        \begin{array}{rl} 
+                            \mathbf{x}(t) &= \displaystyle\lim_{i\to\infty}\mathbf{x}^{i+1}(t) \cr 
+                            &= \mathbf{x}_0 + \displaystyle\lim_{i\to\infty}\int_0^t\mathbf{f}(\mathbf{x}^i(s))~ds \cr 
+                            &= \mathbf{x}_0 + \displaystyle\int_0^t\lim_{i\to\infty}\mathbf{f}(\mathbf{x}^i(s))~ds \quad(\because\text{一様収束性}) \cr 
+                            &= \mathbf{x}_0 + \displaystyle\int_0^t\mathbf{f}(\lim_{i\to\infty}\mathbf{x}^i(s))~ds \quad(\because\text{$\mathbf{f}$ の連続性}) \cr 
+                            &= \mathbf{x}_0 + \displaystyle\int_0^t \mathbf{f}(\mathbf{x}(s))~ds
+                        \end{array}
+                    \] となるため, この $\mathbf{x}(t)$ が解である. 
+                    なお, 
+                    \[
+                        \delta = \dfrac{r}{\displaystyle\max_{\mathbf{x}\in B_r(\mathbf{x}_0)}\|\mathbf{f}(\mathbf{x})\|}
+                    \] とすれば, この構成は well-defined である. 実際, $\mathbf{x}^i(t)\in B_r(\mathbf{x}_0)$ for all $t\in [-\delta, \delta]$ ならば 
+                    \[
+                        \mathbf{x}^{i+1}(t) -\mathbf{x}_0 = \int_0^t\mathbf{f}(\mathbf{x}^i(s))~ds \le |t|\max_{\mathbf{x}\in B_r(\mathbf{x}_0)}\|\mathbf{f}(\mathbf{x})\| \le r
+                    \] なので, $\mathbf{x}^{i+1}(t)\in B_r(\mathbf{x}_0)$ for all $t\in [-\delta, \delta]$ が得られる. 
+                    あとは $\mathbf{f}$ のリプシッツ定数を用いた不等式から, 関数列の一様収束性と解の一意性を示せば良い (詳細は省略するが, 本質的には Banach の不動点定理を用いることになる).
+                </p>
+            </div>
 
+            <div class="example">
+                上の定理が適用 <b>できない</b> 例として 
+                \[
+                    x' = 2\sqrt{|x|},\quad x(0) = 0
+                \] という常微分方程式を考えてみる. 
+                右辺は $x=0$ を含む開区間上で (連続ではあるが) リプシッツ連続では無い. 
+                この問題は 
+                \[
+                    x_1(t) = 0,\quad x_2(t) = \left\{\begin{array}{rl}
+                        0 & \text{if }t\le 0, \cr 
+                        t^2 & \text{if }t\gt 0 
+                    \end{array}\right.
+                \] のように少なくとも $2$ つ解を持つことが確認できるため, 解が存在するが一意では無いような例となっている. 
+            </div>
+            
+        </section>
+
+        <section><h2>サンプルコードについて</h2>
+            <p>この資料には, 解説した数学的概念を可視化するために数値計算を利用する. 
+                各ページには Python によるサンプルコードを記載しているので, それらを基に各自で関数やパラメータを適宜書き換えて実行して見ると良いだろう. 
+                なお, サンプルコードは Google Colab で動作確認済みである. 
+                Python の環境構築が面倒ならば利用を推奨する. 
+            </p>
+            <p>
+                ただし, 数値計算手法やプログラミングについての詳細は, この資料では解説しないので, 興味があれば各自で調べること.
+            </p>
         </section>
 
         
