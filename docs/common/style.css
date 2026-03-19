@@ -157,6 +157,17 @@ hr {
     border-top: 3px solid #cccccc;
 }
 
+code {
+  display: inline-block;
+  width: 90%;
+  white-space: pre;
+  padding: 0.1em 0.25em; /* 文字周りの余白 */
+  color: #444; /* 文字色 */
+  background-color: #e7edf3; /* 背景色 */
+  border-radius: 3px; /* 角丸 */
+  border: solid 1px #d6dde4; /* 枠線 */
+}
+
 /* custom class */
 
 .definition, .theorem, .lemma, .problem, .exercise {
