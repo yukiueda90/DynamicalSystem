@@ -108,16 +108,16 @@
             <p>次に述べる <b>不変集合</b> のアイデアも, 解軌道のおおよその振る舞いを説明する際に重要なものである:</p>
 
             <div class="definition" data-name="不変集合">
-                <p>力学系の相空間 $X$ およびフロー $\varphi$ を考える.</p>
+                <p>力学系の相空間 $X$ およびフロー $S(t)$ を考える.</p>
                 <ul>
                     <li>部分集合 $S\subset X$ が, 
                         \[
-                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\in \mathbb{R}
+                            \mathbf{x}_0\in S \implies S(t)\mathbf{x}_0 \in S \quad\text{for all}\quad t\in \mathbb{R}
                         \] を満たすとき, $S$ を <b>不変集合</b> (<b>invariant set</b>) という. 
                     </li>
                     <li>部分集合 $S\subset X$ が, 
                         \[
-                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\ge 0
+                            \mathbf{x}_0\in S \implies S(t)\mathbf{x}_0 \in S \quad\text{for all}\quad t\ge 0
                         \] を満たすとき, $S$ を <b>正不変集合</b> (<b>positively invariant set</b>) という. 
                     </li>
                 </ul>
@@ -156,17 +156,17 @@
             </p>
 
             <div class="definition" data-name="安定集合, 不安定集合">
-                <p>力学系の相空間 $X$ およびフロー $\varphi$ を考える. </p>
+                <p>力学系の相空間 $X$ およびフロー $\{S(t): t\in\mathbb{R}\}$ を考える. </p>
                 <ul>
                     <li>平衡点 $\widetilde{\mathbf{x}}$ に対して, 
                         \[
-                            W^s(\widetilde{\mathbf{x}}) = \{\mathbf{x}_0\in X : \varphi(t, \mathbf{x}_0) \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to\infty\}
+                            W^s(\widetilde{\mathbf{x}}) = \{\mathbf{x}_0\in X : S(t)\mathbf{x}_0 \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to\infty\}
                         \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>安定集合</b> (<b>stable set</b>) という. 
                         安定集合が多様体としての構造を持つなら <b>安定多様体</b> (<b>stable manifold</b>) と呼ばれる. 
                     </li>
                     <li>平衡点 $\widetilde{\mathbf{x}}$ に対して, 
                         \[
-                            W^u(\widetilde{\mathbf{x}}) = \{\mathbf{x}_0\in X : \varphi(t, \mathbf{x}_0) \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to-\infty\}
+                            W^u(\widetilde{\mathbf{x}}) = \{\mathbf{x}_0\in X : S(t)\mathbf{x}_0 \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to-\infty\}
                         \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>不安定集合</b> (<b>unstable set</b>) という. 
                         不安定集合が多様体としての構造を持つなら <b>不安定多様体</b> (<b>unstable manifold</b>) と呼ばれる. 
                     </li>
@@ -214,34 +214,34 @@
             </p>
 
             <div class="definition" data-name="極限点と極限集合">
-                <p>力学系の相空間 $X$ およびフロー $\varphi$ を考える. </p>
+                <p>力学系の相空間 $X$ およびフロー $\{S(t): t\in\mathbb{R}\}$ を考える. </p>
                 <ul>
                     <li>ある点列 $\{t_n\}$ が存在し, 
                         \[
                             \left\{\begin{array}{l}
                                 \displaystyle\lim_{n\to\infty}t_n=\infty, \cr 
-                                \displaystyle\lim_{n\to\infty}\varphi(t_n, \mathbf{x}_0) = \mathbf{y} \quad\text{in } X
+                                \displaystyle\lim_{n\to\infty}S(t_n)\mathbf{x}_0 = \mathbf{y} \quad\text{in } X
                             \end{array}\right.
                         \] が成立するとき, $\mathbf{y}\in X$ は $\mathbf{x}_0\in X$ の <b>$\omega$ 極限点</b> (<b>$\omega$-limit point</b>) であるという.
                     </li>
                     <li>
                         点 $\mathbf{x}_0\in X$ の全ての $\omega$ 極限点からなる集合を <b>$\omega$ 極限集合</b> (<b>$\omega$-limit set</b>) といい, $\omega(\mathbf{x}_0)$ と表記する, つまり
                         \[
-                            \omega(\mathbf{x}_0) = \{\mathbf{y}\in X : t_n\to \infty,\ \varphi(t_n, \mathbf{x}_0)\to\mathbf{y} \text{ を満たす点列 $\{t_n\}$ が存在する}\}.
+                            \omega(\mathbf{x}_0) = \{\mathbf{y}\in X : t_n\to \infty,\ S(t_n)\mathbf{x}_0\to\mathbf{y} \text{ を満たす点列 $\{t_n\}$ が存在する}\}.
                         \]
                     </li>
                     <li>ある点列 $\{t_n\}$ が存在し, 
                         \[
                             \left\{\begin{array}{l}
                                 \displaystyle\lim_{n\to\infty}t_n=-\infty, \cr 
-                                \displaystyle\lim_{n\to\infty}\varphi(t_n, \mathbf{x}_0) = \mathbf{y} \quad\text{in } X
+                                \displaystyle\lim_{n\to\infty}S(t_n)\mathbf{x}_0 = \mathbf{y} \quad\text{in } X
                             \end{array}\right.
                         \] が成立するとき, $\mathbf{y}\in X$ は $\mathbf{x}_0\in X$ の <b>$\alpha$ 極限点</b> (<b>$\alpha$-limit point</b>) であるという.
                     </li>
                     <li>
                         点 $\mathbf{x}_0\in X$ の全ての $\alpha$ 極限点からなる集合を <b>$\alpha$ 極限集合</b> (<b>$\alpha$-limit set</b>) といい, $\alpha(\mathbf{x}_0)$ と表記する, つまり
                         \[
-                            \alpha(\mathbf{x}_0) = \{\mathbf{y}\in X : t_n\to -\infty,\ \varphi(t_n, \mathbf{x}_0)\to\mathbf{y} \text{ を満たす点列 $\{t_n\}$ が存在する}\}.
+                            \alpha(\mathbf{x}_0) = \{\mathbf{y}\in X : t_n\to -\infty,\ S(t_n)\mathbf{x}_0\to\mathbf{y} \text{ を満たす点列 $\{t_n\}$ が存在する}\}.
                         \]
                     </li>
                 </ul>
@@ -288,7 +288,7 @@
                         -r\sin(t+\alpha) 
                     \end{pmatrix}
                 \] である. 
-                このとき, 半径 $r=\|\mathbf{x}_0\|$ の円周上の任意の点 $\mathbf{y}$ に対して, 点列 $\{t_n\}$ を適切に取りさえすれば, $\varphi(t_n,\mathbf{x}_0) = \mathbf{x}(t_n) \to \mathbf{y}$ となるようにできる. 
+                このとき, 半径 $r=\|\mathbf{x}_0\|$ の円周上の任意の点 $\mathbf{y}$ に対して, 点列 $\{t_n\}$ を適切に取りさえすれば, $S(t_n)\mathbf{x}_0 = \mathbf{x}(t_n) \to \mathbf{y}$ となるようにできる. 
                 つまり
                 \[
                     \omega(\mathbf{x}_0) = \{\mathbf{y}\in\mathbb{R}^2 : \|\mathbf{y}\| = \|\mathbf{x}_0\|\}
@@ -300,7 +300,7 @@
             <p>さらに関連する概念をいくつか述べるが, それらの定義は文献によって様々であるという印象であり, 以下の定義も厳密さには欠けるものであることに注意:</p>
             
             <div class="definition" data-name="アトラクター">
-                <p>力学系の相空間 $X$ およびフロー $\varphi$ を考える. 
+                <p>力学系の相空間 $X$ およびフロー $\{S(t): t\in\mathbb{R}\}$ を考える. 
                     このフローについて, ある初期値に対する $\omega$ 極限集合となる不変集合 $A\subset X$ と, 
                     \[
                         \omega(\mathbf{x}_0) = A
@@ -310,7 +310,7 @@
             </div>
             
             <div class="remark">
-                <p>$\omega$ 極限集合の定義より, 任意の $\mathbf{x}_0\in B$ に対し $t_n\to\infty$ なる点列 $\{t_n\}$ を適切に選べば, $\varphi(t_n, \mathbf{x}_0)$ の収束先がアトラクター $A$ の元となる. 
+                <p>$\omega$ 極限集合の定義より, 任意の $\mathbf{x}_0\in B$ に対し $t_n\to\infty$ なる点列 $\{t_n\}$ を適切に選べば, $S(t_n)\mathbf{x}_0$ の収束先がアトラクター $A$ の元となる. 
                     アトラクターが $1$ 点からなる集合ならば, その点が漸近安定であることを意味しているが, そうでないならば吸引領域 $B$ に初期値を持つ全ての軌道は $A$ に &quot;引き寄せられ&quot;, $A$ の内部もしくは $A$ の限りなく近くを動き続けることになる. 
                 </p>
             </div>
@@ -336,7 +336,6 @@
         <section id="section3-3"><h2>3.3: ホモクリニック軌道, ヘテロクリニック軌道</h2>
             <p>上で述べた概念の具体例を挙げつつ, それらが解のどのような挙動を説明しているかを考えていこう. 
                 ここでは, 安定多様体と不安定多様体が表す解の挙動の中でも特徴的なものを解説する. 
-                まず, ある平衡点の安定多様体と不安定多様体が合流する, という状況を紹介する:
             </p>
 
             <div class="definition" data-name="ホモクリニック軌道">
@@ -379,8 +378,8 @@
                 </p>
                 <div class="resize"><img src='./images/Duffing_equation.png'></div>
                 <p>ホモクリニック軌道は不安定平衡点から出発した点が同じ点に収束する軌道であり, その存在は直感的には奇妙なことに思える. 
-                    実際, このような軌道は安定多様体と不安定多様体が (平衡点以外に) 共通部分を持つ場合のみ存在する. 
-                    軌道は安定多様体に (不安定多様体にも) 完璧に重なっているため, 平衡点に収束することができるが, 少しでもずれるとこのような動きは実現できない. 
+                    実際, このような軌道は安定多様体と不安定多様体が &quot;ぴったり重なって&quot; (平衡点以外に) 共通部分を持つ場合のみ存在する. 
+                    ホモクリニック軌道は安定多様体に (不安定多様体にも) 完璧に重なっているため, 平衡点に収束することができるが, 少しでもずれるとこのような動きは実現できない. 
                     例えば, 上の式に少しの摂動を加えると, 安定多様体と不安定多様体が共通部分を持たなくなり, ホモクリニック軌道も存在しなくなる: 
                     \[
                         \begin{pmatrix} 
@@ -473,10 +472,10 @@
 
             <div class="definition" data-name="周期軌道とリミットサイクル">
                 <ul>
-                    <li>力学系の相空間 $X$ およびフロー $\varphi$ について, 平衡点でない初期値 $\mathbf{x}_0$ に対して 
+                    <li>力学系の相空間 $X$ およびフロー $\{S(t): t\in\mathbb{R}\}$ について, 平衡点でない初期値 $\mathbf{x}_0$ に対して 
                         \[
-                            \varphi(t+T, \mathbf{x}_0) = \varphi(t, \mathbf{x}_0)\quad \text{for all}\quad t\in\mathbb{R} \quad(\text{離散力学系に対しては }\mathbb{Z})
-                        \] を満たす $T$ が存在するならば, 初期値 $\mathbf{x}_0$ に対する軌道 $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}\subset X$ (離散力学系に対しては $\{\varphi(t, \mathbf{x}_0): t\in\mathbb{Z}\}\subset X$) は <b>周期軌道</b> であるという. 
+                            S(t+T)\mathbf{x}_0 = S(t)\mathbf{x}_0\quad \text{for all}\quad t\in\mathbb{R} \quad(\text{離散力学系に対しては }\mathbb{Z})
+                        \] を満たす $T$ が存在するならば, 初期値 $\mathbf{x}_0$ に対する軌道 $\{S(t)\mathbf{x}_0: t\in\mathbb{R}\}\subset X$ (離散力学系に対しては $\{S(t)\mathbf{x}_0: t\in\mathbb{Z}\}\subset X$) は <b>周期軌道</b> であるという. 
                         また, このとき $T$ を <b>周期</b> という. 
                     </li>
                     <li>力学系の周期起動が存在し, また $t\to\infty$ もしくは $t\to-\infty$ としたときに, それに収束する軌道が存在するならば, そのような周期軌道を <b>リミットサイクル</b> という. 
@@ -495,27 +494,7 @@
                 このことに関連する概念として, <b>不変集合</b> と <b>極限集合</b> を導入する.
             </p>
 
-            <!-- <div class="definition" data-name="不変集合">
-                <p>力学系の相空間 $X$ およびフロー $\varphi$ に対して,</p>
-                <ul>
-                    <li>部分集合 $S\subset X$ が, 
-                        \[
-                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\in \mathbb{R}
-                        \] を満たすとき, $S$ を <b>不変集合</b> (<b>invariant set</b>) という. 
-                    </li>
-                    <li>部分集合 $S\subset X$ が, 
-                        \[
-                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\ge 0
-                        \] を満たすとき, $S$ を <b>正不変集合</b> (<b>positively invariant set</b>) という. 
-                    </li>
-                </ul>
-            </div>
-
-            <p>つまり, 不変集合内部を初期値として出発した点は, 時間経過により不変集合から出て行かない, ということを表している. 
-                周期軌道も不変集合の一種であると解釈できるが, 一般には周期軌道では無い不変集合を考えることになる. 
-                特に重要な不変集合の一種として, 以下に述べる極限集合はしばしば利用される:
-            </p> -->
-
+            
             
             
 
@@ -561,7 +540,7 @@
             </p>
 
             <div class="definition" data-name="周期軌道の安定性">
-                <p>力学系の相空間 $X$ およびフロー $\varphi$ について, (ある初期値 $\mathbf{x}_0$ に対する) 周期軌道 $\Gamma = \{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}$ が存在するとする. 
+                <p>力学系の相空間 $X$ およびフロー $\{S(t): t\in\mathbb{R}\}$ について, (ある初期値 $\mathbf{x}_0$ に対する) 周期軌道 $\Gamma = \{S(t)\mathbf{x}_0: t\in\mathbb{R}\}$ が存在するとする. 
                     この周期軌道 $\Gamma$ について, 
                 </p>
                 <ul>

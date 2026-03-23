@@ -176,12 +176,12 @@
                     </li>
                     <li>ある自励系の相空間を $X$ とおき, その自励系の解 $\mathbf{x}(t)$ が, 初期値 $\mathbf{x}_0$ に依存することを強調して
                         \[
-                            \mathbf{x}(t) = \varphi(t, \mathbf{x}_0)
-                        \] と表す. このとき関数 $\varphi: \mathbb{R}\times X \to X$ (もしくは $\varphi: \mathbb{Z}\times X\to X$) を, この自励系の <b>流れ</b> (もしくは <b>フロー</b>) という. 
+                            \mathbf{x}(t) = S(t)\mathbf{x}_0
+                        \] と表す. このとき写像 $S(t): X \to X$ の族 $\{S(t) : t\in\mathbb{R}\}$ (もしくは $\{S(t) : t\in\mathbb{Z}\}$) を, この自励系の <b>流れ</b> (もしくは <b>フロー</b>) という. 
                     </li>
-                    <li>ある自励系の解 $\mathbf{x}(t)$ に対して (初期値 $\mathbf{x}_0$ に依存することを強調するために流れ $\varphi$ を用いて $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ と表すとき), 
+                    <li>ある自励系の解 $\mathbf{x}(t)$ に対して (初期値 $\mathbf{x}_0$ に依存することを強調するために流れ $S(t)$ を用いて $\mathbf{x}(t) = S(t)\mathbf{x}_0$ と表すとき), 
                         \[
-                            \{\varphi(t, \mathbf{x}_0) : t\in \mathbb{R}\} \subset X\quad (\mbox{もしくは }\{\varphi(t, \mathbf{x}_0) : t\in \mathbb{Z}\} \subset X)
+                            \{S(t)\mathbf{x}_0 : t\in \mathbb{R}\} \subset X\quad (\mbox{もしくは }\{S(t)\mathbf{x}_0 : t\in \mathbb{Z}\} \subset X)
                         \] を, (初期値 $\mathbf{x}_0$ に対する) <b>軌道</b> (<b>trajectory</b>) もしくは <b>解軌道</b> という. 
                     </li>
                     <li>ある力学系の (様々な初期値に対する) 軌道の概略を相空間上に表した図を <b>相図</b> (<b>phase portrait</b>) という. </li>
@@ -193,7 +193,7 @@
                     <li>数学における流れ (および軌道) は, 本来は力学系とは別に定義されるものであり, そのアイデアを力学系にも応用できると説明されるべきものである. 
                         また, 非自励系に対しても (時間依存する) 流れを考えることができるが, ここではこれ以上深入りしない. 
                     </li>
-                    <li>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ においては, $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ が時間経過に伴いどのように動くか, という情報が $\mathbf{f}(\mathbf{x})$ として (時間に無関係なベクトル場として) 与えられることになる. 
+                    <li>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ においては, $\mathbf{x}(t) = S(t)\mathbf{x}_0$ が時間経過に伴いどのように動くか, という情報が $\mathbf{f}(\mathbf{x})$ として (時間に無関係なベクトル場として) 与えられることになる. 
                         従って, ベクトル場 $\mathbf{f}(\mathbf{x})$ (もしくは方向場) を図示することで, $\mathbf{x}(t)$ が時間経過により相空間上をどの向きに動くかをイメージできる, つまり軌道の概形がわかる. 
                     </li>
                     <ul>
@@ -202,16 +202,21 @@
                             コンピュータを利用しない限り, あまり現実的ではない. 
                         </li>
                     </ul>
-                    <li>自励系の解 $\mathbf{x}(t)$ と流れ $\varphi$ は, 
+                    <li>流れ $S(t)$ は, 
                         \[
-                            \varphi(t, \mathbf{x}(s)) = \mathbf{x}(s+t)
-                        \] を満たす. 
-                        つまり, $\mathbf{x}(s)$ を初期値として時刻 $t$ だけ進めた結果と, $\mathbf{x}(0)$ を初期値として時刻 $s+t$ だけ進めた結果が一致する.     
+                            \left\{\begin{array}{rll} 
+                                S(0)\mathbf{x} &= \mathbf{x} & \text{for all}\quad \mathbf{x}\in X, \cr 
+                                S(t)S(s)\mathbf{x} &= S(s+t)\mathbf{x} & \text{for all}\quad\mathbf{x}\in X 
+                            \end{array}\right.
+                        \] を満たす (この性質を <b>半群性</b> と呼ぶことがある). 
+                        特に初期値 $\mathbf{x}_0$ に対する自励系の解 $\mathbf{x}(s) = S(s)\mathbf{x}_0$ を考えると, $\mathbf{x}(s)$ を初期値として時刻 $t$ だけ進めた結果と, $\mathbf{x}(0)$ を初期値として時刻 $s+t$ だけ進めた結果が一致する.     
                         <ul>
-                            <li>特に線形力学系 $\mathbf{x}' = A\mathbf{x}$ に対して, $\varphi(t, \mathbf{x}_0) = e^{tA}\mathbf{x}_0$ であり, また 
+                            <li>特に線形力学系 $\mathbf{x}' = A\mathbf{x}$ に対して, $S(t)\mathbf{x}_0 = e^{tA}\mathbf{x}_0$ である. 
+                                つまり, 写像 $S(t)$ は行列 $e^{tA}$ を左から掛ける操作であり, $S(t) = e^{tA}$ と表記される. 
+                                また 
                                 \[
-                                    \varphi(t, \mathbf{x}(s)) = e^{tA}(e^{sA}\mathbf{x}_0) = e^{(s+t)A}\mathbf{x}_0 = \mathbf{x}(s+t)
-                                \] である. 
+                                    S(t)S(s)\mathbf{x}_0 = e^{tA}(e^{sA}\mathbf{x}_0) = e^{(s+t)A}\mathbf{x}_0 = S(s+t)\mathbf{x}_0
+                                \] を確かめることができる. 
                             </li>
                         </ul>
                     </li>
@@ -272,7 +277,7 @@
                     \[
                         \sin\alpha = \dfrac{\widetilde{c}_1}{r},\quad \cos\alpha = \dfrac{\widetilde{c}_2}{r}
                     \] を満たすものである. 
-                    このことは, $\mathbf{x}(t) = \varphi(t, \mathbf{x}_0)$ は (初期値 $\mathbf{x}_0$ に対応した) 円周上を動くことを意味しており, 方向場の矢印の指す方向に動いていることがわかる. 
+                    このことは, $\mathbf{x}(t) = S(t)\mathbf{x}_0$ は (初期値 $\mathbf{x}_0$ に対応した) 円周上を動くことを意味しており, 方向場の矢印の指す方向に動いていることがわかる. 
                     以下に, この線形力学系に対する相図の例を掲載する:
                 </p>
                 <div class="resize"><img src='./images/center-1.png'></div>
@@ -488,17 +493,17 @@
             </p>
 
             <div class="definition" data-name="安定集合, 不安定集合" id="stable_set">
-                <p>力学系の相空間 $X$ およびフロー $\varphi$ を考える. </p>
+                <p>力学系の相空間 $X$ およびフロー $S(t)$ を考える. </p>
                 <ul>
                     <li>平衡点 $\widetilde{\mathbf{x}}$ に対して, 
                         \[
-                            W^s(\widetilde{\mathbf{x}}) = \{\mathbf{x}_0\in X : \varphi(t, \mathbf{x}_0) \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to\infty\}
+                            W^s(\widetilde{\mathbf{x}}) = \{\mathbf{x}_0\in X : S(t)\mathbf{x}_0 \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to\infty\}
                         \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>安定集合</b> (<b>stable set</b>) という. 
                         安定集合が多様体としての構造を持つなら <b>安定多様体</b> (<b>stable manifold</b>) と呼ばれる. 
                     </li>
                     <li>平衡点 $\widetilde{\mathbf{x}}$ に対して, 
                         \[
-                            W^u(\widetilde{\mathbf{x}}) = \{\mathbf{x}_0\in X : \varphi(t, \mathbf{x}_0) \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to-\infty\}
+                            W^u(\widetilde{\mathbf{x}}) = \{\mathbf{x}_0\in X : S(t)\mathbf{x}_0 \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to-\infty\}
                         \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>不安定集合</b> (<b>unstable set</b>) という. 
                         不安定集合が多様体としての構造を持つなら <b>不安定多様体</b> (<b>unstable manifold</b>) と呼ばれる. 
                     </li>
@@ -893,9 +898,9 @@
                                 \] を証明すれば良い (安定性の証明とは異なり, $\widetilde{\varepsilon}$ に依存しない $\widetilde{\delta}$ の存在を示す). 
                             </li>
                             <li>
-                                まず, 自励系の解 $\mathbf{x}(t)$ と流れ $\varphi$ には 
+                                まず, 自励系の解 $\mathbf{x}(t)$ と流れ $S(t)$ には 
                                 \[
-                                    \varphi(t, \mathbf{x}(s)) = \mathbf{x}(s+t)
+                                    S(t)\mathbf{x}(s) = \mathbf{x}(s+t)
                                 \] という関係が成り立つのだった, つまり任意の $s\ge0$ に対して $\mathbf{x}(s)$ を初期値として自励系の解の時間発展を考えることで, $t\gt s$ における $\mathbf{x}(t)$ が得られるのだった. 
                                 このことと安定性の証明と同様の手順により, 任意の $\widetilde{\varepsilon}\gt 0$ に対し, ある $\gamma\gt 0$ が存在し 
                                 \[
@@ -1111,117 +1116,6 @@
                     </li>
                 </ul>
             </div>
-
-            <!-- <hr>
-
-            <p>さて, 平衡点の漸近安定性の証明にリアプノフの安定性定理を用いるには, リアプノフ関数 $V$ が $\dot{V}(\mathbf{x}) = V(\mathbf{x}(t))\cdot\mathbf{f}(\mathbf{x}(t)) \lt 0$ を満たす, つまり狭義リアプノフ関数であることを確認する必要がある. 
-                一方で, (狭義でない) リアプノフ関数を用いて漸近安定性を証明できる場合もある. 
-                その説明のために, いくつか追加の概念を導入しよう:
-            </p> -->
-
-            <!-- <div class="definition" data-name="不変集合">
-                <p>力学系の相空間 $X$ およびフロー $\varphi$ に対して,</p>
-                <ul>
-                    <li>部分集合 $S\subset X$ が, 
-                        \[
-                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\in \mathbb{R}
-                        \] を満たすとき, $S$ を <b>不変集合</b> (<b>invariant set</b>) という. 
-                    </li>
-                    <li>部分集合 $S\subset X$ が, 
-                        \[
-                            \mathbf{x}_0\in S \implies \varphi(t, \mathbf{x}_0) \in S \quad\text{for all}\quad t\ge 0
-                        \] を満たすとき, $S$ を <b>正不変集合</b> (<b>positively invariant set</b>) という. 
-                    </li>
-                </ul>
-            </div>
-
-            <p>つまり, 不変集合内部からスタートした点は, 時間経過により不変集合から出て行かない, ということを表している. </p>
-
-            <div class="definition" data-name="極限点と極限集合">
-                <p>力学系の相空間 $X$ およびフロー $\varphi$ に対して,</p>
-                <ul>
-                    <li>ある点列 $\{t_n\}$ が存在し, 
-                        \[
-                            \left\{\begin{array}{l}
-                                \displaystyle\lim_{n\to\infty}t_n=\infty, \cr 
-                                \displaystyle\lim_{n\to\infty}\varphi(t_n, \mathbf{x}_0) = \mathbf{y} \quad\text{in } X
-                            \end{array}\right.
-                        \] が成立するとき, $\mathbf{y}\in X$ は $\mathbf{x}_0\in X$ の <b>$\omega$ 極限点</b> (<b>$\omega$-limit point</b>) であるという.
-                    </li>
-                    <li>
-                        点 $\mathbf{x}_0\in X$ の全ての $\omega$ 極限点からなる集合を <b>$\omega$ 極限集合</b> (<b>$\omega$-limit set</b>) といい, $\omega(\mathbf{x}_0)$ と表記する, つまり
-                        \[
-                            \omega(\mathbf{x}_0) = \{\mathbf{y}\in X : \text{ある数列 $\{t_n\}$ が存在し, }t_n\to \infty,\ \varphi(t_n, \mathbf{x}_0)\to\mathbf{y} \}
-                        \]
-                    </li>
-                    <li>ある点列 $\{t_n\}$ が存在し, 
-                        \[
-                            \left\{\begin{array}{l}
-                                \displaystyle\lim_{n\to\infty}t_n=-\infty, \cr 
-                                \displaystyle\lim_{n\to\infty}\varphi(t_n, \mathbf{x}_0) = \mathbf{y} \quad\text{in } X
-                            \end{array}\right.
-                        \] が成立するとき, $\mathbf{y}\in X$ は $\mathbf{x}_0\in X$ の <b>$\alpha$ 極限点</b> (<b>$\alpha$-limit point</b>) であるという.
-                    </li>
-                    <li>
-                        点 $\mathbf{x}_0\in X$ の全ての $\alpha$ 極限点からなる集合を <b>$\alpha$ 極限集合</b> (<b>$\alpha$-limit set</b>) といい, $\alpha(\mathbf{x}_0)$ と表記する, つまり
-                        \[
-                            \alpha(\mathbf{x}_0) = \{\mathbf{y}\in X : \text{ある数列 $\{t_n\}$ が存在し, }t_n\to -\infty,\ \varphi(t_n, \mathbf{x}_0)\to\mathbf{y} \}
-                        \]
-                    </li>
-                </ul>
-            </div>
-
-            <p>直感的には時刻 $t$ を大きくしたとき (もしくは小さくしたとき) に, 解 $\mathbf{x}(t)$ が &quot;どこに近づくか&quot; を表すものが極限点, 極限集合である. 
-                特に, 解 $\mathbf{x}(t)$ が収束しないという状況, 例えばある範囲を動き続けるという状況であっても, &quot;どこを動き続けるか&quot; を説明できる.</p>
-
-            <div class="example">
-                <p>線形力学系 
-                    \[
-                        \mathbf{x}' = \begin{pmatrix} 
-                            -1 & 0 \cr 
-                            0 & -2 
-                        \end{pmatrix}\mathbf{x}
-                    \] を考える. 
-                    行列固有値は $-1$, $-2$ であり, 全ての固有値 (の実部) が負であるため, 平衡点 $\mathbf{0}$ は漸近安定である. 
-                    つまり全ての点は時間経過により ($t_n\to\infty$ となる任意の点列 $\{t_n\}$ に対して) $\mathbf{0}$ に収束するため, 任意の $\mathbf{x}_0$ に対し 
-                    \[
-                        \omega(\mathbf{x}_0) = \{\mathbf{0}\}
-                    \] である. 
-                    一方で, 全ての点は時間に逆行したとき ($t_n\to\infty$ となる任意の点列 $\{t_n\}$ に対して) 無限に発散するため, 任意の $\mathbf{x}_0$ に対し 
-                    \[
-                        \alpha(\mathbf{x}_0) = \emptyset
-                    \] である. 
-                </p>
-            </div>
-
-            <div class="example">
-                線形力学系 
-                \[
-                    \mathbf{x}' = \begin{pmatrix} 
-                        0 & 1 \cr 
-                        -1 & 0 
-                    \end{pmatrix}\mathbf{x}
-                \] を考える. 
-                行列固有値は $\pm i$ であり, 初期値 $\mathbf{x}_0 = (r\cos\alpha, r\sin\alpha)$ に対する特殊解は 
-                \[
-                    \mathbf{x}(t) = \begin{pmatrix} 
-                        r\cos(t+\alpha) \cr 
-                        -r\sin(t+\alpha) 
-                    \end{pmatrix}
-                \] である (必要なら $\mathbf{x}'$ を計算したり $t=0$ を代入して確かめれば良い). 
-                このとき, 半径 $r=\|\mathbf{x}_0\|$ の円周上の任意の点 $\mathbf{y}$ に対して, 点列 $\{t_n\}$ を適切に取りさえすれば, $\varphi(t_n,\mathbf{x}_0) = \mathbf{x}(t_n) \to \mathbf{y}$ となるようにできる. 
-                つまり
-                \[
-                    \omega(\mathbf{x}_0) = \{\mathbf{y}\in\mathbb{R}^2 : \|\mathbf{y}\| = \|\mathbf{x}_0\|\}
-                \] である ($\alpha$ 極限集合についても同様である). 
-                このように, $\mathbf{x}(t)$ が一点に収束しない場合でも, 極限集合を考えることで解の挙動をわかりやすく説明できる. 
-            </div> -->
-
-            <!-- <div class="lemma" data-name="ラサールの不変原理">
-                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}\in\mathbb{R}^n$ についてのリアプノフ関数 $V$ が存在するとする. 
-                    このとき, 
-                </p>
-            </div> -->
 
         </section>
          
@@ -1710,7 +1604,7 @@
                     D\mathbf{h}_s(\mathbf{x}_c)(A_c\mathbf{x}_c + \mathbf{r}_c(\mathbf{x}_c, \mathbf{h}_s(\mathbf{x}_c))) = A_s\mathbf{x}_s + \mathbf{r}_s(\mathbf{x}_c, \mathbf{h}(\mathbf{x}_c))
                 \] という等式が得られる (ただし, 具体的に計算する際には上の $\mathbf{x}_s' = D\mathbf{h}_s(\mathbf{x}_c)\mathbf{x}_c'$ の方が使い勝手が良いことも多い). 
                 これを近似的に満たす関数は $\mathbf{h}_s$ の近似を与えることになる. 
-                実際に安定性を判定する際は, 適当な多項式 $\varphi$ を見つけることで, 中心多様体の近似を構成し, その上での解の挙動を考えれば十分である:
+                実際に安定性を判定する際は, 適当な多項式 $S(t)$ を見つけることで, 中心多様体の近似を構成し, その上での解の挙動を考えれば十分である:
             </p>
 
             <div class="theorem" data-name="中心多様体の近似">
@@ -1944,7 +1838,7 @@
             </p>
 
             <div class="definition" data-name="リミットサイクル">
-                <p>力学系の相空間 $X$ およびフロー $\varphi$ について, (ある初期値 $\mathbf{x}_0$ に対する) 周期軌道 $\Gamma = \{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}$ が存在するとする. 
+                <p>力学系の相空間 $X$ およびフロー $S(t)$ について, (ある初期値 $\mathbf{x}_0$ に対する) 周期軌道 $\Gamma = \{\varphi(t, \mathbf{x}_0): t\in\mathbb{R}\}$ が存在するとする. 
                     この周期軌道 $\Gamma$ について, 
                 </p>
                 <ul>
