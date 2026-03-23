@@ -211,6 +211,14 @@ code {
     height: auto;
 }
 
+.resize video {
+    width: 100%;
+    height: auto;
+    max-width: 80dvw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .wave {
     text-decoration: underline;
     text-decoration-style: wavy;
