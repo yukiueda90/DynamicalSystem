@@ -38,15 +38,24 @@ x[:, :, :] = np.nan
 x[:, 0, 0] = x0
 x[:, 1, 0] = y0
 
+# 中心多様体の近似
+phi = lambda x: -3 * x**3
+
+# ルンゲ=クッタ法
+for i in range(N):
+  for j in range(M):
+    x[j, :, i+1] = runge_kutta(x[j, :, i], tau)
+
 fig, ax = plt.subplots()
 fig.tight_layout()
 ax.set_aspect('equal')
+# optional: fix axis limits (important!)
+ax.set_xlim(0.65, 1.35)
+ax.set_ylim(-0.32, 0.32)
 
 # initial plot (empty)
 points = []
 lines = []
-# 中心多様体の近似
-phi = lambda x: -3 * x**3
 xc = np.linspace(-0.2, 0.2, 100)
 line, = ax.plot(1.0 + xc, phi(xc), linewidth=5, color='tab:red')
 lines.append(line)
@@ -55,18 +64,9 @@ for j in range(M):
   line, = ax.plot([], [], color='tab:blue')
   points.append(point) 
   lines.append(line)
-
-# ルンゲ=クッタ法
-for i in range(N):
-  for j in range(M):
-    x[j, :, i+1] = runge_kutta(x[j, :, i], tau)
-
-# optional: fix axis limits (important!)
-ax.set_xlim(0.65, 1.35)
-ax.set_ylim(-0.32, 0.32)
-
+# define update in animation
 def update(frame):
-    artists = []
+    # artists = []
 
     for i in range(M):
         xn = x[i, :, frame]
@@ -74,9 +74,9 @@ def update(frame):
         points[i].set_data([xn[0]], [xn[1]])
         # update trajectory
         lines[i+1].set_data(x[i, 0, :frame+1], x[i, 1, :frame+1])
-        artists.extend([points[i], lines[i]])
-
-    return artists
+        # artists.extend([points[i], lines[i+1]])
+    return
+    # return artists
 
 step: int = 5
 ani = FuncAnimation(fig, update, frames=range(0, x.shape[2], step), interval=10)
