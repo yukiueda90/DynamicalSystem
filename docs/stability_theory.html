@@ -949,7 +949,7 @@
                     いま, $\mathbf{f}(\mathbf{x}) = -\nabla E(\mathbf{x})$ のとき, つまり
                     \[
                         \mathbf{x}' = -\nabla E(\mathbf{x})
-                    \] という力学系を <b>勾配系</b> (<b>gradient system</b>) という.
+                    \] という力学系を <b>勾配系</b> (<b>gradient system</b>) もしくは <b>勾配流</b> (<b>gradient flow</b>) という.
                     このとき, $E$ をエネルギー (ポテンシャル) と呼ぶことがある.
                 </p>
                 <p>勾配系の解は
@@ -1212,6 +1212,9 @@
                 <ul>
                     <li>$D\mathbf{f}(\mathbf{\widetilde{x}})$ の全ての固有値の実部が負ならば, 平衡点 $\widetilde{\mathbf{x}}$ は漸近安定である.</li>
                     <li>$D\mathbf{f}(\mathbf{\widetilde{x}})$ の固有値に実部が正であるものが存在するならば, 平衡点 $\widetilde{\mathbf{x}}$ は不安定である.</li>
+                    <ul>
+                        <li>$D\mathbf{f}(\mathbf{\widetilde{x}})$ の全ての固有値の実部が非ゼロであり, 実部が正の固有値と実部が負の固有値の両方が存在するならば, 平衡点 $\widetilde{\mathbf{x}}$ は鞍点である.</li>
+                    </ul>
                     <li>$D\mathbf{f}(\mathbf{\widetilde{x}})$ の (全ての固有値の実部が $0$ 以下であり) 実部が $0$ である固有値が存在するならば, 平衡点 $\widetilde{\mathbf{x}}$ の安定性は線形安定性解析では判定できない.</li>
                 </ul>
             </div>
@@ -1286,11 +1289,11 @@
                 ただし, 線形安定性解析において言及した 
                 \[
                     \mathbf{y}' = D \mathbf{f}(\widetilde{\mathbf{x}}) \mathbf{y} + \mathbf{R} \approx D\mathbf{f}(\widetilde{\mathbf{x}})\mathbf{y}
-                \] が成立することは確かであり, また平衡点付近では剰余項 $\mathbf{R}$ の影響がヤコビ行列 $D\mathbf{f}(\widetilde{\mathbf{x}})$ の影響に比べて十分小さいため, もしもヤコビ行列が実部が正である固有値を持つならば, (剰余項の影響に依らず) 平衡点から急激に離れる解が存在する, つまり平衡点 $\widetilde{\mathbf{x}}$ は不安定である.
+                \] が成立することは確かであり, また平衡点付近では剰余項 $\mathbf{R}$ の影響がヤコビ行列 $D\mathbf{f}(\widetilde{\mathbf{x}})$ の影響に比べて十分小さいため, もしもヤコビ行列が実部が正である固有値を持つならば, (剰余項の影響に依らず) 平衡点から急激に離れる解が存在する, つまり平衡点 $\widetilde{\mathbf{x}}$ は少なくとも不安定であることは良い.
             </p>
             <p>問題はヤコビ行列の全ての固有値の実部が $0$ 以下であり, かつ実部が $0$ である固有値が存在する場合である. 
                 このとき, $\mathbf{y}' = D\mathbf{f}(\widetilde{\mathbf{x}})\mathbf{y}$ の平衡点 $\mathbf{y}=\mathbf{0}$ は (漸近安定ではないが) 中立安定であり, つまり線形化方程式の解は平衡点近くに長く留まることになる. 
-                このような場合は, 解の挙動に対する剰余項 $\mathbf{R}$ の影響を無視することができず, 平衡点が不安定になる場合がある. 
+                このような場合は, 解の挙動に対する剰余項 $\mathbf{R}$ の影響を無視することができず, 剰余項の影響により平衡点が安定になる場合も不安定になる場合もある. 
             </p> 
             
             <div class="example">
@@ -1311,7 +1314,7 @@
                             1 & 0 
                         \end{pmatrix}\mathbf{x}
                     \] であり, ヤコビ行列 $D\mathbf{f}(\mathbf{0})$ の固有値は $\lambda = \pm i$ である. 
-                    つまり実部が $0$ である固有値が存在しているため, 平衡点 $\mathbf{0}$ は非双曲型であり, 線形安定性解析は適用できない. 
+                    つまり全ての固有値の実部が $0$ 以下であり, また実部が $0$ である固有値が存在しているため, 線形安定性解析では安定性を判定できない. 
                 </p>
                 <p>実はこの問題に関しては, 極座標変換 
                     \[
@@ -1810,10 +1813,15 @@
                     中心多様体縮約より, 元の自励系の平衡点付近での挙動は, この $1$ 次元力学系の平衡点 $x_c=0$ 付近での挙動に近い, つまり漸近安定であることがわかる. 
                 </p>
                 <p>実際に, 元の自励系の平衡点 $\widetilde{\mathbf{x}} = (1,0)$ 付近に初期値をいくつか設定し, 数値計算を行った結果を以下に掲載する. 
-                    図中の黄色い点が初期値, 青い線が各初期値からの解の軌道であり, 赤い線は平衡点付近での中心多様体の近似 (つまり局所中心多様体の近似) を表す. 
+                    図中の青い線が各初期値からの解の軌道であり, 赤い線は平衡点付近での中心多様体の近似 (つまり局所中心多様体の近似) を表す. 
                     ベクトル $\mathbf{v}_2$ で表される安定方向には (指数的に減衰するため) 急速に動いて中心多様体に近づき, 平衡点付近では中心多様体の近似に沿うようにして平衡点に向かって動いている様子を確認できる. 
                 </p>
-                <div class="resize"><img src='./images/center_manifold.png'></div>
+                <!-- <div class="resize"><img src='./images/center_manifold.png'></div> -->
+                 <div class="resize">
+                    <video autoplay="true", loop="true">
+                    <source src="videos/center_manifold.mp4" type="video/mp4" />
+                    </video>
+                </div>
             </div>
 
         </section>
@@ -1825,7 +1833,7 @@
                 また, 平衡点が非双曲型の場合は線形安定性解析が適用できないが, 線形化問題の固有値および固有ベクトルに注目することで, &quot;安定部分空間方向&quot; は気にする必要がないため, 結果的に中心多様体にのみ注目すれば良いことがわかる. 
             </p>
             <p>自励系の平衡点を求め, その安定性を調べることは, 特に非線形力学系の解の挙動を調べる際に有力な手段となる. 
-                平衡点が漸近安定であった方が数学的な取り扱いは容易であるが, むしろ平衡点が漸近安定でない状況の方が解の挙動としては興味深いこともある. 
+                平衡点が漸近安定であった方が数学的な取り扱いは容易であるが, むしろ平衡点が漸近安定でない状況の方が解の挙動としては興味深い. 
             </p>
         </section> 
 
@@ -1951,10 +1959,7 @@
                 しかしながら, このような数値積分による &quot;近似&quot; の精度が低いことは明白だろう. 
             </p>
             <p>そこで, より高精度な数値積分を用いることで, 常微分方程式系に対する高精度な数値計算手法を導出することができるが, そのようなアイデアに基づく手法は <b>ルンゲ=クッタ法</b> (<b>Runge-Kutta method</b>) と総称される (前進オイラー法や後退オイラー法も, ルンゲ=クッタ法の一種とみなされる). 
-                特に古典的なものは, 数値積分におけるシンプソン則 
-                \[
-                    \int_t^{t+\tau}\mathbf{f}(\mathbf{x}(s))~ds \approx \dfrac{\tau}{6}\left(\mathbf{f}(\mathbf{x}(t)) + 4\mathbf{f}(\mathbf{x}(t+\tau/2)) + \mathbf{f}(\mathbf{x}(t+\tau))\right)
-                \] と類似の <b>$4$ 段陽的ルンゲ=クッタ法</b> である: 
+                特に古典的なものは, 以下に述べる <b>$4$ 段陽的ルンゲ=クッタ法</b> である: 
                 \[
                     \mathbf{x}_{n+1} = \mathbf{x}_n + \dfrac{\tau}{6}\left(\mathbf{k}_1 + 2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4\right),
                 \] ここで 
@@ -1965,7 +1970,13 @@
                         \mathbf{k}_3 = \mathbf{f}\left(\mathbf{x}_n + \dfrac{\tau}{2}\mathbf{k}_2\right), \cr 
                         \mathbf{k}_4 = \mathbf{f}(\mathbf{x}_n + \tau\mathbf{k}_3)
                     \end{array}
-                \] である (つまり $4\mathbf{f}(\mathbf{x}(t_n+\tau/2)) \approx 2\mathbf{k}_2 + 2\mathbf{k}_3$, $\mathbf{f}(\mathbf{x}(t_{n+1}))\approx \mathbf{k}_4$ と近似していることに相当している). 
+                \] である (つまり数値積分におけるシンプソン則 
+                \[
+                    \int_t^{t+\tau}\mathbf{f}(\mathbf{x}(s))~ds \approx \dfrac{\tau}{6}\left(\mathbf{f}(\mathbf{x}(t)) + 4\mathbf{f}(\mathbf{x}(t+\tau/2)) + \mathbf{f}(\mathbf{x}(t+\tau))\right)
+                \] と類似の
+                \[
+                    \int_t^{t+\tau}\mathbf{f}(\mathbf{x}(s))~ds \approx \dfrac{\tau}{6}\left(\mathbf{k}_1 + 2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4\right),
+                \] という近似を用いていることに相当している). 
                 公式の覚えやすさなどから、これを単にルンゲ=クッタ法と言及することも多い. 
                 この公式は計算も容易であり, オイラー法よりも高精度なこともあって (類似の公式も含め) 様々な場面に応用されるが, 考える問題次第では陰的ルンゲ=クッタ法が望ましい場合もあるため, 万能というわけではない. 
             </p>
