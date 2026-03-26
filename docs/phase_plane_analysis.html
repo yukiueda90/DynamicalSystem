@@ -914,10 +914,11 @@
                 以下の計算例では, 単純にニュートン法の初期値を $\mathbf{x}^0 = \mathbf{x}_n$ と設定した際の収束先を $\mathbf{x}_{n+1}$ とみなしている. 
             </p>
             
-            <div class="resize"><img src='./images/discrete_gradient.png'></div>
+            <div class="resize"><img src='./images/discrete_gradient_method.png'></div>
             
-            <p>ルンゲ=クッタ法による数値計算結果と比較すると, 見た目はそれほど変わらない (左) が, エネルギーの数値の挙動 (右) は異なっている. 
-                離散勾配法による数値計算結果は, 確かにエネルギーを一定に保っていることを確認できる. 
+            <p>ルンゲ=クッタ法による数値計算結果と比較すると, $T$ が大きい場合であっても, 離散勾配法による数値解は縮小してしまうことが無い (左). 
+                またエネルギーの数値を, 確かにほぼ一定を保っていることを確認できる(右). 
+                計算に用いたパラメータについては, 以下のサンプルコードを参照: 
             </p>
             <pre>
 <code>
@@ -985,8 +986,8 @@ fig, ax = plt.subplots(1, 2, figsize=(8, 4))
 ax[0].set_aspect('equal')
 
 # 時間区間分割
-T: float = 100
-N: int = 300
+T: float = 1000
+N: int = 3000
 t = np.linspace(0, T, N+1)
 tau: float = T/N
 # tau の値を関数に部分適用 

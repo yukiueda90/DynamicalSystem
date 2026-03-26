@@ -62,8 +62,8 @@ fig, ax = plt.subplots(1, 2, figsize=(8, 4))
 ax[0].set_aspect('equal')
 
 # 時間区間分割
-T: float = 100
-N: int = 300
+T: float = 1000
+N: int = 3000
 t = np.linspace(0, T, N+1)
 tau: float = T/N
 # tau の値を関数に部分適用 
