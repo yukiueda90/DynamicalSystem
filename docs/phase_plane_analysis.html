@@ -913,13 +913,11 @@
                 また, $\mathbf{F}_n(\mathbf{x}) = \mathbf{0}$ の解は複数存在し得るが, $\tau$ が十分小さいならば $\mathbf{x}_n$ に最も近いものを $\mathbf{x}_{n+1}$ とするのが良いだろう. 
                 以下の計算例では, 単純にニュートン法の初期値を $\mathbf{x}^0 = \mathbf{x}_n$ と設定した際の収束先を $\mathbf{x}_{n+1}$ とみなしている. 
             </p>
-            
-            <div class="resize"><img src='./images/discrete_gradient_method.png'></div>
-            
             <p>ルンゲ=クッタ法による数値計算結果と比較すると, $T$ が大きい場合であっても, 離散勾配法による数値解は縮小してしまうことが無い (左). 
                 またエネルギーの数値を, 確かにほぼ一定を保っていることを確認できる(右). 
                 計算に用いたパラメータについては, 以下のサンプルコードを参照: 
             </p>
+            <div class="resize"><img src='./images/discrete_gradient_method.png'></div>
             <pre>
 <code>
 import numpy as np 
