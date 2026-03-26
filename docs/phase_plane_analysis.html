@@ -908,7 +908,7 @@
                     \end{pmatrix}
                 \] とおき, $\mathbf{F}_n(\mathbf{x}_{n+1}) = \mathbf{0}$ を満たす $\mathbf{x}_{n+1}$ をニュートン法 
                 \[
-                    \mathbf{x}^{k+1} = \mathbf{x}^k - D\mathbf{F}_{n+1}(\mathbf{x}^k)^{-1}\mathbf{F}_{n+1}(\mathbf{x}^k)
+                    \mathbf{x}^{k+1} = \mathbf{x}^k - D\mathbf{F}_n(\mathbf{x}^k)^{-1}\mathbf{F}_n(\mathbf{x}^k)
                 \] による反復計算の収束先として求める: $\mathbf{x}_{n+1} = \displaystyle\lim_{k\to\infty}\mathbf{x}^k$ (実際には適当なところで反復計算を打ち切ることになる). 
                 また, $\mathbf{F}_n(\mathbf{x}) = \mathbf{0}$ の解は複数存在し得るが, $\tau$ が十分小さいならば $\mathbf{x}_n$ に最も近いものを $\mathbf{x}_{n+1}$ とするのが良いだろう. 
                 以下の計算例では, 単純にニュートン法の初期値を $\mathbf{x}^0 = \mathbf{x}_n$ と設定した際の収束先を $\mathbf{x}_{n+1}$ とみなしている. 
