@@ -151,9 +151,9 @@
             </p>    
             
             <div class="definition" data-name="離散力学系"> 
-                <p>与えられた写像 $\mathbf{f}: \mathbb{R}^n\to\mathbb{R}^n$ と初期値 $\mathbf{x}_0$ に対して, 
+                <p>与えられた写像 $\mathbf{f}: \mathbb{R}^d\to\mathbb{R}^d$ と初期値 $\mathbf{x}_0$ に対して, 
                 \[
-                    \mathbf{x}(k+1) = \mathbf{f}(\mathbf{x}(k)) \quad \mbox{もしくは}\quad \mathbf{x}_{k+1} = \mathbf{f}(\mathbf{x}_k)
+                    \mathbf{x}(n+1) = \mathbf{f}(\mathbf{x}(n)) \quad \mbox{もしくは}\quad \mathbf{x}_{n+1} = \mathbf{f}(\mathbf{x}_n)
                 \] と表されるものを離散力学系という. 
             </p>
             </div>
@@ -164,24 +164,24 @@
             <div class="example">
                 <p>例として, 
                     \[
-                        x_{k+1} = ax_k(1-x_k)
+                        x_{n+1} = ax_n(1-x_n)
                     \] という $1$ 次元離散力学系を考える, ただし初期値は $0\lt x_0\lt 1$ であるとする.  
-                    この解 $x_k$ に対して $k\to\infty$ としたときの振る舞いには, 連続力学系と同様にパラメータ $a$ が大きく影響することになる:
+                    この解 $x_n$ に対して $n\to\infty$ としたときの振る舞いには, 連続力学系と同様にパラメータ $a$ が大きく影響することになる:
                 </p>
                 <ul>
                     <li>$0\lt a\lt 1$ であれば, 
                     \[
-                        0\lt x_{k+1} = ax_k(1-x_k) \lt ax_k \lt x_k
-                    \] であるため, 点列 $\{x_k\}$ は単調に減少し, 特に $k\to\infty$ のとき $x_k\to 0$ となる. </li>
+                        0\lt x_{n+1} = ax_n(1-x_n) \lt ax_n \lt x_n
+                    \] であるため, 点列 $\{x_n\}$ は単調に減少し, 特に $n\to\infty$ のとき $x_n\to 0$ となる. </li>
                     <li>$1\lt a$ の場合には, $1-a^{-1}\in (0,1)$ であることに注意すれば,</li>
                     <ul>
-                        <li>$x_k \lt 1-a^{-1}$ ならば 
+                        <li>$x_n \lt 1-a^{-1}$ ならば 
                         \[
-                            x_{k+1} \gt ax_k(1-(1-a^{-1})) = x_k 
+                            x_{n+1} \gt ax_n(1-(1-a^{-1})) = x_n 
                         \] となる.</li>
-                        <li>$x_k\gt 1-a^{-1}$ ならば同様にして $x_{k+1} \lt x_k$ となることがわかる.</li>
-                        <li>実は, $a\gt 1$ が小さい内は $x_k\to 1-a^{-1}$ となるのだが, $a$ を大きくすると $\{x_k\}$ は $1-a^{-1}$ の前後を&quot;行ったり来たり&quot;するようになり収束しなくなってしまう. 
-                            さらに $a$ を大きくした場合には, 点列 $\{x_k\}$ の振る舞いはますます複雑になり, 明示的に説明することは困難になる. 
+                        <li>$x_n\gt 1-a^{-1}$ ならば同様にして $x_{n+1} \lt x_n$ となることがわかる.</li>
+                        <li>実は, $a\gt 1$ が小さい内は $x_n\to 1-a^{-1}$ となるのだが, $a$ を大きくすると $\{x_n\}$ は $1-a^{-1}$ の前後を&quot;行ったり来たり&quot;するようになり収束しなくなってしまう. 
+                            さらに $a$ を大きくした場合には, 点列 $\{x_n\}$ の振る舞いはますます複雑になり, 明示的に説明することは困難になる. 
                         </li>
                     </ul>
                 </ul>
@@ -201,30 +201,30 @@
             <p>力学系の様々な概念について紹介する前に, ここでは $2$ 次元以上の連続力学系の例として, 線形力学系について紹介しよう.</p>
             
             <div class="definition">
-                <p>変数 $t$, 未知のベクトル値関数 $\mathbf{x}(t)\in\mathbb{R}^n$, 与えられた <span class="wave">線形写像</span> $\mathbf{f}: \mathbb{R}^{n}\to\mathbb{R}^n$ に対して,
+                <p>変数 $t$, 未知のベクトル値関数 $\mathbf{x}(t)\in\mathbb{R}^d$, 与えられた <span class="wave">線形写像</span> $\mathbf{f}: \mathbb{R}^{d}\to\mathbb{R}^d$ に対して,
                     \[
                         \mathbf{x}' = \mathbf{f}(\mathbf{x})
                     \] と表される連続力学系 (特に自励系である) を <b>線形力学系</b> (<b>linear dynamical system</b>) という. 
                 </p>
             </div>
-                ここで, 写像 $\mathbf{f}:\mathbb{R}^n\to\mathbb{R}$ が線形であるとは, 任意の $c_1, c_2\in\mathbb{R}$ および $\mathbf{x}_1, \mathbf{x}_2\in\mathbb{R}^n$ に対し
+                ここで, 写像 $\mathbf{f}:\mathbb{R}^d\to\mathbb{R}$ が線形であるとは, 任意の $c_1, c_2\in\mathbb{R}$ および $\mathbf{x}_1, \mathbf{x}_2\in\mathbb{R}^d$ に対し
                 \[
                     \mathbf{f}(c_1\mathbf{x}_1 + c_2\mathbf{x}_2) = c_1\mathbf{f}(\mathbf{x}_1) + c_2\mathbf{f}(\mathbf{x}_2)
-                \] が成り立つことであり, 従って $\mathbf{x}$ を標準基底 $\mathbf{e}_1, \dots, \mathbf{e}_n$ の線型結合により 
+                \] が成り立つことであり, 従って $\mathbf{x}$ を標準基底 $\mathbf{e}_1, \dots, \mathbf{e}_d$ の線型結合により 
                 \[
                     \mathbf{x} = \begin{pmatrix} 
                         x_1 \cr 
                         \vdots \cr 
-                        x_n 
-                    \end{pmatrix} = x_1\mathbf{e}_1 + \dots + x_n\mathbf{e}_n
+                        x_d 
+                    \end{pmatrix} = x_1\mathbf{e}_1 + \dots + x_d\mathbf{e}_d
                 \] と表現したときに, 
                 \[
                     \begin{array}{rl} 
-                        \mathbf{f}(\mathbf{x}) &= x_1\mathbf{f}(\mathbf{e}_1) + \dots + x_n\mathbf{f}(\mathbf{e}_n) \cr 
-                        &= (\mathbf{f}(\mathbf{e}_1), \dots, \mathbf{f}(\mathbf{e}_n))\mathbf{x}
+                        \mathbf{f}(\mathbf{x}) &= x_1\mathbf{f}(\mathbf{e}_1) + \dots + x_d\mathbf{f}(\mathbf{e}_d) \cr 
+                        &= (\mathbf{f}(\mathbf{e}_1), \dots, \mathbf{f}(\mathbf{e}_d))\mathbf{x}
                     \end{array}
                 \] が成立する. 
-                ここで, $(\mathbf{f}(\mathbf{e}_1), \dots, \mathbf{f}(\mathbf{e}_n)) \in\mathbb{R}^{n\times n}$ なので, この正方行列を $A$ とおくと, 線形力学系とは
+                ここで, $(\mathbf{f}(\mathbf{e}_1), \dots, \mathbf{f}(\mathbf{e}_d)) \in\mathbb{R}^{d\times d}$ なので, この正方行列を $A$ とおくと, 線形力学系とは
                 \[
                     \mathbf{x}' = A\mathbf{x} \tag{1}
                 \] と表される連続力学系 (特に自励系) のことに他ならない. 
@@ -272,7 +272,7 @@
             </div><!-- /lamma --> 
 
             <div class="remark">
-                正方行列 $A\in\mathbb{R}^{n\times n}$ に対し, $\lambda_i\in\mathbb{C}$ が固有値であり $\mathbf{v}_i\in\mathbb{C}^n$ が対応する固有ベクトルであるとは, 
+                正方行列 $A\in\mathbb{R}^{d\times d}$ に対し, $\lambda_i\in\mathbb{C}$ が固有値であり $\mathbf{v}_i\in\mathbb{C}^d$ が対応する固有ベクトルであるとは, 
                 \[
                     A\mathbf{v}_i = \lambda_i \mathbf{v}_i
                 \] が成立することを指すのだった. 
@@ -380,8 +380,8 @@
                         \mathbf{x}' &= A\mathbf{x}, \cr 
                         \mathbf{x}(0) &= \mathbf{x}_0 
                     \end{array}\right. \tag{2}
-                \] を考えてみよう, ただし, $\mathbf{x}_0\in\mathbb{R}^n$ は初期値として与えられたベクトルである. 
-                このとき, 線形力学系 $(1.2)$ の解 $\mathbf{x}: \mathbb{R}\to\mathbb{R}^n$ は 
+                \] を考えてみよう, ただし, $\mathbf{x}_0\in\mathbb{R}^d$ は初期値として与えられたベクトルである. 
+                このとき, 線形力学系 $(1.2)$ の解 $\mathbf{x}: \mathbb{R}\to\mathbb{R}^d$ は 
                 \[
                     \mathbf{x}(t) = e^{tA}\mathbf{x}_0 
                 \] と表すことができる (これは, 
@@ -422,7 +422,7 @@
                         <li>なお, 
                             \[
                                 \|e^{A}\| = \left\|\displaystyle\sum_{k=0}^\infty \dfrac{A^k}{k!}\right\| \le \displaystyle\sum_{k=0}^\infty \dfrac{\|A\|^k}{k!} = e^{\|A\|}
-                            \] であることから, 任意の $A\in\mathbb{R}^{n\times n}$ に対し $e^{A}\in\mathbb{R}^{n\times n}$ は well-defined である. 
+                            \] であることから, 任意の $A\in\mathbb{R}^{d\times d}$ に対し $e^{A}\in\mathbb{R}^{d\times d}$ は well-defined である. 
                         </li>
                     </ul>
                 </div>
@@ -484,7 +484,7 @@
 
             <div class="lemma" data-name="行列指数関数のジョルダン標準形による表示" id="Lem_Jordan_exp">
                 <ol>
-                    <li>正方行列 $A\in\mathbb{R}^{n\times n}$ のジョルダン標準形 $J = P^{-1}AP\in\mathbb{C}^{n\times n}$ に対して, 
+                    <li>正方行列 $A\in\mathbb{R}^{d\times d}$ のジョルダン標準形 $J = P^{-1}AP\in\mathbb{C}^{d\times d}$ に対して, 
                         \[
                             e^{tA} = Pe^{tJ}P^{-1}
                         \] である.
@@ -607,7 +607,7 @@
             </p>
 
             <div class="theorem">
-                行列 $A\in\mathbb{R}^{n\times n}$ について, 
+                正方行列 $A$ について, 
                 \[
                     \text{$A$ の全ての固有値の実部が負}\iff e^{tA}\to 0 \quad \text{as}\quad t\to\infty.
                 \]
@@ -889,23 +889,23 @@
                     <li>
                         まず, 以下の性質を確認しよう:
                         <div class="lemma">
-                            <p>行列 $A\in\mathbb{R}^{n\times n}$ のある固有値 $\lambda$ が $\lambda\in\mathbb{C}\backslash\mathbb{R}$ を満たすとする. 
+                            <p>行列 $A\in\mathbb{R}^{d\times d}$ のある固有値 $\lambda$ が $\lambda\in\mathbb{C}\backslash\mathbb{R}$ を満たすとする. 
                                 このとき, 以下が成立する:
                             </p>
                             <ul>
-                                <li>対応する固有ベクトル $\mathbf{v}$ を $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ を用いて $\mathbf{v} = \mathbf{w}_1 + i\mathbf{w}_2$ と表したとき, $\mathbf{w}_2\neq\mathbf{0}$ である. 
-                                    つまり $\mathbf{v}\in \mathbb{C}^n\backslash\mathbb{R}^n$ である. </li>
-                                <li>上の表記において, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ は線型独立である.</li>
+                                <li>対応する固有ベクトル $\mathbf{v}$ を $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^d$ を用いて $\mathbf{v} = \mathbf{w}_1 + i\mathbf{w}_2$ と表したとき, $\mathbf{w}_2\neq\mathbf{0}$ である. 
+                                    つまり $\mathbf{v}\in \mathbb{C}^d\backslash\mathbb{R}^d$ である. </li>
+                                <li>上の表記において, $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^d$ は線型独立である.</li>
                                 <li>$\overline{\lambda}$ は行列 $A$ の固有値であり, また $\overline{\mathbf{v}}$ は対応する固有ベクトルである.</li>
                             </ul>
                         </div><!-- /lemma -->
 
                         <div class="proof">
                             <ul>
-                                <li>もしも $\mathbf{w}_2=\mathbf{0}$ ならば (つまり $\mathbf{v}_1\in\mathbb{R}^n$ ならば), $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1$ の左辺は実ベクトルであり, 一方で固有ベクトル $\mathbf{v}_1$ は $\mathbf{0}$ では無いことから右辺は実ベクトルでは無い, 従って矛盾する. 
+                                <li>もしも $\mathbf{w}_2=\mathbf{0}$ ならば (つまり $\mathbf{v}_1\in\mathbb{R}^d$ ならば), $A\mathbf{v}_1 = \lambda_1\mathbf{v}_1$ の左辺は実ベクトルであり, 一方で固有ベクトル $\mathbf{v}_1$ は $\mathbf{0}$ では無いことから右辺は実ベクトルでは無い, 従って矛盾する. 
                                 </li>
                                 <li>$\lambda = \alpha + i\beta$ とおく, ただし $\alpha, \beta\in\mathbb{R}$ であり, $\lambda\in\mathbb{C}\backslash\mathbb{R}$ より $\beta\neq0$ である. 
-                                    もしも $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^n$ が線型独立で無いならば, $\mathbf{w}_1 = c\mathbf{w}_2$, つまり $\mathbf{v} = (c+i)\mathbf{w}_2$ となる $c\in\mathbb{R}$ が存在するため, 
+                                    もしも $\mathbf{w}_1, \mathbf{w}_2\in\mathbb{R}^d$ が線型独立で無いならば, $\mathbf{w}_1 = c\mathbf{w}_2$, つまり $\mathbf{v} = (c+i)\mathbf{w}_2$ となる $c\in\mathbb{R}$ が存在するため, 
                                     \[
                                         \begin{array}{rl} 
                                             (c+i)A\mathbf{w}_2 &= A\mathbf{v} \cr 
@@ -922,14 +922,14 @@
                         </div><!-- /proof -->
                     </li>
                     <li>
-                        これらの性質は $n=2$ の場合にも成立するため, 固有値 $\lambda_1$ に対応する固有ベクトル $\mathbf{v}_1 = \mathbf{w}_1 + i\mathbf{w}_2$ および固有値 $\lambda_2 = \overline{\lambda_1}$ に対応する固有ベクトル $\mathbf{v}_2 = \overline{\mathbf{v}}_1$ を考えることができる.  
+                        これらの性質は $d=2$ の場合にも成立するため, 固有値 $\lambda_1$ に対応する固有ベクトル $\mathbf{v}_1 = \mathbf{w}_1 + i\mathbf{w}_2$ および固有値 $\lambda_2 = \overline{\lambda_1}$ に対応する固有ベクトル $\mathbf{v}_2 = \overline{\mathbf{v}}_1$ を考えることができる.  
                         このように両方の固有ベクトルと密接に関連する $2$ つの実ベクトル $\mathbf{w}_1$, $\mathbf{w}_2\in\mathbb{R}^2$ が得られるが, これらは線型独立であるため $\mathbb{R}^2$ の基底となる. 
                         これらを用いて一般解の表現を試みよう. 
                     </li>
                     <li>
-                        以降, 複素ベクトル $\mathbf{z}\in\mathbb{C}^n$ に対し, 
+                        以降, 複素ベクトル $\mathbf{z}\in\mathbb{C}^d$ に対し, 
                         \[
-                            \mathbf{z} = \mathbf{a} + i\mathbf{b} \quad (\mathbf{a}, \mathbf{b}\in\mathbb{R}^n)
+                            \mathbf{z} = \mathbf{a} + i\mathbf{b} \quad (\mathbf{a}, \mathbf{b}\in\mathbb{R}^d)
                         \] であるときに, ベクトル $\mathbf{z}$ の実部および虚部を
                         \[
                             \operatorname{Re}(\mathbf{z}) = \mathbf{a},\quad \operatorname{Im}(\mathbf{z}) = \mathbf{b}
@@ -1078,7 +1078,7 @@
                 特に, 全ての固有値の実部が負であれば, 解 $\mathbf{x}(t)$ は $\mathbf{0}$ に収束することも確かめれれる. 
                 上では $2$ 次方程式の解の公式に基づき $3$ つの場合分けを考えたが, 固有値 (の実部) の符号 (つまり $T = \operatorname{tr}A$ の符号) による場合分けも解の挙動を説明する際に重要となる. 
             </p>
-            <p>また, 上では $2$ 次元の線形力学系のみを例として考えたが, 一般に $n$ 次元の場合であっても, 線形力学系 $(2)$ の解は $\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ と表され, 行列 $A$ の固有値と固有ベクトルを求めることで行列の指数関数を用いない表示を得ることができる. 
+            <p>また, 上では $2$ 次元の線形力学系のみを例として考えたが, 一般に $d$ 次元の場合であっても, 線形力学系 $(2)$ の解は $\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ と表され, 行列 $A$ の固有値と固有ベクトルを求めることで行列の指数関数を用いない表示を得ることができる. 
                 その際には, やはり行列 $A$ の固有値 $\lambda_i$ が実数であるか否か, 固有値 $\lambda_i$ の重複度, $\operatorname{Re}(\lambda_i)$ の符号などが, 解の挙動を説明するために重要な情報となる. 
             </p>
 

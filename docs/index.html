@@ -38,14 +38,14 @@
             \] などと表記することがある. 
             このとき, 常微分方程式は $x' = f(t, x)$ と表される. 
         </p>  
-        <p>一方で, (共通するただ一つの変数を持つ) $n$ 個の未知関数についての連立した常微分方程式を<b>常微分方程式系</b> (<b>System of Ordinary Differential Equations</b>, <b>System of ODEs</b>), もしくは <b>連立常微分方程式</b> という. 
-            例えば, $n$ 個の未知関数
+        <p>一方で, (共通するただ一つの変数を持つ) $d$ 個の未知関数についての連立した常微分方程式を<b>常微分方程式系</b> (<b>System of Ordinary Differential Equations</b>, <b>System of ODEs</b>), もしくは <b>連立常微分方程式</b> という. 
+            例えば, $d$ 個の未知関数
             \[
                 \mathbf{x}(t) = \begin{pmatrix} 
                     x_1(t) \cr 
                     x_2(t) \cr 
                     \vdots \cr 
-                    x_n(t) 
+                    x_d(t) 
                 \end{pmatrix}
             \] に対して, 
             \[
@@ -56,14 +56,14 @@
                     \dfrac{dx_1}{dt} \cr 
                     \dfrac{dx_2}{dt} \cr 
                     \vdots \cr 
-                    \dfrac{dx_n}{dt} 
+                    \dfrac{dx_d}{dt} 
                 \end{pmatrix},\quad \mathbf{f}(t, \mathbf{x}) = \begin{pmatrix} 
-                    f_1(t, x_1, x_2, \dots, x_n) \cr 
-                    f_2(t, x_1, x_2, \dots, x_n) \cr 
+                    f_1(t, x_1, x_2, \dots, x_d) \cr 
+                    f_2(t, x_1, x_2, \dots, x_d) \cr 
                     \vdots \cr
-                    f_n(t, x_1, x_2, \dots, x_n) 
+                    f_d(t, x_1, x_2, \dots, x_d) 
                 \end{pmatrix}
-            \] であり, $f_1, f_2, \dots, f_n$ は既知の関数であるとする. 
+            \] であり, $f_1, f_2, \dots, f_d$ は既知の関数であるとする. 
         </p> 
 
         <hr>
@@ -106,21 +106,21 @@
             <p>この資料の内容に関連するものの, 詳細については言及しないものについて以下に列挙する.</p> 
 
             <div class="definition" data-name="ベクトル, 行列のノルム">
-                <p>$\mathbb{R}^n$ 上のユークリッドノルム (ベクトルのノルム) を 
+                <p>$\mathbb{R}^d$ 上のユークリッドノルム (ベクトルのノルム) を 
                     \[
-                        \|\mathbf{v}\| = \sqrt{\sum_{k=1}^n v_i^2}
+                        \|\mathbf{v}\| = \sqrt{\sum_{k=1}^d v_i^2}
                     \] と表記する. 
-                    また, 対応する $\mathbb{R}^{n\times n}$ 上のノルム (行列ノルム) を 
+                    また, 対応する $\mathbb{R}^{d\times d}$ 上のノルム (行列ノルム) を 
                     \[
-                        \|A\| = \sup_{\mathbf{v}\in\mathbb{R}^n,\ \mathbf{v}\neq \mathbf{0}} \dfrac{\|A\mathbf{v}\|}{\|\mathbf{v}\|}
+                        \|A\| = \sup_{\mathbf{v}\in\mathbb{R}^d,\ \mathbf{v}\neq \mathbf{0}} \dfrac{\|A\mathbf{v}\|}{\|\mathbf{v}\|}
                     \] と定義する.
                 </p>
             </div>
 
             <div class="lemma">
                 <ol>
-                    <li>$\|A\mathbf{v}\| \le \|A\|\|\mathbf{v}\|\quad \text{for all}\quad \mathbf{v}\in\mathbb{R}^n$, $A\in\mathbb{R}^{n\times n}$. </li>
-                    <li>$\|AB\| \le \|A\|\|B\|\quad \text{for all}\quad A, B\in\mathbb{R}^{n\times n}$. </li>
+                    <li>$\|A\mathbf{v}\| \le \|A\|\|\mathbf{v}\|\quad \text{for all}\quad \mathbf{v}\in\mathbb{R}^d$, $A\in\mathbb{R}^{d\times d}$. </li>
+                    <li>$\|AB\| \le \|A\|\|B\|\quad \text{for all}\quad A, B\in\mathbb{R}^{d\times d}$. </li>
                 </ol>
             </div>
 
@@ -130,8 +130,8 @@
                     <li>1. より
                         \[
                             \begin{array}{rl} 
-                                \|AB\| &= \displaystyle\sup_{\mathbf{v}\in\mathbb{R}^n,\ \mathbf{v}\neq \mathbf{0}}\dfrac{\|AB\mathbf{v}\|}{\|\mathbf{v}\|} \cr 
-                                &\le \displaystyle\sup_{\mathbf{v}\in\mathbb{R}^n,\ \mathbf{v}\neq \mathbf{0}}\dfrac{\|A\|\|B\mathbf{v}\|}{\|\mathbf{v}\|} \cr 
+                                \|AB\| &= \displaystyle\sup_{\mathbf{v}\in\mathbb{R}^d,\ \mathbf{v}\neq \mathbf{0}}\dfrac{\|AB\mathbf{v}\|}{\|\mathbf{v}\|} \cr 
+                                &\le \displaystyle\sup_{\mathbf{v}\in\mathbb{R}^d,\ \mathbf{v}\neq \mathbf{0}}\dfrac{\|A\|\|B\mathbf{v}\|}{\|\mathbf{v}\|} \cr 
                                 &\le \|A\|\|B\|.
                             \end{array}
                         \]
@@ -140,7 +140,7 @@
             </div>
             
             <div class="theorem" data-name="時間局所解の一意存在"> 
-                <p>与えられた $\mathbf{x}_0\in\mathbb{R}^n$ および $r\gt0$ に対し, $\mathbf{f}:B_r(\mathbf{x}_0)\to\mathbb{R}^n$ がリプシッツ連続であるとする.  
+                <p>与えられた $\mathbf{x}_0\in\mathbb{R}^d$ および $r\gt0$ に対し, $\mathbf{f}:B_r(\mathbf{x}_0)\to\mathbb{R}^d$ がリプシッツ連続であるとする.  
                     このとき, 常微分方程式系
                     \[
                         \left\{\begin{array}{rl} 

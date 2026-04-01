@@ -52,17 +52,17 @@
                             x_1' \cr 
                             x_2' \cr 
                             \vdots \cr 
-                            x_n' 
+                            x_d' 
                         \end{pmatrix} = \begin{pmatrix} 
                             f_1(\mathbf{x}) \cr 
                             f_2(\mathbf{x}) \cr 
                             \vdots \cr 
-                            f_n(\mathbf{x}) 
+                            f_d(\mathbf{x}) 
                         \end{pmatrix}
                     \] を考える. 
-                    このとき, $i=1, 2, \dots n$ に対して
+                    このとき, $i=1, 2, \dots d$ に対して
                     \[
-                        \{\mathbf{x}\in\mathbb{R}^n : f_i(\mathbf{x}) = 0\}
+                        \{\mathbf{x}\in\mathbb{R}^d : f_i(\mathbf{x}) = 0\}
                     \] を $x_i$ の<b>ヌルクライン (nullcline)</b> という.
                 </p>
             </div>
@@ -74,7 +74,7 @@
                         つまり, 方向場の矢印の &quot;向き&quot; ($2$ 次元の力学系なら右上, 右下, 左上, 左下) はヌルクラインで区切られた領域内で共通である.</li>
                     <li>すべてのヌルクラインの交点では, 時間経過によりどの方向にも動かない, つまりすべてのヌルクラインの交点は平衡点である.</li>
                     <li>あとはヌルクラインで区切られた各領域上でのおおよその方向場から, 相図の概形を描いたり平衡点の安定性の判定が (大雑把に) できる. </li>
-                    <li>ヌルクラインは一般に $n$ 次元力学系に対して定義されるが, これに基づく解軌道の解釈を $3$ 次元以上の力学系に応用することは, あまり実用的では無いだろう (少なくともコンピュータの利用は必須だろう). </li>
+                    <li>ヌルクラインは一般に $d$ 次元力学系に対して定義されるが, これに基づく解軌道の解釈を $3$ 次元以上の力学系に応用することは, あまり実用的では無いだろう (少なくともコンピュータの利用は必須だろう). </li>
                 </ul>
             </div>
 
@@ -521,6 +521,22 @@
                     異なる初期値を選んだとしても, 解の軌道は時間経過で同じ閉曲線に限りなく近づいていく. </p>
             </div>
 
+            <div class="exercise">
+                <ul>
+                    <li>ファン・デル・ポール振動子に対する数値計算を実行し, 上の例と異なる初期値に対しても解の軌道が安定なリミットサイクルに近づく様子を確認せよ. </li>
+                    <li>$2$ 次元ロトカ・ヴォルテラ方程式
+                        \[
+                            \begin{pmatrix} 
+                                x' \cr 
+                                y' 
+                            \end{pmatrix} = \begin{pmatrix} 
+                                a (b-y)x \cr 
+                                -c (d-x)y 
+                            \end{pmatrix} 
+                        \] に対する数値計算を実行し, 周期軌道 (の近似) が得られること, およびリミットサイクルが存在しない (と思われる) ことを確認せよ. </li>
+                </ul>
+            </div>
+
             <p>さて, 上では数値計算結果からリミットサイクルの存在を推測できると言及したが, 与えられた自励系のリミットサイクルの存在を数学的に証明することは一般にはそれほど容易ではない. 
                 とはいえ, $2$ 次元の自励系に限れば実は以下の定理が成立することが知られている: 
             </p>
@@ -626,14 +642,14 @@
             <p><a href="./stability_theory.html#section2-3">2.3: リアプノフの安定性定理</a> において言及した勾配系 
                 \[
                     \mathbf{x} = -\nabla E(\mathbf{x})
-                \] は, エネルギー $E: \mathbb{R}^n\to\mathbb{R}$ を小さくする方向に解が動くと説明することができるものであった. 
+                \] は, エネルギー $E: \mathbb{R}^d\to\mathbb{R}$ を小さくする方向に解が動くと説明することができるものであった. 
                 勾配系のようにエネルギーを用いて表される力学系は, (相空間の次元が小さいならば) エネルギーを表す関数のプロットから解の挙動を推測することができる. 
                 このアイデアについて簡単に紹介しよう. 
             </p>
             <p>まずは勾配系の定義を改めて述べる: </p>
 
             <div class="definition" data-name="勾配系">
-                <p>スカラー値関数 $E: \mathbb{R}^n\to\mathbb{R}$ に対して, 
+                <p>スカラー値関数 $E: \mathbb{R}^d\to\mathbb{R}$ に対して, 
                     \[
                         \mathbf{x}' = -\nabla E(\mathbf{x})
                     \] という力学系を <b>勾配系</b> (<b>gradient system</b>) もしくは <b>勾配流</b> (<b>gradient flow</b>) という.
@@ -693,12 +709,12 @@
             <p>次に <b>ハミルトン系</b> について紹介する:</p> 
 
             <div class="definition" data-name="ハミルトン系">
-                <p>スカラー値関数 $H: \mathbb{R}^{2n}\to\mathbb{R}$ について, $\mathbf{x}\in\mathbb{R}^{2n}$ を 
+                <p>スカラー値関数 $H: \mathbb{R}^{2d}\to\mathbb{R}$ について, $\mathbf{x}\in\mathbb{R}^{2d}$ を 
                     \[
                         \mathbf{x} = \begin{pmatrix} 
                             \mathbf{q} \cr 
                             \mathbf{p} 
-                        \end{pmatrix},\quad (\mathbf{p}, \mathbf{q}\in\mathbb{R}^n)
+                        \end{pmatrix},\quad (\mathbf{p}, \mathbf{q}\in\mathbb{R}^d)
                     \] と表す. また, 
                     \[
                         \nabla H(\mathbf{x}) = \begin{pmatrix} 
@@ -707,11 +723,11 @@
                         \end{pmatrix},\quad \nabla_{\mathbf{q}}H(\mathbf{x}) = \begin{pmatrix} 
                             \partial H/\partial q_1(\mathbf{x}) \cr 
                             \vdots \cr 
-                            \partial H/\partial q_n(\mathbf{x}) 
+                            \partial H/\partial q_d(\mathbf{x}) 
                         \end{pmatrix},\quad \nabla_{\mathbf{p}}H(\mathbf{x}) = \begin{pmatrix} 
                             \partial H/\partial p_1(\mathbf{x}) \cr 
                             \vdots \cr 
-                            \partial H/\partial p_n(\mathbf{x}) 
+                            \partial H/\partial p_d(\mathbf{x}) 
                         \end{pmatrix}
                     \] と表記する. 
                     このとき, 
@@ -730,14 +746,6 @@
 
             <div class="remark">
                 <ul>
-                    <li>ハミルトニアンは 
-                        \[
-                            \mathbf{x}' = \begin{pmatrix} 
-                                0 & I \cr 
-                                -I & 0 
-                            \end{pmatrix} \nabla H(\mathbf{x})
-                        \] と表すこともできる. 
-                    </li>
                     <li>ハミルトン系の解 $\mathbf{x}(t)$ は, 
                         \[
                             \dfrac{d}{dt}H(\mathbf{x}(t)) = \mathbf{x}'\cdot \nabla H(\mathbf{x}) = \begin{pmatrix} 
@@ -750,6 +758,20 @@
                         \] を満たす. 
                         すなわち, ハミルトン系の解 $\mathbf{x}(t)$ は, エネルギー (ハミルトニアン) $H$ の値を保存するように動く. 
                         このような特徴を持つ力学系は <b>保存系</b> と呼ばれることがある. 
+                    </li>
+                    <li>ハミルトン系は
+                        \[
+                            \mathbf{x}' = \begin{pmatrix} 
+                                0 & I \cr 
+                                -I & 0 
+                            \end{pmatrix} \nabla H(\mathbf{x})
+                        \] と表すことができる (一方で, 勾配系は 
+                        \[
+                             \mathbf{x}' = \begin{pmatrix} 
+                                0 & -I \cr 
+                                -I & 0 
+                            \end{pmatrix} \nabla E(\mathbf{x})
+                        \] と表すことができる).
                     </li>
                     <li>一般に, 
                         \[
@@ -802,7 +824,7 @@
 
         <section id="section3-A"><h2>数値計算: 離散勾配法</h2>
             <p>先ほど言及したように, 勾配系の解はエネルギーを小さくするように動く, ハミルトン系の解はエネルギーを保存するように動く, という性質がある. 
-                さて, オイラー法やルンゲ=クッタ法の数値計算結果がこの性質を再現するかというと, 一般には再現できるとは限らない. 
+                さて, オイラー法やルンゲ=クッタ法の数値計算結果がこの性質を再現するかというと, 一般にはそうとは限らない. 
             </p>
             <p>簡単な例として, $x'' = -dV/dx$ という問題に $y = x'$ を導入することで得られる 
                 \[
@@ -817,25 +839,25 @@
                         -\partial_x H 
                     \end{pmatrix}
                 \] というハミルトン系を考えよう, ただし $H(x, y) = V(x) + y^2/2$ である. 
-                特に $V(x) = x^2/2$ のとき, エネルギーは $H(x, y) = (x^2+y^2)/2$ であり, このハミルトン系は <a href="section1-A">数値計算: 二次元線形力学系</a> において考えた調和振動子に一致する. 
+                特に $V(x) = x^2/2$ のとき, エネルギーは $H(x, y) = (x^2+y^2)/2$ であり, このハミルトン系は <a href="section1-A">数値計算: オイラー法</a> において考えた調和振動子に一致する. 
                 前進オイラー法と後退オイラー法の数値解がエネルギーを保存しない (数値解は厳密解と比較して膨張したり縮小したりする) ということは既に確認した通りである. 
             </p>
 
-            <p>さて, ルンゲ=クッタ法などは多くの問題に対して適用可能であるという利点がある (このことから <b>汎用解法</b> と総称されることがある) が, 勾配系やハミルトン系のような問題に対しては, 解の性質を再現するように設計された数値計算手法が用いられることもある. 
+            <p>さて, オイラー法やルンゲ=クッタ法などは多くの問題に対して適用可能であるという利点がある (このことから <b>汎用解法</b> と総称されることがある) が, 勾配系やハミルトン系のような問題に対しては, 解の性質を再現するように特別に設計された数値計算手法が用いられることもある. 
                 このような発想に基づく数値計算手法を (汎用解法と対比して) <b>構造保存型数値解法</b> と呼ぶことがある. 
                 例えば, (一般化された) ハミルトン系に対する <b>離散勾配法</b> は構造保存型数値解法の一種と見なされる: 
             </p>
 
             <div class="definition" data-name="離散勾配法">
-                <p>歪対称行列 $A$ を用いて 
+                <p>歪対称行列 $A\in \mathbb{R}^{d\times d}$ を用いて 
                     \[
                         \mathbf{x}' = A\nabla H(\mathbf{x})
                     \] と表される問題を考える. 
-                    いま, エネルギー $H$ の勾配 $\nabla H$ に対し, 以下を満たす <b>離散勾配</b> $\overline{\nabla}H$ を定める: 
+                    いま, エネルギー $H: \mathbb{R}^d\to\mathbb{R}$ の勾配 $\nabla H: \mathbb{R}^d\to\mathbb{R}^d$ に対し, 以下を満たす <b>離散勾配</b> $\overline{\nabla}H: \mathbb{R}^d\times\mathbb{R}^d\to\mathbb{R}^d$ を定める: 
                     \[
                         \left\{\begin{array}{cl}
-                            H(\mathbf{x}) - H(\widehat{\mathbf{x}}) = (\overline{\nabla}H(\mathbf{x}, \widehat{\mathbf{x}}))\cdot(\mathbf{x} - \widehat{\mathbf{x}}) & \text{for all }\mathbf{x},\ \widehat{\mathbf{x}}, \cr 
-                            \overline{\nabla}H(\mathbf{x}, \mathbf{x}) = \nabla H(\mathbf{x}) & \text{for all }\mathbf{x}.
+                            H(\mathbf{x}) - H(\widehat{\mathbf{x}}) = (\overline{\nabla}H(\mathbf{x}, \widehat{\mathbf{x}}))\cdot(\mathbf{x} - \widehat{\mathbf{x}}) & \text{for all }\mathbf{x},\ \widehat{\mathbf{x}}\in\mathbb{R}^d, \cr 
+                            \overline{\nabla}H(\mathbf{x}, \mathbf{x}) = \nabla H(\mathbf{x}) & \text{for all }\mathbf{x}\in\mathbb{R}^d.
                         \end{array}\right.
                     \] これを用いて, $\mathbf{x}' = A\nabla H(\mathbf{x})$ に対して 
                     \[
@@ -845,26 +867,42 @@
                 </p>
             </div>
 
-            <p>まず, 離散勾配法により得られる数値計算結果は, 
-                \[
-                    \begin{array}{rl} 
-                        H(\mathbf{x}_{n+1}) - H(\mathbf{x}_n) &= (\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)) \cdot (\mathbf{x}_{n+1} - \mathbf{x}_n) \cr 
-                        &= \tau\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)^{\operatorname{T}}A\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n) \cr 
-                        &= 0 \quad(\because \text{ $A$ の歪対称性})
-                    \end{array}
-                \] を満たすため, 
-                \[
-                    H(\mathbf{x}_{n+1}) = H(\mathbf{x}_n) = \dots = H(\mathbf{x}_0)
-                \] となり, 確かにエネルギーを保存することがわかる. 
-                そこで, 具体例を通じてエネルギーが保存される様子を観察してみよう. 
-            </p>
+            <div class="exercise">
+                <p>エネルギー $H$ に対する離散勾配 $\overline{\nabla}H$ が存在するとき, 歪対称行列 $A$ を用いて表される $\mathbf{x}' = A\nabla H(\mathbf{x})$ という力学系に対する離散勾配法により得られる数値計算結果 $\mathbf{x}_n$ が, 
+                    \[
+                        H(\mathbf{x}_n) = \dots = H(\mathbf{x}_0)
+                    \] を満たすことを証明せよ, ただし $\mathbf{x}_0$ は与えられた初期値とする.
+                </p>
+            </div>
 
-            <!-- <p>一般に, 与えられたエネルギー $H$ に対する離散勾配は複数存在し得るが, ここでは (適切な $H$ に対して) 
-                \[
-                    \overline{\nabla}H(\mathbf{x}, \widehat{\mathbf{x}}) = \nabla H\left((\mathbf{x} + \widehat{\mathbf{x}}) / 2\right) + \dfrac{H(\mathbf{x}) - H(\widehat{\mathbf{x}}) - \nabla H\left((\mathbf{x} + \widehat{\mathbf{x}}) / 2\right) \cdot (\mathbf{x} - \widehat{\mathbf{x}})}{\|\mathbf{x} - \widehat{\mathbf{x}}\|^2} (\mathbf{x} - \widehat{\mathbf{x}})
-                \] という離散勾配を用いる (これは <b>Gonzalez の離散勾配法</b> と呼ばれることがある). 
-            -->
-            <p>エネルギーの具体例は, 先ほども考えた $H(\mathbf{x}) = V(x) + y^2/2$ において, 今度は $V(x) = x^4/4$ としてみる. 
+            <div class="answer">
+                <p>離散勾配の性質と離散勾配法の式より 
+                    \[
+                        \begin{array}{rl} 
+                            H(\mathbf{x}_{n+1}) - H(\mathbf{x}_n) &= (\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)) \cdot (\mathbf{x}_{n+1} - \mathbf{x}_n) \cr 
+                            &= \tau\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)^{\operatorname{T}}A\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n) 
+                        \end{array}
+                    \] が得られる. 
+                    ここで, 任意のベクトル $\mathbf{v}\in\mathbb{R}^{d}$ に対し $\mathbf{v}^{\operatorname{T}}A\mathbf{v}$ はスカラー値であること, および $A$ が歪対称行列であることから $A^{\operatorname{T}} = -A$ であることに注意すると, 
+                    \[
+                        \begin{array}{rl} 
+                            \mathbf{v}^{\operatorname{T}}A\mathbf{v} &= \left(\mathbf{v}^{\operatorname{T}}A\mathbf{v}\right)^{\operatorname{T}} \quad(\because \text{$\mathbf{v}^{\operatorname{T}}A\mathbf{v}$ はスカラー値}) \cr 
+                            &= \mathbf{v}^{\operatorname{T}}A^{\operatorname{T}}\mathbf{v} \cr 
+                            &= -\mathbf{v}^{\operatorname{T}}A\mathbf{v} \quad (\because \text{$A$ は歪対称})
+                        \end{array}
+                    \] が得られるため, 任意の $\mathbf{v}\in\mathbb{R}^{d}$ に対し $\mathbf{v}^{\operatorname{T}}A\mathbf{v} = 0$ である. 
+                    これを用いると 
+                    \[
+                        H(\mathbf{x}_{n+1}) - H(\mathbf{x}_n) = \tau\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)^{\operatorname{T}}A\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n) = 0
+                    \] となるため, 
+                    \[
+                        H(\mathbf{x}_{n+1}) = H(\mathbf{x}_n) = \dots = H(\mathbf{x}_0),
+                    \] すなわち離散勾配法によるエネルギーの保存が得られる. 
+                </p>
+            </div>
+
+            <p>具体例を通じて離散勾配法の数値解を観察してみよう. 
+                先ほども考えた $H(\mathbf{x}) = V(x) + y^2/2$ において, 今度は $V(x) = x^4/4$ としてみる. 
                 このとき, 
                 \[
                     H(\mathbf{x}) = \dfrac{x^4}{4} + \dfrac{y^2}{2},\quad \nabla H(\mathbf{x}) = \begin{pmatrix} 
@@ -900,7 +938,7 @@
                 \] は離散勾配法の一つである. 
             </p>
 
-            <p>これは陰的非線形な計算スキームであり, 陽的ルンゲ=クッタ法ほど手軽ではないものの, ニュートン法などで計算可能である. 
+            <p>これは陰的非線形な計算スキームであり, 陽的ルンゲ=クッタ法ほど手軽に計算できないものの, ニュートン法などを用いることで計算可能である. 
                 例えば, 与えられた $\mathbf{x}_n = (x_n, y_n)$ に対し, 
                 \[
                     \mathbf{F}_n(\mathbf{x}) = \mathbf{x} - \mathbf{x}_n - \tau \begin{pmatrix} 
@@ -914,8 +952,8 @@
                 また, $\mathbf{F}_n(\mathbf{x}) = \mathbf{0}$ の解は複数存在し得るが, $\tau$ が十分小さいならば $\mathbf{x}_n$ に最も近いものを $\mathbf{x}_{n+1}$ とするのが良いだろう. 
                 以下の計算例では, 単純にニュートン法の初期値を $\mathbf{x}^0 = \mathbf{x}_n$ と設定した際の収束先を $\mathbf{x}_{n+1}$ とみなしている. 
             </p>
-            <p>ルンゲ=クッタ法による数値計算結果と比較すると, $T$ が大きい場合であっても, 離散勾配法による数値解は縮小してしまうことが無い (左). 
-                またエネルギーの数値を, 確かにほぼ一定を保っていることを確認できる(右). 
+            <p>ルンゲ=クッタ法による数値計算結果と比較すると ($T$ が大きい場合であっても) 離散勾配法による数値解は縮小してしまうことが無い. 
+                また右のプロット (横軸が $n$, 縦軸が $H(\mathbf{x}_n)$) を見ると, 離散勾配法による数値解はエネルギーを一定を保っていることを確認できる. 
                 計算に用いたパラメータについては, 以下のサンプルコードを参照: 
             </p>
             <div class="resize"><img src='./images/discrete_gradient_method.png'></div>
