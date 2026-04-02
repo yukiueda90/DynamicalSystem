@@ -210,6 +210,8 @@
                 <div class="resize"><img src='./images/stable_manifold.png'></div>
             </div>
 
+            <hr>
+
             <p>上で述べた概念の具体例を挙げつつ, それらが解のどのような挙動を説明しているかを考えていこう. 
                 ここでは, 安定多様体と不安定多様体が表す解の挙動の中でも特徴的なものを解説する. 
             </p>
@@ -344,6 +346,8 @@
 
             </div>
         </section>
+
+        <hr>
 
         <section id="section3-2"><h2>3.2: 極限集合とリミットサイクル</h2>
             <p>上の例からも推測できるが, $t\to\infty$ としたときに自励系の解が収束も発散もしないことがある. 
@@ -537,6 +541,8 @@
                 </ul>
             </div>
 
+            <hr> 
+
             <p>さて, 上では数値計算結果からリミットサイクルの存在を推測できると言及したが, 与えられた自励系のリミットサイクルの存在を数学的に証明することは一般にはそれほど容易ではない. 
                 とはいえ, $2$ 次元の自励系に限れば実は以下の定理が成立することが知られている: 
             </p>
@@ -638,6 +644,8 @@
                 </p>
             </div>  -->
 
+        <hr>
+
         <section id="section3-3"><h2>3.3: エネルギーに基づく解釈</h2>
             <p><a href="./stability_theory.html#section2-3">2.3: リアプノフの安定性定理</a> において言及した勾配系 
                 \[
@@ -691,7 +699,7 @@
                         \begin{pmatrix} 
                             x' \cr 
                             y' 
-                        \end{pmatrix} = -\begin{pmatrix} 
+                        \end{pmatrix} = -\nabla E(\mathbf{x}) = -\begin{pmatrix} 
                             \partial E/\partial x \cr 
                             \partial E/\partial y 
                         \end{pmatrix} = \begin{pmatrix} 
@@ -701,7 +709,7 @@
                     \] の平衡点 $(0, 0)$ は鞍点である. 
                     実際, エネルギーのグラフをプロットすると下図のようになり, $(0,0)$ が沈点でも源点でもないことを確認できる. 
                     なお, 多変数関数に対するこのような点 (ある方向に極大, ある方向に極小を達成する点) は, グラフが馬の鞍のような形をしていることから鞍点と呼ばれる. 
-                    力学系においては収束する軌道と離れる軌道の両方を持つ平衡点を鞍点と呼ぶが, これは勾配系の鞍点と同様の性質を持つことに基づく. 
+                    力学系においては収束する軌道と離れる軌道の両方を持つ平衡点を鞍点と呼ぶが, これは勾配系のエネルギーが鞍点である場合と同様の性質を持つことに基づく. 
                 </p>
                 <div class="resize"><img src='./images/energy_function_2d-1.png'></div>
             </div>
@@ -773,18 +781,6 @@
                             \end{pmatrix} \nabla E(\mathbf{x})
                         \] と表すことができる).
                     </li>
-                    <li>一般に, 
-                        \[
-                            M^{\operatorname{T}}\begin{pmatrix} 
-                                0 & I \cr 
-                                -I & 0 
-                            \end{pmatrix}M = \begin{pmatrix} 
-                                0 & I \cr 
-                                -I & 0 
-                            \end{pmatrix}
-                        \] を満たす行列 $M$ を <b>斜交行列</b> もしくは <b>シンプレティック行列</b> という. 
-                        ハミルトン系では, エネルギー $H$ の勾配 $\nabla H$ がシンプレティック行列となる. 
-                    </li>
                 </ul>
             </div>
 
@@ -813,18 +809,99 @@
                     \] というハミルトン系であると解釈できる. 
                     従って, この問題の解は初期値 $\mathbf{x}_0 = (x_0, y_0)$ により与えられた $H(x_0, y_0)$ の等高線上を動くことになる. 
                     下図がエネルギー関数および $H(0,0) = 0$ の等高線をプロットしたものである. 
-                    この等高線上にある平衡点は $\mathbf{0}$ のみであり, この平衡点は不安定であることがわかる. 
-                    従って $\mathbf{0}$ から離れるように動く軌道が存在するが, その軌道は再び $\mathbf{0}$ に近づくように動く (平衡点以外の点で動きが止まることは起こり得ない), つまり図中の黒い線はホモクリニック軌道を表している. 
+                    この等高線上にある平衡点は $\mathbf{0}$ のみであり, この平衡点は線形安定性解析より不安定であることがわかる. 
+                    従って $\mathbf{0}$ から離れるように動く軌道が存在するが, 平衡点以外の点で解の動きが止まることは起こり得ないため, 解の軌道は再び $\mathbf{0}$ に近づくように動くことになる, つまり図中の黒い線はホモクリニック軌道を表していることがわかる. 
                 </p>
                 <div class="resize"><img src='./images/hamiltonian-1.png'></div>
             </div>
 
+            <hr>
+
+            <p>記号の簡単のために 
+                \[
+                    J = \begin{pmatrix} 
+                        0 & -I \cr 
+                        I & 0 
+                    \end{pmatrix}\in\mathbb{R}^{d\times d}
+                \] を導入しよう. このとき, 
+                \[
+                    J^{-1} = \begin{pmatrix} 
+                        0 & I \cr 
+                        -I & 0 
+                    \end{pmatrix}
+                \] に注意すると, ハミルトン系は $\mathbf{x}' = J^{-1}\nabla H(\mathbf{x})$ と表すことができる. 
+                ここで, このハミルトン系のフローを $S(t): \mathbf{R}^d\to\mathbf{R}^d$ と表す, つまり解は $\mathbf{x}(t) = S(t)\mathbf{x}_0$ と表すことができる. 
+                このとき, 以下が成立することが知られている:
+            </p>
+
+            <div class="theorem" data-name="ハミルトン系のシンプレティック性">
+                <p>エネルギー $H:\mathbb{R}^d\to\mathbb{R}$ は十分滑らかであるとする. 
+                    このとき, ハミルトン系 $\mathbf{x}' = J^{-1}\nabla H(\mathbf{x})$ のフロー $S(t): \mathbb{R}^d\to\mathbb{R}^d$ に対して, 
+                    \[
+                        \left(DS(t)(\mathbf{x}_0)\right)^{\operatorname{T}} J (DS(t)(\mathbf{x}_0)) = J 
+                    \] が成立する, ただし, 
+                    \[
+                        DS(t)(\mathbf{x}_0) = \dfrac{\partial S(t)}{\partial \mathbf{x}_0}(\mathbf{x}_0)
+                    \] は $\mathbf{x}_0$ を変数とする関数 $S(t)$ のヤコビ行列である. 
+                </p>
+            </div>
+
+            <div class="remark">
+                <ul>
+                    <li>一般に, 
+                        \[
+                            M^{\operatorname{T}}JM = J
+                        \] を満たす行列 $M$ を <b>斜交行列</b> もしくは <b>シンプレティック行列</b> という. 
+                        上の定理は, ハミルトン系のフロー $S(t)$ を $\mathbf{x}_0$ を変数とする関数とみなしたときのヤコビ行列 $DS(t) \in\mathbb{R}^{d\times d}$ がシンプレティック行列となることを意味している. 
+                    </li>
+                    <li>なお, ハミルトン系のこのような性質を <b>シンプレティック性</b> という. 
+                        シンプレティック性は, ハミルトン系を特徴づける性質の一つであり, これは後述の <b>シンプレティック解法</b> のように数値計算にも利用される. 
+                    </li>
+                </ul>
+            </div>
+
+            <div class="proof">
+                <p>この証明中のみ, フロー $S(t): \mathbb{R}^d\to\mathbb{R}^d$ に対して $S(t)(\mathbf{x}_0)$ のように表記することにする. 
+                    記号の簡単のために 
+                    \[
+                        F(t)(\mathbf{x}_0) = \dfrac{\partial S(t)}{\partial \mathbf{x}_0}(\mathbf{x}_0)
+                    \] とおく, このとき $(F(t)(\mathbf{x}_0))^{\operatorname{T}} J(F(t)(\mathbf{x}_0)) = J$ を示せば良いことになる. 
+                    まず, $S(0)(\mathbf{x}_0) = \mathbf{x}_0$ であることから, $F(0)(\mathbf{x}_0) = I$ となるため $(F(0)(\mathbf{x}_0))^{\operatorname{T}} J(F(0)(\mathbf{x}_0)) = J$ が得られる. 
+                    あとは 
+                    \[
+                        \dfrac{d}{dt}(F(t)(\mathbf{x}_0))^{\operatorname{T}} J(F(t)(\mathbf{x}_0)) = 0 \in\mathbb{R}^{d\times d}
+                    \] であることを証明すれば良い. 
+                </p>
+                <p>いま, ハミルトン系の式より
+                    \[
+                        \dfrac{d}{dt}S(t)(\mathbf{x}_0) = \mathbf{x}' = J^{-1}\nabla H(S(t)(\mathbf{x}_0))
+                    \] であることに注意すると
+                    \[
+                        \dfrac{d}{dt}F(t)(\mathbf{x}_0) = J^{-1}\nabla^2 H(S(t)\mathbf{x}_0)\left(\dfrac{\partial S(t)}{\partial\mathbf{x}_0}(\mathbf{x}_0)\right) = J^{-1}\nabla^2 H(S(t)\mathbf{x}_0)(F(t)(\mathbf{x}_0))
+                    \] が得られる, ここで $\nabla^2 H$ は関数 $H: \mathbb{R}^d\to\mathbb{R}$ に対するヘッセ行列 
+                    \[
+                        \nabla^2 H (\mathbf{x}) = \begin{pmatrix} 
+                            \dfrac{\partial^2 H}{\partial x_1^2}(\mathbf{x}) & \dfrac{\partial^2 H}{\partial x_1\partial x_2}(\mathbf{x}) & \dots & \dfrac{\partial^2 H}{\partial x_1\partial x_d}(\mathbf{x}) \cr 
+                            \dfrac{\partial^2 H}{\partial x_2\partial x_1}(\mathbf{x}) & \dfrac{\partial^2 H}{\partial x_2^2}(\mathbf{x}) & \dots & \dfrac{\partial^2 H}{\partial x_2\partial x_d}(\mathbf{x}) \cr 
+                            \vdots & \vdots & \ddots & \vdots \cr
+                            \dfrac{\partial^2 H}{\partial x_d\partial x_1}(\mathbf{x}) & \dfrac{\partial^2 H}{\partial x_d\partial x_2}(\mathbf{x}) & \dots & \dfrac{\partial^2 H}{\partial x_d^2}(\mathbf{x}) \cr 
+                        \end{pmatrix} 
+                    \] であり, 特に対称行列であることに注意. 
+                    このことと $(J^{-1})^{\operatorname{T}} = -J^{-1}$ であることから 
+                    \[
+                        \dfrac{d}{dt}(F^{\operatorname{T}}JF) = (J^{-1}\nabla^2 H F)^{\operatorname{T}}JF + F^{\operatorname{T}}JJ^{-1}\nabla^2 H F = - F^{\operatorname{T}}(\nabla^2 H)^{\operatorname{T}}F + F^{\operatorname{T}}\nabla^2 HF = 0
+                    \] となり, 欲しい式が得られる. 
+                </p>
+            </div>
 
         </section>
 
-        <section id="section3-A"><h2>数値計算: 離散勾配法</h2>
+        <hr>
+
+        <section id="section3-A"><h2>数値計算: 構造保存型数値解法</h2>
             <p>先ほど言及したように, 勾配系の解はエネルギーを小さくするように動く, ハミルトン系の解はエネルギーを保存するように動く, という性質がある. 
-                さて, オイラー法やルンゲ=クッタ法の数値計算結果がこの性質を再現するかというと, 一般にはそうとは限らない. 
+                さらに, ハミルトン系にはシンプレティック性と呼ばれる性質があることも言及した. 
+                さて, オイラー法やルンゲ=クッタ法の数値計算結果がこれらの性質を再現するかというと, 一般にはそうとは限らない. 
             </p>
             <p>簡単な例として, $x'' = -dV/dx$ という問題に $y = x'$ を導入することで得られる 
                 \[
@@ -843,10 +920,12 @@
                 前進オイラー法と後退オイラー法の数値解がエネルギーを保存しない (数値解は厳密解と比較して膨張したり縮小したりする) ということは既に確認した通りである. 
             </p>
 
-            <p>さて, オイラー法やルンゲ=クッタ法などは多くの問題に対して適用可能であるという利点がある (このことから <b>汎用解法</b> と総称されることがある) が, 勾配系やハミルトン系のような問題に対しては, 解の性質を再現するように特別に設計された数値計算手法が用いられることもある. 
+            <p>さて, オイラー法やルンゲ=クッタ法などは多くの問題に対して適用可能であるという利点がある (このことから <b>汎用解法</b> と総称されることがある) が, 勾配系やハミルトン系のような問題に対しては, 数値解が厳密解の性質を再現するように特別に設計された数値計算手法が用いられることもある. 
                 このような発想に基づく数値計算手法を (汎用解法と対比して) <b>構造保存型数値解法</b> と呼ぶことがある. 
-                例えば, (一般化された) ハミルトン系に対する <b>離散勾配法</b> は構造保存型数値解法の一種と見なされる: 
+                ここでは, 特にハミルトン系に対する構造保存型数値解法として, エネルギー保存を再現する <b>エネルギー保存解法</b> とシンプレティック性を再現する <b>シンプレティック解法</b> の具体例を紹介しよう. 
             </p>
+
+            <p>まず, エネルギー保存解法の具体例として, (一般化された) ハミルトン系に対する <b>離散勾配法</b> を述べる: </p>
 
             <div class="definition" data-name="離散勾配法">
                 <p>歪対称行列 $A\in \mathbb{R}^{d\times d}$ を用いて 
@@ -896,12 +975,13 @@
                         H(\mathbf{x}_{n+1}) - H(\mathbf{x}_n) = \tau\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)^{\operatorname{T}}A\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n) = 0
                     \] となるため, 
                     \[
-                        H(\mathbf{x}_{n+1}) = H(\mathbf{x}_n) = \dots = H(\mathbf{x}_0),
-                    \] すなわち離散勾配法によるエネルギーの保存が得られる. 
+                        H(\mathbf{x}_{n+1}) = H(\mathbf{x}_n) = \dots = H(\mathbf{x}_0) 
+                    \] が得られる, すなわち離散勾配法によるエネルギーの保存が証明される. 
                 </p>
             </div>
 
-            <p>具体例を通じて離散勾配法の数値解を観察してみよう. 
+            <p>一般に, 与えられたエネルギー $H$ に対する離散勾配は存在するとは限らず, また複数存在し得る. 
+                ここでは離散勾配の具体的な構成例を一つだけ紹介しよう. 
                 先ほども考えた $H(\mathbf{x}) = V(x) + y^2/2$ において, 今度は $V(x) = x^4/4$ としてみる. 
                 このとき, 
                 \[
@@ -910,7 +990,7 @@
                         y 
                     \end{pmatrix}, 
                 \] である. 
-                一般に, 与えられたエネルギー $H$ に対する離散勾配は複数存在し得るが, ここでは
+                ここで, 
                 \[
                     \overline{\nabla}H(\mathbf{x}, \widehat{\mathbf{x}}) = \begin{pmatrix} 
                         (x^3 + x^2\widehat{x} + x\widehat{x}^2 + \widehat{x}^3) / 4 \cr 
@@ -950,13 +1030,117 @@
                     \mathbf{x}^{k+1} = \mathbf{x}^k - D\mathbf{F}_n(\mathbf{x}^k)^{-1}\mathbf{F}_n(\mathbf{x}^k)
                 \] による反復計算の収束先として求める: $\mathbf{x}_{n+1} = \displaystyle\lim_{k\to\infty}\mathbf{x}^k$ (実際には適当なところで反復計算を打ち切ることになる). 
                 また, $\mathbf{F}_n(\mathbf{x}) = \mathbf{0}$ の解は複数存在し得るが, $\tau$ が十分小さいならば $\mathbf{x}_n$ に最も近いものを $\mathbf{x}_{n+1}$ とするのが良いだろう. 
-                以下の計算例では, 単純にニュートン法の初期値を $\mathbf{x}^0 = \mathbf{x}_n$ と設定した際の収束先を $\mathbf{x}_{n+1}$ とみなしている. 
+                実際の数値計算では, 単純にニュートン法の初期値を $\mathbf{x}^0 = \mathbf{x}_n$ と設定した際の収束先を $\mathbf{x}_{n+1}$ とみなせば十分だろう. 
             </p>
-            <p>ルンゲ=クッタ法による数値計算結果と比較すると ($T$ が大きい場合であっても) 離散勾配法による数値解は縮小してしまうことが無い. 
+
+            <hr>
+
+            <p>次に, シンプレティック解法の具体例を紹介する. 
+                ハミルトン系は, 先ほどと同じ $x'' = -dV/dx$ から導出される 
+                \[
+                    H(\mathbf{x}) = V(x) + y^2/2, \quad V(x) = x^4/4, \quad 
+                    \mathbf{x}' = \begin{pmatrix} 
+                        0 & 1 \cr 
+                        -1 & 0 
+                    \end{pmatrix} \nabla H(\mathbf{x}) = \begin{pmatrix} 
+                        y \cr 
+                        -V'(x) 
+                    \end{pmatrix}  = \begin{pmatrix} 
+                        y \cr 
+                        -x^3 
+                    \end{pmatrix} 
+                \] を用いることにする. 
+                例えば非標準的なルンゲ=クッタ法の一種なども含め, 様々な数値計算手法がシンプレティック解法に属すると解釈されるが, ここでは <b>Störmer-Verlet 法</b> を上のハミルトン系に適用してみる:  
+                \[
+                    \left\{\begin{array}{rl}
+                        x_{n+1/2} &= x_n + \dfrac{\tau}{2}y_n, \cr 
+                        y_{n+1} &= y_n - \tau V'(x_{n+1/2}), \cr 
+                        x_{n+1} &= x_{n+1/2} + \dfrac{\tau}{2}y_{n+1}.
+                    \end{array}\right.
+                \] 
+            </p>
+            <p>なお, この式は整理すると 
+                \[
+                    \left\{\begin{array}{cl}
+                        \dfrac{x_{n+1/2} - x_n}{\tau/2} &= y_n, \cr 
+                        \dfrac{y_{n+1} - y_n}{\tau} &= - V'(x_{n+1/2}), \cr 
+                        \dfrac{x_{n+1} - x_{n+1/2}}{\tau/2} &= y_{n+1}.
+                    \end{array}\right.
+                \] を意味しており, つまり $x'' = -dV/dx$ に対する中心 $2$ 階差分近似 
+                \[
+                    \dfrac{\dfrac{x_{n+1}-x_{n+1/2}}{\tau/2} - \dfrac{x_{n+1/2}-x_n}{\tau/2}}{\tau} = -V'(x_{n+1/2})
+                \] に相当している. 
+            </p>
+            <p>さて, これがシンプレティック性を再現していることを確認しよう. 
+                いま, $3$ つの関数 $S_1(\tau)$, $S_2(\tau)$, $S_3(\tau): \mathbb{R}^2\to\mathbb{R}^2$ を 
+                \[
+                    S_1(\tau)(\mathbf{x}) = \begin{pmatrix} 
+                        x + \dfrac{\tau}{2}y \cr 
+                        y 
+                    \end{pmatrix}, \quad S_2(\tau)(\mathbf{x}) = \begin{pmatrix} 
+                        x \cr 
+                        y - \tau V'(x) 
+                    \end{pmatrix}, \quad S_3(\tau)(\mathbf{x}) = \begin{pmatrix} 
+                        x + \dfrac{\tau}{2}y \cr 
+                        y 
+                    \end{pmatrix}
+                \] と定めると, Störmer-Verlet 法により得られる式は 
+                \[
+                    \mathbf{x}_{n+1} = (S_3(\tau)\circ S_2(\tau)\circ S_1(\tau))(\mathbf{x}_n)
+                \] と表すことができる. 
+                そこで, 
+                \[
+                    S_d(\tau) = S_3(\tau)\circ S_2(\tau)\circ S_1(\tau)
+                \] とおくと, これが離散的なフローである. 
+                合成関数のヤコビ行列は 
+                \[
+                    DS_d(\tau) = DS_3(\tau) DS_2(\tau) DS_1(\tau)
+                \] となることと,
+                \[
+                    J = \begin{pmatrix} 
+                        0 & -1 \cr 
+                        1 & 0 
+                    \end{pmatrix}
+                \] であることに注意すると, 各ヤコビ行列を具体的に計算することで 
+                \[
+                    \begin{array}{rl} 
+                        (DS_d(\tau))^{\operatorname{T}}J(DS_d(\tau)) &= (DS_1(\tau))^{\operatorname{T}} (DS_2(\tau))^{\operatorname{T}} (DS_3(\tau))^{\operatorname{T}} J (DS_3(\tau)) (DS_2(\tau)) (DS_1(\tau)) \cr 
+                        &= (DS_1(\tau))^{\operatorname{T}} (DS_2(\tau))^{\operatorname{T}} \begin{pmatrix} 
+                            1 & 0 \cr 
+                            \tau/2 & 1 
+                        \end{pmatrix} J \begin{pmatrix} 
+                            1 & \tau/2 \cr 
+                            0 & 1 
+                        \end{pmatrix} (DS_2(\tau)) (DS_1(\tau)) \cr 
+                        &= (DS_1(\tau))^{\operatorname{T}} \begin{pmatrix} 
+                            1 & -\tau V''(x) \cr 
+                            0 & 1 
+                        \end{pmatrix} J \begin{pmatrix} 
+                            1 & 0 \cr 
+                            -\tau V''(x) & 1 
+                        \end{pmatrix} (DS_1(\tau)) \cr 
+                        &= \begin{pmatrix} 
+                            1 & 0 \cr 
+                            \tau/2 & 1 
+                        \end{pmatrix} J \begin{pmatrix} 
+                            1 & \tau/2 \cr 
+                            0 & 1 
+                        \end{pmatrix} = J 
+                    \end{array}
+                \] となる, すなわちシンプレティック性を再現できていることを確認できる. 
+                なお, シンプレティック解法は陽的とは限らないものの, この Störmer-Verler 法に関しては陽的スキームであり, 従ってニュートン法などは必要ない. 
+            </p>
+
+            <hr> 
+
+            <p>それではルンゲ=クッタ法, 離散勾配法, Störmer-Verler 法による数値計算を比較してみよう. 
+                数値計算結果 (左のプロット) を見てみると, ルンゲ=クッタ法による結果と比較して ($T$ が大きい場合であっても) 離散勾配法とシンプレティック解法による数値解は縮小してしまうことが無い. 
                 また右のプロット (横軸が $n$, 縦軸が $H(\mathbf{x}_n)$) を見ると, 離散勾配法による数値解はエネルギーを一定を保っていることを確認できる. 
-                計算に用いたパラメータについては, 以下のサンプルコードを参照: 
+                シンプレティック法による数値計算結果は, エネルギーを一定に保っているわけではないが, エネルギーがある範囲に収まっている様子が観察できる. 
+                シンプレティック解法は厳密解を定性的に良く近似することが知られており, エネルギー保存解法より好んで用いられることが多いが, 不安定平衡点近傍での挙動が悪化したり, 時間刻み幅の制御と組み合わせると良い性質を保証できないなどの弱点もあり, 万能というわけではない. 
             </p>
-            <div class="resize"><img src='./images/discrete_gradient_method.png'></div>
+            <p>計算に用いたパラメータについては, 以下のサンプルコードを参照: </p>
+            <div class="resize"><img src='./images/hamiltonian_system.png'></div>
             <pre>
 <code>
 import numpy as np 
@@ -971,6 +1155,10 @@ from functools import partial
 # 離散勾配法: 
 # (x_{n+1} - x_n) / \tau = (y_{n+1} + y_n) / 2
 # (y_{n+1} - y_n) / \tau = -(x_{n+1}^3 + x_{n+1}^2x_n + x_{n+1}x_n^2 + x_n^3) / 4
+# Stormer-Verlet 法: 
+# x_{n+1/2} = x_n + tau/2 * y_n 
+# y_{n+1} = y_n - tau x_{n+1/2}^3 
+# x_{n+1} = x_{n+1/2} + tau/2 * y_{n+1}
 
 # エネルギー (ハミルトニアン)
 H = lambda x: (x[0]**4) / 4 + (x[1]**2) / 2 
@@ -981,6 +1169,9 @@ def f(x: np.ndarray) -> np.ndarray:
         x[1],
         -x[0]**3 
     ])
+
+# V(x) = x^4/4 の微分 
+dV = lambda x: x**3
 
 # 古典的ルンゲ=クッタ (４段陽的ルンゲ=クッタ)
 def runge_kutta(x: np.ndarray, tau: float) -> np.ndarray:
@@ -1019,7 +1210,14 @@ def newton_method(Fn, DFn, x_init: np.ndarray) -> np.ndarray:
          raise ValueError('Newton method does not converge.') 
     return x_update
 
-fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+# Stormer-Verlet 法 
+def stormer_verlet(x: np.ndarray, tau: float) -> np.ndarray: 
+    x[0] = x[0] + tau/2 * x[1] # x_{n+1/2}
+    x[1] = x[1] - tau * dV(x[0]) 
+    x[0] = x[0] + tau/2 * x[1] 
+    return x 
+
+fig, ax = plt.subplots(1, 2, figsize=(10, 4))
 ax[0].set_aspect('equal')
 
 # 時間区間分割
@@ -1035,31 +1233,40 @@ DF = partial(DF, tau=tau)
 x0 = [1.0, 0.0]
 
 # 配列を初期化
-x= np.empty((2, N+1), dtype = float)
-x_RK = np.empty((2, N+1), dtype = float)
-x[:] = np.nan
+x_RK = np.empty((2, N+1), dtype = float) # Runge-Kutta method
+x_DG = np.empty((2, N+1), dtype = float) # Discrete Gradient method
+x_SV = np.empty((2, N+1), dtype = float) # Stormer-Varlet method
 x_RK[:] = np.nan
-x[:, 0] = x0
+x_DG[:] = np.nan
+x_SV[:] = np.nan
 x_RK[:, 0] = x0
-
-# 離散勾配法 
-for i in range(N): 
-    # x_n を部分適用 
-    Fn = partial(F, x_n = x[:, i])
-    DFn = partial(DF, x_n = x[:, i])
-    # ニュートン法
-    x[:, i+1] = newton_method(Fn, DFn, x[:, i])
+x_DG[:, 0] = x0
+x_SV[:, 0] = x0
 
 # ルンゲ=クッタ法 (比較用)
 for i in range(N):
     x_RK[:, i+1] = runge_kutta(x_RK[:, i], tau)
 
+# 離散勾配法 
+for i in range(N): 
+    # x_n を部分適用 
+    Fn = partial(F, x_n = x_DG[:, i])
+    DFn = partial(DF, x_n = x_DG[:, i])
+    # ニュートン法
+    x_DG[:, i+1] = newton_method(Fn, DFn, x_DG[:, i])
+
+# Stormer-Varlet 法 
+for i in range(N): 
+    x_SV[:, i+1] = stormer_verlet(x_SV[:, i], tau)
+
 # プロット
-ax[0].plot(x_RK[0], x_RK[1], color='tab:orange', label='Runge-Kutta')
-ax[0].plot(x[0], x[1], color='tab:blue', label='Discrete Gradient Method')
+ax[0].plot(x_RK[0], x_RK[1], label='Runge-Kutta')
+ax[0].plot(x_DG[0], x_DG[1], label='Discrete Gradient Method')
+ax[0].plot(x_SV[0], x_SV[1], label='Stormer-Verlet')
 ax[0].legend()
-ax[1].plot(t, H(x_RK), color='tab:orange')
-ax[1].plot(t, H(x), color='tab:blue')
+ax[1].plot(t, H(x_RK))
+ax[1].plot(t, H(x_DG))
+ax[1].plot(t, H(x_SV))
 fig.tight_layout()
 plt.show()
 </code>
