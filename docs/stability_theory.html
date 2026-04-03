@@ -193,7 +193,9 @@
                     <li>数学における流れ (および軌道) は, 本来は力学系とは別に定義されるものであり, そのアイデアを力学系にも応用できると説明されるべきものである. 
                         また, 非自励系に対しても (時間依存する) 流れを考えることができるが, ここではこれ以上深入りしない. 
                     </li>
-                    <li>フロー $S(t)$ は関数であり, $\mathbf{x}(t) = S(t)(\mathbf{x}_0)$ のように表記することも可能ではあるが, この資料では $\mathbf{x}(t) = S(t)\mathbf{x}_0$ と表記することにする. </li>
+                    <li>$\{S(t)\}$ が流れであるとき, 各 $t$ に対し $S(t)$ は与えられた点を時刻 $t$ だけ &quot;進める&quot; 写像である.</li> 
+                    <li>以降は, 流れ (フロー) を定める各写像 $S(t): X\to X$ を単にフローと呼ぶことにする. </li>
+                    <li>フロー $S(t)$ は写像であり, $\mathbf{x}(t) = S(t)(\mathbf{x}_0)$ のように表記することも可能ではあるが, この資料では $\mathbf{x}(t) = S(t)\mathbf{x}_0$ と表記することにする. </li>
                     <li>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ においては, $\mathbf{x}(t) = S(t)\mathbf{x}_0$ が時間経過に伴いどのように動くか, という情報が $\mathbf{f}(\mathbf{x})$ として (時間に無関係なベクトル場として) 与えられることになる. 
                         従って, ベクトル場 $\mathbf{f}(\mathbf{x})$ (もしくは方向場) を図示することで, $\mathbf{x}(t)$ が時間経過により相空間上をどの向きに動くかをイメージできる, つまり軌道の概形がわかる. 
                     </li>
@@ -210,7 +212,7 @@
                                 S(t)S(s)\mathbf{x} &= S(s+t)\mathbf{x} & \text{for all}\quad\mathbf{x}\in X 
                             \end{array}\right.
                         \] を満たす (この性質を <b>半群性</b> と呼ぶことがある). 
-                        特に初期値 $\mathbf{x}_0$ に対する自励系の解 $\mathbf{x}(s) = S(s)\mathbf{x}_0$ を考えると, $\mathbf{x}(s)$ を初期値として時刻 $t$ だけ進めた結果と, $\mathbf{x}(0)$ を初期値として時刻 $s+t$ だけ進めた結果が一致する.     
+                        特に初期値 $\mathbf{x}_0$ に対する自励系の解 $\mathbf{x}(s) = S(s)\mathbf{x}_0$ を考えると, $\mathbf{x}(s)$ を初期値として時刻 $t$ だけ進めた結果と, $\mathbf{x}(0)=\mathbf{x}_0$ を初期値として時刻 $s+t$ だけ進めた結果が一致する.     
                         <ul>
                             <li>特に線形力学系 $\mathbf{x}' = A\mathbf{x}$ に対して, $S(t)\mathbf{x}_0 = e^{tA}\mathbf{x}_0$ である. 
                                 つまり, 写像 $S(t)$ は行列 $e^{tA}$ を左から掛ける操作であり, $S(t) = e^{tA}$ と表記される. 
@@ -225,7 +227,7 @@
                     </li>
                     <li>力学系の平衡点は時間経過により動かないような解のことなので, 軌道が一点からなるような初期値に対応していると解釈できる. 
                     </li>
-                    <li>力学系の軌道は初期値の違いにより異なる挙動を示すことがある. 
+                    <li>力学系の軌道は初期値の違いにより異なる挙動を示す. 
                         この挙動の違いをわかりやすく図で表すものが相図であり, 解を明示的に表示できない場合に相図を描くことで, 解のおおまかな挙動を把握, 説明することが容易となる.  
                     </li>
                     <ul>
@@ -294,7 +296,7 @@
 
         <section id="section2-2"><h2>2.2: 平衡点の安定性</h2>
             <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ を例とすると, 与えられたベクトル場 $\mathbf{f}$ の方向場を描くことで, 適当な初期値に対する軌道の概形が得られ, 複数の軌道を描くことで相図が得られる.
-                ただし, コンピュータを利用しない限り, 精密な方向場を描くのは大変であり, 一方でコンピュータを利用するならば近似解を計算することで相図をプロットできるため, この方法で解の挙動を調べることは現実的とは言い難い. 
+                ただし, コンピュータを利用しない限り, 精密な方向場を描くのは大変であり, 一方でコンピュータを利用するならば多くの場合は近似解を計算することでおおよその相図をプロットできるため, 方向場を精密に描いて解の挙動を調べることは現実的とは言い難い. 
             </p>
 
             <p>実用上は平衡点に注目し, その近傍での解の振る舞いを調べることで力学系の解の挙動を推測することになる. 
@@ -998,7 +1000,6 @@
                     \[
                         A^{\operatorname{T}}P + PA + Q = 0
                     \] という方程式は <b>リアプノフ方程式</b> と呼ばれるものであり, その解 $P$ を求めることは, 線形力学系で記述されるシステムの安定性を調べる有用な手段の一つである. 
-                    
                 </p>
             </div>
 
@@ -1117,6 +1118,9 @@
                     </li>
                 </ul>
             </div>
+            <p>従って, 線形力学系の平衡点における安定性を調べる方法として, 行列固有値を計算するかリアプノフ方程式を解くかの $2$ つが考えられる. 
+                この資料では行列 $A$ のサイズが小さい場合しか考えないため, 以降は固有値を計算して安定性を判定することになるが, 実用上は固有値の計算が困難な場合に, リアプノフ方程式が用いられることもある. 
+            </p>
 
         </section>
          
@@ -1127,7 +1131,9 @@
                 上で見たように, 線型力学系 $\mathbf{x}' = A\mathbf{x}$ の場合には (つまり $\mathbf{f}$ が線型であり $\mathbf{f}(\mathbf{x}) = A\mathbf{x}$ と表される場合には), 行列 $A$ の固有値実部と関連したリアプノフ関数の具体的な構成方法が知られている. 
             </p>
             <p>さて, 非線形力学系に対するリアプノフ関数を具体的に構成できるかというと, 一般には否である. 
-                そこで, 非線形力学系の安定性の判定に利用できる別のアイデアを紹介する. 
+                ただし, 平衡点付近で非線形力学系を線形力学系で &quot;近似&quot; することで, 平衡点の安定性を判定できることがある. 
+                つまり, 非線形力学系の平衡点の安定性解析を, 行列固有値の計算に帰着させたり, リアプノフ関数の近似を構成することで行うことができる場合がある. 
+                ここでは特に, 行列固有値の計算に帰着させるテクニックを見てみよう:
             </p>
 
             <ul>
@@ -1605,8 +1611,8 @@
                 \] が得られる. 
                 次に, (中心多様体上では $\mathbf{x}_s = \mathbf{h}_s(\mathbf{x}_c)$ であることにもう一度注意して) 両辺にそれぞれ $(\ast)$ 式を代入すると
                 \[
-                    D\mathbf{h}_s(\mathbf{x}_c)(A_c\mathbf{x}_c + \mathbf{r}_c(\mathbf{x}_c, \mathbf{h}_s(\mathbf{x}_c))) = A_s\mathbf{x}_s + \mathbf{r}_s(\mathbf{x}_c, \mathbf{h}(\mathbf{x}_c))
-                \] という等式が得られる (ただし, 具体的に計算する際には上の $\mathbf{x}_s' = D\mathbf{h}_s(\mathbf{x}_c)\mathbf{x}_c'$ の方が使い勝手が良いことも多い). 
+                    D\mathbf{h}_s(\mathbf{x}_c)(A_c\mathbf{x}_c + \mathbf{r}_c(\mathbf{x}_c, \mathbf{h}_s(\mathbf{x}_c))) = A_s\mathbf{x}_s + \mathbf{r}_s(\mathbf{x}_c, \mathbf{h}(\mathbf{x}_c)) = A_s\mathbf{h}_s(\mathbf{x}_c) + \mathbf{r}_s(\mathbf{x}_c, \mathbf{h}(\mathbf{x}_c))
+                \] という等式が得られる. 
                 これを近似的に満たす関数は $\mathbf{h}_s$ の近似を与えることになる. 
                 実際に安定性を判定する際は, 適当な多項式 $S(t)$ を見つけることで, 中心多様体の近似を構成し, その上での解の挙動を考えれば十分である:
             </p>
@@ -1617,12 +1623,47 @@
                         \left\{\begin{array}{l}
                             \varphi(\mathbf{0}) = \mathbf{0}, \cr 
                             D\varphi(\mathbf{0}) = O, \cr 
-                            D\varphi(\mathbf{\mathbf{x}_c})(A_c\mathbf{x}_c + \mathbf{r}_c(\mathbf{x}_c, \varphi(\mathbf{x}_c))) - (A_s\mathbf{x}_s + \mathbf{r}_s(\mathbf{x}_c, \varphi(\mathbf{x}_c))) = O(|\mathbf{x}_c|^k)
+                            D\varphi(\mathbf{\mathbf{x}_c})(A_c\mathbf{x}_c + \mathbf{r}_c(\mathbf{x}_c, \varphi(\mathbf{x}_c))) - (A_s\varphi(\mathbf{x}_c) + \mathbf{r}_s(\mathbf{x}_c, \varphi(\mathbf{x}_c))) = O(|\mathbf{x}_c|^k)
                         \end{array}\right.
                     \] を満たすならば, 自励系 $(\ast)$ の中心多様体 $W^c$ を定義する $\mathbf{h}_s$ に対し,  
                     \[
                         \mathbf{h}_s(\mathbf{x}_c) = \varphi(\mathbf{x}_c) + O(|\mathbf{x}_c|^k)
                     \] が成立する, ここで, $O(|\mathbf{x}_c|^k)$ はランダウの記号である. 
+                </p>
+            </div>
+
+            <div class="remark">
+                <p>直観的には, 
+                    \[
+                        \left\{\begin{array}{l}
+                            \mathbf{h}_s(\mathbf{0}) = \mathbf{0}, \cr 
+                            D\mathbf{h}_s(\mathbf{0}) = O, \cr 
+                            \mathbf{x}_s = \mathbf{h}_s(\mathbf{x}_c), \cr
+                            \mathbf{x}_s' = D\mathbf{h}_s(\mathbf{x}_c)\mathbf{x}_c' 
+                        \end{array}\right.
+                    \] を満たす $\mathbf{h}_s(\mathbf{x}_c)$ の近似として, 
+                    \[
+                        \left\{\begin{array}{l}
+                            \varphi(\mathbf{0}) = \mathbf{0}, \cr 
+                            D\varphi(\mathbf{0}) = O, \cr 
+                            \mathbf{x}_s \approx \varphi(\mathbf{x}_c), \cr
+                            \mathbf{x}_s' \approx D\varphi(\mathbf{x}_c)\mathbf{x}_c' 
+                        \end{array}\right.
+                    \] となる多項式 $\varphi(\mathbf{x}_c)$ を求めたい. 
+                    このときに,  
+                    \[
+                        \begin{array}{rl} 
+                            \mathbf{x}_s' &= A_s\mathbf{x}_s + \mathbf{r}_s(\mathbf{x}_c, \mathbf{h}_s(\mathbf{x}_c)) \approx A_s\mathbf{x}_s + \mathbf{r}_s(\mathbf{x}_c, \varphi(\mathbf{x}_c)) \approx A_s\varphi(\mathbf{x}_c) + \mathbf{r}_s(\mathbf{x}_c, \varphi(\mathbf{x}_c)), \cr
+                            \mathbf{x}_c' &= A_c\mathbf{x}_c + \mathbf{r}_c(\mathbf{x}_c, \mathbf{h}_s(\mathbf{x}_c)) \approx A_c\mathbf{x}_c + \mathbf{r}_c(\mathbf{x}_c, \varphi(\mathbf{x}_c))
+                        \end{array}
+                    \] というアイデアに基づき, 
+                    \[
+                        \left\{\begin{array}{l}
+                            \varphi(\mathbf{0}) = \mathbf{0}, \cr 
+                            D\varphi(\mathbf{0}) = O, \cr 
+                            A_s\varphi(\mathbf{x}_c) + \mathbf{r}_s(\mathbf{x}_c, \varphi(\mathbf{x}_c)) \approx D\varphi(\mathbf{x}_c)(A_c\mathbf{x}_c + \mathbf{r}_c(\mathbf{x}_c, \varphi(\mathbf{x}_c)))
+                        \end{array}\right.
+                    \] を満たす $\varphi(\mathbf{x}_c)$ を求めれば, それは自然に $\mathbf{x}_s \approx \varphi(\mathbf{x}_c)$ も満たす, ということを意味している. 
                 </p>
             </div>
 
@@ -1744,13 +1785,28 @@
                         \end{pmatrix} 
                     \] であり, 従って $P = (\mathbf{v}_1, \mathbf{v}_2)$ とおくと
                     \[
+                        P = \begin{pmatrix} 
+                            1 & 1 \cr 
+                            0 & -1 
+                        \end{pmatrix}, \quad P^{-1} = \begin{pmatrix} 
+                            1 & 1 \cr 
+                            0 & -1 
+                        \end{pmatrix}, \quad P^{-1}D\mathbf{f}(\mathbf{0})P = \begin{pmatrix} 
+                            \lambda_1 & 0 \cr 
+                            0 & \lambda_2 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            0 & 0 \cr 
+                            0 & -1 
+                        \end{pmatrix}
+                    \] である. これを用いて
+                    \[
                         \begin{pmatrix} 
                             x_c \cr 
                             x_s 
                         \end{pmatrix} = P^{-1}\mathbf{x} = \begin{pmatrix} 
                             x+y \cr 
                             -y 
-                        \end{pmatrix},\quad \begin{pmatrix} 
+                        \end{pmatrix},\quad \mathbf{x} = \begin{pmatrix} 
                             x \cr 
                             y 
                         \end{pmatrix} = P\begin{pmatrix} 
@@ -1760,7 +1816,7 @@
                             x_c + x_s \cr 
                             -x_s 
                         \end{pmatrix}
-                    \] であり, 
+                    \] という変数変換を考えると,  
                     \[
                         \begin{array}{rl} 
                             \begin{pmatrix} 
@@ -1778,44 +1834,65 @@
                                 x_s 
                             \end{pmatrix} + \begin{pmatrix} 
                                 -3x^3 \cr 
-                                -3x^3 
+                                3x^3 
                             \end{pmatrix} \cr 
                             &= \begin{pmatrix} 
-                                \lambda_1 & 0 \cr 
-                                0 & \lambda_2 
+                                0 & 0 \cr 
+                                0 & -1 
                             \end{pmatrix}\begin{pmatrix} 
                                 x_c \cr 
                                 x_s 
                             \end{pmatrix} + \begin{pmatrix} 
                                 -3(x_c+x_s)^3 \cr 
-                                -3(x_c+x_s)^3  
+                                3(x_c+x_s)^3  
                             \end{pmatrix}
                         \end{array}
-                    \] となるため, ($\lambda_1=0$, $\lambda_2=-1\neq0$ であることを思い出すと) この自励系は $(\ast)$ 式の形になっている.
-                    これを用いて, 中心多様体 $W^c$ を定義する $h_s: \mathbb{R}\to \mathbb{R}$ の近似となる多項式 $\varphi: \mathbb{R}\to \mathbb{R}$ を構成しよう. 
-                    $\varphi(\mathbf{0})=\mathbf{0}$, $D\varphi(\mathbf{0}) = O$ より $2$ 次以下の項は消えてしまうことを考慮して 
+                    \] となるため, この自励系は $(\ast)$ 式の形になっている.
+                    これを用いて, 中心多様体 $W^c$ を定義する $h_s: \mathbb{R}\to \mathbb{R}$ の近似となる多項式 $\varphi: \mathbb{R}\to \mathbb{R}$ を構成しよう:
+                    \[
+                        \left\{\begin{array}{l}
+                            \varphi(0) = 0, \cr 
+                            \varphi'(0) = 0, \cr 
+                            x_s' \approx \varphi'(x_c)x_c', \cr 
+                            x_c' = -3(x_c+x_s)^3 \approx -3(x_c+\varphi(x_c))^3, \cr 
+                            x_s' = -x_s + 3(x_c+x_s)^3 \approx -\varphi(x_c) + 3(x_c+\varphi(x_c))^3. 
+                        \end{array}\right.
+                    \] いま, 上 $2$ つより定数項と一次の項は $0$ である, そこで例えば
                     \[
                         \varphi(x_c) = a_2x_c^2 + a_3x_c^3 
-                    \] とおいてみる. 
-                    このとき, 上の式と $x_s=\varphi(x_c)$ に基づき $\varphi'(x_c)x_c' - x_s' = O(x_c^k)$ の $k$ をできるだけ大きくする $a_2$, $a_3$ を求める:
+                    \] という $3$ 次多項式で中心多様体の近似を試みる. 
+                    このとき, 
                     \[
                         \begin{array}{rl} 
-                            \varphi'(x_c)x_c' - x_s' &= (2a_2x_c + 3a_3x_c^2)x_c' - x_s' \cr 
-                            &= -(-\varphi(x_c) -3(x_c+\varphi(x_c))^3) \cr
-                            &= a_2x_c^2 + a_3x_c^3 + 3(x_c+a_2x_c^2+a_3x_c^3)^3 \cr 
-                            &= a_2x_c^2 + (3+a_3)x_c^3 + O(x_c^4).
+                            \varphi'(x_c)x_c' - x_s' &\approx \varphi'(x_c)(-3(x_c + \varphi(x_c))^3) + \varphi(x_c) - 3(x_c+\varphi(x_c))^3 \cr 
+                            &= O(x_c^4) + \varphi(x_c) - 3(x_c^3 + O(x_c^4)) \cr 
+                            &= a_2x_c^2 + (a_3-3)x_c^3 + O(x_c^4).
                         \end{array}
-                    \] 従って, $a_2=0$, $a_3 = -3$ とすれば $\varphi(x_c) = -3x_c^3$ は ($x_c=0$ 付近で) 中心多様体の十分に良い近似を与える.  
-                </p>
-                <p>ここで中心多様体の近似 $\{(x_c,x_s)\in\mathbb{R}^2 : x_s=\varphi(x_c),\ |x_c|\text{ は十分小さい}\}$ 上での自励系  
+                    \] 従って, $a_2=0$, $a_3 = 3$ とすることで, $x_s = \varphi(x_c) = 3x_c^3$ は ($x_c=0$ 付近で) 中心多様体の十分に良い近似 
                     \[
-                        x_c' = -3(x_c+\varphi(x_c))^3 = -3(x_c-3x_c^3)^3
-                    \] の平衡点 $x_c=0$ の安定性を考えると, $x_c=0$ 付近では $x_c' = -3(x_c-3x_c^3)^3 \lt 0$ となることから, この $1$ 次元力学系の平衡点 $x_c=0$ は漸近安定である. 
+                        x_s = h_s(x_c) = \varphi(x_c) + O(x_c^4) = 3x_c^3 + O(x_c^4) \approx 3x_c^3
+                    \] を与える.  
+                </p>
+                <p>ここで中心多様体の近似 $\{(x_c,x_s)\in\mathbb{R}^2 : x_s=\varphi(x_c)=x_c^3,\ |x_c|\text{ は十分小さい}\}$ 上での自励系  
+                    \[
+                        x_c' = -3(x_c+h_s(x_c))^3 = -3(x_c-3x_c^3+O(x_c^4))^3
+                    \] の平衡点 $x_c=0$ の安定性を考えると, $x_c=0$ 付近では $x_c' \approx -3x_c^3$ となることから, この $1$ 次元力学系の平衡点 $x_c=0$ は漸近安定である. 
                     中心多様体縮約より, 元の自励系の平衡点付近での挙動は, この $1$ 次元力学系の平衡点 $x_c=0$ 付近での挙動に近い, つまり漸近安定であることがわかる. 
                 </p>
-                <p>実際に, 元の自励系の平衡点 $\widetilde{\mathbf{x}} = (1,0)$ 付近に初期値をいくつか設定し, 数値計算を行った結果を以下に掲載する. 
-                    図中の青い線が各初期値からの解の軌道であり, 赤い線は平衡点付近での中心多様体の近似 (つまり局所中心多様体の近似) を表す. 
-                    ベクトル $\mathbf{v}_2$ で表される安定方向には (指数的に減衰するため) 急速に動いて中心多様体に近づき, 平衡点付近では中心多様体の近似に沿うようにして平衡点に向かって動いている様子を確認できる. 
+                <p>さて, 上の結果に $x$, $y$ を導入すると, 
+                    \[
+                        -y = x_s = h_s(x_c) = 3x_c^3 + O(x_c^4) = 3(x+y)^3 + O((x+y)^4)
+                    \] が中心多様体であり, これは 
+                    \[
+                        -y = x_s \approx \varphi(x_c) = 3x_c^3 = 3(x+y)^3
+                    \] により近似される. 
+                    これを $(x, y)$ 平面上にプロットすることは手間だが, 大雑把に $y$ が十分小さいならば 
+                    \[
+                        y = -3x^3
+                    \] が中心多様体の近似 (のさらに近似) だと思って良いだろう. 
+                    実際に, 元の自励系の平衡点 $\widetilde{\mathbf{x}} = (1,0)$ 付近に初期値をいくつか設定し, 数値計算を行った結果を以下に掲載する. 
+                    図中の青い線が各初期値からの解の軌道であり, 赤い線は $y=-3x^3$ を並行移動した $y=-3(x-1)^3$ (これを平衡点付近での中心多様体の近似と思っている) を表す. 
+                    安定方向には (指数的に減衰するため) 急速に動いて中心多様体に近づき, 平衡点付近では中心多様体の近似に沿うようにして平衡点に向かって動いている様子を確認できる. 
                 </p>
                 <!-- <div class="resize"><img src='./images/center_manifold.png'></div> -->
                  <div class="resize">
@@ -1823,6 +1900,29 @@
                     <source src="videos/center_manifold.mp4" type="video/mp4" />
                     </video>
                 </div>
+            </div>
+
+            <div class="remark">
+                <p>なお, $x$, $y$ を用いた大雑把な中心多様体の近似に関しては, 
+                    \[
+                        \left\{\begin{array}{l}
+                            \varphi(x_c) = a_2x_c^2 + a_3x_c^3, \cr
+                            x_s'\approx \varphi'(x_c)x_c', \cr
+                            x_c = x+y, \cr 
+                            x_s = -y, \cr 
+                            x' = y, \cr 
+                            y' = -y-3x^3
+                        \end{array}\right.
+                    \] を用いて, 
+                    \[
+                        \begin{array}{rl} 
+                            0 &\approx \varphi'(x_c)x_c' - x_s' \cr 
+                            &= (2a_x(x+y) + 3a_3(x+y)^2)(x+y)' - (-y)' \cr 
+                            &= -3x^3(2a_x(x+y) + 3a_3(x+y)^2) - (y+3x^3) 
+                        \end{array}
+                    \] のように変形し, 平衡点 $\mathbf{x} = \mathbf{0}$ 付近では $0\approx -(y+3x^3)$ となることから $y=-3x^3$ が中心多様体の近似であるとみなしても良いだろう. 
+                    数学的な厳密さには欠けるが, 計算テクニックとしては有用である. 
+                </p>
             </div>
 
         </section>
@@ -1962,8 +2062,6 @@ plt.show()
     </article>
     </main>
     </div>
-
-
 
 </body>
 
