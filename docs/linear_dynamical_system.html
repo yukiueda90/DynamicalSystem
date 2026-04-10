@@ -1278,6 +1278,66 @@ plt.show()
                     \end{pmatrix}
                 \] を <b>シンプレクティックオイラー法</b> と呼ぶことがあるが, これによる数値解は単位円から大きく離れないことが知られている.  
             </p>
+
+            <div class="exercise">
+                <p>調和振動子 
+                    \[
+                        \begin{pmatrix} 
+                            x' \cr 
+                            y' 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            0 & 1 \cr 
+                            -1 & 0 
+                        \end{pmatrix}\begin{pmatrix} 
+                            x \cr 
+                            y 
+                        \end{pmatrix}, \quad x(0) = x_0,\quad y(0) = y_0 
+                    \] に対する中点則 
+                    \[
+                        \dfrac{\mathbf{x}_{n+1} - \mathbf{x}_n}{\tau} = A \dfrac{\mathbf{x}_{n+1}+\mathbf{x}_n}{2},\qquad \text{ただし}\quad \mathbf{x}_{n} = \begin{pmatrix} 
+                            x_n \cr 
+                            y_n 
+                        \end{pmatrix},\quad A = \begin{pmatrix} 
+                            0 & 1 \cr 
+                            -1 & 0 
+                        \end{pmatrix}
+                    \] による数値解が $\|\mathbf{x}_{n+1}\| = \|\mathbf{x}_n\| = \dots = \|\mathbf{x}_0\|$ を満たすことを証明せよ.
+                </p>
+            </div> 
+
+            <div class="answer">
+                <p>中点則では 
+                    \[
+                        \left(I-\dfrac{\tau}{2}A\right)\mathbf{x}_{n+1} = \left(I+\dfrac{\tau}{2}A\right)\mathbf{x}_n 
+                    \] である. 
+                    ここで, (必要ならクラメルの公式などを使って) 
+                    \[
+                        \left(I-\dfrac{\tau}{2}A\right)^{-1} = \begin{pmatrix} 
+                            1 & -\tau/2 \cr 
+                            \tau/2 & 1 
+                        \end{pmatrix}^{-1} = \dfrac{1}{1+\tau^2/4}\begin{pmatrix} 
+                            1 & \tau/2 \cr 
+                            -\tau/2 & 1 
+                        \end{pmatrix} = \dfrac{1}{1+\tau^2/4}\left(I+\dfrac{\tau}{2}A\right)
+                    \] であることから, 
+                    \[
+                        \begin{array}{rl} 
+                            \|\mathbf{x}_{n+1}\|^2 &= \left\|\left(I-\dfrac{\tau}{2}A\right)^{-1}\left(I+\dfrac{\tau}{2}A\right)\mathbf{x}_n\right\|^2 \cr 
+                            &= \left\|\dfrac{1}{1+\tau^2/4}\begin{pmatrix} 
+                                1-\tau^2/4 & \tau \cr 
+                                -\tau & 1-\tau^2/4 
+                            \end{pmatrix}\mathbf{x}_n\right\|^2 \cr 
+                            &= \dfrac{1}{(1+\tau^2/4)^2} \left\|\begin{pmatrix} 
+                                (1-\tau^2/4)x_n + \tau y_n \cr 
+                                -\tau x_n + (1-\tau^2/4)y_n 
+                            \end{pmatrix}\right\|^2 \cr 
+                            &= \dfrac{(1-\tau^2/4)^2+\tau^2}{(1+\tau^2/4)^2}\|\mathbf{x}_n\|^2 \cr 
+                            &= \|\mathbf{x}_n\|^2.
+                        \end{array}
+                    \] これが任意の $n$ に対して成立するため $\|\mathbf{x}_{n+1}\| = \|\mathbf{x}_n\| = \dots = \|\mathbf{x}_0\|$ が得られる. 
+                </p>
+            </div>
+
             <p>このように, 一般には方程式 (の解) の性質に応じて数値計算手法を適切に選ぶことが望ましい. 
                 そしてそのためには, 方程式や解の性質を説明する数学的なアイデアを理解, 利用する必要があるのである. 
             </p>
