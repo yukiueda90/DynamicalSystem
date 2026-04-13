@@ -27,7 +27,7 @@
     </div>
     
     <!-- main -->
-    <main role="main"><article id="section4"><h1>4. 分岐</h1>
+    <main role="main"><article id="section4"><h1>4. 分岐とカオス</h1>
         <p>力学系において, 解の挙動は平衡点やリミットサイクルの存在, およびその安定性に強く影響される. 
             力学系にパラメータが含まれている場合, そのパラメータを動かしたとき, 例えばある臨界値を境に平衡点が新たに現れる, 消滅するといったことが起こり得る. 
             一般に, 力学系では臨界点付近のパラメータの変化により, 解の挙動の劇的な違いを説明することができるが, このような現象は力学系の <b>分岐</b> (<b>bifurcation</b>) と呼ばれる.  
@@ -36,16 +36,18 @@
             また, 力学系の解は, パラメータを変化させた際の分岐によりカオス的挙動に遷移することもある. 
             比較的単純な式から複雑な挙動を表現することができることは, カオス理論の興味深い点であり, それと関連する分岐現象も重要な概念である. 
         </p>
-        <p>ここでは, 特徴に基づき様々な名前を付けられた分岐について紹介し, その応用について言及する. </p>
+        <p>ここでは, 特徴に基づき様々な名前を付けられた分岐について紹介し, またカオス的な挙動をする自励系の具体例について言及する. </p>
 
-        <section id="section4-1"><h2>4.1: 分岐の概要と分岐図</h2>
+        <section id="section4-1"><h2>4.1: 分岐のいくつかの具体例</h2>
             <p>まず, 高次元の力学系において分岐の様子をイメージしやすくするために, <b>分岐図</b> というアイデアを導入する. 
+                分岐図は, 解の挙動がパラメータの変化にどのように影響を受けるかを理解する際に役立つものである: 
             </p>
 
             <div class="definition" data-name="分岐図">
                 <p>パラメータを含む力学系の解の挙動を考える. </p>
                 <ul>
-                    <li>横軸にパラメータ, 縦軸に平衡点やリミットサイクルを表す値を取ったプロットを <b>分岐図</b> (<b>bifurcation diagram</b>) という. </li> 
+                    <li>パラメータに依存して平衡点やリミットサイクルがどのように変化するかを表す図を <b>分岐図</b> (<b>bifurcation diagram</b>) という.</li>
+                    <li>典型的には, 横軸にパラメータ, 縦軸に平衡点やリミットサイクルを表す &quot;値&quot; を用いてプロットされる. </li> 
                     <li>例えば安定な平衡点やリミットサイクルは実線で, 不安定な平衡点やリミットサイクルは点線で表す, もしくは安定性によって色を変えるなど区別して描画されることが多い. </li>
                 </ul>
             </div>
@@ -96,6 +98,413 @@
                 <div class="resize"><img src='./images/transcritical_diagram_1d-1.png'></div>
             </div>
 
+            <div class="example">
+                一次元力学系 
+                    \[
+                        x' = rx - x^3
+                    \] を考える, ここで $r\in\mathbb{R}$ はパラメータである. 
+                    この力学系の平衡点は, 
+                </p>
+                <ul>
+                    <li>$r\lt 0$ のときは $x = 0$ が安定な平衡点である, </li> 
+                    <li>$r=0$ のときは $x = 0$ が安定な平衡点である (が, 線型項が消失することから収束の速さは指数的減衰から台数的減衰に変化する), </li> 
+                    <li>$r\gt 0$ のときは, $x = \pm\sqrt{r}$ が安定な平衡点であり, $x = 0$ が不安定な平衡点である,</li>
+                </ul>
+                <p>このように, パラメータを変化させた際に $1$ つ平衡点が$3$ つの平衡点に分裂するような分岐を (分岐図の形状から) <b>ピッチフォーク分岐</b> (<b>pitchfork bifurcation</b>) もしくは <b>熊手型分岐</b> という. 
+                    なお, この例のように, あるパラメータに対して安定な平衡状態が $2$ つ存在する状況を <b>双安定</b> (<b>bistable</b>) であるという. 
+                </p>
+                <div class="resize"><img src='./images/pitchfork_diagram-1.png'></div>
+                <p>この例では安定な平衡点が不安定化し, 代わりに $2$ つの安定な平衡点が現れるが, このようなピッチフォーク分岐を特に <b>超臨界ピッチフォーク分岐</b> (<b>supercritical pitchfork bifurcation</b>) という. 
+                    逆に, パラメータを変化させた際に不安定な平衡点が安定化, 代わりに $2$ つの不安定な平衡点が現れるピッチフォーク分岐を <b>亜臨界ピッチフォーク分岐</b> (<b>subcritical pitchfork bifurcation</b>) という. 
+                    言い方を変えれば, 亜臨界ピッチフォーク分岐では (サドルノード分岐と同様に) パラメータの変化により安定な平衡解が不安定な平衡解と合流して安定でなくなる, という現象が起こる. 
+                </p>
+                <p>これに関連して, もう一つの例として 
+                    \[
+                        x' = rx + x^3 - x^5 
+                    \] という一次元力学系を考えてみよう. 
+                    分岐図を描くと, $r=0$ において亜臨界ピッチフォーク分岐が, $r=-1/4$ においてサドルノード分岐が起こることがわかる. 
+                </p>
+                <div class="resize"><img src='./images/hysteresis-1.png'></div>
+                <p>
+                    この問題に対し, パラメータが時間に依存して変化する状況を考えると, 解は &quot;パラメータをどのように変化させたか&quot; に依存することになる. 
+                    例えば初期値を $x=0$ の近くに与え, $r$ をゆっくりと増加させる. 
+                    パラメータ $r$ が負である間は, 解は $x=0$ に近づこうとするが, $r=0$ を境に $x=0$ は安定な平衡解では無くなってしまい, 解は異なる平衡解近づこうとする. 
+                    今度は逆に $r$ をゆっくりと減少させると, $r=-1/4$ を境に安定な平衡解は $x=0$ しか存在しなくなり, 系の状態のジャンプが発生する. 
+                    このように, 系の状態変化はパラメータ変化や状態の &quot;履歴&quot; に依存することがある. 
+                    このような性質は <b>ヒステリシス</b> (<b>hysteresis</b>) と呼ばれ, 様々な現象において観察されるものであるが, 双安定性やピッチフォーク分岐などはこのような現象を数理モデルで再現する際に有用な特徴を持つ. 
+                </p>
+            </div>
+
+            <div class="example">
+                <p>ここでは $2$ 次元力学系 
+                    \[
+                        \left\{\begin{array}{rl}
+                            x' &= \mu x - \omega y - (x^2+y^2)x, \cr 
+                            y' &= \omega x + \mu y - (x^2+y^2)y 
+                        \end{array}\right.
+                    \] を考えよう, ただし $\mu$, $\omega$ はパラメータであり, $\omega\gt0$ とする. 
+                    まず, 原点 $\mathbf{0}$ が平衡点であることは明らかであり, 右辺を $\mathbf{f}(\mathbf{x})$ と表すことにすると, ヤコビ行列 
+                    \[
+                        D\mathbf{f}(\mathbf{0}) = \begin{pmatrix} 
+                            \mu & -\omega \cr 
+                            \omega & \mu 
+                        \end{pmatrix} 
+                    \] の固有値は $\lambda = \mu\pm i\omega$ なので, 線形安定性解析より $\mu\gt0$ ならば $\mathbf{0}$ は漸近安定な平衡点であり, $\mu\gt0$ ならば $\mathbf{0}$ は不安定な平衡点である. 
+                </p>
+                <p>さて, この問題を極座標表示を用いて書き直してみよう: $r\gt0$ を用いて $x=r\cos\theta$, $y=r\sin\theta$ と表すことで 
+                    \[
+                        \left\{\begin{array}{rl}
+                            r'\cos\theta - r\theta'\sin\theta &= \mu r\cos\theta - \omega r\sin\theta - r^3\cos\theta, \cr 
+                            r'\sin\theta + r\theta'\cos\theta &= \omega r\cos\theta + \mu r \sin\theta - r^3\sin\theta
+                        \end{array}\right.
+                    \] すなわち 
+                    \[
+                        \begin{pmatrix} 
+                            \cos\theta & -\sin\theta \cr 
+                            \sin\theta & \cos\theta 
+                        \end{pmatrix}\begin{pmatrix} 
+                            r' - (\mu r-r^3) \cr 
+                            r(\theta' - \omega) 
+                        \end{pmatrix} = \mathbf{0}
+                    \] が得られるため, これを解いて  
+                    \[
+                        \left\{\begin{array}{rl}
+                            r' &= \mu r - r^3 \cr 
+                            \theta' &= \omega
+                        \end{array}\right.
+                    \] が得られる. 
+                    ここから ($r\ge0$ に注意すると), $\mu\gt 0$ の場合は $r=\sqrt{\mu}$ で表される安定なリミットサイクルが存在することがわかる. 
+                </p>
+                <p>これを分岐図に表してみよう. 
+                    パラメータ $\omega\gt0$ は固定することにして, パラメータ $\mu$ を分岐図の横軸にする. 
+                    縦軸には安定な平衡点, リミットサイクルに対する $r$ の値を用いることにしてみよう. 
+                    このとき以下の図のように, 安定な平衡点が不安定化し, 代わりに安定な周期解が現れる様子を表すことができる. 
+                </p>
+                <div class="resize"><img src='./images/hopf_bifurcation-1.png'></div>
+                <p>このような分岐は, 線形化問題の複素共役な $2$ つの固有値が, パラメータを変化させた際に虚軸を横切ることで発生するものであり, <b>ホップ分岐</b> (<b>Hopf bifurcation</b>) と呼ばれる. 
+                    上の例は <b>超臨界ホップ分岐</b> (<b>supercritical Hopf bifurcation</b>) であり, 不安定な平衡点が安定に転じると同時に不安定な周期解が現れる <b>亜臨界ホップ分岐</b> (<b>subcritical Hopf bifurcation</b>) も知られている. 
+                </p>
+            </div>
+
+            <p>上で言及したように, ホップ分岐は線形化問題の複素共役な $2$ つの固有値が, パラメータを変化させた際に虚軸を横切ることで起きると説明される. 
+                一方で, サドルノード分岐, トランスクリティカル分岐およびピッチフォーク分岐は, 線形化問題の実軸上にある固有値が, パラメータを変化させた際に虚軸を横切ることで起きる, と説明することができる. 
+            </p>
+
+            <p>さて, 以上では一次元力学系に対するサドルノード分岐, トランスクリティカル分岐およびピッチフォーク分岐, および二次元力学系に対するホップ分岐を紹介した. 
+                実際には, これら以外にも様々なタイプの分岐が知られているが, この資料ではこれ以上は深入りしない. 
+                また, 例えば二次元以上の力学系に対するサドルノード分岐, トランスクリティカル分岐やピッチフォーク分岐についても, ここでは詳細は述べない. 
+                厳密には, 中心多様体縮約により次元の小さい力学系に帰着させることで判定されるものであるが, 実用上は線形安定性解析からおおよその分岐図の形状を調べ, それにより判断すれば十分だろう. 
+            </p>
+            
+            <div class="example">
+                <p>ここでは具体例として 
+                    \[
+                        \left\{\begin{array}{rl}
+                            x' &= 2rx - x^3 - xy, \cr 
+                            y' &= -y + x^2
+                        \end{array}\right.
+                    \] という 二次元力学系を考えてみる. 
+                    まず, 平衡点は 
+                    \[
+                        \left\{\begin{array}{rl}
+                            2rx - x^3 - xy &= 0, \cr 
+                            -y + x^2 &= 0
+                        \end{array}\right.
+                    \] を解くことで得られるが, $r\le 0$ ならば平衡点は $\mathbf{0}$ の $1$ 点のみである. 
+                    一方, $r\gt 0$ ならば 
+                    \[
+                        \mathbf{0},\quad \widetilde{\mathbf{x}}_1 = \left(\sqrt{r}, r\right),\quad \widetilde{\mathbf{x}}_2 = \left(-\sqrt{r}, r\right) 
+                    \] の $3$ 点が平衡点となる. 
+                    この時点で $r=0$ において分岐が起きていることがわかる. 
+                </p>
+                <p>次に, 線形安定性解析を試みよう. 
+                    右辺のベクトル場 
+                    \[
+                        \mathbf{f}(\mathbf{x}) = \begin{pmatrix} 
+                            2rx - x^3 - xy \cr 
+                            -y + x^2 
+                        \end{pmatrix}
+                    \] のヤコビ行列が 
+                    \[
+                        D\mathbf{f}(\mathbf{x}) = \begin{pmatrix} 
+                            2r - 3x^2 - y & -x \cr 
+                            2x & -1 
+                        \end{pmatrix} 
+                    \] となることから, $D\mathbf{f}(\mathbf{0})$ の固有値は $-1$, $2r$ であり, 従って平衡点 $\mathbf{0}$ は $r\lt0$ のとき安定, $r\gt0$ のとき鞍点であり不安定となる (特に $r$ を変化させた際に, 実軸上の固有値が虚軸を横切るように変化することを確認できる). 
+                    一方で, $r\gt 0$ の際に $\widetilde{\mathbf{x}}_1$, $\widetilde{\mathbf{x}}_2$ におけるヤコビ行列を調べることで, これらが安定な平衡点であることが確認できる. 
+                    実用上は, これらの情報からこの分岐は二次元力学系におけるピッチフォーク分岐だと判断しても良いだろう (厳密には, 中心多様体縮約により平衡点 $\mathbf{0}$ 付近での挙動を一次元力学系に帰着させて調べるべきだが, ここでは省略する).  
+                </p>
+            </div>
+
+        </section>
+
+        <hr>
+
+        <section id="section4-2"><h2>4.2: カオス的挙動の例</h2>
+            <p>ここからは力学系における <b>カオス</b> の具体例を見てみよう. 
+                まず, カオスとは何かという疑問はもっともであり, 実際に力学系におけるカオスを特徴づける性質を数学的に定義することもできるが, ここでは詳細な説明はしない. 
+                代わりに, カオス的な挙動に見られる典型的な性質をいくつか紹介することにする. 
+            </p>
+            <ul>
+                <li>初期値鋭敏性を持つ, つまり初期値の微小な差 $\delta_0$ による時刻 $t$ における解の差 $\delta(t)$ が指数関数的に増大する. 
+                    <ul>
+                        <li>具体的には $|\delta(t)| \approx e^{\lambda t}|\delta_0|$ となる $\lambda$ が正であることと説明される. 
+                            これに基づき, 初期値鋭敏性は典型的には <b>リアプノフ指数</b> (<b>Lyapunov exponent</b>)
+                            \[
+                                \lambda = \lim_{t\to\infty}\lim_{|\delta_0|\to 0}\dfrac{1}{t}\ln \dfrac{|\delta(t)|}{|\delta_0|}
+                            \] により評価される. 
+                            リアプノフ指数は $\delta_0$ の &quot;方向&quot; の数だけ (つまり力学系の次元の数だけ) 存在することに注意. 
+                        </li>
+                    </ul> 
+                </li>
+                <li>有界である. 例えば解自体が指数的に増大するような力学系は正のリアプノフ指数を持つとしてもカオス的とは見做されない. </li>
+                <li>ある種の &quot;稠密性&quot; を持つ. 離散力学系ならば周期点が稠密にあると説明され, 連続力学系ならば解の軌道がある範囲を埋め尽くすように動く, と説明される. </li>
+            </ul>
+            <p>カオス的な挙動の具体例として, ここでは (有名な) <b>ローレンツ方程式</b> を扱う: 
+                \[
+                    \left\{\begin{array}{rl}
+                        x' &= \sigma(y-x), \cr 
+                        y' &= x(\rho-z)-y, \cr 
+                        z' &= xy-\beta z.
+                    \end{array}\right.
+                \] この自励系は $3$ つのパラメータ $\sigma$, $\rho$, $\beta$ を持つが, 特に $\sigma = 10$, $\rho=28$, $\beta=8/3$ とした際の解が以下のようになることはよく知られている (左は初期値 $(1, 1, 1)$ に対する計算結果, 右は初期値 $(-1, -1, -1)$ に対する計算結果): 
+            </p>
+            <div class="resize"><img src='./images/lorenz1.png'></div>
+            <p>ただしこのプロットはあくまで数値計算結果であることに注意する必要がある. 
+                実際には初期値鋭敏性のため, カオス的挙動の数値解は誤差の影響を強く受け, 厳密解から離れてしまう (ただしここでは気にしないことにする). 
+                ローレンツ方程式は気象現象に対する単純化された数理モデルとして提案されたものであるが, 比較的単純な連立常微分方程式が予測不能な解の挙動を導出する典型例として扱われる. 
+            </p>
+            <p>さて, ここではパラメータ $\rho$ に注目し, どのように分岐が起こるのかを見てみよう. 
+                以降, 常に $\sigma=10$, $\rho\gt0$, $\beta=8/3$ とする. 
+            </p>
+            <ul>
+                <li>まずは $0\lt \rho \le 1$ のときは平衡点は $\mathbf{0}$ のみであり, $\rho\gt 1$ ならば
+                    \[
+                        \mathbf{0},\quad \widetilde{\mathbf{x}}_1 = (\sqrt{\beta(\rho-1)}, \sqrt{\beta(\rho-1)}, \rho-1),\quad \widetilde{\mathbf{x}}_2 = (-\sqrt{\beta(\rho-1)}, -\sqrt{\beta(\rho-1)}, \rho-1)
+                    \] の $3$ つが平衡点であることは簡単に確認できる. 
+                </li>
+                <li>次に線形安定性解析を試みよう: ローレンツ方程式の右辺 
+                    \[
+                        \mathbf{f}(\mathbf{x}) = \begin{pmatrix} 
+                            \sigma(y-x) \cr 
+                            x(\rho-z)-y \cr 
+                            xy-\beta z 
+                        \end{pmatrix}
+                    \] のヤコビ行列は 
+                    \[
+                        D\mathbf{f}(\mathbf{x}) = \begin{pmatrix} 
+                            -\sigma & \sigma & 0 \cr 
+                            \rho-z & -1 & -x \cr 
+                            y & x & -\beta 
+                        \end{pmatrix} 
+                    \] である. 
+                </li>
+                <ul>
+                    <li>これを用いると, $D\mathbf{f}(\mathbf{0})$ の固有値は 
+                        \[
+                            \lambda = -\beta,\quad \dfrac{1}{2}\left(-(\sigma+1)\pm \sqrt{(\sigma+1)^2 - 4\sigma(1-\rho)}\right)
+                        \] である. 
+                        特に, $0\lt \rho\lt 1$ ならば全ての固有値は負の実数であり, 従って $\mathbf{0}$ は漸近安定な平衡点である. 
+                        一方, $\rho\gt 1$ ならば正の実数の固有値が $1$ つ現れるため, $\mathbf{0}$ は鞍点となる. 
+                    </li>
+                    <ul>
+                        <li>もっといえば, $\rho\gt 1$ のとき $\mathbf{0}$ に対して $2$ 次元安定多様体 (曲面状の局所安定多様体) と, $1$ 次元不安定多様体 (曲線状の局所不安定多様体) が存在する. </li>
+                    </ul>
+                    <li>さて, $D\mathbf{f}(\widetilde{\mathbf{x}}_1)$ および $D\mathbf{f}(\widetilde{\mathbf{x}}_2)$ の固有値は (計算は面倒だが) 
+                        \[
+                            \lambda^3 + (1+\sigma+\beta)\lambda^2 + \beta(\sigma+\rho)\lambda + 2\sigma\beta(\rho-1) = 0
+                        \] の根であり, ($\widetilde{\mathbf{x}}_1$, $\widetilde{\mathbf{x}}_2$ が平衡点となるのは $\rho\gt1$ の場合に限られることに注意して) 特に $\rho=1$ のときの根を考えれば, ある $\rho^*\gt 1$ が存在して 
+                        \[
+                            1\lt \rho \lt\rho^*
+                        \] に対して全ての固有値は負の実部を持ち, 従って $\widetilde{\mathbf{x}}_1$, $\widetilde{\mathbf{x}}_2$ が漸近安定な平衡点であることがわかる. 
+                        <ul>
+                            <li>なお, このような $\rho^*$ の上限を求めるには, ちょうど $\rho=\rho^*$ のときに実部が $0$ の固有値が現れることから 
+                                \[
+                                    \lambda^3 + (1+\sigma+\beta)\lambda^2 + \beta(\sigma+\rho^*)\lambda + 2\sigma\beta(\rho^*-1) = (\lambda+\alpha)(\lambda+i\omega)(\lambda-i\omega)
+                                \] という形になっていることに注目して式変形すれば良い ($\sigma=10 \gt 1+8/3 = 1+\beta$ に注意): 
+                                \[
+                                    \rho^* = \sigma\dfrac{\sigma + \beta + 3}{\sigma-\beta-1} = \dfrac{470}{19} \approx 24.737.
+                                \]
+                            </li>
+                            <li>実は上で求めた $\rho^*$ に対して, $\rho=\rho^*$ でホップ分岐が起こることで $\widetilde{\mathbf{x}}_1$, $\widetilde{\mathbf{x}}_2$ が不安定な平衡点に転じることが知られている (証明は容易では無い). 
+                                ただし, 安定なリミットサイクルが発生するわけではない: 解は局所的には平衡点の周りをまわるような挙動をするが, 大域的な影響でリミットサイクルにはならない. 
+                            </li>
+                        </ul> 
+                    </li>
+                    <li>さらに言えば, 実はある $\rho^{**}\in (1, \rho^*)$ において, 鞍点 $\mathbf{0}$ でのホモクリニック軌道が存在することが知られている. 
+                        この値 ($\rho^{**} \approx 13.926$) からさらに $\rho$ を大きくすることで, ホモクリニック軌道からの変動によりカオス的挙動が現れようとするが, $\widetilde{\mathbf{x}}_1$, $\widetilde{\mathbf{x}}_2$ が漸近安定である間は解の軌道が平衡点に収束しようとする影響があるためカオス的にはならない. 
+                        さらに $\rho$ が大きくなり, 平衡点 $\widetilde{\mathbf{x}}_1$, $\widetilde{\mathbf{x}}_2$ の安定性が失われることで, カオス的挙動が観察されるようになる. 
+                    </li>
+                </ul>
+                <li>例えば $\rho=28$ のときの計算結果をみると, 解の軌道は蝶の羽のような形をした曲面上に引き寄せられ, その付近を動いている様子が観察されるが, これは曲面状のアトラクターが存在していることを意味している. 
+                    カオス的な挙動を生み出すアトラクターは <b>ストレンジアトラクター</b> もしくは <b>カオスアトラクター</b> と呼ばれる. 
+                    特にローレンツ方程式において観察されるストレンジアトラクターは <b>ローレンツアトラクター</b> と呼ばれ, 数多くの研究がなされている. 
+                </li>
+            </ul>
+            <div class="resize"><img src='./images/lorenz2.png'></div>
+                
+
+            
+        </section>
+
+        <hr
+
+        <section id="section4-A"><h2>数値計算: 数値分岐解析</h2>
+            <p>簡単な問題に対しては, 手計算により分岐図を得ることができるが, 一般にはそうしたことが可能とは限らない. 
+                そのような場合に, 数値計算により分岐図を導出し, それをパラメータに依存する力学系の解の挙動の理解に役立てることがあるが, このアイデアは <b>数値分岐解析</b> と呼ばれる. 
+                残念ながら, 一般的な状況まで含む数値分岐解析の手法は複雑であり, ここで全てを説明することは困難である. 
+                ここでは, 簡単な問題に限って分岐図を導出する数値計算を通じて, 分岐解析に用いられる数値計算のアイデアを紹介する. 
+            </p>
+            <p>まず, 簡単のために $1$ 次元力学系のみを対象とし, 分岐はサドルノード分岐, トランスクリティカル分岐, ピッチフォーク分岐のみを想定することにする. 
+                また, $f$ に対する適当な仮定の下で陰関数定理を適用することで, パラメータを動かした際の平衡点に軌跡 
+                \[
+                    \{(x, r) \in \mathbb{R}^2: f(x, r) = 0\}
+                \]
+                は, 分岐図の上で複数の曲線として表されるとする. 
+                この各曲線は $f(x,r) = 0$ の解曲線と呼ばれ, また分岐図における <b>枝</b> (<b>branch</b>) と呼ばれることがある.    
+            </p>
+            <p>さて, 一般にパラメータ $r$ を含む 
+                \[
+                    f(x, r) = 0
+                \] の解曲線を追跡する数値計算手法として <b>numerical continuation method</b> が知られている (日本語訳はよくわからない). 
+                ここではその一つである <b>疑似弧長法</b> (<b>pseudo-arclength continuation</b>) を紹介しよう. 
+                解曲線がパラメータ $s$ を用いて 
+                \[
+                    \mathbf{y}(s) = (x(s), r(s))
+                \] と表されるとする, このとき $f(\mathbf{y}(s)) = 0$ であることに注意. 
+                いま, $\mathbf{y}(s_k)$ が与えられたとき, $\mathbf{y}(s_{k+1})$ は 
+                \[
+                    \mathbf{y}(s_{k+1}) - \mathbf{y}(s_k) = \int_{s_k}^{s_{k+1}}\mathbf{y}'(s)~ds
+                \] となることに基づき, $\mathbf{y}(s_{k+1})$ の予測値 $\widetilde{\mathbf{y}}_{k+1}$ を 
+                \[
+                    \widetilde{\mathbf{y}}_{k+1} = \mathbf{y}(s_k) + \Delta s \mathbf{y}'(s_k) \approx \mathbf{y}(s_k) + \int_{s_k}^{s_{k+1}}\mathbf{y}'(s)~ds = \mathbf{y}(s_{k+1})
+                \] と定める, ここで $\Delta s = s_{k+1} - s_k$ であり, これは前進オイラー法による近似を意味している. 
+                なお, \[
+                    f(\mathbf{y}(s)) = f(x(s), r(s)) = 0
+                \] の両辺を $s$ で微分することで 
+                \[
+                    f_x(\mathbf{y}(s))\dfrac{dx}{ds}(s) + f_r(\mathbf{y}(s))\dfrac{dr}{dx}(s) = 0
+                \] となることから, 適当な $\alpha\in\mathbb{R}$ を用いて
+                \[
+                    \mathbf{y}'(s_k) = \left(\dfrac{dx}{ds}(s_k), \dfrac{dr}{ds}(s_k)\right) = \alpha(f_r(\mathbf{y}(s_k)), -f_x(\mathbf{y}(s_k)))
+                \] という関係が成り立っていることがわかる. 
+                これを用いれば, (適当な $\alpha$ を用いて) $\widetilde{\mathbf{y}}_{k+1} = \mathbf{y}(s_k) + \Delta s \mathbf{y}'(s_k)$ を具体的に計算することが可能である. 
+                このようにして構成された近似値 $\widetilde{\mathbf{y}}_{k+1}$ は $f(\widetilde{\mathbf{y}}_{k+1}) = 0$ を満たすとは限らないが, これを基に適当に修正を加えれば, 解曲線上の点 $\mathbf{y}(s_{k+1})$ を得ることができるだろう. 
+            </p>
+            <p>このアイデアに基づき, 疑似弧長法では 解曲線上の与えられた点 $\mathbf{y}_k$ と十分小さなステップ幅 $\Delta s$ に対して, 以下を計算することで解曲線上の点 $\mathbf{y}_{k+1}$ を求める: 
+            </p>
+            <ul>
+                <li>まず,  
+                    \[
+                        \mathbf{v} = \dfrac{(f_r(\mathbf{y}_k), -f_x(\mathbf{y}_k))}{|f_x(\mathbf{y}_k)^2 + f_r(\mathbf{y}_k)^2|}
+                    \] を計算する. 
+                </li>
+                <li>次に, $\mathbf{y}_{k+1}$ の予測値を 
+                    \[
+                        \widetilde{\mathbf{y}}_{k+1} = \Delta s \mathbf{v}
+                    \] と定める. 
+                </li>
+                <li>最後に点 $\widetilde{\mathbf{y}}_{k+1}$ において $\mathbf{v}$ と直交する直線 (超平面) と解曲線の交点を, 以下をニュートン法で計算することで求め, その結果を $\mathbf{y}_{k+1}$ とする: 
+                    \[
+                        \mathbf{F}(\mathbf{y}) = \begin{pmatrix} 
+                            f(\mathbf{y}) \cr 
+                            (\mathbf{y}-\widetilde{\mathbf{y}}_{k+1})\cdot\mathbf{v} 
+                        \end{pmatrix} = \mathbf{0}.
+                    \] 
+                </li>
+            </ul>
+            <p>これを繰り返すことで得られる $\mathbf{y}_0$, $\mathbf{y}_1$, $\dots$ が, 解曲線の近似を与える. </p>
+            <div class="resize"><img src='./images/pseudo_arclength_continuation-1.png'></div>
+            <p>なお, 陽的な計算で求めた予測値を陰的な計算で修正する計算手法を <b>予測子修正子法</b> (<b>Predictor-Corrector method</b>) と呼ぶが, 疑似弧長法もその一種であると解釈することができる.
+                また, 疑似弧長法は $2$ 次元以上の力学系にも拡張可能であるが, ここでは言及しない.
+            </p>
+
+            <p>次に, 各 $\mathbf{y}_k$ における安定性は, $f_x(\mathbf{y}_k)$ の符号 ($2$ 次元以上の力学系では, $\mathbf{y}_k$ におけるヤコビ行列の固有値実部の符号) を調べることで確認できる. 
+                また, 符号が変化する点で分岐が起こっていることも判定できる (実際には様々な分岐を検出すためのテクニックが用いられるが, ここでは深入りしない).
+            </p>
+
+            <p>ここまでの説明を実際の数値計算で確かめてみよう. 
+                具体例として, 以前にピッチフォーク分岐が起こる具体例として紹介した 
+                \[
+                    y' = f(x, r) = rx + x^3 - x^5 
+                \] を用いることにする. 
+                以下のサンプルコードでは初期値 $\mathbf{y}_0 = (x_0, r_0) = (x_0, -x_0^2 + x_0^4)$ を, $x_0 = 0.1$ とすることで決定している. 
+                この初期値を用いて疑似弧長法で解曲線をプロットしたものが, 分岐図における枝の一つになっていることを確認できる:  
+            </p>
+            <div class="resize"><img src='./images/numerical_bifurcation1.png'></div>
+            <pre>
+<code>
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 関数の定義 
+f = lambda x, r: r*x + x**3 - x**5 
+fx = lambda x, r: r + 3*x**2 - 5*x**4 
+fr = lambda x, r: x
+
+# 疑似弧長法 
+def pseudo_arclength(y0: np.ndarray, ds: float = 0.01, n_steps: int = 500) -> np.ndarray: 
+  # 配列の初期化
+  y = np.empty((2, n_steps+1)) 
+  y[:] = np.nan 
+  y[:, 0] = y0 
+  # 疑似弧長法の反復
+  for i in range(n_steps): 
+    v = np.array([fr(y[0, i], y[1, i]), -fx(y[0, i], y[1, i])]) 
+    v = v / np.linalg.norm(v) 
+    y_pred = y[:, i] + ds * v # 予測
+    y[:, i+1] = newton_corrector(y_pred, v) # ニュートン法で修正
+
+  return y
+
+# 疑似弧長法内のニュートン法
+def newton_corrector(y_pred: np.ndarray, v: np.ndarray, tol: float = 1e-8, max_iter: int = 30): 
+  # ニュートン法の初期値
+  y = y_pred.copy()
+  # ニュートン法の反復
+  for _ in range(max_iter):
+    # ベクトル
+    F = np.array([
+        f(y[0], y[1]), 
+        (y - y_pred) @ v
+    ])
+    # ヤコビ行列
+    DF = np.array([
+        [fx(y[0], y[1]), fr(y[0], y[1])],
+        [v[0], v[1]]
+    ])
+    delta = np.linalg.solve(DF, F)
+    y = y - delta # ニュートン法で更新
+    # 収束したら計算終了
+    if np.linalg.norm(delta) < tol:
+        return y
+  raise ValueError("Newton method did not converge.")
+
+# プロットの準備 
+fig, ax = plt.subplots() 
+# 初期値を設定 
+y0 = [0.01, np.nan] 
+y0[1] = -y0[0]**2 + y0[0]**4 
+# 疑似弧長法で計算 
+y = pseudo_arclength(y0)
+# 安定性の判定 
+fx_value = fx(y[0], y[1])
+stable = fx_value < 0
+unstable = fx_value > 0
+# プロット 
+ax.plot(y[1, stable], y[0, stable], color='tab:blue', linewidth=2.5)
+ax.plot(y[1, unstable], y[0, unstable], color='tab:blue', linewidth=2.5, linestyle='dashed')
+
+plt.show()
+</code>
+            </pre>
+            <p>異なる初期値から計算した結果も重ねてプロットすることで, 手計算で得られたものと同様の分岐図を得ることもできる (下図). 
+                ただし, 実際には分岐点の高精度な検出, $2$ 次元以上の力学系やホップ分岐を含む様々な分岐の追跡は容易ではない. 
+                現在では数値分岐解析用の様々なソフトウェア, ライブラリなど (例えば AUTO, http://cmvl.cs.concordia.ca/auto/) が存在するため, 興味があれば調べてみると良いだろう. 
+            </p>
+            <div class="resize"><img src='./images/numerical_bifurcation2.png'></div>
+
+        
         </section>
     </article>
     </main>
