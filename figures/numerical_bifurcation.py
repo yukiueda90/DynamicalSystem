@@ -24,7 +24,8 @@ def pseudo_arclength(y0: np.ndarray, ds: float = 0.01, n_steps: int = 1000) -> n
 # 疑似弧長法におけるニュートン法
 def newton_corrector(y_pred: np.ndarray, v: np.ndarray, tol: float = 1e-8, max_iter: int = 30): 
   # ニュートン法の初期値
-  y = y_pred.copy()
+#   y = y_pred.copy()
+  y = y_pred
   # ニュートン法の反復
   for _ in range(max_iter):
     # ベクトル
