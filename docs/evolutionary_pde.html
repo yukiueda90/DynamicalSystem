@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>力学系入門</title>
+    <!-- style -->
+    <link rel="stylesheet" href="./common/style.css">
+    <!-- mathjax -->
+    <script src="./common/import_mathjax.js"></script>
+</head>
+
+<body>
+    <header>
+        <!-- (no header) -->
+    </header>
+
+    <!-- contents -->
+    <div class="wrapper">
+
+    <!-- sidebar -->
+    <div class="side" id="sidebar"></div>
+
+    <div class="hamburger" onclick="toggleSidebar()">
+        ☰
+    </div>
+    
+    <!-- main -->
+    <main role="main"><article id="section5"><h1>5. 時間発展 PDE の数値計算</h1>
+        <p>ここまでに常微分方程式系 (ODE system) として記述される連続力学系
+            \[
+                \mathbf{x}' = \mathbf{f}(\mathbf{x})
+            \] について主に紹介したが, ここからは偏微分方程式 (Partial Differential Equations, PDE) について述べる. 
+            偏微分方程式は関数の偏導関数を含む微分方程式であり, ここでは特に時間 $t$ に加えて異なる変数 (特に空間変数) に関する微分が現れる問題を考えたい. 
+            抽象的には作用素 $A: H\to H$ を用いて  
+            \[
+                \dfrac{\partial u}{\partial t} = Au
+            \] のように表される時間発展偏微分方程式の解 $u(x, t)$ を考えることになるが, 常微分方程式系との違いとして, 
+        </p>
+        <ul>
+            <li>常微分方程式系の場合 $\mathbf{x}(t)\in\mathbb{R}^d$ であったが, 時間発展 PDE の場合は $u(\cdot, t)\in H$ (つまり各時刻 $t$ に対し, $x\mapsto u(x, t)$ という関数 $u(\cdot, t)$ は $H$ の元) であり, 多くの場合 $H$ として無限次元の関数空間を考えることになる. 
+            </li>
+            <li>常微分方程式系の場合 $\mathbf{f}$ は微分などを含んでいなかったが, 時間発展 PDE の場合は作用素 $A$ として空間変数に関する微分を含むもの (例えば微分作用素, 楕円型作用素など) を考えることになる. 
+            </li>
+        </ul>
+        <p>これらについて厳密に議論するには, 関数解析や偏微分方程式論の知識が必要になるが, ここではそれらを前提とせず, 常微分方程式系 (特に連続力学系) に関する議論のアナロジーとして, 「実は時間発展 PDE でも同様の議論が可能である」という紹介に終始することにする. 
+            また, PDE に対する数値計算手法も併せて紹介し, いくつかの具体例に対して解の挙動を観察する. 
+        </p>
+        
+        <section><h2>PDE の力学系的解釈</h2>
+            <p>以降, 時間発展 PDE では, 時間変数 $t$ と空間変数 $x$ に依存する関数 $u(x, t)$ を扱うことにする.
+                また, 記号の簡単のために 
+                \[
+                    u_t = \dfrac{\partial u}{\partial t}
+                \] と表記する. 
+            </p>
+            <p>時間発展 PDE の簡単な例として, 例えば一次元熱方程式 
+                \[
+                    \left\{\begin{array}{l} 
+                        u_t = ku_{xx} \quad\text{in}\quad [0, L], \cr 
+                        u(0, t) = 0, \quad u(L, t) = 0, \cr
+                        u(x, 0) = u_0(x)
+                    \end{array}\right.
+                \] を考えることができる, ここで $u_{xx}$ は関数 $u$ の変数 $x$ に対する $2$ 階偏微分を表し, $k\gt 0$ は拡散係数と呼ばれるパラメータである.  
+                方程式に空間についての $2$ 階微分が含まれているため, これを満たす関数 $u$ を (積分定数に相当する任意性を排除して) 定めるには追加の条件が必要となる. 
+                この例では空間領域 (今回は空間一次元なので $[0, L]$ という区間) の境界における値をしているが, このような条件は <b>境界条件</b> (<b>boundary condition</b>) と呼ばれる. 
+                また, 初期条件 $u(x, 0) = u_0(x)$ と境界条件が与えられた時間発展 PDE を <b>初期値境界値問題</b> と呼ぶ. 
+            </p> 
+            <p>熱方程式の解を見つける方法として, 上の問題に対する <b>変数分離法</b> を説明しておこう.
+                まず, 上で与えた境界条件の下で熱方程式の解が存在するならば一意であることは容易に証明できる. 
+                そこで, 
+                \[
+                    u(x, t) = \varphi(x)\eta(t)
+                \] という形で熱方程式の解となるものが存在するかを考えてみる, もしもこのような解を構成できたならば, それがただ一つの解ということになる. 
+                上を熱方程式に代入することで, 
+                \[
+                    \left\{\begin{array}{rl}  
+                        \varphi(x)\eta'(t) = k\varphi''(x)\eta(t) \cr
+                        \varphi(0) = \varphi(L) = 0, \cr 
+                        \varphi(x)\eta(0) = u_0(x) 
+                    \end{array}\right. 
+                \] を満たすような $\varphi(x)$, $\lambda(t)$ がもしも存在すれば, これらが熱方程式のただ一つの解の表示を与えることになる. 
+                ここでは $u_0(x) \not\equiv 0$ である場合を考えることにすると, $\varphi(x)\eta(t)\not\equiv 0$ なので 
+                \[
+                    \dfrac{\eta'(t)}{\eta(t)} = k\dfrac{\varphi''(x)}{\varphi(x)} 
+                \] が得られるが, この両辺は $x$ にも $t$ にも依存しないため, これを $\lambda\in\mathbb{R}$ とおく. 
+                すると $\varphi(x)$ として 
+                \[
+                    \left\{\begin{array}{rl} 
+                        k\varphi''(x) = \lambda\varphi(x), \cr 
+                        \varphi(0) = \varphi(L) = 0 
+                    \end{array}\right. 
+                \] を満たすものを探せば良いことになる. 
+                上で $\varphi$ についての ODE が得られるが, (必要ならば $\psi = \varphi'$ を導入して線形力学系と思うことで) 一般解を得ることができる.  
+                さらに境界条件 (および初期条件から得られる $\varphi(x)\neq0$) が満たされる特殊解を考えることもできる.
+                実際, $n=1,2,\dots$ に対し
+                \[
+                    \lambda_n = -k(n\pi / L)^2,\quad \varphi_n(x) = \sin \dfrac{n\pi}{L}x 
+                \] は, $k\varphi_n''(x) = \lambda_n\varphi_n(x)$ および $\varphi_n(0) = \varphi_n(x)$ を確かめることができる (これは $\lambda_n$ と $\varphi_n$ が, $\widetilde{A}v = kv_{xx}$ という線形作用素の固有値および対応する <b>固有関数</b> であると説明される). 
+                この $\lambda_n$ に対し, 今度は $\eta_n'(t) = \lambda_n \eta_n(t)$ を満たすものを考えると, 
+                \[
+                    \eta_n(t) = Ce^{\lambda_n t}
+                \] が得られる. 
+                これらを組み合わせると, 
+                \[
+                    u(x, t) = c_ne^{\lambda_n t}\varphi_n(x) = c_ne^{-k(n\pi/L)^2 t}\sin\dfrac{n\pi}{L}x
+                \] は, $u_t = ku_{xx}$ と境界条件を満たし, さらにこれらの線型結合 
+                \[
+                    u(x, t) = \sum_{n=1}^{\infty}c_ne^{\lambda_n t}\varphi_n(x) = \sum_{n=1}^{\infty}c_ne^{-k(n\pi/L)^2 t}\sin\dfrac{n\pi}{L}x
+                \] も $u_t = ku_{xx}$ と境界条件を満たす. 
+                あとは初期条件 
+                \[
+                    u(x, 0) = \sum_{n=1}^{\infty}c_n\sin\dfrac{n\pi}{L}x = u_0(x)
+                \]
+                が満たされるように係数 $c_n$ を決定することで, 初期値境界値問題の解 $u(x, t)$ が構成できることになる. 
+                従って, 初期条件として与えられる $u_0$ がフーリエ級数展開可能ならば, 変数分離法によりただ一つの解を具体的に構成することができる. 
+            </p>
+
+            <p>上の熱方程式も含め, 適切な時間発展 PDE は <b>無限次元力学系</b> として解釈することで, 力学系の様々な概念に対応するアイデアを導入することが可能である. 
+                まずは常微分方程式系における平衡点に相当するものとして, <b>定常解</b> という概念を導入する:  
+                時間発展 PDE $u_t = Au$ に対し, $A\widetilde{u} = 0$ (および与えられた境界条件) を満たす関数 $\widetilde{u}(x)$ を定常解という. 
+                つまり定常解は時間経過で動かない解であり, 実際に初期条件として $u(x, 0) = \widetilde{u}(x)$ が与えられたなら, 任意の $t\ge0$ に対して $u(x, t) = \widetilde{u}(x)$ が成立する. 
+                定常解に対しては, 安定性, 漸近安定性, 不安定性が平衡点のそれらと同様に定義される. 
+            </p>
+            <p>定常解は時間経過により動かないような解であるが, 時間発展 PDE においては関数形状を保ちながら一定速度で動き続ける解も興味深い対象である. 
+                特に空間一次元の時間発展 PDE に対し, ある関数 $\varphi: \mathbb{R}\to\mathbb{R}$ を用いて 
+                \[
+                    u(x, t) = \varphi(x-ct)
+                \] と表される解 $u(x, t)$ が存在するならば, このような解は <b>進行波解</b> (<b>traveling wave solution</b>) と呼ばれる, ここで定数 $c$ は解の進行速度を表す. 
+                進行波解に対しても, ある種の安定性を定義することができるが, ここでは説明は省略する. 
+            </p>
+
+            <hr>
+
+            <p>さて, 常微分方程式系の平衡点に対する線形安定性解析と同様に, 時間発展 PDE の定常解 (や進行波解) に対する線形安定性解析が可能である. 
+                ここでは具体的として, 
+                \[
+                    u_t = Au = ku_{xx} + f(u)  
+                \] という問題の定常解 $\widetilde{u}(x)$ に対する線形安定性解析の手順を (大雑把にではあるが) 確認しよう, ただし $f$ は非線形な作用素とし (従って $A$ は非線形な作用素である) 十分に微分可能とする, また境界条件は適当に与えられているとする. 
+                いま, 関数 $u(x, t)$ が $\widetilde{u}(x)$ に近いような各 $t$ に対して 
+                \[
+                    f(u) = f(\widetilde{u}) + f'(\widetilde{u})(u-\widetilde{u}) + R(u)
+                \] という表示を考える, ここで $R(u)$ は $u$ が $\widetilde{u}$ に近ければ十分に定数関数 $0$ に近いとする. 
+                ここで $\widetilde{u}(x)$ が定常解であることから 
+                \[
+                    0 = A\widetilde{u} = k\widetilde{u}_{xx} + f(\widetilde{u})
+                \] であることと, ($\widetilde{u}$ は $t$ に依存しないため) $\widetilde{u}_t=0$ であることから, 
+                \[
+                    (u-\widetilde{u})_t = u_t = ku_{xx} + f(u) = k(u-\widetilde{u})_{xx} + f'(\widetilde{u})(u-\widetilde{u}) + R(u)
+                \] と変形できる. 
+                あとは, $R(u)$ は十分 $0$ に近いと思って無視して, また $v=u-\widetilde{u}$ とおくと 
+                \[
+                    v_t = \widetilde{A}v = kv_{xx} + f'(\widetilde{u})v 
+                \] という式 (および境界条件) が得られる, 上のように定められる作用素 $\widetilde{A}$ は線形であることに注意.  
+                これは常微分方程式系のときと同様に <b>線形化方程式</b> と呼ばれ, $u(x, t)$ が定常解 $\widetilde{u}(x)$ に十分近いような時刻 $t$ では元の問題の近似を与えている. 
+                従って, その安定性は元の時間発展 PDE $u_t = ku_{xx} + f(u)$ の安定性を判断する際に重要な情報となる. 
+            </p>
+            <p>実際, 適切な線形作用素 $\widetilde{A}$ および境界条件に対して (熱方程式のときと同様に) 
+                \[
+                    \widetilde{A}\varphi_n = \lambda_n \varphi_n
+                \] および境界条件を満たす無限個の実数 $\lambda_i$ および対応する実関数 $\varphi_i(x)$, つまり固有値および対応する固有関数が存在する (一般には固有値および固有関数は実数とは限らないが, 適切な線形作用素に対しては実数となることが知られている). 
+                固有ベクトルと同様に, $0$ は固有関数とは認められないことに注意. 
+                これらを用いて
+                \[
+                    v(x, t) = \displaystyle\sum_{n=0}^\infty c_ne^{\lambda_n t}\varphi_n(x)
+                \] と表される関数 $v$ は $v_t = \widetilde{A}v$ および境界条件を満たす. 
+                このことから, 時間発展偏微分方程式 $u_t = Au$ の定常解 $\widetilde{u}$ に対する線形化問題 $v_t = \widetilde{A}v$ を考えた際に, 線形作用素 $\widetilde{A}$ の全ての固有値が負であれば (最大固有値が負であれば), $\displaystyle\lim_{t\to\infty}v(x, t)=0$ が成立する.  
+                つまり元の時間発展 PDE の解 $u(x, t)$ は定常解 $\widetilde{u}(x)$ に収束し, 従って平衡点 $\widetilde{u}$ は漸近安定であることがわかる. 
+            </p>
+
+            <p>このように, 定常解付近での局所的な解の挙動については, 定常解の安定性を調べることで説明することができる. 
+                一方で, 解の大域的な挙動についても, やはり常微分方程式系と同様に &quot;幾何学的&quot; な解釈が可能である. 
+                実際には, 時間発展 PDE では多くの場合相空間として無限次元関数空間を扱うことになるため, 具体的なイメージや作図は不可能である. 
+                それでも, 極限集合, アトラクター, エネルギーや勾配流といった様々な概念が時間発展 PDE の解析に利用される. 
+                また, パラメータを含む時間発展 PDE に対しては分岐についても常微分方程式系に対するそれと同様に定義される. 
+                ここでは上で挙げた概念たちの詳細な定義は述べないが, 以下の具体例を通じて常微分方程式系として表される力学系におけるアイデアと同様のものであることを確認して欲しい. 
+            </p>
+        </section>
+
+        <hr>
+
+        <section><h2>熱方程式</h2>
+            <p>上では非線形な作用素を持つ PDE に対する線形安定性解析に固有関数を利用したアイデアを紹介したが, まずは簡単のために線形の時間発展 PDE を考えてみよう. 
+
+            </p>
+        </section>
+
+        <section><h2>アレン=カーン方程式</h2>
+            <p>ここでは <b>アレン=カーン方程式</b> (<b>Allen-Cahn equation</b>)
+                \[
+                    u_t = \varepsilon^2 \Delta u + \mu u(1-u^2)
+                \]
+                を例として扱う, ここで $\varepsilon\gt0$ と $\mu\gt 0$ はパラメータである.  
+                この方程式は, 混合物質の相分離現象 (例えば水と油が時間経過により分離する様子など) を表現する数理モデルとして扱われる. 
+                ここでは簡単のために空間 $1$ 次元の場合のみを考え, 境界条件として空間を表す区間の両端で $u=0$ であることを課す (つまり斉次ディリクレ境界条件を課す) ことにする: 
+                \[
+                    \left\{\begin{array}{l} 
+                        u_t = \varepsilon^2 u_{xx} + \mu u(1-u^2) \quad \text{in}\quad [0, L], \cr 
+                        u(0, t) = u(L, t) = 0.
+                    \end{array}\right.
+                \] まずは適当な初期値を与えた際の数値計算結果を観察し, 解の挙動について大雑把に説明しよう. 
+                まず, 区間 $[0, L]$ を $M$ 等分することで空間分割幅を $h = L/M\gt0$ とし, $x_m = mh$ とする. 
+                同様に時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, $t_n = nh$ とする. 
+                このとき, アレン=カーン方程式の解 $u$ に対し, $u(x_m, t_n)$ の近似を与える $u_m^n$ を以下のように計算する: 空間に関する $2$ 階微分は $2$ 階中心差分
+                \[
+                    u_{xx}(x_m, t_n) \approx \dfrac{\dfrac{u_{m+1}^n - u_{m}^n}{h} - \dfrac{u_{m}^n - u_{m-1}^n}{h}}{h} = \dfrac{u_{m+1}^n - 2u_m^n + u_{m-1}^n}{h^2} 
+                \]
+                により近似し, 時間については ($4$ 段陽的) ルンゲ=クッタ法を適用する. 
+                つまり与えられた $u_m^n$ $(m=0, 1, \dots, M)$ に対し,  
+                \[
+                    f(u_m^n) = \varepsilon^2 \dfrac{u_{m+1}^n - 2u_m^n + u_{m-1}^n}{h^2} + \mu u_m^n(1-(u_m^n)^2)
+                \] を用いて各 $m=1, 2, \dots, M-1$ に対して
+                \[
+                    \begin{array}{l} 
+                        k_1 = f(u_m^n), \cr 
+                        k_2 = f\left(u_m^n + \dfrac{\tau}{2}k_1\right), \cr 
+                        k_3 = f\left(u_m^n + \dfrac{\tau}{2}k_2\right), \cr 
+                        k_4 = f\left(u_m^n + \tau k_3\right) 
+                    \end{array}
+                \] を計算し, 
+                \[
+                    u_m^{n+1} = u_m^n + \dfrac{\tau}{6}(k_1+2k_2 + 2k_3 + k_4)\qquad (m=1, 2, \dots, M-1)
+                \] を求める. 
+                この計算において, $u_m^0$ は初期値として, $u_0^n$ と $u_M^n$ は境界条件として既に与えられていることに注意. 
+                また, 以下のサンプルコードでは, $u_m^n$ たちを成分として持つベクトル $\mathbf{u}^n$ に対しベクトル $\mathbf{k}_i$ を計算し, ルンゲ=クッタ法により値を更新していることにも注意:  
+            </p>
+            <div class="resize">
+                <video autoplay="true", loop="true">
+                <source src="videos/allen_cahn.mp4" type="video/mp4" />
+                </video>
+            </div>
+            <pre>
+<code>
+import numpy as np 
+import matplotlib.pyplot as plt 
+from matplotlib.animation import FuncAnimation 
+
+# Allen-Cahn equation: 
+# u_t = eps * u_xx + mu * u(1-u^2) in [0, L]
+# u(0, t) = 0, u(L, t) = 0 
+
+# パラメータ 
+eps: float = 0.1 
+mu: float = 20.0
+
+# 2 階中心差分による空間離散化 
+def f(u: np.ndarray, h: float) -> np.ndarray: 
+    vec = np.empty_like(u) 
+    vec[0] = 0. 
+    vec[-1] = 0. 
+    vec[1:-1] = eps**2 * (u[2:] - 2*u[1:-1] + u[:-2]) / (h**2) + mu * u[1:-1]*(1. - u[1:-1]**2) 
+    return vec
+
+# 古典的ルンゲ=クッタ (４段陽的ルンゲ=クッタ)
+def runge_kutta(u: np.ndarray, tau: float, h: float) -> np.ndarray:
+    k1 = f(u, h)
+    k2 = f(u + tau/2 * k1, h)
+    k3 = f(u + tau/2 * k2, h)
+    k4 = f(u + tau * k3, h)
+    return u + tau/6 * (k1 + 2*k2 + 2*k3 + k4) 
+
+# 空間領域, 時間区間 
+L: float = 1. 
+T: float = 0.3 
+M: int = 300 
+N: int = 5000 
+x = np.linspace(0, L, M+1) 
+t = np.linspace(0, T, N+1) 
+h: float = L/M 
+tau = float = T/N 
+
+# 初期条件 (境界条件を満たすものを指定)
+u0 = 0.6 * np.sin(3*np.pi*x/L) 
+# 配列の初期化, 初期条件と境界条件の設定 
+u = np.empty((M+1, N+1)) 
+u[:, 0] = u0
+u[0, :] = 0 
+u[-1, :] = 0
+
+# プロットの準備 
+fig, ax = plt.subplots() 
+ax.set_ylim([-1.1, 1.1])
+
+# 初期条件のプロット 
+line, = ax.plot(x, u[:, 0], color='tab:blue') 
+# アニメーションにおける update を定義 
+def update(frame): 
+    line.set_data(x, u[:, frame]) # 更新された u を入力 
+    return 
+
+# 計算 
+for n in range(N): 
+    u[:, n+1] = runge_kutta(u[:, n], tau, h) 
+    # u[0, n+1] = 0 # f[0] = 0 のため不要
+    # u[-1, n+1] = 0 # f[-1] = 0 のため不要
+
+# プロット 
+step: int = 10
+ani = FuncAnimation(fig, update, frames=range(0, N, step), interval=5)
+# ファイル出力する場合は下のコメントアウトを解除
+# ani.save("allen_cahn.mp4", writer="ffmpeg", fps=60)
+
+plt.show()
+# Google Colab でアニメーションを表示するには 
+# plt.show() をコメントアウトし, 代わりに以下のようにする (時間がかかるので注意): 
+# from matplotlib import rc
+# from IPython.display import HTML
+# rc('animation', html='jshtml')
+# ani 
+
+</code>
+            </pre>
+            <p>サンプルコードのパラメータを用いて計算することで上のアニメーションのような挙動を観察できる. 
+                これは方程式
+                \[
+                    u_t = \varepsilon^2 u_{xx} + \mu u(1-u^2) \quad \text{in}\quad [0, L] 
+                \]
+                の右辺にある $2$ つの項の作用を, パラメータ $\varepsilon$, $\mu$ により適切に調整したためであるが, 例えば数値計算において $\varepsilon = 0$ としたり $\mu = 0$ としたりすることで, 一方の項を消去し様子の異なる数値計算結果を観察することもできる. 
+                右辺第 $1$ 項の効果 $u_t = u_{xx}$ は, $u_{xx}$ が正の部分 ($u$ が下に凸の部分) では $u$ の値を大きくしようとし, 逆に上に凸の部分を小さくしようとする. 
+                つまり, 関数 $u$ の値が &quot;拡散&quot; し, $u$ の形状が平たくなろうとする効果を表している. 
+                このような項は <b>拡散項</b> と呼ばれる. 
+                一方で右辺第 $2$ 項には微分が含まれず, $u$ の値自体の影響で $u$ が変化する効果を表している. 
+                このような項は <b>反応項</b> と呼ばれ, また拡散項と反応項を持つ偏微分方程式は <b>反応拡散方程式</b> と呼ばれる. 
+            </p>
+            <p>アレン=カーン方程式の反応項にのみ注目した $u_t = \mu u(1-u^2)$ について, 簡単のため $\mu=1$ とし, さらに (空間変数を無視して) 一次元力学系と思うことにすると, これは 
+                \[
+                    E(u) = \dfrac{u^4}{4} - \dfrac{u^2}{2} 
+                \] というエネルギーに対する勾配系 $u_t = -E'(u)$ となる. 
+                エネルギー $E$ の形状に注目すると, $u=\pm1$ が安定な平衡点であり, $u=0$ は不安定な平衡点である. 
+                結果的に, アレン=カーン方程式の反応項は, $u$ の値が $u=\pm 1$ に近づこうとする効果を表している. 
+                実際, 先ほどの計算例でも, 関数 $u$ の大部分が $u=\pm1$ となるように動いている様子を確認できる. 
+                なお, 上の $E$ のようなエネルギーは相分離現象などを記述する際にしばしば用いられるものであり, 関数の形状から <b>二重井戸型ポテンシャル</b> (<b>double-well potential</b>) と言及される. 
+                実際には, 拡散項も含めて 
+                \[
+                    E(u) = \int \left(\dfrac{1}{2}u_x^2 + \dfrac{u^4}{4} - \dfrac{u^2}{2} \right)
+                \] と定めると, 汎函数 $E$ の変分 $\delta E$ を用いて $u_t = -\delta E$ という勾配流であることもわかる. 
+            </p>
+            <p>先ほどの計算例では拡散項と反応項の影響が釣り合うような関数形状から動かなくなる様子を確認できる, つまりこれは与えられたパラメータに対するアレン=カーン方程式の定常解への収束を表現している. 
+                しかしながら, パラメータ $\mu=0$ とすると (方程式は熱方程式となり) 拡散項の影響により解は $u=0$ という定常解に近づく. 
+                つまり, パラメータ $\mu$ を変化させることで分岐が発生し, $\mu$ を大きくすることで $u=0$ 以外の安定な定常解が生じると推測できる.
+            </p>
+
+            <hr>
+
+            <p>アレン=カーン方程式の分岐について解析的に確かめてみよう. 
+                まず, 定常解 $\widetilde{u}(x)$ は 
+                \[
+                    \left\{\begin{array}{l} 
+                        0 = \widetilde{u}_{xx} + \dfrac{\mu}{\varepsilon^2}\widetilde{u}(1-\widetilde{u}^2)\quad \text{in}\quad [0, L], \cr
+                        \widetilde{u}(0) = \widetilde{u}(L) = 0 
+                    \end{array}\right.
+                \] を満たしていることから, $\lambda = \mu/\varepsilon^2$ の値に注目して定常解の安定性を考えてみる. 
+                自明な定常解 $\widetilde{u}=0$ については, 線形安定性解析より 
+                \[
+                    \left\{\begin{array}{l} 
+                        v_t = v_{xx} + \lambda v \quad \text{in} \quad [0, L], \cr 
+                        v(0) = v(L) = 0 
+                    \end{array}\right.
+                \] を考えれば良いことになる ($\widetilde{u}$ が十分 $0$ に近ければ $\widetilde{u}^3$ は無視してしまってもよいだろう, ということに相当している). 
+                ここで, $\widetilde{A}v = v_{xx} + \lambda v$ なる線形作用素 $\widetilde{A}$ について (境界条件も考慮して) 
+                \[
+                    \left\{\begin{array}{l} 
+                        \widetilde{A}\varphi_n = \lambda_n\varphi_n, \cr 
+                        \varphi_n(0) = \varphi_n(L) = 0 
+                    \end{array}\right.
+                \] を満たす固有値 $\lambda_i$ と固有関数 $\varphi_i(x)$ を考えると 
+                \[
+                    \varphi_n(x) = \sin\dfrac{n \pi}{L}x,\quad \lambda_n = \lambda - (n\pi/L)^2\qquad (i=1, 2, \dots)
+                \] である. 
+                特に最大固有値は $\lambda_1 = \lambda - (\pi/L)^2$ であり, これが負ならば定常解 $\widetilde{u} = 0$ は安定であり, 正ならば不安定である. 
+                従って, $\lambda = (\pi/L)^2$ において定常解 $0$ は安定から不安定に転じ, 実は $0$ でない安定な定常解が生じる (さらに言えば, 実はこの分岐は超臨界ピッチフォーク分岐である). 
+                さらに $n=2, 3, \dots$ に対し, $\lambda = (n \pi/L)^2$ でも (定常解 $\widetilde{u} = 0$ における不安定多様体の次元が増加し) ピッチフォーク状の分岐が起こる. 
+                結果的に, $\lambda = \mu/\varepsilon^2$ が十分に大きければ, 大量の分岐により生じた大量の定常解が存在することになる. 
+                実際, 先ほどの数値計算例において異なる初期値 (たとえば波数の異なるサインカーブ) を用いることで, 異なる定常解を容易に見つけることができる. 
+            </p>
+        </section>
+
+        <hr>
+
+        <section><h2>フィッシャー = KPP 方程式</h2>
+            <p>ここまでの例でも見たように, 反応拡散方程式 (もしくはその線形化問題) に対して, 三角関数の線型結合により記述される関数の利用は有用な解析テクニックである. 
+                一般には, 非線形な反応拡散方程式の解そのものを, 熱方程式の場合と同様に三角関数の線型結合により構成することは不可能である. 
+                しかしながら, 解の近似を構成する際には, このアイデアを応用することが可能である. 
+                このような数値計算手法は <b>スペクトル法</b> (<b>spectral method</b>) と呼ばれ, 簡単な形をした空間領域上のなだらかな解を極めて高精度に近似することが可能であることが知られる. 
+                ここでは, <b>フィッシャー = KPP 方程式</b> (<b>Fisher-KPP equation</b>) 
+                \[
+                    u_t = ku_{xx} + ru(1-u) \quad \text{in}\quad \mathbb{R}
+                \] 
+                を具体例に, スペクトル法について解説しよう. 
+                なお, この方程式は (無限区間上で考えた際に) 進行波解を持つことが知られ, 伝播現象を表すシンプルな数理モデルとして扱われるものである. 
+                ただし, 数値計算の都合上ここでは 
+                \[
+                    \left\{\begin{array}{l} 
+                        u_t = ku_{xx} + ru(1-u) \quad \text{in}\quad [0, L], \cr 
+                        u(0, t) = 1,\quad u(L, t) = 0
+                    \end{array}\right.
+                \] を考えることにする (初期条件は適当に与えることにする). 
+            </p>
+            <p>まず, 方程式を斉次ディリクレ境界条件に帰着させるために, 例えば $g(x) = 1-x/L$ を用いて 
+                \[
+                    v(x, t) = u(x, t) - g(x)
+                \] とおく. この $v$ は ($g_{xx} = 0$ であることに注意すると)
+                \[
+                    \left\{\begin{array}{l} 
+                        v_t = kv_{xx} + ru(1-u) \quad \text{in}\quad [0, L], \cr 
+                        v(0, t) = v(L, t) = 0
+                    \end{array}\right. 
+                \] を満たすので, この $v$ の近似を計算し, 後から関数 $g$ を加えることで元の解 $u$ の近似を構成する. 
+                次に, 今回は時間離散化として <b>半陰的オイラー法</b> (<b>semi-implicit Euler</b>) を適用する: 時間区間 $[0, T]$ を $N$ 分割し $\tau = T/N$, $t_n = n\tau$ とおき, 与えられた $v^n$ に対し 
+                \[
+                    \dfrac{v^{n+1} - v^n}{\tau} = kv_{xx}^{n+1} + f^n 
+                    \tag{$\ast$}
+                \] を解いて得られる $v^{n+1}(x)$ を $v(x, t_{n+1})$ の近似として採用する, ここで $u^n = v^n + g$ であり, $f^n = ru^n(1-u^n)$ である. 
+                ここで, $v^{n+1}(x)$ も境界条件 $v^{n+1}(0) = v^{n+1}(L) = 0$ を満たすことが要請されることに注意. 
+            </p>
+            <p>それでは上の状況に対するスペクトル法のアイデアを説明しよう. 
+                線形化問題を考えた際に現れる固有関数が, 境界条件から 
+                \[
+                    \varphi_m(x) = \sin \dfrac{m\pi}{L}x
+                \] という形になることに注目し (異なる境界条件に対しては $e^{i\lambda t}$ という形のものを考えることもあるが, ここでは言及しない), これらの有限個の線型結合により解の近似を構成する. 
+                ここでは時間離散化 ($\ast$) と併せて   
+                \[
+                    v^{n+1}(x) = \sum_{m=1}^M \widehat{v}_m^{n+1}\varphi_m(x)
+                \] と表される関数を考える. 
+                このとき, 
+                \[
+                    kv^{n+1}_{xx} = \sum_{m=1}^M -k\left(\dfrac{m\pi}{L}\right)^2 \widehat{v}_m^{n+1} \varphi_m(x)
+                \] と表すことができることが重要である. 
+                さらに, 三角関数の直交性に注意すると 
+                \[
+                    \int_0^L \varphi_i(x)\varphi_j(x) ~dx = \dfrac{L}{2}\delta_{ij}
+                \] となる, ここで $\delta_{ij}$ はクロネッカーのデルタである. 
+                従って 
+                \[
+                    \widehat{v}_m^{n+1} = \dfrac{2}{L}\int_0^L v^{n+1}(x)\varphi_m(x) ~dx
+                \] となるが, これは有限区間上のフーリエ変換に他ならない. 
+                以上に基づき, $(\ast)$ 式全体に対するフーリエ変換を考えることにより, 各 $m$ に対し 
+                \[
+                    \dfrac{\widehat{v}_m^{n+1} - \widehat{v}_m^n}{\tau} = -k\left(\dfrac{m\pi}{L}\right)^2\widehat{v}^{n+1}_m + \widehat{f}^n(m)
+                \] を考えることにする, ここで $\widehat{f}^n(m)$ は $f^n$ のフーリエ変換 
+                \[
+                    \widehat{f}^n(m) = \dfrac{2}{L}\int_0^L f^n\varphi_m~dx
+                \] である. 
+                なお, 上の式は (十分大きな $M$ に対して) 
+                \[
+                    f^n \approx \sum_{m=0}^M \widehat{f}^n(m)\varphi_m 
+                \] という近似を用いていることに相当している. 
+                上を整理すると, 各 $m=1,2,\dots, M$ に対して
+                \[
+                    \widehat{v}^{n+1}_m = \dfrac{1}{1+\tau k(m\pi/L)^2}\left(\widehat{v}^n_m + \widehat{f}^n(m)\right)
+                \] を計算することで, これを用いて $v^{n+1}$ を構成することができる. 
+            </p>
+            <p>実際のスペクトル法の計算においては, 区間 $[0, L]$ を $M+1$ 等分し $h = L/(M+1)$, $x_m = mh$ とおき, $v^{n+1}(x_m)$ を近似する $v_m^{n+1}$ を計算する. 
+                また, 非線形項 $f^n$ については, 適当な近似で取り替えて計算すれば良いだろう. 
+                具体的には, 
+                \[
+                    \varphi_j(x_m) = \sin \dfrac{j\pi}{L}m\dfrac{L}{M+1} = \sin\dfrac{jm\pi}{M+1}\quad (1\le j\le M,\ 0\le m\le M+1)
+                \] となるため, 行列 
+                \[
+                    S = \begin{pmatrix} 
+                        \varphi_1(x_1) & \varphi_2(x_1) & \dots & \varphi_M(x_1) \cr 
+                        \varphi_1(x_2) & \varphi_2(x_2) & \dots & \varphi_M(x_2) \cr 
+                        \vdots & \vdots & \ddots & \vdots \cr 
+                        \varphi_1(x_M) & \varphi_2(x_M) & \dots & \varphi_M(x_M) 
+                    \end{pmatrix} \in\mathbb{R}^{M\times M}
+                \] は対称行列となり, また詳細は省略するが, 実は 
+                \[
+                    S^{-1} = \dfrac{2}{M+1}S
+                \] となることが知られている. 
+                これを用いて, 与えられたベクトル
+                \[
+                    \mathbf{v}^{n} = \begin{pmatrix} 
+                        v_1^{n} \cr 
+                        \vdots \cr 
+                        v_M^{n} 
+                    \end{pmatrix} = \begin{pmatrix} 
+                        \displaystyle\sum_{m=1}^M \widehat{v}^n_m\varphi_m(x_1) \cr 
+                        \vdots \cr 
+                        \displaystyle\sum_{m=1}^M \widehat{v}^n_m\varphi_m(x_M) 
+                    \end{pmatrix} = S \widehat{\mathbf{v}}^n, \quad 
+                    \mathbf{f}^n = \begin{pmatrix} 
+                        \displaystyle\sum_{m=1}^M f(v_1^n + g(x_1))\varphi_m(x_1) \cr 
+                        \vdots \cr 
+                        \displaystyle\sum_{m=1}^M f(v_m^n + g(x_m))\varphi_m(x_M) 
+                    \end{pmatrix} 
+                \] に対し, <b>離散サイン変換</b> (一般には <b>離散フーリエ変換</b>) により得られる
+                \[
+                    \widehat{\mathbf{v}}^{n} = S^{-1} \mathbf{v}^n = \dfrac{2}{M+1}S\mathbf{v}^n, \quad \widehat{\mathbf{f}}^n = S^{-1}\mathbf{f}^n = \dfrac{2}{M+1}S\mathbf{f}^n
+                \] の第 $m$ 成分 $\widehat{v}^n_m$, $\widehat{f}^n_m$ に対して
+                \[
+                    \widehat{v}^{n+1}_m = \dfrac{1}{1+\tau k(m\pi/L)^2}\left(\widehat{v}^n_m + \widehat{f}^n_m\right)
+                \] を計算することで $\widehat{\mathbf{v}}^{n+1}$ の各成分を求め, $\mathbf{v}^{n+1} = S\widehat{\mathbf{v}}^n$ の各成分が $v_m^{n+1}$, つまり $v(x_m, t_n)$ の近似を与えていると思えば良い. 
+                最後に各成分に $g(x_m)$ を足し合わせることで $u(x_m, t_n)$ の近似を構成できる. 
+            </p>
+
+    </article>
+    </main>
+    </div>
+
+</body>
+
+<!-- javascript -->
+<script src="./common/create_statement_block.js"></script>
+<script src="./common/function_toggleSidebar.js"></script>
+<script src="./common/import_sidebar.js"></script>
+
+</html>
