@@ -3,51 +3,63 @@ from scipy.fft import dst, idst
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-# parameters
-L, N = 50.0, 1280
-D, r = 1.0, 5.0
-dt, steps = 0.003, 500
+# パラメータ 
+k: float = 1.0 
+r: float = 5.0
 
-# grid (interior points)
-x = np.linspace(0, L, N+2)[1:-1]
+# 空間領域, 時間区間
+L: float = 50.0 
+T: float = 5.0 
+M: int = 500 
+N: int = 1000 
+x = np.linspace(0, L, M+2) 
+t = np.linspace(0, T, N+1)
+h: float = L/(M+1) 
+tau: float = T/N 
+# m と離散サイン変換の行列
+m = np.arange(1, M+1)
+S = np.sin(np.pi * np.outer(m, m) / (M+1))
 
-# boundary function g(x): g(0)=1, g(L)=0
-g = 1 - x / L
 
-# initial condition for u, then v = u - g
-# u = g.copy()  
-u = np.hstack((np.ones(80), (1 + np.cos(np.linspace(0, np.pi, 80)))/2, np.zeros(N-160)))                     # start near steady profile
-v = u - g                         # satisfies homogeneous BCs
+# 初期化
+u = np.empty((M+2, N+1))
+# 境界条件を満たす関数
+g = 1 - x/L
+# 初期条件
+u[:, 0] = 1 * (x < L/10) + (1 + np.cos((x-L/10)/(L/8)*np.pi))/2 * (np.logical_and(x >= L/10, x < L/10 + L/8)) 
+# 斉次ディリクレ境界条件を満たす関数
+v = u[:, 0] - g                        
 
-# wavenumbers
-n = np.arange(1, N+1)
-k2 = (n * np.pi / L)**2
-
-# figure
+# 初期条件のプロット
 fig, ax = plt.subplots()
-line, = ax.plot(x, u, lw=2)
-ax.set_ylim(-0.1, 1.1)
-ax.set_title("Fisher-KPP evolution")
-ax.set_xlabel("x")
-ax.set_ylabel("u")
-
-def step():
-    global v
-    u = v + g
-    f = r * u * (1 - u)
-
-    v_hat = dst(v, type=1, norm='ortho')
-    f_hat = dst(f, type=1, norm='ortho')
-
-    v_hat = (v_hat + dt * f_hat) / (1 + dt * D * k2)
-    v = idst(v_hat, type=1, norm='ortho')
-
-    return v + g
-
+line, = ax.plot(x, u[:, 0], lw=2)
+# アニメーションにおける update を定義 
 def update(frame):
-    u_new = step()
-    line.set_ydata(u_new)
+    line.set_ydata(u[:, frame])
     return line,
 
-ani = FuncAnimation(fig, update, frames=100, interval=10)
+# 計算
+for n in range(N): 
+    f = r * u[:, n] * (1 - u[:, n])
+    # v_hat = dst(v[1:-1], type=1, norm='ortho')
+    # f_hat = dst(f[1:-1], type=1, norm='ortho')
+    v_hat = 2/(M+1) * S @ v[1:-1]
+    f_hat = 2/(M+1) * S @ f[1:-1]
+    v_hat = (v_hat + tau * f_hat) / (1 + tau * k * (m*np.pi/L)**2)
+    # v[1:-1] = idst1(v_hat, type=1, norm='ortho')
+    v[1:-1] = S @ v_hat
+    u[:, n+1] = v + g
+
+# プロット
+step: int = 2
+ani = FuncAnimation(fig, update, frames=range(0, N, step), interval=5)
+# ファイル出力する場合は下のコメントアウトを解除
+ani.save("fisher_kpp.mp4", writer="ffmpeg", fps=60)
+
 plt.show()
+# Google Colab でアニメーションを表示するには 
+# plt.show() をコメントアウトし, 代わりに以下のようにする (時間がかかるので注意): 
+# from matplotlib import rc
+# from IPython.display import HTML
+# rc('animation', html='jshtml')
+# ani 
