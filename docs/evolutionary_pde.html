@@ -180,12 +180,6 @@
 
         <hr>
 
-        <section><h2>熱方程式</h2>
-            <p>上では非線形な作用素を持つ PDE に対する線形安定性解析に固有関数を利用したアイデアを紹介したが, まずは簡単のために線形の時間発展 PDE を考えてみよう. 
-
-            </p>
-        </section>
-
         <section><h2>アレン=カーン方程式</h2>
             <p>ここでは <b>アレン=カーン方程式</b> (<b>Allen-Cahn equation</b>)
                 \[
@@ -389,7 +383,7 @@ plt.show()
                 \] 
                 を具体例に, スペクトル法について解説しよう. 
                 なお, この方程式は (無限区間上で考えた際に) 進行波解を持つことが知られ, 伝播現象を表すシンプルな数理モデルとして扱われるものである. 
-                ただし, 数値計算の都合上ここでは 
+                ただし, 数値計算の都合上, 無限区間を厳密に扱うことができないため, ここでは代わりに 
                 \[
                     \left\{\begin{array}{l} 
                         u_t = ku_{xx} + ru(1-u) \quad \text{in}\quad [0, L], \cr 
@@ -493,6 +487,155 @@ plt.show()
                 \] を計算することで $\widehat{\mathbf{v}}^{n+1}$ の各成分を求め, $\mathbf{v}^{n+1} = S\widehat{\mathbf{v}}^n$ の各成分が $v_m^{n+1}$, つまり $v(x_m, t_n)$ の近似を与えていると思えば良い. 
                 最後に各成分に $g(x_m)$ を足し合わせることで $u(x_m, t_n)$ の近似を構成できる. 
             </p>
+            <pre>
+<code>
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+# パラメータ 
+k: float = 1.0 
+r: float = 5.0
+
+# 空間領域, 時間区間
+L: float = 50.0 
+T: float = 5.0 
+M: int = 500 
+N: int = 1000 
+x = np.linspace(0, L, M+2) 
+t = np.linspace(0, T, N+1)
+h: float = L/(M+1) 
+tau: float = T/N 
+# m と離散サイン変換の行列
+m = np.arange(1, M+1)
+S = np.sin(np.pi * np.outer(m, m) / (M+1))
+
+
+# 初期化
+u = np.empty((M+2, N+1))
+# 境界条件を満たす関数
+g = 1 - x/L
+# 初期条件
+u[:, 0] = 1 * (x < L/10) + (1 + np.cos((x-L/10)/(L/8)*np.pi))/2 * (np.logical_and(x >= L/10, x < L/10 + L/8)) 
+# 斉次ディリクレ境界条件を満たす関数
+v = u[:, 0] - g                        
+
+# 初期条件のプロット
+fig, ax = plt.subplots()
+line, = ax.plot(x, u[:, 0], lw=2)
+# アニメーションにおける update を定義 
+def update(frame):
+    line.set_ydata(u[:, frame])
+    return line,
+
+# 計算
+for n in range(N): 
+    f = r * u[:, n] * (1 - u[:, n])
+    # v_hat = dst(v[1:-1], type=1, norm='ortho')
+    # f_hat = dst(f[1:-1], type=1, norm='ortho')
+    v_hat = 2/(M+1) * S @ v[1:-1]
+    f_hat = 2/(M+1) * S @ f[1:-1]
+    v_hat = (v_hat + tau * f_hat) / (1 + tau * k * (m*np.pi/L)**2)
+    # v[1:-1] = idst1(v_hat, type=1, norm='ortho')
+    v[1:-1] = S @ v_hat
+    u[:, n+1] = v + g
+
+# プロット
+step: int = 2
+ani = FuncAnimation(fig, update, frames=range(0, N, step), interval=5)
+# ファイル出力する場合は下のコメントアウトを解除
+# ani.save("fisher_kpp.mp4", writer="ffmpeg", fps=60)
+
+plt.show()
+# Google Colab でアニメーションを表示するには 
+# plt.show() をコメントアウトし, 代わりに以下のようにする (時間がかかるので注意): 
+# from matplotlib import rc
+# from IPython.display import HTML
+# rc('animation', html='jshtml')
+# ani 
+</code>
+            </pre>
+            <div class="resize">
+                <video autoplay="true", loop="true">
+                <source src="videos/fisher_kpp.mp4" type="video/mp4" />
+                </video>
+            </div>
+            <p>サンプルコードによる数値計算の結果を上に示す. 
+                初期値は適当に (境界条件を満たすものを) 与えているが, 時間経過によりある形状に速やかに近づき, その形状を維持しつつ右に移動する進行波解を数値的に再現できていることを確認できる. 
+                ただし, この問題については境界条件の影響で, 進行する波が右端に近づくと形状が崩れてしまう. 
+                上のサンプルコードでは $T=5.0$ としているが, これを大きくすると解が崩れて計算が破綻してしまうため注意. 
+                また, 上のサンプルコードでは離散サイン変換の計算において, わかりやすさのために行列ベクトル積を素直に計算している (numpy では A @ v で行列 $A$ とベクトル $v$ の積を計算できる) が, 実際には, <b>高速フーリエ変換</b> (<b>Fast Fourier Transform</b>, FFT) などの効率的な計算テクニックを利用するべきだろう. 
+                Python では, scipy.fft モジュールで簡単に FFT を利用できるため, 興味があれば試してみると良い. 
+            </p>
+
+        </section>
+
+        <hr>
+
+        <section><h2>カーン=ヒリアード方程式</h2>
+            <p><a href="phase_plane_analysis.html#section3-A">数値計算: 構造保存型数値解法</a> において, 構造保存型数値解法の一例としてハミルトン系に対する離散勾配法を紹介した. 
+                ここでは時間発展 PDE に対する構造保存型数値解法の一種として, <b>離散変分導関数法</b> (<b>discrete variational derivative method</b>) を紹介しよう. 
+                例として <b>カーン=ヒリアード方程式</b> (<b>Cahn-Hilliard equation</b>)  
+                \[
+                    u_t = -(\varepsilon^2 u_{xx} + \mu u(1-u^2))_{xx}
+                \] を考える, ここで $\varepsilon\gt 0$ と $\mu\gt 0$ はパラメータである. 
+                特に, ここでは境界条件 (および初期条件) として, 
+                \[
+                    \left\{\begin{array}{l}
+                        u_t = -(\varepsilon^2 u_{xx} + \mu u(1-u^2))_{xx} \quad \text{in}\quad [0, L], \cr
+                        u_x(0, t) = u_x(L, t) = 0, \cr 
+                        u_{xxx}(0, t) = u_{xxx}(L, t) = 0, \cr 
+                        u(x, 0) = u_0(x)
+                    \end{array}\right.
+                \] を考えることにする. 
+            </p>
+            <p>ところで, カーン=ヒリアード方程式はアレン=カーン方程式と同様に相分離現象を表す数理モデルとして利用されるものであるが, こちらは上のような適切な境界条件の下で質量保存則を満たすという利点がある. 
+                実際, 
+                \[
+                    \begin{array}{rl} 
+                        \dfrac{d}{dt}\displaystyle\int_0^L u~dx &= \displaystyle\int_0^L u_t ~dx \cr 
+                        &= \displaystyle\int_0^L -(\varepsilon^2 u_{xx} + \mu u(1-u^2))_{xx} ~dx \cr 
+                        &= \left[-\varepsilon^2 u_{xxx} - \mu u_x - 3\mu u^2u_x\right]_0^L = 0
+                    \end{array}
+                \] であるため, $u$ を区間 $[0, L]$ 上で積分した値は時間 $t$ には依存しない, つまり質量が時間経過により変化しないことがわかる. 
+                さらに, この問題については, 
+                \[
+                    G(u, u_x) = \dfrac{\varepsilon^2}{2}u_x^2 - \dfrac{\mu}{2}u^2 + \dfrac{\mu}{4}u^4,\quad J(u) = \int_0^L G(u, u_x)~dx
+                \] により定められる $J(u)$ が, 時間とともに減少するということもわかる, ここで $G(u, u_x)$, $J(u)$ はそれぞれカーン=ヒリアード方程式の <b>局所エネルギー</b>, <b>全エネルギー</b> と呼ばれることがある. 
+                このことを確認するために, $G(u, u_x)$ に対する <b>変分導関数</b> 
+                \[
+                    \dfrac{\delta G}{\delta u} = \dfrac{\partial G}{\partial u} - \dfrac{\partial}{\partial x}\dfrac{\partial G}{\partial u_x} 
+                \] を導入しよう. 
+                上の $G(u, u_x)$ の変分導関数を実際に計算すると, 
+                \[
+                    \dfrac{\delta G}{\delta u} = -\mu u + \mu u^3 - \dfrac{\partial}{\partial x}\varepsilon^2 u_x = -(\varepsilon^2 u_{xx} + \mu u (1-u^2))
+                \] が得られる. 
+                つまりカーン=ヒリアード方程式は 
+                \[
+                    u_t = \left(\dfrac{\delta G}{\delta u}\right)_{xx}
+                \] であると思うことができる. 
+                なお, 境界条件から
+                \[
+                    \left[\dfrac{\partial G}{\partial u_x}\right]_0^L = \left[\varepsilon^2 u_x\right]_0^L = 0,\quad \left[\left(\dfrac{\delta G}{\delta u}\right)_x\right]_0^L = 0
+                \] が得られることも重要である (後者は質量保存則と同様の計算により得られる). 
+                これらを用いると, 実際に 
+                \[
+                    \begin{array}{rl} 
+                        \dfrac{d}{dt}J(u) &= \displaystyle\int_0^L \dfrac{\partial G(u, u_x)}{\partial t}~dx \cr 
+                        &= \displaystyle\int_0^L\left(\dfrac{\partial G}{\partial u}u_t + \dfrac{\partial G}{\partial u_x}u_{xt}\right)~dx \cr 
+                        &= \displaystyle\int_0^L \dfrac{\partial G}{\partial u}u_t ~ dx + \underbrace{\left[\dfrac{\partial G}{\partial u_x}u_t\right]_0^L}_{=0} -\int_0^L \dfrac{\partial}{\partial x}\dfrac{\partial G}{\partial u_x}u_{t}~dx \cr 
+                        &= \displaystyle\int_0^L \dfrac{\delta G}{\delta u}u_t ~ dx \cr 
+                        &= \displaystyle\int_0^L \dfrac{\delta G}{\delta u}\left(\dfrac{\delta G}{\delta u}\right)_{xx} ~ dx \cr 
+                        &= \underbrace{\left[\dfrac{\delta G}{\delta u}\left(\dfrac{\delta G}{\delta u}\right)_{x}\right]_0^L}_{=0} - \displaystyle\int_0^L \left(\dfrac{\delta G}{\delta u}\right)_{x}^2 ~ dx \le 0
+                    \end{array}
+                \] のように式変形することで, $J(u)$ は時間 $t$ について単調減少であることが確かめられる (もちろん変分導関数を用いずに式変形することで同じ結論を得ることもできる). 
+                ただし, 単純な $4$ 階差分に基づく計算やスペクトル法など汎用解法による数値計算結果がこのような性質を再現するとは限らないことは想像に難くないだろう. 
+                なお, この問題に対する単純な差分法は, 計算に用いる区間分割をどれだけ細かくしても発散してしまうことさえあり, 適切な数値計算結果を得ることが難しい例として知られている. 
+            </p>
+            <p>ここでは, 上で述べた性質を再現するように構成された構造保存型数値解法を考えたい. 
+
+            </p>
+        </section>
 
     </article>
     </main>
