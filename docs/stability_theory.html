@@ -822,9 +822,9 @@
                     </li>
                     <li>安定でない平衡点は <b>不安定</b> (<b>unstable</b>) であるという. 
                     </li>
-                    <li>安定な平衡点 $\widetilde{\mathbf{x}}\in \mathbb{R}^d$ について, 
+                    <li>安定な平衡点 $\widetilde{\mathbf{x}}\in \mathbb{R}^d$ について, ある $\widetilde{\delta}\gt0$ が存在し, 
                         \[
-                            \lim_{t\to\infty}\|\mathbf{x}(t)-\widetilde{\mathbf{x}}\|=0
+                            \|\mathbf{x}_0-\widetilde{\mathbf{x}}\| \lt \widetilde{\delta} \implies\lim_{t\to\infty}\|\mathbf{x}(t)-\widetilde{\mathbf{x}}\|=0
                         \] が成立するとき, 平衡点 $\widetilde{\mathbf{x}}\in \mathbb{R}^d$ は <b>吸引的</b> (<b>attracting</b>) である, もしくは <b>漸近安定</b> (<b>asymptotically stable</b>) であるという.
                     </li>
                     <li>リアプノフ安定だが吸引的でない平衡点は <b>中立安定</b> (<b>neutrally stable</b>) であるという.</li>
@@ -906,7 +906,7 @@
                                 あとは吸引的であること, つまりある $\widetilde{\delta}\gt 0$ が存在し, 任意の $\widetilde{\varepsilon}\gt 0$ に対しある $T\gt 0$ が存在し,
                                 \[
                                     \|\mathbf{x}_0-\widetilde{\mathbf{x}}\|\lt \widetilde{\delta} \implies \|\mathbf{x}(t)-\widetilde{\mathbf{x}}\|\lt \widetilde{\varepsilon}\quad \text{for all}\quad t\gt T
-                                \] を証明すれば良い (安定性の証明とは異なり, $\widetilde{\varepsilon}$ に依存しない $\widetilde{\delta}$ の存在を示す). 
+                                \] を証明すれば良い. 
                             </li>
                             <li>
                                 まず, 自励系の解 $\mathbf{x}(t)$ とフロー $S(t)$ には 
@@ -970,10 +970,10 @@
                     また, この勾配系に対し, 
                     \[
                         V(\mathbf{x}) = E(\mathbf{x})
-                    \] はリアプノフ関数である. 実際, $E$ が最小値 $E(\widetilde{\mathbf{x}}) = 0$ を達成するという仮定と, 
+                    \] はリアプノフ関数である: 実際, $E$ が最小値 $E(\widetilde{\mathbf{x}}) = 0$ を達成するという仮定と, 
                     \[
-                        \nabla V(\mathbf{x})\cdot \mathbf{f}(\mathbf{x}) = \nabla E(\mathbf{x})\cdot (-\nabla E(\mathbf{x})) = -\|\nabla E(\mathbf{x})\|^2 
-                    \] であることから従う. 
+                        \nabla V(\mathbf{x})\cdot \mathbf{f}(\mathbf{x}) = \nabla E(\mathbf{x})\cdot (-\nabla E(\mathbf{x})) = -\|\nabla E(\mathbf{x})\|^2 \le 0
+                    \] であることからわかる. 
                     ただし, 一般には狭義リアプノフ関数であるとは限らない. 
                 </p> 
             </div>
