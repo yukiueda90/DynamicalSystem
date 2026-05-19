@@ -1950,7 +1950,7 @@
             </p>
         </section> 
 
-        <section id="section2-A"><h2>数値計算: 陽的ルンゲ=クッタ法</h2>
+        <section id="section2-A"><h2>数値計算: ルンゲ=クッタ法とニュートン法</h2>
             <p>ここでは, 非線形力学系を想定した数値計算手法として <b>古典的ルンゲ=クッタ法</b> の応用例を述べる. 
                 まず, 力学系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ に対するオイラー法を考えてみる. 
                 時間区間 $[0,T]$ を $N$ 等分して $\tau = T/N$, $t_n = n\tau$ としたとき, $\mathbf{x}_n \approx \mathbf{x}(t_n)$ を以下で求める:  
@@ -2019,7 +2019,7 @@
                     \end{array}
                 \] を用いて 
                 \[
-                    \mathbf{x}(t_n)\approx \mathbf{x}_{n+1} = \mathbf{x}_n + \dfrac{\tau}{6}\left(\mathbf{k}_1 + 2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4\right)
+                    \mathbf{x}(t_{n+1})\approx \mathbf{x}_{n+1} = \mathbf{x}_n + \dfrac{\tau}{6}\left(\mathbf{k}_1 + 2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4\right)
                 \] と計算するのが一般的である. 
                 上で紹介したものはあくまでルンゲ=クッタ法の一種ではあるが, 公式の覚えやすさや計算の手間と精度のバランスが良いことなどから最も一般的であり, これを単にルンゲ=クッタ法と言及されることも多い. 
                 この公式は計算も容易であり, オイラー法よりも高精度なこともあって (類似の公式も含め) 様々な場面に応用されるが, 考える問題次第では他の計算手法が望ましい場合もあるため, 万能というわけではない. 
@@ -2069,6 +2069,119 @@ x[:, 0] = [x0, y0]
 # 古典的ルンゲ=クッタ (４段陽的ルンゲ=クッタ)
 for i in range(N):
   x[:, i+1] = runge_kutta(x[:, i], tau)
+
+# プロット
+ax.plot(x[0], x[1])
+# 向きを表す矢印 
+vec = f(x)
+ax.quiver(x[0][50:N:50], x[1][50:N:50], vec[0][50:N:50], vec[1][50:N:50], scale=5, headwidth=3, minshaft=0, color='tab:blue')
+# 初期値
+ax.plot(x[0, 0], x[1, 0], linestyle='None', marker='o', label='initial value') 
+ax.legend()
+plt.show()
+</code>
+            </pre>
+
+            <p>さて, 陽的ルンゲ=クッタ法は右辺の計算は, 与えられた $\mathbf{x}_n$ を関数 $\mathbf{f}$ に代入する, といった操作のみにより $\mathbf{x}_{n+1}$ を算出することができたが, 陰的な数値計算スキーム (陰的ルンゲ=クッタ法や陰的オイラー法) を用いた場合はそうもいかない. 
+                例えば線形力学系に対する陰的オイラー法では, 
+                \[
+                    (I+\tau A)\mathbf{x}_{n+1} - \mathbf{x}_n = \mathbf{0}
+                \] を満たす $\mathbf{x}_{n+1}$ を計算する必要があり, この場合は連立 $1$ 次方程式を解く必要があるのだった. 
+                一般に, 非線形力学系に対する陰的スキームによる数値計算は, 
+                \[
+                    \mathbf{F}(\mathbf{x}_{n+1}) = \mathbf{0}
+                \] を満たす $\mathbf{x}_{n+1}$ を求めよ, という問題に帰着される (例えば非線形力学系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ に対する後退オイラー法 
+                \[
+                    \dfrac{\mathbf{x}_{n+1} - \mathbf{x}_n}{\tau} = \mathbf{f}(\mathbf{x}_{n+1})
+                \] は, 
+                \[
+                    \mathbf{F}(\mathbf{x}) = \mathbf{x} - \tau\mathbf{f}(\mathbf{x}) - \mathbf{x}_n
+                \] に対し $\mathbf{F}(\mathbf{x}_{n+1}) = \mathbf{0}$ を満たす $\mathbf{x}_{n+1}$ を求める問題に帰着される). 
+                このような問題に対する数値解法の一つとして, ここでは <b>ニュートン法</b> についても紹介しておこう. 
+                一次元の場合, つまり与えられた $x_n\in\mathbb{R}$ に依存する関数 $f_n:\mathbb{R}\to\mathbb{R}$ に対し,  
+                \[
+                    f_n(x_{n+1}) = 0
+                \] を満たす $x_{n+1}$ をニュートン法で求める際には, 適当な $x_{n, 0}$ に対し 
+                \[
+                    x_{n, k+1} = x_{n, k} - \dfrac{f_n(x_{n, k})}{f_n'(x_{n, k})}
+                \] という反復計算を行い, その収束先として 
+                \[
+                    x_{n+1} = \lim_{k\to\infty}x_{n, k}
+                \] とすれば良い (ただし実際の計算ではニュートン法の計算は適当に打ち切ることになる). 
+                同様に, 与えられた $\mathbf{x}_n\in\mathbb{R}^d$ に依存する関数 $\mathbf{F}_n:\mathbb{R}^d\to\mathbb{R}^d$ に対し,  
+                \[
+                    \mathbf{F}_n(\mathbf{x}_{n+1}) = 0
+                \] を満たす $\mathbf{x}_{n+1}$ をニュートン法で求める際には, 適当な $\mathbf{x}_{n, 0}$ に対し 
+                \[
+                    \mathbf{x}_{n, k+1} = \mathbf{x}_{n, k} - D\mathbf{F}_n(\mathbf{x}_{n, k})^{-1}\mathbf{F}_n(\mathbf{x}_{n, k})
+                \] という反復計算を行い, 適当に打ち切ったものを $\mathbf{x}_{n+1}$ として採用すればよい, ここで $D\mathbf{F}_n(\mathbf{x}_{n, k})^{-1}$ はヤコビ行列 
+                \[
+                    D\mathbf{F}_n(\mathbf{x}_{n, k}) = \begin{pmatrix} 
+                        \dfrac{\partial F_1}{\partial x_1}(\mathbf{x}_{n, k}) & \dots & \dfrac{\partial F_1}{\partial x_d}(\mathbf{x}_{n, k}) \cr 
+                        \vdots & \ddots & \vdots \cr 
+                        \dfrac{\partial F_d}{\partial x_1}(\mathbf{x}_{n, k}) & \dots & \dfrac{\partial F_d}{\partial x_d}(\mathbf{x}_{n, k}) 
+                    \end{pmatrix}
+                \] の逆行列である (ベクトル $\mathbf{F}_n$ の第 $i$ 成分を $F_i$ とおいた). 
+                例えば, $\mathbf{F}_n(\mathbf{x}) = \mathbf{x} - \tau\mathbf{f}(\mathbf{x}) - \mathbf{x}_n$ ならば, 
+                \[
+                    D\mathbf{F}_n(\mathbf{x}) = I - \tau D\mathbf{f}(\mathbf{x})
+                \] のように計算すればよい. 
+            </p>
+            <p>一つ前のサンプルコードと同じ計算を, 後退オイラー法とニュートン法の組み合わせにより計算するサンプルコードを以下に示す. 
+                ただし, 後退オイラー法ではルンゲ=クッタ法に比べて時間区間分割幅を十分に小さくしなければ同様の数値計算結果が得られないことに注意 (実際に, 以下のサンプルコードの $N$ を小さく取り替えると計算結果がどうなるかを確認してみると良い):
+            </p>
+            <pre>
+<code>
+import numpy as np
+import matplotlib.pyplot as plt
+
+# x' = -y + x(x^2+y^2)
+# y' = x + y(x^2+y^2)
+
+# ベクトル場を定義
+def f(x: np.ndarray) -> np.ndarray:
+  return np.array([
+      -x[1] + x[0] * (x[0]**2 + x[1]**2),
+      x[0] + x[1] * (x[0]**2 + x[1]**2)
+  ])
+# ヤコビ行列を計算 
+def df(x: np.ndarray) -> np.ndarray: 
+   return np.array([
+      [3*x[0]**2 + x[1]**2, -1 + 2*x[0]*x[1]], 
+      [1 + 2*x[0]*x[1], x[0]**2 + 3*x[1]**2]
+   ])
+
+# ニュートン法
+def newton(x_prev: np.ndarray, tau: float, tol: float = 1e-8, max_iter: int = 30) -> np.ndarray: 
+   x = x_prev 
+      for _ in range(max_iter): 
+         F = x - tau*f(x) - x_prev 
+         DF = np.eye(2) - tau*df(x)
+         x = x - np.linalg.solve(DF, F)
+      if np.linalg.norm(np.linalg.solve(DF, F)) < tol:
+         return x
+      raise ValueError('Newton method did not converge.')
+
+fig, ax = plt.subplots()
+ax.set_aspect('equal')
+
+# 時間区間分割
+T: float = 30
+N: int = 10000
+t = np.linspace(0, T, N+1)
+tau: float = T/N
+
+# 初期条件
+x0: float = 0.1
+y0: float = 0
+
+# 配列を初期化
+x = np.empty((2, N+1), dtype = float)
+x[:, 0] = [x0, y0]
+
+# ニュートン法
+for i in range(N): 
+   x[:, i+1] = newton(x[:, i], tau)
 
 # プロット
 ax.plot(x[0], x[1])
