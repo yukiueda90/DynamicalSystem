@@ -59,6 +59,8 @@ ax.set_ylim([-1.1, 1.1])
 
 # 初期条件のプロット 
 line, = ax.plot(x, u[:, 0], color='tab:blue') 
+# plt.savefig('cahn_hilliard.pdf')
+
 # アニメーションにおける update を定義 
 def update(frame): 
     line.set_data(x, u[:, frame]) # 更新された u を入力 
