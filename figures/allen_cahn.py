@@ -49,7 +49,7 @@ fig, ax = plt.subplots()
 ax.set_ylim([-1.1, 1.1])
 
 # 初期条件のプロット 
-line, = ax.plot(x, u[:, 0], color='tab:blue')
+line, = ax.plot(x, u[:, 0], color='tab:blue', linewidth=2.5)
 # plt.savefig('allen_cahn.pdf') 
 # アニメーションにおける update を定義 
 def update(frame): 
