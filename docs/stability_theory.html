@@ -750,6 +750,13 @@
                 </p>
                 <p>この例では, 解軌道が急激に中心部分空間に近づいた後の挙動に注目したい. 
                     解がひとたび中心部分空間に近づいてしまえば, あとは概ね $c_3\mathbf{v}_2t + (c_2\mathbf{v}_2 + c_3\mathbf{v}_3)$ と表される動きに近づいていくことがわかる, つまりこの例では時間経過に伴い (中心部分空間に沿って) $\mathbf{v}_2$ で表される方向に発散するように動くため, 原点は不安定な平衡点であることがわかる. 
+                    このように, 安定部分空間と中心部分空間が存在する場合には, 線形力学系の解の挙動は 
+                </p>
+                <ol>
+                    <li>安定部分空間方向に急速に減衰する,</li> 
+                    <li>中心部分空間に沿うようにゆっくりと動く</li>
+                </ol>
+                <p>という $2$ 段階に分けて考えることができる. 
                     実は非線形力学系に対しても, 同様のアイデアにより <b>中心多様体</b> 上の解の挙動を調べることが, 安定性解析において重要となる. 
                 </p>
                 <div class="resize">
@@ -945,7 +952,7 @@
                                 以上より, 任意の $T\gt 0$ に対し
                                 \[
                                     0\lt V(\mathbf{x}(T)) \lt \widetilde{\alpha} + \displaystyle\int_0^T (-\widetilde{\beta})~ds = \widetilde{\alpha}-T\widetilde{\beta}
-                                \] となる初期値 $\mathbf{x}_0\in B_{\delta}(\widetilde{\mathbf{x}})$ が存在することになるが, この不等式は $T \gt \widetilde{\alpha}/\widetilde{\beta}$ において成立しないため矛盾する. 
+                                \] となる初期値 $\mathbf{x}_0\in B_{\widetilde{\delta}}(\widetilde{\mathbf{x}})$ が存在することになるが, この不等式は $T \gt \widetilde{\alpha}/\widetilde{\beta}$ において成立しないため矛盾する. 
                             </li>
                         </ul>
                     </li>
@@ -965,7 +972,7 @@
                 </p>
                 <p>勾配系の解は
                     \[
-                        x_i' = -\dfrac{\partial E}{\partial x_i}(\mathbf{x})\quad\text{for all}\quad i=1,\dots, n
+                        x_i' = -\dfrac{\partial E}{\partial x_i}(\mathbf{x})\quad\text{for all}\quad i=1,\dots, d
                     \] を満たしていることから, 各 $x_i$ は $E$ を小さくする方向に時間発展することがわかる.  
                     また, この勾配系に対し, 
                     \[
@@ -1014,7 +1021,7 @@
             <div class="proof">
                 <p>まず, $P = (P_{ij})$, $\mathbf{x} = (x_i)$ に対し, 
                     \[
-                        V(\mathbf{x}) = \mathbf{x}^{\operatorname{T}}P\mathbf{x} = \sum_{i=1}^n\sum_{j=1}^nx_iP_{ij}x_j
+                        V(\mathbf{x}) = \mathbf{x}^{\operatorname{T}}P\mathbf{x} = \sum_{i=1}^d\sum_{j=1}^dx_iP_{ij}x_j
                     \] である. 
                     $P$ が対称行列 (つまり $P_{ij} = P_{ji}$) であるならば, $\nabla V\in\mathbb{R}^d$ の第 $k$ 成分は
                     \[
@@ -1219,9 +1226,9 @@
                 このとき, 自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 $\widetilde{\mathbf{x}}$ におけるヤコビ行列 
                 \[
                     D\mathbf{f}(\mathbf{\widetilde{x}}) = \begin{pmatrix} 
-                        \dfrac{\partial f_1}{\partial x_1}(\widetilde{\mathbf{x}}) & \dots & \dfrac{\partial f_1}{\partial x_n}(\widetilde{\mathbf{x}}) \cr
+                        \dfrac{\partial f_1}{\partial x_1}(\widetilde{\mathbf{x}}) & \dots & \dfrac{\partial f_1}{\partial x_d}(\widetilde{\mathbf{x}}) \cr
                         \vdots & \ddots & \vdots \cr
-                        \dfrac{\partial f_n}{\partial x_1}(\widetilde{\mathbf{x}}) & \dots & \dfrac{\partial f_n}{\partial x_n}(\widetilde{\mathbf{x}})
+                        \dfrac{\partial f_d}{\partial x_1}(\widetilde{\mathbf{x}}) & \dots & \dfrac{\partial f_d}{\partial x_d}(\widetilde{\mathbf{x}})
                     \end{pmatrix}\in\mathbb{R}^{d\times d}
                 \] について, 以下が成立する:
                 <ul>
@@ -1402,8 +1409,23 @@
                 ただし, 不安定部分空間が存在するならば, 指数的に発散する解軌道が存在するため平衡点は不安定であることがわかるし, 不安定部分空間が存在しないならば, 安定部分空間方向には指数的に減衰するため, 中心部分空間上の解の挙動にだけ注目すれば, 安定性を判断できそうである. 
             </p>
             <p>実際には, 剰余項の影響があるためここまで単純ではないが, 実は同様のアイデアに基づき <b>中心多様体</b> 上の解の挙動を考えることで, 安定性を判定することができる. 
+                中心多様体の数学的な定義を述べる前に, 具体的にどのような性質を持つものであるかを数値計算例を通じて確認してみよう. 
+                以下は, ある非線形力学系の平衡点付近での解の挙動を, いくつかの初期値に対してアニメーションとして表示したものである: 
             </p> 
-            <p>まず, 自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ が平衡点 $\widetilde{\mathbf{x}}$ を持つとき, $\mathbf{x}-\widetilde{\mathbf{x}}$ を改めて $\mathbf{x}$ と表す変数変換により, $\mathbf{0}$ が平衡点であると思うことができる. 
+            <div class="resize">
+                <video autoplay="true", loop="true">
+                <source src="videos/center_manifold.mp4" type="video/mp4" />
+                </video>
+            </div>
+            <p>解はある方向に急速に減衰し, 赤い線で示した曲線に近づくとゆっくりと平衡点に向かって動く様子が観察できる. 
+                以前に線形力学系の例として, 安定部分空間方向に急速に減衰し, 中心部分空間に沿うようにゆっくり解が動くものを紹介したが, 非線形力学系でも同様に急速な動きとゆっくりとした動きの $2$ 段階に分けて解の挙動を考えることができることがある. 
+                中心多様体とは, 直感的には &quot;どこで解がゆっくり動くか&quot; を説明するものである.     
+            </p>
+            <p>非線形力学系の中心多様体は, 線形化問題の中心部分空間に対応するものであり, 平衡点付近ではそれら $2$ つは十分に近いとみなせる. 
+                もっと言えば, 中心多様体は平衡点において線形化問題の中心部分空間に接するものであり, 平衡点の十分近くでは &quot;線形化問題の中心部分空間を少しだけ変形したもの&quot; となる. 
+            </p>
+            <p>それでは, 中心部分空間の数学的な定義を述べる準備を始めよう. 
+                まず, 自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ が平衡点 $\widetilde{\mathbf{x}}$ を持つとき, $\mathbf{x}-\widetilde{\mathbf{x}}$ を改めて $\mathbf{x}$ と表す変数変換により, $\mathbf{0}$ が平衡点であると思うことができる. 
                 そこで $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ が平衡点 $\mathbf{0}$ を持つとしよう. 
                 このとき,  
                 \[
@@ -1506,17 +1528,13 @@
                     \] であって, 以下を満たすものが存在するとき, $W^c(\mathbf{0})\subset\mathbb{R}^d$ はこの自励系の平衡点 $\mathbf{0}$ に対する <b>中心多様体</b> であるという:
                 </p>
                 <ul>
-                    <li>$W^c(\mathbf{0})\subset\mathbb{R}^d$ は平衡点 $\mathbf{0}$ において線形化問題の中心部分空間 $E^c$ に接する. 
-                        <ul>
-                            <li>つまり
-                            \[
-                                \mathbf{h}_s(\mathbf{0}) = \mathbf{0},\quad D\mathbf{h}_s(\mathbf{0}) = O,
-                            \]
-                            \[
-                                \mathbf{h}_u(\mathbf{0}) = \mathbf{0},\quad D\mathbf{h}_u(\mathbf{0}) = O
-                            \] が成立する. 
-                            </li>
-                        </ul>
+                    <li>$W^c(\mathbf{0})\subset\mathbb{R}^d$ は平衡点 $\mathbf{0}$ において 
+                        \[
+                            \mathbf{h}_s(\mathbf{0}) = \mathbf{0},\quad D\mathbf{h}_s(\mathbf{0}) = O,
+                        \]
+                        \[
+                            \mathbf{h}_u(\mathbf{0}) = \mathbf{0},\quad D\mathbf{h}_u(\mathbf{0}) = O
+                        \] を満たす. 
                     </li>
                     <li>$W^c(\mathbf{0})$ は不変集合である, つまり自励系の解 $\mathbf{x}(t)$ は 
                         \[
@@ -1528,20 +1546,21 @@
 
             <div class="remark">
                 <ul>
-                    <li>直観的には, 平衡点付近での自励系を考える際に, 線形化問題の中心部分空間を剰余項の影響を考慮して変形したものが中心多様体である. 
-                        その &quot;変形&quot; を表すものが $\mathbf{h}_s$, $\mathbf{h}_c$ により与えられる. 
+                    <li>直観的には, 平衡点付近での自励系を考える際に, 線形化問題の中心部分空間 $E^c$ を剰余項の影響を考慮して変形したものが中心多様体である. 
+                        その &quot;変形&quot; は, 適当な座標変換の下で関数 $\mathbf{h}_s$, $\mathbf{h}_c$ として与えられる. 
                         中心多様体は不変であることから, 中心多様体上に限って自励系を考えることが可能である. 
                     </li>
                     <li>線形力学系では, 中心部分空間が存在する場合 (つまり実部が $0$ である行列固有値が存在する場合) 平衡点は漸近安定にはならない. 
                         一方で, 非線形力学系では, 中心多様体が存在する場合でも, 平衡点が漸近安定になる場合もある. 
                     </li>
-                    <li>ここでは平衡点が $\mathbf{0}$ である場合を考えているが, 一般に平衡点 $\widetilde{\mathbf{x}}$ における中心多様体は $W^c(\widetilde{\mathbf{x}})$ と表記される. 
+                    <li>ここでは並行移動により平衡点が $\mathbf{0}$ である場合, さらに適当に座標変換した場合に定義を述べているが, 一般に平衡点 $\widetilde{\mathbf{x}}$ における中心多様体を $W^c(\widetilde{\mathbf{x}})$ と表記する. 
                         これは安定集合 (安定多様体) $W^s(\widetilde{\mathbf{x}})$ および 不安定集合 (不安定多様体) $W^u(\widetilde{\mathbf{x}})$ の表記と対応したものである. 
                     </li>
                     <li>また, 平衡点の近傍でのみ中心多様体の性質を満たすものを考えることもできる (これを <b>局所中心多様体</b> と呼ぶことがある). 
                         以下の議論で中心多様体に言及するが, 実際には局所中心多様体のみ考えれば良い. 
                     </li>
                 </ul>
+                <div class="resize"><img src='./images/center_manifold_image-1.png'></div>
             </div>
 
             <p>さて, 中心多様体のアイデアを非双曲型平衡点の安定性解析に応用しよう. 
@@ -1906,7 +1925,7 @@
                     安定方向には (指数的に減衰するため) 急速に動いて中心多様体に近づき, 平衡点付近では中心多様体の近似に沿うようにして平衡点に向かって動いている様子を確認できる. 
                 </p>
                 <!-- <div class="resize"><img src='./images/center_manifold.png'></div> -->
-                 <div class="resize">
+                <div class="resize">
                     <video autoplay="true", loop="true">
                     <source src="videos/center_manifold.mp4" type="video/mp4" />
                     </video>
