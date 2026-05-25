@@ -11,12 +11,18 @@ eps: float = 0.1
 mu: float = 20.0
 
 # 2 階中心差分による空間離散化 
-def f(u: np.ndarray, h: float) -> np.ndarray: 
+def Lap(u: np.ndarray, h: float) -> np.ndarray: 
     vec = np.empty_like(u) 
-    vec[0] = 0. 
-    vec[-1] = 0. 
-    vec[1:-1] = eps**2 * (u[2:] - 2*u[1:-1] + u[:-2]) / (h**2) + mu * u[1:-1]*(1. - u[1:-1]**2) 
-    return vec
+    vec[0] = (-2*u[0] + u[1]) / (h**2) 
+    vec[-1] = (u[-2] - 2*u[-1]) / (h**2) 
+    vec[1:-1] = (u[:-2] - 2*u[1:-1] + u[2:]) / (h**2) 
+    return vec 
+
+def W(u: np.ndarray) -> np.ndarray: 
+    return u * (1 - u**2)
+
+def f(u: np.ndarray, h: float) -> np.ndarray: 
+    return eps**2 * Lap(u, h) + mu * W(u)
 
 # 古典的ルンゲ=クッタ (４段陽的ルンゲ=クッタ)
 def runge_kutta(u: np.ndarray, tau: float, h: float) -> np.ndarray:
@@ -58,10 +64,8 @@ def update(frame):
 
 # 計算 
 for n in range(N): 
-    u[:, n+1] = runge_kutta(u[:, n], tau, h) 
-    # u[0, n+1] = 0 # f[0] = 0 のため不要
-    # u[-1, n+1] = 0 # f[-1] = 0 のため不要
-
+    u[1:-1, n+1] = runge_kutta(u[1:-1, n], tau, h) 
+    
 # プロット 
 step: int = 10
 ani = FuncAnimation(fig, update, frames=range(0, N, step), interval=5)

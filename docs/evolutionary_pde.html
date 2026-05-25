@@ -194,30 +194,47 @@
                         u(0, t) = u(L, t) = 0.
                     \end{array}\right.
                 \] まずは適当な初期値を与えた際の数値計算結果を観察し, 解の挙動について大雑把に説明しよう. 
-                まず, 区間 $[0, L]$ を $M$ 等分することで空間分割幅を $h = L/M\gt0$ とし, $x_m = mh$ とする. 
-                同様に時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, $t_n = nh$ とする. 
-                このとき, アレン=カーン方程式の解 $u$ に対し, $u(x_m, t_n)$ の近似を与える $u_m^n$ を以下のように計算する: 空間に関する $2$ 階微分は $2$ 階中心差分
+                まず, 記号の簡単のために 
                 \[
-                    u_{xx}(x_m, t_n) \approx \dfrac{\dfrac{u_{m+1}^n - u_{m}^n}{h} - \dfrac{u_{m}^n - u_{m-1}^n}{h}}{h} = \dfrac{u_{m+1}^n - 2u_m^n + u_{m-1}^n}{h^2} 
-                \]
-                により近似し, 時間については ($4$ 段陽的) ルンゲ=クッタ法を適用する. 
-                つまり与えられた $u_m^n$ $(m=0, 1, \dots, M)$ に対し,  
+                    W(u) = u(1-u^2)
+                \] とおく. 
+                また数値計算のために, 区間 $[0, L]$ を $M$ 等分することで空間分割幅を $h = L/M\gt0$ とし, $x_m = mh$ とする. 
+                このとき, アレン=カーン方程式の解 $u$ に対し, 空間に関する $2$ 階微分は $2$ 階中心差分 
                 \[
-                    f(u_m^n) = \varepsilon^2 \dfrac{u_{m+1}^n - 2u_m^n + u_{m-1}^n}{h^2} + \mu u_m^n(1-(u_m^n)^2)
-                \] を用いて各 $m=1, 2, \dots, M-1$ に対して
+                    u_{xx}(x_m, t) \approx \dfrac{\dfrac{u_{m+1} - u_{m}}{h} - \dfrac{u_{m} - u_{m-1}}{h}}{h} = \dfrac{u_{m+1} - 2u_m + u_{m-1}}{h^2} 
+                \] により近似する. 
+                この近似に基づき, $m = 1, 2, \dots, M-1$ に対して第 $m$ 成分が $u_m(t)$ であるベクトル $\mathbf{u}(t)$ を  
+                \[
+                    \mathbf{u}_t = \varepsilon^2 \Delta_h \mathbf{u} + \mu W_h(\mathbf{u})
+                \] により決定されるとみなす, ここで 
+                \[
+                    \Delta_h = \begin{pmatrix} 
+                        -2 & 1 & 0 & 0 & \dots & 0 \cr 
+                        1 & -2 & 1 & 0 & \dots & 0 \cr 
+                        0 & 1 & -2 & 1 & \dots & 0 \cr 
+                        \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \cr 
+                        0 & 0 & 0 & 0 & \dots & -2 
+                    \end{pmatrix} \in \mathbb{R}^{(M-1)\times (M-1)},\quad (W_h(\mathbf{u}))_m = u_m(1-(u_m)^2)
+                \] である. 
+                なお, $u_0 = u_M = 0$ は境界条件により与えられているとみなす. 
+                このようにして導出された常微分方程式系に対して, ここでは ($4$ 段陽的) ルンゲ=クッタ法を適用する. 
+                つまり時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, $t_n = nh$ とし, 与えられた $u_m^n$ $(m=0, 1, \dots, M)$ に対し,  
+                \[
+                    \mathbf{f}(\mathbf{u}^n) = \varepsilon^2 \Delta_h\mathbf{u}^n + \mu W_h(\mathbf{u}^n)
+                \] を用いて
                 \[
                     \begin{array}{l} 
-                        k_1 = f(u_m^n), \cr 
-                        k_2 = f\left(u_m^n + \dfrac{\tau}{2}k_1\right), \cr 
-                        k_3 = f\left(u_m^n + \dfrac{\tau}{2}k_2\right), \cr 
-                        k_4 = f\left(u_m^n + \tau k_3\right) 
+                        \mathbf{k}_1 = \mathbf{f}(\mathbf{u}^n), \cr 
+                        \mathbf{k}_2 = \mathbf{f}\left(\mathbf{u}^n + \dfrac{\tau}{2}\mathbf{k}_1\right), \cr 
+                        \mathbf{k}_3 = \mathbf{f}\left(\mathbf{u}^n + \dfrac{\tau}{2}\mathbf{k}_2\right), \cr 
+                        \mathbf{k}_4 = \mathbf{f}\left(\mathbf{u}^n + \tau \mathbf{k}_3\right) 
                     \end{array}
                 \] を計算し, 
                 \[
-                    u_m^{n+1} = u_m^n + \dfrac{\tau}{6}(k_1+2k_2 + 2k_3 + k_4)\qquad (m=1, 2, \dots, M-1)
-                \] を求める. 
-                この計算において, $u_m^0$ は初期値として, $u_0^n$ と $u_M^n$ は境界条件として既に与えられていることに注意. 
-                また, 以下のサンプルコードでは, $u_m^n$ たちを成分として持つベクトル $\mathbf{u}^n$ に対しベクトル $\mathbf{k}_i$ を計算し, ルンゲ=クッタ法により値を更新していることにも注意:  
+                    \mathbf{u}^{n+1} = \mathbf{u}^n + \dfrac{\tau}{6}(\mathbf{k}_1+2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4)
+                \] を計算する. 
+                このようにして得られた $u_m^n$ が $u(x_m, t_n)$ の近似を与えていると思うことができる. 
+                なお, $\mathbf{u}^0$ は初期値から, $u_0^n$ と $u_M^n$ は境界条件から与えればよい. 
             </p>
             <div class="resize">
                 <video autoplay="true", loop="true">
@@ -239,12 +256,18 @@ eps: float = 0.1
 mu: float = 20.0
 
 # 2 階中心差分による空間離散化 
-def f(u: np.ndarray, h: float) -> np.ndarray: 
+def Lap(u: np.ndarray, h: float) -> np.ndarray: 
     vec = np.empty_like(u) 
-    vec[0] = 0. 
-    vec[-1] = 0. 
-    vec[1:-1] = eps**2 * (u[2:] - 2*u[1:-1] + u[:-2]) / (h**2) + mu * u[1:-1]*(1. - u[1:-1]**2) 
-    return vec
+    vec[0] = (-2*u[0] + u[1]) / (h**2) 
+    vec[-1] = (u[-2] - 2*u[-1]) / (h**2) 
+    vec[1:-1] = (u[:-2] - 2*u[1:-1] + u[2:]) / (h**2) 
+    return vec 
+
+def W(u: np.ndarray) -> np.ndarray: 
+    return u * (1 - u**2)
+
+def f(u: np.ndarray, h: float) -> np.ndarray: 
+    return eps**2 * Lap(u, h) + mu * W(u)
 
 # 古典的ルンゲ=クッタ (４段陽的ルンゲ=クッタ)
 def runge_kutta(u: np.ndarray, tau: float, h: float) -> np.ndarray:
@@ -277,7 +300,8 @@ fig, ax = plt.subplots()
 ax.set_ylim([-1.1, 1.1])
 
 # 初期条件のプロット 
-line, = ax.plot(x, u[:, 0], color='tab:blue') 
+line, = ax.plot(x, u[:, 0], color='tab:blue', linewidth=2.5)
+# plt.savefig('allen_cahn.pdf') 
 # アニメーションにおける update を定義 
 def update(frame): 
     line.set_data(x, u[:, frame]) # 更新された u を入力 
@@ -285,10 +309,8 @@ def update(frame):
 
 # 計算 
 for n in range(N): 
-    u[:, n+1] = runge_kutta(u[:, n], tau, h) 
-    # u[0, n+1] = 0 # f[0] = 0 のため不要
-    # u[-1, n+1] = 0 # f[-1] = 0 のため不要
-
+    u[1:-1, n+1] = runge_kutta(u[1:-1, n], tau, h) 
+    
 # プロット 
 step: int = 10
 ani = FuncAnimation(fig, update, frames=range(0, N, step), interval=5)
@@ -374,14 +396,13 @@ plt.show()
 
         <section><h2>フィッシャー = KPP 方程式</h2>
             <p>ここまでの例でも見たように, 反応拡散方程式 (もしくはその線形化問題) に対して, 三角関数の線型結合により記述される関数の利用は有用な解析テクニックである. 
-                一般には, 非線形な反応拡散方程式の解そのものを, 熱方程式の場合と同様に三角関数の線型結合により構成することは不可能である. 
-                しかしながら, 解の近似を構成する際には, このアイデアを応用することが可能である. 
-                このような数値計算手法は <b>スペクトル法</b> (<b>spectral method</b>) と呼ばれ, 簡単な形をした空間領域上のなだらかな解を極めて高精度に近似することが可能であることが知られる. 
+                一般には, 非線形な反応拡散方程式の解そのものを, 熱方程式の場合と同様に三角関数の線型結合により構成することは不可能であるが, 解の近似を構成する際には, このアイデアを応用することが可能である. 
+                このような数値計算手法は <b>スペクトル法</b> (<b>spectral method</b>) と呼ばれるものの典型例であり, 簡単な形をした空間領域上のなだらかな解を極めて高精度に近似することが可能であることが知られる. 
                 ここでは, <b>フィッシャー = KPP 方程式</b> (<b>Fisher-KPP equation</b>) 
                 \[
                     u_t = ku_{xx} + ru(1-u) \quad \text{in}\quad \mathbb{R}
                 \] 
-                を具体例に, スペクトル法について解説しよう. 
+                を具体例に, 三角関数に基づくスペクトル法による空間半離散化について解説しよう. 
                 なお, この方程式は (無限区間上で考えた際に) 進行波解を持つことが知られ, 伝播現象を表すシンプルな数理モデルとして扱われるものである. 
                 ただし, 数値計算の都合上, 無限区間を厳密に扱うことができないため, ここでは代わりに 
                 \[
@@ -391,63 +412,75 @@ plt.show()
                     \end{array}\right.
                 \] を考えることにする (初期条件は適当に与えることにする). 
             </p>
-            <p>まず, 方程式を斉次ディリクレ境界条件に帰着させるために, 例えば $g(x) = 1-x/L$ を用いて 
+            <p>まず, 記号の簡単のために $f(u) = u(1-u)$ とおく. 
+                次に, 方程式を斉次ディリクレ境界条件に帰着させるために, 例えば $g(x) = 1-x/L$ を用いて 
                 \[
-                    v(x, t) = u(x, t) - g(x)
-                \] とおく. この $v$ は ($g_{xx} = 0$ であることに注意すると)
+                    v(x, t) = u(x, t) - g(x) 
+                \] とおく. この $v$ は ($g_t = g_{xx} = 0$ であることに注意すると)
                 \[
                     \left\{\begin{array}{l} 
-                        v_t = kv_{xx} + ru(1-u) \quad \text{in}\quad [0, L], \cr 
+                        v_t = kv_{xx} + rf(u) \quad \text{in}\quad [0, L], \cr 
                         v(0, t) = v(L, t) = 0
-                    \end{array}\right. 
-                \] を満たすので, この $v$ の近似を計算し, 後から関数 $g$ を加えることで元の解 $u$ の近似を構成する. 
-                次に, 今回は時間離散化として <b>半陰的オイラー法</b> (<b>semi-implicit Euler</b>) を適用する: 時間区間 $[0, T]$ を $N$ 分割し $\tau = T/N$, $t_n = n\tau$ とおき, 与えられた $v^n$ に対し 
-                \[
-                    \dfrac{v^{n+1} - v^n}{\tau} = kv_{xx}^{n+1} + f^n 
-                    \tag{$\ast$}
-                \] を解いて得られる $v^{n+1}(x)$ を $v(x, t_{n+1})$ の近似として採用する, ここで $u^n = v^n + g$ であり, $f^n = ru^n(1-u^n)$ である. 
-                ここで, $v^{n+1}(x)$ も境界条件 $v^{n+1}(0) = v^{n+1}(L) = 0$ を満たすことが要請されることに注意. 
+                    \end{array}\right. \tag{$\ast$}
+                \] を満たすので, この解となる $v$ の近似を計算し, それに関数 $g$ を加えたものを $u(x, t) = v(x, t) + g(x)$ の近似とすれば良い. 
             </p>
-            <p>それでは上の状況に対するスペクトル法のアイデアを説明しよう. 
-                線形化問題を考えた際に現れる固有関数が, 境界条件から 
+            <p>それではこの問題に対する, 三角関数に基づくスペクトル法のアイデアを説明しよう. 
+                まず, フーリエ級数展開によれば $L^2(0, L)$ の直交基底として三角関数を用いることができるのだった. 
+                今回は斉次ディリクレ境界条件を課していることを考慮し, 
                 \[
-                    \varphi_m(x) = \sin \dfrac{m\pi}{L}x
-                \] という形になることに注目し (異なる境界条件に対しては $e^{i\lambda t}$ という形のものを考えることもあるが, ここでは言及しない), これらの有限個の線型結合により解の近似を構成する. 
-                ここでは時間離散化 ($\ast$) と併せて   
+                    \varphi_i(x) = \sin \dfrac{i\pi}{L}x
+                \] たちの線型結合により, 解の近似を与える関数を構成しよう. 
+                具体的には, 関数
                 \[
-                    v^{n+1}(x) = \sum_{m=1}^M \widehat{v}_m^{n+1}\varphi_m(x)
-                \] と表される関数を考える. 
-                このとき, 
+                    v_h(x, t) = \sum_{j=1}^M \widehat{v}_j(t) \varphi_j(x),\quad u_h(x, t) = v_h(x, t) + g(x)
+                \] が $v(x, t)$, $u(x, t)$ それぞれの近似となるように, つまり ($\ast$) 式を &quot;近似的に&quot; 満たすように $\widehat{v}_j(t)$ を適切に定めれば良い. 
+                そこで, ここでは ($\ast$) 式の両辺に <b>テスト関数</b> として $\varphi_m(x)$ を掛け合わせて積分した 
                 \[
-                    kv^{n+1}_{xx} = \sum_{m=1}^M -k\left(\dfrac{m\pi}{L}\right)^2 \widehat{v}_m^{n+1} \varphi_m(x)
-                \] と表すことができることが重要である. 
-                さらに, 三角関数の直交性に注意すると 
+                    \int_0^L (v_h)_t\varphi_m ~dx = \int_0^L (k(v_h)_{xx} + rf(u_h))\varphi_m ~dx \quad \text{for all}\quad m = 1, \dots, M 
+                \] が満たされることを要請してみよう.  
+                三角関数の直交性に注意すると 
                 \[
                     \int_0^L \varphi_i(x)\varphi_j(x) ~dx = \dfrac{L}{2}\delta_{ij}
-                \] となる, ここで $\delta_{ij}$ はクロネッカーのデルタである. 
-                従って 
+                \] となることから, 上の式を 
                 \[
-                    \widehat{v}_m^{n+1} = \dfrac{2}{L}\int_0^L v^{n+1}(x)\varphi_m(x) ~dx
-                \] となるが, これは有限区間上のフーリエ変換に他ならない. 
-                以上に基づき, $(\ast)$ 式全体に対するフーリエ変換を考えることにより, 各 $m$ に対し 
+                    (\widehat{v}_m)_t = -k\left(\dfrac{m\pi}{L}\right)^2\widehat{v}_m + r\widehat{f}_m \quad\text{for all}\quad m = 1,\dots, M
+                \] と変形することができる, ここで 
                 \[
-                    \dfrac{\widehat{v}_m^{n+1} - \widehat{v}_m^n}{\tau} = -k\left(\dfrac{m\pi}{L}\right)^2\widehat{v}^{n+1}_m + \widehat{f}^n(m)
-                \] を考えることにする, ここで $\widehat{f}^n(m)$ は $f^n$ のフーリエ変換 
+                    \widehat{f}_m = \dfrac{2}{L}\int_0^L f(u_h)\varphi_m~dx
+                \] である (つまり $v_h$, $f(v_h)$ のフーリエ変換により空間 $2$ 階微分を $-(m\pi/L)^2$ に置き換えたことに相当している). 
+                記号の簡単のために, 第 $m$ 成分がフーリエ係数 $\widehat{v}_m$, $\widehat{f}_m$ であるベクトルをそれぞれ $\widehat{\mathbf{v}}$, $\widehat{\mathbf{f}}$ とおき, また $(m, m)$ 成分が $-(m\pi/L)^2$ である対角行列を $A$ とおく. 
+                すると, 上の式は 
                 \[
-                    \widehat{f}^n(m) = \dfrac{2}{L}\int_0^L f^n\varphi_m~dx
-                \] である. 
-                なお, 上の式は (十分大きな $M$ に対して) 
-                \[
-                    f^n \approx \sum_{m=0}^M \widehat{f}^n(m)\varphi_m 
-                \] という近似を用いていることに相当している. 
-                上を整理すると, 各 $m=1,2,\dots, M$ に対して
-                \[
-                    \widehat{v}^{n+1}_m = \dfrac{1}{1+\tau k(m\pi/L)^2}\left(\widehat{v}^n_m + \widehat{f}^n(m)\right)
-                \] を計算することで, これを用いて $v^{n+1}$ を構成することができる. 
+                    \widehat{\mathbf{v}}_t = k A\widehat{\mathbf{v}} + r \widehat{\mathbf{f}}
+                \] という常微分方程式系に他ならない. 
+                これが三角関数に基づくスペクトル法による空間半離散化であり, 時間発展 PDE を常微分方程式系で近似する方法の一つである. 
             </p>
-            <p>実際のスペクトル法の計算においては, 区間 $[0, L]$ を $M+1$ 等分し $h = L/(M+1)$, $x_m = mh$ とおき, $v^{n+1}(x_m)$ を近似する $v_m^{n+1}$ を計算する. 
-                また, 非線形項 $f^n$ については, 適当な近似で取り替えて計算すれば良いだろう. 
-                具体的には, 
+
+            <hr>
+
+            <p>あとは上の常微分方程式系に対する適当な数値計算手法を適用して $\widehat{\mathbf{v}}$ を求めれば, そこから関数 $v_h(x, t)$ を求めることができるが, その前にスペクトル法に関連する計算テクニックを導入しよう. 
+                ここでは区間 $[0, L]$ を $M+1$ 等分し $h = L/(M+1)$, $x_m = mh$ とおき, 
+                \[
+                    v_m(t) = v_h(x_m, t) = \sum_{j=1}^M \widehat{v}_j(t) \varphi_j(x_m),\quad u_m(t) = v_m(t) + g(x_m)\quad\text{for all}\quad m=1, \dots, M.
+                \] とおく ($v_0(t) = v_{M+1}(t) = 0$ は明らか). 
+                以降, 第 $m$ 成分が $v_m(t)$, $f(u_m)$ であるベクトルをそれぞれ $\mathbf{v}$, $\mathbf{f}$ と表記することにする. 
+                特に $\mathbf{v}$ に注目すると, 
+                \[
+                    \mathbf{v} = \begin{pmatrix} 
+                        v_1 \cr 
+                        \vdots \cr 
+                        v_M 
+                    \end{pmatrix} = \begin{pmatrix} 
+                        \displaystyle\sum_{j=1}^M \widehat{v}_j\varphi_j(x_1) \cr 
+                        \vdots \cr 
+                        \displaystyle\sum_{j=1}^M \widehat{v}_j\varphi_j(x_M) 
+                    \end{pmatrix} = \begin{pmatrix} 
+                        \varphi_1(x_1) & \varphi_2(x_1) & \dots & \varphi_M(x_1) \cr 
+                        \varphi_1(x_2) & \varphi_2(x_2) & \dots & \varphi_M(x_2) \cr 
+                        \vdots & \vdots & \ddots & \vdots \cr 
+                        \varphi_1(x_M) & \varphi_2(x_M) & \dots & \varphi_M(x_M) 
+                    \end{pmatrix} \widehat{\mathbf{v}} 
+                \] が得られるが, 定義より
                 \[
                     \varphi_j(x_m) = \sin \left(\dfrac{j\pi}{L}m\dfrac{L}{M+1}\right) = \sin\dfrac{jm\pi}{M+1}\quad (1\le j\le M,\ 0\le m\le M+1)
                 \] となるため, 行列 
@@ -462,31 +495,62 @@ plt.show()
                 \[
                     S^{-1} = \dfrac{2}{M+1}S
                 \] となることが知られている. 
-                これを用いて, 与えられたベクトル
+                従って, 
                 \[
-                    \mathbf{v}^{n} = \begin{pmatrix} 
-                        v_1^{n} \cr 
-                        \vdots \cr 
-                        v_M^{n} 
-                    \end{pmatrix} = \begin{pmatrix} 
-                        \displaystyle\sum_{m=1}^M \widehat{v}^n_m\varphi_m(x_1) \cr 
-                        \vdots \cr 
-                        \displaystyle\sum_{m=1}^M \widehat{v}^n_m\varphi_m(x_M) 
-                    \end{pmatrix} = S \widehat{\mathbf{v}}^n, \quad 
-                    \mathbf{f}^n = \begin{pmatrix} 
-                        \displaystyle\sum_{m=1}^M f(v_1^n + g(x_1))\varphi_m(x_1) \cr 
-                        \vdots \cr 
-                        \displaystyle\sum_{m=1}^M f(v_m^n + g(x_m))\varphi_m(x_M) 
-                    \end{pmatrix} 
-                \] に対し, <b>離散サイン変換</b> (一般には <b>離散フーリエ変換</b>) により得られる
-                \[
-                    \widehat{\mathbf{v}}^{n} = S^{-1} \mathbf{v}^n = \dfrac{2}{M+1}S\mathbf{v}^n, \quad \widehat{\mathbf{f}}^n = S^{-1}\mathbf{f}^n = \dfrac{2}{M+1}S\mathbf{f}^n
-                \] の第 $m$ 成分 $\widehat{v}^n_m$, $\widehat{f}^n_m$ に対して
-                \[
-                    \widehat{v}^{n+1}_m = \dfrac{1}{1+\tau k(m\pi/L)^2}\left(\widehat{v}^n_m + \widehat{f}^n_m\right)
-                \] を計算することで $\widehat{\mathbf{v}}^{n+1}$ の各成分を求め, $\mathbf{v}^{n+1} = S\widehat{\mathbf{v}}^n$ の各成分が $v_m^{n+1}$, つまり $v(x_m, t_n)$ の近似を与えていると思えば良い. 
-                最後に各成分に $g(x_m)$ を足し合わせることで $u(x_m, t_n)$ の近似を構成できる. 
+                    \mathbf{v} = S\widehat{\mathbf{v}},\quad \widehat{\mathbf{v}} = \dfrac{2}{M+1}S\mathbf{v} 
+                \] と相互に変換することが可能である. 
+                これは <b>離散フーリエ変換</b> (特にこの場合は <b>離散サイン変換</b>) と呼ばれるものであり, フーリエ変換やフーリエ逆変換に相当する計算を極めて簡単に実行することができる, 重要なテクニックである. 
             </p>
+
+            <hr>
+
+            <p>ここまでの議論を踏まえて, 実際に数値計算を試みよう. 
+                まず, 数値計算では非線形項 $f$ について
+                \[
+                    \widehat{\mathbf{f}} = \dfrac{2}{M+1}S\mathbf{f} 
+                \] としてしまうことにする. 
+                これは $\mathbf{f} = S\widehat{\mathbf{v}}$, つまり 
+                \[
+                    \sum_{j=1}^M\widehat{f}_j\varphi_j(x_m)\approx f(u_m) 
+                \] という近似を用いて数値計算を行うことを意味している. 
+                次に, 常微分方程式系 
+                \[
+                    \widehat{\mathbf{v}}_t = k A\widehat{\mathbf{v}} + r \widehat{\mathbf{f}}
+                \] の数値計算の際に, 時間区間 $[0, T]$ を $N$ 分割し $\tau = T/N$, $t_n = n\tau$ とおき, 与えられた $\widehat{\mathbf{v}}^n \approx \widehat{\mathbf{v}}(t_n)$ および $\widehat{\mathbf{f}}^n\approx \widehat{\mathbf{f}}(t_n)$ に対し 
+                \[
+                    \dfrac{\widehat{\mathbf{v}}^{n+1} - \widehat{\mathbf{v}}^{n}}{\tau} = k A\widehat{\mathbf{v}}^{n+1} + r\widehat{\mathbf{f}}^n 
+                \] という <b>半陰的オイラー法</b> (<b>semi-implicit Euler</b>) を採用することにする. 
+                これらのアイデアに基づく数値計算は, 以下のように実行すれば良い: 
+            </p>
+            <ol>
+                <li>第 $m$ 成分が $v_m^n \approx v(x_m, t_n)$ であるベクトル $\mathbf{v}^n$ から, 第 $m$ 成分が $f(u_m^n)$ であるベクトル $\mathbf{f}^n$ を求める. </li> 
+                <li>逆離散サイン変換に基づき 
+                    \[
+                        \widehat{\mathbf{v}}^n = \dfrac{2}{M+1}S\mathbf{v}^n,\quad \widehat{\mathbf{f}}^n = \dfrac{2}{M+1}S\mathbf{f}^n 
+                    \] をそれぞれ計算する. </li> 
+                <li>半陰的オイラー法に基づき, 
+                    \[
+                        \widehat{\mathbf{v}}^{n+1} = (I+\tau kA)^{-1}(\widehat{\mathbf{v}}^n + \tau r\widehat{\mathbf{f}}^n)
+                    \] と定める. 
+                </li>
+                <li>離散サイン変換により 
+                    \[
+                        \mathbf{v}^{n+1} = S\widehat{\mathbf{v}}^{n+1} 
+                    \] を計算する. 
+                    このベクトルの各成分が $v(x_m, t_n)$ の近似を表すため, $u(x_m, t_n) = v(x_m, t_n) + g(x_m)$ の近似が得られる. 
+                </li>
+            </ol>
+            <p>なお, 行列 $(I+\tau kA)^{-1}$ は第 $(m, m)$ 成分が 
+                \[
+                    \dfrac{1}{1+\tau k(m\pi/L)^2}
+                \] である対角行列であり, 従って半陰的オイラー法の計算は
+                \[
+                    \widehat{v}^{n+1}_m = \dfrac{\widehat{v}^n_m + \tau r \widehat{f}^n_m}{1+\tau k(m\pi/L)^2}\quad \text{for all}\quad m=1, \dots, M
+                \] と表すことができ, 容易に計算可能である. 
+            </p>
+                
+                
+                
             <pre>
 <code>
 import numpy as np
@@ -530,13 +594,10 @@ def update(frame):
 
 # 計算
 for n in range(N): 
-    f = r * u[:, n] * (1 - u[:, n])
-    # v_hat = dst(v[1:-1], type=1, norm='ortho')
-    # f_hat = dst(f[1:-1], type=1, norm='ortho')
+    f = u[:, n] * (1 - u[:, n])
     v_hat = 2/(M+1) * S @ v[1:-1]
     f_hat = 2/(M+1) * S @ f[1:-1]
-    v_hat = (v_hat + tau * f_hat) / (1 + tau * k * (m*np.pi/L)**2)
-    # v[1:-1] = idst1(v_hat, type=1, norm='ortho')
+    v_hat = (v_hat + tau * r * f_hat) / (1 + tau * k * (m*np.pi/L)**2)
     v[1:-1] = S @ v_hat
     u[:, n+1] = v + g
 
@@ -564,7 +625,7 @@ plt.show()
                 初期値は適当に (境界条件を満たすものを) 与えているが, 時間経過によりある形状に速やかに近づき, その形状を維持しつつ右に移動する進行波解を数値的に再現できていることを確認できる. 
                 ただし, この問題については境界条件の影響で, 進行する波が右端に近づくと形状が崩れてしまう. 
                 上のサンプルコードでは $T=5.0$ としているが, これを大きくすると解が崩れて計算が破綻してしまうため注意. 
-                また, 上のサンプルコードでは離散サイン変換の計算において, わかりやすさのために行列ベクトル積を素直に計算している (numpy では A @ v で行列 $A$ とベクトル $v$ の積を計算できる) が, 実際には, <b>高速フーリエ変換</b> (<b>Fast Fourier Transform</b>, FFT) などの効率的な計算テクニックを利用するべきだろう. 
+                また, 上のサンプルコードでは離散サイン変換の計算において, わかりやすさのために行列ベクトル積を素直に計算している (numpy では A @ v で行列 $A$ とベクトル $v$ の積を計算できる) が, 実際には, <b>高速フーリエ変換</b> (<b>Fast Fourier Transform</b>, FFT) など, 離散フーリエ変換を効率的に計算するテクニックを利用するべきだろう. 
                 Python では, scipy.fft モジュールで簡単に FFT を利用できるため, 興味があれば試してみると良い. 
             </p>
 
