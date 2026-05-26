@@ -205,7 +205,7 @@
                 \] により近似する. 
                 この近似に基づき, $m = 1, 2, \dots, M-1$ に対して第 $m$ 成分が $u_m(t)$ であるベクトル $\mathbf{u}(t)$ を  
                 \[
-                    \mathbf{u}_t = \varepsilon^2 \Delta_h \mathbf{u} + \mu W_h(\mathbf{u})
+                    \mathbf{u}_t = \varepsilon^2 \Delta_h \mathbf{u} + \mu \mathbf{W}_h(\mathbf{u})
                 \] により決定されるとみなす, ここで 
                 \[
                     \Delta_h = \begin{pmatrix} 
@@ -214,13 +214,14 @@
                         0 & 1 & -2 & 1 & \dots & 0 \cr 
                         \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \cr 
                         0 & 0 & 0 & 0 & \dots & -2 
-                    \end{pmatrix} \in \mathbb{R}^{(M-1)\times (M-1)},\quad (W_h(\mathbf{u}))_m = u_m(1-(u_m)^2)
-                \] である. 
+                    \end{pmatrix} \in \mathbb{R}^{(M-1)\times (M-1)}
+                \] であり, $\mathbf{W}_h(\mathbf{u})$ は第 $m$ 成分が $u_m(1-(u_m)^2)$ であるベクトルである. 
                 なお, $u_0 = u_M = 0$ は境界条件により与えられているとみなす. 
-                このようにして導出された常微分方程式系に対して, ここでは ($4$ 段陽的) ルンゲ=クッタ法を適用する. 
+                このようにして PDE を近似する常微分方程式系が得られた. 
+                この常微分方程式系に対して, ここでは ($4$ 段陽的) ルンゲ=クッタ法を適用してみよう. 
                 つまり時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, $t_n = nh$ とし, 与えられた $u_m^n$ $(m=0, 1, \dots, M)$ に対し,  
                 \[
-                    \mathbf{f}(\mathbf{u}^n) = \varepsilon^2 \Delta_h\mathbf{u}^n + \mu W_h(\mathbf{u}^n)
+                    \mathbf{f}(\mathbf{u}^n) = \varepsilon^2 \Delta_h\mathbf{u}^n + \mu \mathbf{W}_h(\mathbf{u}^n)
                 \] を用いて
                 \[
                     \begin{array}{l} 
@@ -428,7 +429,7 @@ plt.show()
                 まず, フーリエ級数展開によれば $L^2(0, L)$ の直交基底として三角関数を用いることができるのだった. 
                 今回は斉次ディリクレ境界条件を課していることを考慮し, 
                 \[
-                    \varphi_i(x) = \sin \dfrac{i\pi}{L}x
+                    \varphi_j(x) = \sin \dfrac{j\pi}{L}x
                 \] たちの線型結合により, 解の近似を与える関数を構成しよう. 
                 具体的には, 関数
                 \[
@@ -441,7 +442,7 @@ plt.show()
                 三角関数の直交性に注意すると 
                 \[
                     \int_0^L \varphi_i(x)\varphi_j(x) ~dx = \dfrac{L}{2}\delta_{ij}
-                \] となることから, 上の式を 
+                \] となることから, 上の式は 
                 \[
                     (\widehat{v}_m)_t = -k\left(\dfrac{m\pi}{L}\right)^2\widehat{v}_m + r\widehat{f}_m \quad\text{for all}\quad m = 1,\dots, M
                 \] と変形することができる, ここで 
@@ -453,7 +454,7 @@ plt.show()
                 \[
                     \widehat{\mathbf{v}}_t = k A\widehat{\mathbf{v}} + r \widehat{\mathbf{f}}
                 \] という常微分方程式系に他ならない. 
-                これが三角関数に基づくスペクトル法による空間半離散化であり, 時間発展 PDE を常微分方程式系で近似する方法の一つである. 
+                これが三角関数に基づくスペクトル法による空間半離散化であり, 時間発展 PDE を常微分方程式系で近似することができた. 
             </p>
 
             <hr>
