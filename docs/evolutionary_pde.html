@@ -199,29 +199,34 @@
                     W(u) = u(1-u^2)
                 \] とおく. 
                 また数値計算のために, 区間 $[0, L]$ を $M$ 等分することで空間分割幅を $h = L/M\gt0$ とし, $x_m = mh$ とする. 
-                このとき, アレン=カーン方程式の解 $u$ に対し, 空間に関する $2$ 階微分は $2$ 階中心差分 
+                このとき, アレン=カーン方程式の解 $u$ に対し, $u_m(t) \approx u(x_m, t)$ を用いて, 空間に関する $2$ 階微分を $2$ 階中心差分 
                 \[
                     u_{xx}(x_m, t) \approx \dfrac{\dfrac{u_{m+1} - u_{m}}{h} - \dfrac{u_{m} - u_{m-1}}{h}}{h} = \dfrac{u_{m+1} - 2u_m + u_{m-1}}{h^2} 
                 \] により近似する. 
-                この近似に基づき, $m = 1, 2, \dots, M-1$ に対して第 $m$ 成分が $u_m(t)$ であるベクトル $\mathbf{u}(t)$ を  
+                この近似に基づき, ベクトル $\mathbf{u}(t)$ を  
                 \[
-                    \mathbf{u}_t = \varepsilon^2 \Delta_h \mathbf{u} + \mu \mathbf{W}_h(\mathbf{u})
+                    \mathbf{u}_t = \varepsilon^2 \Delta_h \mathbf{u} + \mu \mathbf{W}(\mathbf{u})
                 \] により決定されるとみなす, ここで 
                 \[
-                    \Delta_h = \begin{pmatrix} 
+                    \mathbf{u} = \begin{pmatrix} 
+                        u_1 \cr 
+                        u_2 \cr 
+                        \vdots \cr 
+                        u_{M-1} 
+                    \end{pmatrix}\in\mathbb{R}^{M-1},\quad \Delta_h = \begin{pmatrix} 
                         -2 & 1 & 0 & 0 & \dots & 0 \cr 
                         1 & -2 & 1 & 0 & \dots & 0 \cr 
                         0 & 1 & -2 & 1 & \dots & 0 \cr 
                         \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \cr 
                         0 & 0 & 0 & 0 & \dots & -2 
                     \end{pmatrix} \in \mathbb{R}^{(M-1)\times (M-1)}
-                \] であり, $\mathbf{W}_h(\mathbf{u})$ は第 $m$ 成分が $u_m(1-(u_m)^2)$ であるベクトルである. 
+                \] であり, $\mathbf{W}(\mathbf{u})$ は第 $m$ 成分が $W(u_m) = u_m(1-(u_m)^2)$ であるベクトルである. 
                 なお, $u_0 = u_M = 0$ は境界条件により与えられているとみなす. 
                 このようにして PDE を近似する常微分方程式系が得られた. 
                 この常微分方程式系に対して, ここでは ($4$ 段陽的) ルンゲ=クッタ法を適用してみよう. 
                 つまり時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, $t_n = nh$ とし, 与えられた $u_m^n$ $(m=0, 1, \dots, M)$ に対し,  
                 \[
-                    \mathbf{f}(\mathbf{u}^n) = \varepsilon^2 \Delta_h\mathbf{u}^n + \mu \mathbf{W}_h(\mathbf{u}^n)
+                    \mathbf{f}(\mathbf{u}^n) = \varepsilon^2 \Delta_h\mathbf{u}^n + \mu \mathbf{W}(\mathbf{u}^n)
                 \] を用いて
                 \[
                     \begin{array}{l} 
@@ -350,8 +355,8 @@ plt.show()
                 なお, 上の $E$ のようなエネルギーは相分離現象などを記述する際にしばしば用いられるものであり, 関数の形状から <b>二重井戸型ポテンシャル</b> (<b>double-well potential</b>) と言及される. 
                 実際には, 拡散項も含めて 
                 \[
-                    E(u) = \int \left(\dfrac{1}{2}u_x^2 + \dfrac{u^4}{4} - \dfrac{u^2}{2} \right)
-                \] と定めると, 汎函数 $E$ の変分 $\delta E$ を用いて $u_t = -\delta E$ という勾配流であることもわかる. 
+                    J(u) = \int \left(\dfrac{1}{2}u_x^2 + \dfrac{u^4}{4} - \dfrac{u^2}{2} \right)
+                \] と定めると, 汎函数 $J$ の変分 $\delta J$ を用いて $u_t = -\delta J$ という勾配流であると表現することもできる. 
             </p>
             <p>先ほどの計算例では拡散項と反応項の影響が釣り合うような関数形状から動かなくなる様子を確認できる, つまりこれは与えられたパラメータに対するアレン=カーン方程式の定常解への収束を表現している. 
                 しかしながら, パラメータ $\mu=0$ とすると (方程式は熱方程式となり) 拡散項の影響により解は $u=0$ という定常解に近づく. 
@@ -662,15 +667,15 @@ plt.show()
                 \] であるため, $u$ を区間 $[0, L]$ 上で積分した値は時間 $t$ には依存しない, つまり質量が時間経過により変化しないことがわかる. 
                 さらに, この問題については, 
                 \[
-                    W(u) = \dfrac{u^4}{4} - \dfrac{u^2}{2},\quad G(u, u_x) = \dfrac{\varepsilon^2}{2}u_x^2 +\mu W(u),\qquad J(u) = \int_0^L G(u, u_x)~dx
-                \] により定められる $J(u)$ が, 時間とともに減少するということもわかる, ここで $W(u)$ は二重井戸型ポテンシャルであり, また $G(u, u_x)$, $J(u)$ はそれぞれカーン=ヒリアード方程式の <b>局所エネルギー</b>, <b>全エネルギー</b> と呼ばれることがある. 
+                    E(u) = \dfrac{u^4}{4} - \dfrac{u^2}{2},\qquad G(u, u_x) = \dfrac{\varepsilon^2}{2}u_x^2 +\mu E(u),\qquad J(u) = \int_0^L G(u, u_x)~dx
+                \] により定められる $J(u)$ が, 時間とともに減少するということもわかる, ここで $E(u)$ は二重井戸型ポテンシャルであり, また $G(u, u_x)$, $J(u)$ はそれぞれカーン=ヒリアード方程式の <b>局所エネルギー</b>, <b>全エネルギー</b> と呼ばれることがある. 
                 このことを確認するために, $G(u, u_x)$ に対する <b>変分導関数</b> 
                 \[
                     \dfrac{\delta G}{\delta u} = \dfrac{\partial G}{\partial u} - \dfrac{\partial}{\partial x}\dfrac{\partial G}{\partial u_x} 
                 \] を導入しよう. 
                 なお, この変分導関数は, $J$ の変分を計算する際に
                 \[
-                    \left.\dfrac{d}{d\varepsilon}\right|_{\varepsilon=0}J(u+\varepsilon v) = \int_0^L\left(\dfrac{\partial G}{\partial u}v + \dfrac{\partial G}{\partial u_x}v_x\right)~dx = \int_0^L\dfrac{\delta G}{\delta u}v~dx \quad \text{for all}\quad v\in C^{\infty}_0((0,L))
+                    \left.\dfrac{d}{d\varepsilon}\right|_{\varepsilon=0}J(u+\varepsilon v) = \int_0^L\left(\dfrac{\partial G}{\partial u}v + \dfrac{\partial G}{\partial u_x}v_x\right)~dx = \int_0^L\dfrac{\delta G}{\delta u}v~dx \quad \text{for all}\quad v\in C^{\infty}_0(0, L)
                 \] を満たすものである. 
                 上の $G(u, u_x)$ の変分導関数を実際に計算すると, 
                 \[
@@ -680,11 +685,13 @@ plt.show()
                 \[
                     u_t = \left(\dfrac{\delta G}{\delta u}\right)_{xx}
                 \] であると思うことができる. 
-                なお, 境界条件から
+                また, 境界条件から
                 \[
-                    \left[\dfrac{\partial G}{\partial u_x}\right]_0^L = \left[\varepsilon^2 u_x\right]_0^L = 0,\quad \left[\left(\dfrac{\delta G}{\delta u}\right)_x\right]_0^L = 0
-                \] が得られることも重要である (後者は質量保存則と同様の計算により得られる). 
-                これらを用いると, 実際に 
+                    \left\{\begin{array}{rll} 
+                        \dfrac{\partial G}{\partial u_x} &= 0 & (x=0, L), \cr 
+                        \left(\dfrac{\delta G}{\delta u}\right)_x &= 0 & (x=0, L)
+                    \end{array}\right.
+                \] が得られることも用いると, 実際に 
                 \[
                     \begin{array}{rl} 
                         \dfrac{d}{dt}J(u) &= \displaystyle\int_0^L \dfrac{\partial G(u, u_x)}{\partial t}~dx \cr 
@@ -706,11 +713,21 @@ plt.show()
             <hr>
 
             <p>カーン=ヒリアード方程式に対する離散変分導関数法のアイデアについて具体的に説明しよう. 
+                本来, 離散変分導関数法において空間離散化と時間離散化は同時に説明されることが多いが, ここでは時間離散化により常微分方程式系を導出し, その後で後退オイラー法を適用する, という順序で解説してみる. 
                 区間 $[0, L]$ を $M$ 等分することで空間分割幅を $h = L/M\gt0$ とし, $x_m = mh$ とする. 
-                同様に時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, $t_n = nh$ とする. 
-                このとき, カーン=ヒリアード方程式の解 $u$ に対し, $u(x_m, t_n)$ の近似を与える $u_m^n$ を求めたい. 
-                以降, $u_m^n$ を第 $m$ 成分としてもつベクトルを $\mathbf{u}^n$ と表記する. 
+                このとき, カーン=ヒリアード方程式の解 $u$ に対し, $u(x_m, t)$ の近似を与える $u_m$ ($m=0, 1, \dots, M$) を求めたい. 
+                以降, $u_m$ を第 $m+1$ 成分としてもつベクトルを $\mathbf{u}(t)\in\mathbb{R}^{M+1}$ と表記する:
+                \[
+                    \mathbf{u} = \begin{pmatrix} 
+                        u_0 \cr 
+                        u_1 \cr 
+                        \vdots \cr
+                        u_M 
+                    \end{pmatrix} \in \mathbb{R}^{M+1}.
+                \] 境界条件の違いから, アレン=カーン方程式のときとは異なっていることに注意. 
+                以降現れる $M+1$ 次行ベクトルの各成分も同様に表記する. 
             </p>
+
             <ol>
                 <li>境界条件 
                     \[
@@ -719,68 +736,65 @@ plt.show()
                             u_{xxx}(0, t) &= u_{xxx}(L, t) &= 0
                         \end{array}\right.
                     \] を近似する. 
-                    ここでは, $u_{-2}^n$, $u_{-1}^n$, $u_{M+1}^n$, $u_{M+2}^n$ を, 
+                    ここでは, $u_{-2}$, $u_{-1}$, $u_{M+1}$, $u_{M+2}$ を, 
                     \[
                         \left\{\begin{array}{l} 
-                            \dfrac{u_1^n - u_{-1}^n}{2h} = \dfrac{u_{M+1}^n - u_{M-1}^n}{2h} = 0, \cr 
-                            \dfrac{u_2^n - 2u_1^n + 2u_{-1}^n - u_{-2}^n}{2h^3} = \dfrac{u_{M+2}^n - 2u_{M+1}^n + 2u_{M-1}^n - u_{M-2}^n}{2h^3} = 0
+                            \dfrac{u_1 - u_{-1}}{2h} = \dfrac{u_{M+1} - u_{M-1}}{2h} = 0, \cr 
+                            \dfrac{u_2 - 2u_1 + 2u_{-1} - u_{-2}}{2h^3} = \dfrac{u_{M+2} - 2u_{M+1} + 2u_{M-1} - u_{M-2}}{2h^3} = 0
                         \end{array}\right.
-                    \] が満たされるように定めることで, 境界条件の近似とする. 
+                    \] が満たされるように定めることで, 境界条件の近似とする: つまり, 以降は 
+                    \[
+                        u_{-2} = u_2,\quad u_{-1} = u_1,\quad u_{M+1} = u_{M-1},\quad u_{M+2} = u_{M-2}
+                    \] と思うことにする. また, 以降現れる全ての $M+1$ 次行ベクトルも同様に扱う.  
                 </li>
-                <li>局所エネルギー $G(u, u_x)$ の ($x_m, t_n$ における) 近似を表すベクトル $\mathbf{G}(\mathbf{u}^n)$ を構成する. 
+                <li>局所エネルギー $G(u, u_x)$ の ($x_m$ における) 近似を表すベクトル $\mathbf{G}(\mathbf{u})$ を構成する. 
                     ここでは, 
                     \[
-                        G(u, u_x) = \dfrac{\varepsilon^2}{2}u_x^2 +\mu W(u) 
-                    \] の近似 $\mathbf{G}(\mathbf{u}^n)$ の第 $m$ 成分 $G_m(\mathbf{u}^n)$ を
+                        G(u, u_x) = \dfrac{\varepsilon^2}{2}u_x^2 +\mu E(u) 
+                    \] の近似 $\mathbf{G}(\mathbf{u})\in\mathbb{R}^{M+1}$ の第 $m+1$ 成分 $G_m(\mathbf{u})$ を
                     \[
-                        G_m(\mathbf{u}^n) = \dfrac{\varepsilon^2}{2}\dfrac{\left(\dfrac{u_m^n - u_{m-1}^n}{h}\right)^2 + \left(\dfrac{u_{m+1}^n - u_m^n}{h}\right)^2}{2} + \mu W(u^n_m) 
+                        G_m(\mathbf{u}) = \dfrac{\varepsilon^2}{2}\underbrace{\dfrac{\left(\dfrac{u_m - u_{m-1}}{h}\right)^2 + \left(\dfrac{u_{m+1} - u_m}{h}\right)^2}{2}}_{=A_m(\mathbf{u})} + \mu E(u_m) 
                     \] と定めよう. 
+                    さらに, 第 $m+1$ 成分が $A_m(\mathbf{u})$, $E(u_m)$ であるベクトルをそれぞれ $\mathbf{A}(\mathbf{u})$, $\mathbf{E}(\mathbf{u})$ と表すことで 
+                    \[
+                        \mathbf{G}(\mathbf{u}) = \dfrac{\varepsilon^2}{2}\mathbf{A}(\mathbf{u}) + \mu \mathbf{E}(\mathbf{u})
+                    \] と表記する. 
                 </li>
-                <li>大域エネルギー $J(u)$ の近似を表す $J_h(\mathbf{u}^n)$ を構成する. 
+                <li>大域エネルギー $J(u)$ の近似を表す $J_h(\mathbf{u})$ を構成する. 
                     ここでは,  
                     \[
                         J(u) = \int_0^L G(u, u_x)~dx
                     \] の近似 $J_h(\mathbf{u}^n)$ を, 積分に対する台形則により定めよう: 
                     \[
-                        J_h(\mathbf{u}^n) = \sum_{m=1}^M \dfrac{G_{m-1}(\mathbf{u}^n) + G_m(\mathbf{u}^n)}{2}h. 
-                    \] 以降, 記号の簡単のために $G_m(\mathbf{u}^n) = G_m^n$ および
+                        J_h(\mathbf{u}) = \left(\dfrac{1}{2}G_0(\mathbf{u}) + \sum_{m=1}^{M-1}G_m(\mathbf{u}) + \dfrac{1}{2}G_M(\mathbf{u})\right)h.
+                    \] 以降, 記号の簡単のために, ベクトル $\mathbf{v}, \mathbf{w}\in\mathbb{R}^{M+1}$ に対し, 
                     \[
-                        \sum_* a_m = \sum_{m=1}^M \dfrac{a_{m-1} + a_m}{2}h = \left(\dfrac{1}{2}a_0 + a_1 + \dots + a_{M-1} + \dfrac{1}{2}a_M\right)h
-                    \] という表記を用いることにする. 
-                    つまり大域エネルギー $J(u)$ の近似を 
+                        S(\mathbf{v}) = \left(\dfrac{1}{2}v_0 + \sum_{m=1}^{M-1}v_m + \dfrac{1}{2}v_M\right)h,\qquad (\mathbf{v}, \mathbf{w})_h = \left(\dfrac{1}{2}v_0w_0 + \sum_{m=1}^{M-1}v_mw_m + \dfrac{1}{2}v_Mw_M\right)h
+                    \]
+                    と表記することにする.  
+                    つまり大域エネルギー $J(u)$ の近似は 
                     \[
-                        J_h(\mathbf{u}^n) = \sum_* G_m^n
-                    \] と定める. 
+                        J_h(\mathbf{u}) = S(\mathbf{G}(\mathbf{u}))
+                    \] と表される. 
                 </li>
-                <li>変分導関数を用いて表される, 連鎖率 
+                <li>変分導関数を用いて表される, 連鎖律 
                     \[
                         \dfrac{d}{dt}J(u) = \int_0^L\dfrac{\delta G}{\delta u}u_t~dx \le 0
-                    \] を (積分については先ほどと同じ台形則を用いて) 離散的な連鎖率
+                    \] を (積分については先ほどと同じく台形則を用いて) 
                     \[
-                        \dfrac{J_h(\mathbf{u}^{n+1}) - J_h(\mathbf{u}^n)}{\tau} = \sum_* \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right)_m \dfrac{u_m^{n+1} - u_m^n}{\tau} 
-                        <!-- = \sum_{m=1}^M \dfrac{\left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right)_{m-1} \dfrac{u_{m-1}^{n+1} - u_{m-1}^n}{\tau} + \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right)_m \dfrac{u_m^{n+1} - u_m^n}{\tau}}{2} h  -->
-                    \] により近似するような <b>離散変分導関数</b> 
+                        S\left(\dfrac{d}{dt}\mathbf{G}(\mathbf{u})\right) = \dfrac{d}{dt}J_h(\mathbf{u}) = \left(\dfrac{\delta \mathbf{G}}{\delta\mathbf{u}}, \mathbf{u}_t\right)_h 
+                    \] という離散的な &quot;連鎖律&quot; で近似することで, これを満たす 
                     \[
-                        \dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}
-                    \] を, $J_h(\mathbf{u}^n)$ の定義を基に定める. 
-                    ここでは, 
-                    \[
-                        \begin{array}{rl} 
-                            \displaystyle\sum_* \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right)_m \dfrac{u_m^{n+1} - u_m^n}{\tau} &= \dfrac{J_h(\mathbf{u}^{n+1}) - J_h(\mathbf{u}^n)}{\tau} \cr 
-                            <!-- \displaystyle\sum_{m=1}^M \dfrac{\left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right)_{m-1} \dfrac{u_{m-1}^{n+1} - u_{m-1}^n}{\tau} + \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right)_m \dfrac{u_m^{n+1} - u_m^n}{\tau}}{2} h &= \dfrac{J_h(\mathbf{u}^{n+1}) - J_h(\mathbf{u}^n)}{\tau} \cr  -->
-                            <!-- &= \dfrac{\displaystyle\sum_{m=1}^M \dfrac{G_{m-1}(\mathbf{u}^{n+1}) + G_m(\mathbf{u}^{n+1})}{2}h - \displaystyle\sum_{m=1}^M \dfrac{G_{m-1}(\mathbf{u}^n) + G_m(\mathbf{u}^n)}{2}h}{\tau} \cr  -->
-                            <!-- &= \displaystyle\sum_{m=1}^M \dfrac{\dfrac{G_{m-1}(\mathbf{u}^{n+1}) - G_{m-1}(\mathbf{u}^n)}{\tau} + \dfrac{G_m(\mathbf{u}^{n+1}) - G_m(\mathbf{u}^n)}{\tau}}{2} h -->
-                            &= \displaystyle\sum_* \dfrac{G_m^{n+1} - G_m^n}{\tau}
-                        \end{array}
-                    \] となるように離散変分導関数を定めれば良い. 
+                        \dfrac{\delta \mathbf{G}}{\delta\mathbf{u}}\in\mathbb{R}^{M+1}
+                    \] を定めることができたと仮定する.
                 </li>
                 <li>変分導関数を用いて表されるカーン=ヒリアード方程式 
                     \[
                         u_t = \left(\dfrac{\delta G}{\delta u}\right)_{xx}
-                    \] の近似として, 離散変分導関数を用いて表される
+                    \] の近似として, 
                     \[
-                        \dfrac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\tau} = \Delta_h\dfrac{\delta \mathbf{G}}{\delta (\mathbf{u}^{n+1}, \mathbf{u}^n)} 
-                    \] を計算する, ここで 
+                        \mathbf{u}_t = \Delta_h\dfrac{\delta \mathbf{G}}{\delta\mathbf{u}} 
+                    \] を得る, ここで 
                     \[
                         \Delta_h = \dfrac{1}{h^2}\begin{pmatrix} 
                             -2 & 2 & 0 & 0 & \dots & 0 \cr 
@@ -788,164 +802,212 @@ plt.show()
                             0 & 1 & -2 & 1 & \dots & 0 \cr 
                             \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \cr
                             0 & 0 & 0 & 0 & \dots & -2 
-                        \end{pmatrix}
+                        \end{pmatrix}\in\mathbb{R}^{(M+1)\times (M+1)}
                     \] は (境界条件込みの) 離散ラプラシアンである. 
                 </li>
             </ol>
+            
+            <hr>
+
+            <p>このようにして, PDE を常微分方程式系により近似することができるが, まずこの近似の性質を考えてみよう. 
+                具体的には, 上の離散ラプラシアン $\Delta_h\in\mathbb{R}^{(M+1)\times(M+1)}$ の性質を調べてみる. 
+                まず, この行列は (ディリクレ境界条件の場合とは異なり) 非対称でありしかも正則ではない. 
+                しかしながら, 台形則による数値積分 $S$ や台形則に基づく内積 $(\cdot, \cdot)_h$ と組み合わせると非常に良い性質を満たすことを確認できる. 
+                例えば, 任意のベクトル $\mathbf{v}, \mathbf{w}\in\mathbb{R}^{M+1}$ に対して, 
+                \[
+                    S(\Delta_h\mathbf{v}) = 0,\qquad (\Delta_h\mathbf{v}, \mathbf{w})_h = -(\nabla_h\mathbf{v}, \nabla_h\mathbf{w})_e = (\mathbf{v}, \Delta_h\mathbf{w})_h,\qquad (\mathbf{v}, \Delta_h\mathbf{v})_h \le 0 
+                \] が成立する, ただし 
+                \[
+                    \nabla_h = \dfrac{1}{h}\begin{pmatrix} 
+                        -1 & 1 & 0 & \dots & 0 & 0 \cr 
+                        0 & -1 & 1 & \dots & 0 & 0 \cr 
+                        \vdots & \vdots & \ddots & \ddots & \vdots & \vdots \cr 
+                        0 & 0 & 0 & \dots & -1 & 1 
+                    \end{pmatrix} \in \mathbb{R}^{M\times(M+1)} 
+                \] は離散勾配であり, また第 $m$ 成分が $p_m$, $q_m$ であるベクトル $\mathbf{p}$, $\mathbf{q}\in\mathbb{R}^M$ に対して
+                \[
+                    (\mathbf{p}, \mathbf{q})_e = \sum_{m=1}^Mp_mq_mh 
+                \] である (上の式は境界条件を用いると 
+                \[
+                    \int_0^Lv_{xx}~dx = \left[v_x\right]_0^L = 0,\qquad \int_0^L v_{xx}w~dx = -\int_0^L v_xw_x~dx = \int_0^Lvw_{xx}~dx,\qquad \int_0^Lv_{xx}v~dx = -\int_0^L|v_x|^2~dx \le 0 
+                \] が成立することを再現していると解釈できる). 
+                実際, ベクトル $\Delta_h\mathbf{v}$ の第 $m+1$ 成分が $(v_{m-1}-2v_m+v_{m+1})/h^2$ であることから, 
+                \[
+                    \begin{array}{rl} 
+                        S(\Delta_h\mathbf{v}) &= \left(\dfrac{1}{2}(-2v_0+2v_1) + \displaystyle\sum_{m=1}^{M-1}(v_{m-1}-2v_m+v_{m+1}) + \dfrac{1}{2}(2v_{M-1}-2v_M)\right)\dfrac{h}{h^2} \cr 
+                        &= -(v_0-v_1) + \displaystyle\sum_{m=1}^{M-1}((v_{m-1}-v_m) - (v_m-v_{m+1})) + (v_{M-1}-v_M) \cr 
+                        &= 0,
+                    \end{array}
+                \]
+                \[
+                    \begin{array}{rl} 
+                        (\Delta_h\mathbf{v}, \mathbf{w})_h &= \left(\dfrac{1}{2}(-2v_0+2v_1)w_0 + \displaystyle\sum_{m=1}^{M-1}(v_{m-1}-2v_m+v_{m+1})w_m + \dfrac{1}{2}(2v_{M-1}-2v_M)w_M\right)\dfrac{h}{h^2} \cr 
+                        &= \left((-v_0 + v_1)w_0 + (v_0 - v_1)w_1 + \displaystyle\sum_{m=2}^{M-1}(v_{m-1}-v_m)w_m + \sum_{m=1}^{M-2}(-v_m+v_{m+1})w_m + (-v_{M-1}+v_M)w_{M-1} + (v_{M-1}-v_M)w_M\right)\dfrac{h}{h^2} \cr 
+                        &= \left((-v_0+v_1)(w_0-w_1) + \displaystyle\sum_{m=2}^{M-1}(-v_{m-1}+v_m)(w_{m-1} - w_m) + (-v_{M-1}+v_M)(w_{M-1}-w_M)\right)\dfrac{h}{h^2} \cr
+                        &= -\displaystyle\sum_{m=1}^M\dfrac{-v_{m-1}+v_m}{h}\dfrac{-w_{m-1}+w_m}{h}h \cr 
+                        &= -(\nabla_h\mathbf{v}, \nabla_h\mathbf{w})_e \cr 
+                        &= \dots \cr 
+                        &= (\mathbf{v}, \Delta_h\mathbf{w})_h
+                    \end{array}
+                \] および
+                \[
+                    \begin{array}{rl} 
+                        (\mathbf{v}, \Delta_h\mathbf{v})_h &= -(\nabla_h\mathbf{v}, \nabla_h\mathbf{v})_e \cr 
+                        &= -\displaystyle\sum_{m=1}^{M}\left(\dfrac{v_{m-1}-v_{m}}{h}\right)^2h \cr 
+                        &\le 0
+                    \end{array}
+                \] を確かめることができる. 
+            </p>
+            <p>また, これらの性質から特に 
+                \[
+                    \dfrac{d}{dt}S(\mathbf{u}) = S(\mathbf{u}_t) = S\left(\Delta_h\dfrac{\delta\mathbf{G}}{\delta\mathbf{u}}\right) = 0,
+                \]
+                \[
+                    \dfrac{d}{dt}J_h(\mathbf{u}) = \left(\dfrac{\delta\mathbf{G}}{\delta\mathbf{u}}, \mathbf{u}_t\right)_h = \left(\dfrac{\delta\mathbf{G}}{\delta\mathbf{u}}, \Delta_h \dfrac{\delta\mathbf{G}}{\delta\mathbf{u}}\right)_h \le 0
+                \] が成立することになるが, これらは 
+                \[
+                    \dfrac{d}{dt}\int_0^Lu~dx = 0,\qquad \dfrac{d}{dt}J(u) \le 0 
+                \] を再現していると解釈ができる. 
+                つまり, 変分導関数に基づく方程式の記述を利用することで, 元の方程式の構造を保存するような空間微分の適切に近似ができているのである. 
+            </p>
 
             <hr>
 
-            <p>上で, 離散変分導関数は 
+            <p>それでは, 次に時間離散化についても考えてみよう. 
+                ここまでの議論で, 
                 \[
-                    \displaystyle\sum_*\left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right)_m \dfrac{u_m^{n+1} - u_m^n}{\tau} = \sum_*\dfrac{G_m^{n+1} - G_m^n}{\tau}    
-                \] を満たすものとして定めれば良いと言及した. 
-                これを満たすものを具体的に求めることは容易ではないが, ここでは頑張って計算してみよう. 
-                まず, 記号の簡単のために, 
+                    S\left(\dfrac{d}{dt}\mathbf{G}(\mathbf{u})\right) = \left(\dfrac{\delta \mathbf{G}}{\delta\mathbf{u}}, \mathbf{u}_t\right)_h 
+                \] を満たす $\delta \mathbf{G}/\delta\mathbf{u}\in\mathbb{R}^{M+1}$ に対し 
+                \[
+                    \mathbf{u}_t = \Delta_h \dfrac{\delta\mathbf{G}}{\delta\mathbf{u}}
+                \] という常微分方程式を考える, というアイデアを導入した. 
+                ここでは, これに後退オイラー法を適用する: 
+                時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, $t_n = nh$ とする. 
+                このとき, $\mathbf{u}(t_n)$ の近似を与える $\mathbf{u}^n$ を, 
+                \[
+                    S\left(\dfrac{\mathbf{G}(\mathbf{u}^{n+1}) - \mathbf{G}(\mathbf{u}^n)}{\tau}\right) = \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^{n})}, \dfrac{\mathbf{u}^{n+1}-\mathbf{u}^n}{\tau}\right)_h 
+                \] を満たす <b>離散変分導関数</b> $\delta \mathbf{G}/\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)\in\mathbb{R}^{M+1}$ に対し 
+                \[
+                    \dfrac{\mathbf{u}^{n+1}-\mathbf{u}^n}{\tau} = \Delta_h \dfrac{\delta\mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}
+                \] を解くことで決定しよう. 
+                離散変分導関数を具体的にどのように構成するか, という問題はあるが, その前に上の式から得られる $\mathbf{u}^{n+1}$ の性質を確認しておくと, 
                 \[
                     \begin{array}{rl} 
-                        \text{($1$ 階前進差分商)} & \delta_h^+ u_m^n = \dfrac{u_{m+1}^n - u_m^n}{h}, \cr 
-                        \text{($1$ 階中心差分商)} &\delta_h^{\langle 1\rangle} u_m^n = \dfrac{u_{m+1}^n - u_{m-1}^n}{2h}, \cr 
-                        \text{($1$ 階後退差分商)} &\delta_h^- u_m^n = \dfrac{u_m^n - u_{m-1}^n}{h}, \cr 
-                        \text{($2$ 階中心差分商)} &\delta_h^{\langle 2\rangle} u_m^n = \dfrac{u_{m+1}^n - 2u_m^n + u_{m-1}^n}{h^2}, \cr 
-                        \text{($3$ 階中心差分商)} &\delta_h^{\langle 3\rangle} u_m^n = \dfrac{u_{m+2}^n - 2u_{m+1}^n + 2u_{m-1}^n - u_{m-2}^n}{2h^3}
+                        S(\mathbf{u}^{n+1}) - S(\mathbf{u}^n) &= \tau S\left(\dfrac{\mathbf{u}^{n+1}-\mathbf{u}^n}{\tau}\right) \cr 
+                        &= \tau S\left(\Delta_h\dfrac{\delta\mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right) \cr 
+                        &= 0,
                     \end{array}
-                \] とおく. 
-                さらに, 
+                \] および 
                 \[
-                    D_{\tau}u_m^n = \dfrac{u_m^{n+1} - u_m^n}{\tau}, \qquad u_m^{n+1/2} = \dfrac{u_m^{n+1} + u_m^n}{2} 
-                \] とおく. 
-                まず, これらの記号について, 以下が成立することを確かめておこう: 
-                </p>
-                
-                <div class="lemma">
-                    <ul>
-                        <li>$\delta_h^+\delta_h^-u_m^n = \delta_h^-\delta_h^+u_m^n = \delta_h^{\langle 2\rangle} u_m^n$, </li>
-                        <li>$\dfrac{\delta_h^{\pm} u_m^{n+1} + \delta_h^{\pm} u_m^n}{2} = \delta_h^{\pm}u_m^{n+1/2}$, </li>
-                        <li>$\dfrac{\delta_h^{\pm} u_m^{n+1} - \delta_h^{\pm} u_m^n}{\tau} = \delta_h^{\pm}D_\tau u_m^n$, </li>
-                        <li>実数 $u_m$ および $v_m$ ($m=-1, 0, \dots, M+1$) に対し, 
-                            \[
-                                \sum_* u_m(\delta_h^+ v_m) = \left[\dfrac{h}{2}(u_mv_{m+1}+u_{m-1}v_m)\right]_{m=0}^{m=M} - \sum_* (\delta_h^- u_m)v_m 
-                            \] が成立する. 
-                        </li>
-                    </ul>
-                    <p>ただし, 上で $\delta_h^{\pm}$ とあるのは $\delta_h^+$ でも $\delta_h^-$ でも成立することを表している. </p>
-                </div>
+                    \begin{array}{rl} 
+                        J_h(\mathbf{u}^{n+1}) - J_h(\mathbf{u}^n) &= S(\mathbf{G}(\mathbf{u}^{n+1})) - S(\mathbf{G}(\mathbf{u}^n)) \cr 
+                        &= \tau S\left(\dfrac{\mathbf{G}(\mathbf{u}^{n+1}) - \mathbf{G}(\mathbf{u}^n)}{\tau}\right) \cr 
+                        &= \tau \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^{n})}, \dfrac{\mathbf{u}^{n+1}-\mathbf{u}^n}{\tau}\right)_h \cr 
+                        &= \tau \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^{n})}, \Delta_h\dfrac{\delta\mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right)_h \cr
+                        & \le 0
+                    \end{array}
+                \] が満たされていることがわかる. 
+                つまり, この数値計算により得られる $\mathbf{u}^n$ は, 時間経過による体積保存とエネルギー減衰という構造を再現することが数学的に保証される. 
+                このことが, 離散変分導関数法の大きな利点である. 
+            </p>
 
-                <div class="proof">
-                    <p>最後以外は定義から明らか. 
-                        最後の結果も, 
-                        \[
-                            \begin{array}{rl} 
-                                \displaystyle\sum_* \left(u_m(\delta_h^+v_m) + (\delta_h^-u_m)v_m \right) &= \displaystyle\sum_* \left(u_m(v_{m+1}-v_m) + (u_m-u_{m-1})v_m\right) \cr 
-                                &= \displaystyle\sum_* \left(u_mv_{m+1} -u_{m-1}v_m\right) \cr 
-                                &= \dfrac{1}{2} (u_0v_1 -u_{-1}v_0)h + (u_1v_2 - u_0v_1)h + (u_2v_3 - u_1v_2)h + \dots\cr 
-                                &\qquad + (u_{M-1}v_M - u_{M-2}v_{M-1})h + \dfrac{1}{2} (u_Mv_{M+1} - u_{M-1}v_M)h \cr 
-                                &= -\dfrac{u_0v_1 + u_{-1}v_0}{2}h + \dfrac{u_Mv_{M+1}+u_{M-1}v_M}{2}h
-                            \end{array}
-                        \] のように計算することで確かめられる. 
-                        なお, この結果は部分積分の離散版に相当している. 
-                    </p>
-                </div>
-                
-                <p>上の記号を用いると離散的な境界条件は 
+            <hr>
+
+            <p>それでは, 離散変分導関数 
                 \[
-                    \left\{\begin{array}{l} 
-                        \delta_h^{\langle 1\rangle} u_0^n = \delta_h^{\langle 1\rangle} u_M^n = 0, \cr
-                        \delta_h^{\langle 3\rangle} u_0^n = \delta_h^{\langle 3\rangle} u_M^n = 0, \cr
-                    \end{array}\right.
-                \] であり, また 
+                    \dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^n, \mathbf{u}^{n+1})}
+                \] の具体的な構成を試みよう. 
+                以降, さらなる記号の簡単のために 
                 \[
-                    G_m^n = G_m(\mathbf{u}^n) = \dfrac{\varepsilon^2}{2}\dfrac{(\delta_h^- u_m^n)^2 + (\delta_h^+ u_m^n)^2}{2} +\mu W(u^n_m) 
-                \] と表され, さらに離散変分導関数は, 
+                    D_{\tau}u_m^n = \dfrac{u^{n+1}_m - u^n_m}{\tau},\quad D_{\tau}\mathbf{u}^n = \dfrac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\tau}, \quad u^{n+1/2}_m = \dfrac{u^{n+1}_m + u^n_m}{2}, \quad \mathbf{u}^{n+1/2} = \dfrac{\mathbf{u}^{n+1} + \mathbf{u}^n}{2}
+                \] という表記を導入しよう. 
+                さらに, 後のために
                 \[
-                    \displaystyle\sum_*\left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right)_m D_\tau u_m^n = \sum_*\dfrac{G_m^{n+1} - G_m^n}{\tau}    
-                \] を満たすように構成すれば良いことになる. 
-                この右辺について, 
+                    a_m = \dfrac{-u_{m-1}^{n+1/2}+u_m^{n+1/2}}{h},\qquad  b_m = \dfrac{-D_{\tau}u_{m-1}^n + D_{\tau}u_m}{h}
+                \] と表記することにする. 
+                境界条件より 
+                \[
+                    a_0 = -a_1,\quad b_0 = -b_1,\quad a_{M+1} = -a_{M},\quad b_{M+1} = -b_{M}
+                \] であることに注意.
+                また, $a_m$, $b_m$ を第 $m$ 成分にもつベクトルはそれぞれ $\nabla_h\mathbf{u}^{n+1/2}$, $\nabla_hD_{\tau}\mathbf{u}^n\in\mathbb{R}^M$ であることが重要である.  
+                さて, 離散変分導関数を定義する式を変形することで, 
                 \[
                     \begin{array}{rl} 
-                        \displaystyle\sum_*\dfrac{G_m^{n+1} - G_m^n}{\tau} &= \displaystyle\sum_*\dfrac{1}{\tau}\dfrac{\varepsilon^2}{2}\left(\dfrac{(\delta_h^- u_m^{n+1})^2 + (\delta_h^+ u_m^{n+1})^2}{2} - \dfrac{(\delta_h^- u_m^n)^2 + (\delta_h^+ u_m^n)^2}{2}\right) \cr 
-                        &\qquad + \displaystyle\sum_*\dfrac{1}{\tau}\dfrac{\mu W(u^{n+1}_m) - \mu W(u^n_m)}{u^{n+1}_m - u^n_m} (u_m^{n+1} - u_m^n) \cr
-                        &= \dfrac{\varepsilon^2}{2}\displaystyle\sum_*\left(\dfrac{1}{2\tau}(\delta_h^- u_m^{n+1} + \delta_h^- u_m^n)(\delta_h^- u_m^{n+1} - \delta_h^- u_m^n) + \dfrac{1}{2\tau}(\delta_h^+ u_m^{n+1} + \delta_h^+ u_m^n)(\delta_h^+ u_m^{n+1} - \delta_h^+ u_m^n)\right) \cr 
-                        &\qquad + \displaystyle\sum_* A_m D_{\tau} u_m^n \cr 
-                        &= \dfrac{\varepsilon^2}{2}\displaystyle\sum_*\left((\delta_h^- u_m^{n+1/2})(\delta_h^-D_{\tau}u_m^n) + (\delta_h^+ u_m^{n+1/2})(\delta_h^+D_{\tau}u_m^n)\right) + \displaystyle\sum_*A_mD_{\tau}u_m^n \cr 
-                        &= \dfrac{\varepsilon^2}{2}\left(B -\displaystyle\sum_*\left((\delta_h^+\delta_h^-u_m^{n+1/2} + \delta_h^-\delta_h^+u_m^{n+1})D_{\tau}u_m^n\right)\right) + \displaystyle\sum_*A_m D_{\tau}u_m^n \cr 
-                        &= \dfrac{\varepsilon^2}{2}B-\varepsilon^2\displaystyle\sum_*(\delta_h^{\langle 2\rangle}u_m^{n+1/2})D_{\tau}u_m^n + \displaystyle\sum_*A_m D_{\tau}u_m^n
+                        \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^n, \mathbf{u}^{n+1})}, D_{\tau}\mathbf{u}^n\right)_h &= S\left(\dfrac{\mathbf{G}(\mathbf{u}^{n+1}) - \mathbf{G}(\mathbf{u}^n)}{\tau}\right) \cr 
+                        &= \dfrac{\varepsilon^2}{2}S\left(\dfrac{\mathbf{A}(\mathbf{u}^{n+1})-\mathbf{A}(\mathbf{u}^n)}{\tau}\right) + \mu S\left(\dfrac{\mathbf{E}(\mathbf{u}^{n+1})-\mathbf{E}(\mathbf{u}^n)}{\tau}\right)
                     \end{array}
-                \] と式変形できる, ただし 
-                \[
-                    A_m = \dfrac{\mu W(u^{n+1}_m) - \mu W(u^n_m)}{u^{n+1}_m - u^n_m} = -\mu u_m^{n+1/2} \left(1 - \dfrac{(u_m^{n+1})^2 + (u_m^n)^2}{2}\right)
-                \]
-                であり, また $B$ は離散版部分積分により現れる境界上での項であり, 具体的には 
-                \[
-                    B = \left[\dfrac{h}{2}\left((D_{\tau}u_m^n)(\delta_h^-u_{m+1}^{n+1/2}) + (D_{\tau}u_{m-1}^n)(\delta_h^-u_m^{n+1/2})\right)\right]_{m=0}^{m=M} + \left[\dfrac{h}{2}\left((\delta_h^+u_m^{n+1/2})(D_{\tau}u_{m+1}^n) + (\delta_h^+u_{m-1}^{n+1/2})(D_{\tau}u_m^n)\right)\right]_{m=0}^{m=M}
-                \] である. 
-                いま, 境界条件より 
-                \[
-                    u_{-2}^n = u_2^n,\quad u_{-1}^n = u_1^n,\quad u_{M+1}^n = u_{M-1}^n,\quad u_{M+2}^n = u_{M-2}^n
-                \] であり, 従って 
-                \[
-                    \left\{\begin{array}{rl} 
-                        \delta_h^-u_{M+1}^{n+1/2} &= \dfrac{u_{M+2}^{n+1/2} - u_{M+1}^{n+1/2}}{h} = \dfrac{u_{M-2}^{n+1/2} - u_{M-1}^{n+1/2}}{h} = -\delta_h^+u_{M-1}^{n+1/2}, \cr 
-                        D_{\tau}u_{M-1}^n &= D_{\tau}u_{M+1}^n, \cr 
-                        \delta_h^-u_{M}^{n+1/2} &= -\delta_h^+u_{M}^{n+1/2}, \cr 
-                        \vdots
-                    \end{array}\right.
-                \] が成立するため, これを用いることで $B = 0$ となることが確かめられる. 
-                以上より, 
-                \[
-                    \displaystyle\sum_*\left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right)_m D_\tau u_m^n = -\varepsilon^2\displaystyle\sum_*(\delta_h^{\langle 2\rangle}u_m^{n+1/2})D_{\tau}u_m^n + \displaystyle\sum_*A_m D_{\tau}u_m^n
-                \] が得られたことになるため, 離散変分導関数は 
+                \] となる. 
+                まず第 $1$ 項に注目すると, ベクトル $(\mathbf{A}(\mathbf{u}^{n+1}) - \mathbf{A}(\mathbf{u}^n))/\tau$ の第 $m+1$ 成分は 
                 \[
                     \begin{array}{rl} 
-                        \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right)_m &= -\varepsilon^2(\delta_h^{\langle 2\rangle}u_m^{n+1/2}) + A_m \cr 
-                        &= -\left(\varepsilon^2(\delta_h^{\langle 2\rangle}u_m^{n+1/2}) +\mu u_m^{n+1/2}\left(1 - \dfrac{(u_m^{n+1})^2 + (u_m^n)^2}{2}\right)\right)
-                    \end{array} 
-                \] と定めれば良いことがわかった. 
-                記号の簡単のため, 第 $m$ 成分が 
+                        \dfrac{A_m(\mathbf{u}^{n+1}) - A_m(\mathbf{u}^n)}{\tau} &= \dfrac{1}{2\tau h^2}\left(((u^{n+1}_m-u^{n+1}_{m-1})^2 + (u^{n+1}_{m+1}-u^{n+1}_m)^2) - ((u^{n}_m-u^{n}_{m-1})^2 + (u^{n}_{m+1}-u^{n}_m)^2)\right) \cr 
+                        &= \dfrac{1}{2\tau h^2}\left(((u^{n+1}_m-u^{n+1}_{m-1}) + (u^n_m-u^n_{m-1}))((u^{n+1}_m-u^{n+1}_{m-1}) - (u^n_m-u^n_{m-1})) \right. \cr 
+                        &\qquad\qquad\qquad  \left. + ((u^{n+1}_{m+1}-u^{n+1}_{m}) + (u^n_{m+1}-u^n_{m}))((u^{n+1}_{m+1}-u^{n+1}_{m}) - (u^n_{m+1}-u^n_{m}))\right) \cr 
+                        &= \dfrac{1}{h^2}\left((u^{n+1/2}_m - u^{n+1/2}_{m-1})(D_{\tau}u_m^n - D_{\tau}u^n_{m-1}) + (u^{n+1/2}_{m+1}-u^{n+1/2}_m)(D_{\tau}u^n_{m+1} - D_{\tau}u^n_m)\right) \cr 
+                        &= a_mb_m + a_{m+1}b_{m+1}
+                    \end{array}
+                \] である. 
+                従って, 
                 \[
-                    A_m = -\mu u_m^{n+1/2}\left(1 - \dfrac{(u_m^{n+1})^2 + (u_m^n)^2}{2}\right)
-                \] であるベクトルを $\mathbf{a}(\mathbf{u}^{n+1}, \mathbf{u}^n)$ とおくと, 
+                    \begin{array}{rl} 
+                        S\left(\dfrac{\mathbf{A}(\mathbf{u}^{n+1})-\mathbf{A}(\mathbf{u}^n)}{\tau}\right) &= \left(\dfrac{1}{2}(a_0b_0+a_1b_1) + a_1b_1 + \displaystyle\sum_{m=2}^{M-1}a_mb_m\right. \cr 
+                        &\qquad\qquad \left.+ \displaystyle\sum_{m=1}^{M-2}a_{m+1}b_{m+1} +  a_Mb_M + \dfrac{1}{2}(a_Mb_M + a_{M+1}b_{M+1})\right)h \cr 
+                        &= 2\displaystyle\sum_{m=1}^{M}a_mb_m \cr 
+                        &= 2(\nabla_h\mathbf{u}^{n+1/2}, \nabla_hD_{\tau}\mathbf{u}^n)_e \cr 
+                        &= -2(\Delta_h\mathbf{u}^{n+1/2}, D_{\tau}\mathbf{u})_h
+                    \end{array}
+                \] が得られる. 
+                次に第 $2$ 項に注目すると, ベクトル $(\mathbf{E}(\mathbf{u}^{n+1}) - \mathbf{E}(\mathbf{u}^n))/\tau$ の第 $m+1$ 成分は 
                 \[
-                    \dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)} = -\left(\varepsilon^2(\Delta_h\mathbf{u}^{n+1/2}) - \mathbf{a}(\mathbf{u}^{n+1}, \mathbf{u}^n)\right)
-                \]
-                という表記が得られるが, 離散変分導関数法ではこれを $G(u, u_x)$ の変分導関数 
+                    \begin{array}{rl} 
+                        \dfrac{E(u^{n+1}_m) - E(u^n_m)}{\tau} &= \dfrac{1}{\tau}\left(\left(\dfrac{(u^{n+1}_m)^4}{4} - \dfrac{(u^{n+1}_m)^2}{2}\right) - \left(\dfrac{(u^{n}_m)^4}{4} - \dfrac{(u^{n}_m)^2}{2}\right)\right) \cr 
+                        &= \dfrac{1}{\tau} \left(\dfrac{(u^{n+1}_m)^2 - (u^n_m)^2}{2} \left(\dfrac{(u^{n+1}_m)^2 + (u^n_m)^2}{2} - 1\right)\right) \cr 
+                        &= \dfrac{u^{n+1}_m + u^n_m}{2}\left(\dfrac{(u^{n+1}_m)^2 + (u^n_m)^2}{2} - 1\right) \dfrac{u^{n+1}_m - u^n_m}{\tau} \cr 
+                        &= u^{n+1/2}_m\left(\dfrac{(u^{n+1}_m)^2 + (u^n_m)^2}{2} - 1\right)D_{\tau}u^n_m
+                    \end{array}
+                \] である. 
+                従って, 第 $m+1$ 成分が 
                 \[
-                    \dfrac{\delta G}{\delta u} = -(\varepsilon^2 u_{xx} + \mu u (1-u^2))
-                \] の近似として採用していることになる. 
-                結果的に, Cahn-Hilliard 方程式 
+                    u^{n+1/2}_m\left(1- \dfrac{(u^{n+1}_m)^2 + (u^n_m)^2}{2}\right)
+                \] であるベクトルを $\mathbf{W}(\mathbf{u}^{n+1}, \mathbf{u}^n)\in\mathbb{R}^{M+1}$ とおくと, 
                 \[
-                    \left\{\begin{array}{rl}
-                        u_t &= -(\varepsilon^2 u_{xx} + \mu u (1-u^2))_{xx}, \cr
-                        u_x(0, t) &= u_x(L, t) = 0, \cr
-                        u_{xxx}(0, t) &= u_{xxx}(L, t) = 0
-                    \end{array}\right.    
-                \]
-                に対する離散変分導関数法として, 
-                \[
-                    \left\{\begin{array}{l} 
-                        \dfrac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\tau} = -\Delta_h\left(\varepsilon^2(\Delta_h\mathbf{u}^{n+1/2}) - \mathbf{a}(\mathbf{u}^{n+1}, \mathbf{u}^n)\right), \cr 
-                        u_{-2}^n = u_2^n,\quad u_{-1}^n = u_1^n,\quad u_{M+1}^n = u_{M-1}^n,\quad u_{M+2}^n = u_{M-2}^n 
-                    \end{array}\right.
+                    S\left(\dfrac{\mathbf{E}(\mathbf{u}^{n+1})-\mathbf{E}(\mathbf{u}^n)}{\tau}\right) = \left(-\mathbf{W}(\mathbf{u}^{n+1}, \mathbf{u}^n), D_{\tau}\mathbf{u}^n\right)_h
                 \] が得られる. 
             </p>
+            <p>以上より, 
+                \[
+                    \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^n, \mathbf{u}^{n+1})}, D_{\tau}\mathbf{u}^n\right)_h = \left(-(\varepsilon^2\Delta_h\mathbf{u}^{n+1/2} + \mu \mathbf{W}(\mathbf{u}^{n+1}, \mathbf{u}^n)), D_{\tau}\mathbf{u}^n\right)_h
+                \] が得られたため, 離散変分導関数は 
+                \[
+                    \dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^n, \mathbf{u}^{n+1})} = -(\varepsilon^2\Delta_h\mathbf{u}^{n+1/2} + \mu \mathbf{W}(\mathbf{u}^{n+1}, \mathbf{u}^n))
+                \] と定めれば良いことがわかった. 
+                従って, カーン=ヒリアード方程式
+                \[
+                    u_t = -(\varepsilon^2u_{xx}+\mu u(1-u^2))_{xx}
+                \] に対する離散変分導関数法による数値計算スキームは 
+                \[
+                    \dfrac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\tau} = \Delta_h\left(-(\varepsilon^2\Delta_h\mathbf{u}^{n+1/2} + \mu \mathbf{W}(\mathbf{u}^{n+1}, \mathbf{u}^n))\right)
+                \] である. 
+            </p>
+
             <p>これをニュートン法で計算してみよう. その際には, 与えられた $\mathbf{u}^n$ に対し定められる関数 
                 \[
-                    \mathbf{f}_n(\mathbf{u}) = -\Delta_h\left(\varepsilon^2\left(\Delta_h\dfrac{\mathbf{u} + \mathbf{u}^n}{2}\right) - \mathbf{a}(\mathbf{u}, \mathbf{u}^n)\right)  
+                    \mathbf{f}_n(\mathbf{u}) = -\Delta_h\left(\varepsilon^2\left(\Delta_h\dfrac{\mathbf{u} + \mathbf{u}^n}{2}\right) + \mu\mathbf{W}(\mathbf{u}, \mathbf{u}^n)\right)  
                 \] のヤコビ行列を計算する必要がある. 
-                ここで, ヤコビ行列を計算する際には $\mathbf{u}^n$ は定数と思えること, および離散ラプラシアンに関する連鎖率 
+                ここで, ヤコビ行列を計算する際には $\mathbf{u}^n$ は定数と思えば良いこと, および離散ラプラシアンに関する連鎖率 
                 \[
                     D(\Delta_h \mathbf{g}(\mathbf{u})) = \Delta_h D(\mathbf{g}(\mathbf{u}))
                 \] が成立することに注意すれば, 
                 \[
-                    D\mathbf{f}_n(\mathbf{u}) = -\dfrac{\varepsilon^2}{2}\Delta_h^2 - \dfrac{\mu}{2}\Delta_h + \dfrac{\mu}{4}\Delta D(T(\mathbf{u}))
-                \] である, ただし $T(\mathbf{u})$ は第 $m$ 成分が $(u_m + u_m^n)((u_m)^2 + (u_m^n)^2)$ であるベクトルであり, 従って $D(T(\mathbf{u}))$ は対角行列であり, その $(m, m)$ 成分 $d_m$ は 
+                    D\mathbf{f}_n(\mathbf{u}) = -\dfrac{\varepsilon^2}{2}\Delta_h^2 - \dfrac{\mu}{2}\Delta_h + \dfrac{\mu}{4}\Delta_h D(\mathbf{T}(\mathbf{u}))
+                \] である, ただし $\mathbf{T}(\mathbf{u})$ は第 $m$ 成分が $(u_m + u_m^n)((u_m)^2 + (u_m^n)^2)$ であるベクトルであり, 従って $D(\mathbf{T}(\mathbf{u}))$ は対角行列であり, その $(m, m)$ 成分 $d_m$ は 
                 \[
                     d_m = 3(u_m)^2 + 2(u_mu_m^n) + (u_m^n)^2
                 \] である. 
                 これを用いて
                 \[
                     \mathbf{F}_n(\mathbf{u}) = \mathbf{u} - \tau \mathbf{f}_n(\mathbf{u}) - \mathbf{u}^n
-                \] およびそのヤコビ行列を計算し, ニュートン法の反復計算
+                \] およびそのヤコビ行列 $D\mathbf{F}_n(\mathbf{u}) = I - \tau D\mathbf{f}_n(\mathbf{u})$ を計算し, ニュートン法の反復計算
                 \[
                     \mathbf{u}^n_{k+1} = \mathbf{u}^n_k - D\mathbf{F}_n(\mathbf{u}^n_k)^{-1}\mathbf{F}_n(\mathbf{u}^n_k)
                 \] により $\mathbf{u}^{n+1}$ を (適当に打ち切ることで近似的に) 求めれば良い. 
@@ -976,27 +1038,31 @@ h: float = L/M
 tau: float = T/N 
 
 # 離散ラプラシアン 
-Lap: np.ndarray = -2 * np.eye(M+1) + np.eye(M+1, k=1) + np.eye(M+1, k=-1)
+Lap: np.ndarray = (-2 * np.eye(M+1) + np.eye(M+1, k=1) + np.eye(M+1, k=-1)) / (h**2)
 # 境界条件を考慮 
-Lap[0, 1] = 2 
-Lap[-1, -2] = 2
-Lap = Lap / (h**2)
+Lap[0, 1] = 2 / (h**2)
+Lap[-1, -2] = 2 / (h**2)
 
+# 関数 W
+def W(u: np.ndarray, u_prev: np.ndarray) -> np.ndarray: 
+    u_mid = (u + u_prev) / 2 
+    return u_mid * (1 - (u**2 + u_prev**2) / 2)
 # 離散化された右辺 
-def f(u: np.ndarray, u_prev: np.ndarray, h: float) -> np.ndarray: 
+def f(u: np.ndarray, u_prev: np.ndarray) -> np.ndarray: 
     u_mid = (u + u_prev) / 2 
     return -Lap @ (eps**2 * Lap @ u_mid + mu * u_mid * (1 - (u**2 + u_prev**2) / 2))
 # ヤコビ行列 
-def df(u: np.ndarray, u_prev: np.ndarray, h: float) -> np.ndarray: 
+def df(u: np.ndarray, u_prev: np.ndarray) -> np.ndarray: 
     DT = np.diag(3*(u**2) + 2*u*u_prev + u_prev**2)
     return -(eps**2)/2 * Lap @ Lap - mu/2 * Lap + mu/4 * Lap @ DT
 
+
 # ニュートン法
-def newton(x_prev: np.ndarray, tau: float, h: float, tol: float = 1e-6, max_iter: int = 30) -> np.ndarray: 
+def newton(x_prev: np.ndarray, tau: float, tol: float = 1e-6, max_iter: int = 30) -> np.ndarray: 
     x = x_prev 
     for _ in range(max_iter): 
-        F = x - tau*f(x, x_prev, h) - x_prev 
-        DF = np.eye(M+1) - tau*df(x, x_prev, h)
+        F = x - tau*f(x, x_prev) - x_prev 
+        DF = np.eye(M+1) - tau*df(x, x_prev)
         x = x - np.linalg.solve(DF, F)
     if np.linalg.norm(np.linalg.solve(DF, F)) < tol:
        return x
