@@ -21,27 +21,30 @@ h: float = L/M
 tau: float = T/N 
 
 # 離散ラプラシアン 
-Lap: np.ndarray = -2 * np.eye(M+1) + np.eye(M+1, k=1) + np.eye(M+1, k=-1)
+Lap: np.ndarray = (-2 * np.eye(M+1) + np.eye(M+1, k=1) + np.eye(M+1, k=-1)) / (h**2)
 # 境界条件を考慮 
-Lap[0, 1] = 2 
-Lap[-1, -2] = 2
-Lap = Lap / (h**2)
+Lap[0, 1] = 2 / (h**2)
+Lap[-1, -2] = 2 / (h**2)
 
+# 関数 W
+def W(u: np.ndarray, u_prev: np.ndarray) -> np.ndarray: 
+    u_mid = (u + u_prev) / 2 
+    return u_mid * (1 - (u**2 + u_prev**2) / 2)
 # 離散化された右辺 
-def f(u: np.ndarray, u_prev: np.ndarray, h: float) -> np.ndarray: 
+def f(u: np.ndarray, u_prev: np.ndarray) -> np.ndarray: 
     u_mid = (u + u_prev) / 2 
     return -Lap @ (eps**2 * Lap @ u_mid + mu * u_mid * (1 - (u**2 + u_prev**2) / 2))
 # ヤコビ行列 
-def df(u: np.ndarray, u_prev: np.ndarray, h: float) -> np.ndarray: 
+def df(u: np.ndarray, u_prev: np.ndarray) -> np.ndarray: 
     DT = np.diag(3*(u**2) + 2*u*u_prev + u_prev**2)
     return -(eps**2)/2 * Lap @ Lap - mu/2 * Lap + mu/4 * Lap @ DT
 
 # ニュートン法
-def newton(x_prev: np.ndarray, tau: float, h: float, tol: float = 1e-6, max_iter: int = 30) -> np.ndarray: 
+def newton(x_prev: np.ndarray, tau: float, tol: float = 1e-6, max_iter: int = 30) -> np.ndarray: 
     x = x_prev 
     for _ in range(max_iter): 
-        F = x - tau*f(x, x_prev, h) - x_prev 
-        DF = np.eye(M+1) - tau*df(x, x_prev, h)
+        F = x - tau*f(x, x_prev) - x_prev 
+        DF = np.eye(M+1) - tau*df(x, x_prev)
         x = x - np.linalg.solve(DF, F)
     if np.linalg.norm(np.linalg.solve(DF, F)) < tol:
        return x
@@ -74,7 +77,7 @@ for n in range(N):
 step: int = 30
 ani = FuncAnimation(fig, update, frames=range(0, N, step), interval=5)
 # ファイル出力する場合は下のコメントアウトを解除
-ani.save("cahn_hilliard.mp4", writer="ffmpeg", fps=60)
+# ani.save("cahn_hilliard.mp4", writer="ffmpeg", fps=60)
 
 plt.show()
 
