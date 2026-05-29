@@ -199,14 +199,15 @@
                     W(u) = u(1-u^2)
                 \] とおく. 
                 また数値計算のために, 区間 $[0, L]$ を $M$ 等分することで空間分割幅を $h = L/M\gt0$ とし, $x_m = mh$ とする. 
-                このとき, アレン=カーン方程式の解 $u$ に対し, $u_m(t) \approx u(x_m, t)$ を用いて, 空間に関する $2$ 階微分を $2$ 階中心差分 
+                このとき, アレン=カーン方程式の解 $u$ に対し, $u_m(t) \approx u(x_m, t)$ を求めよう. 
+                空間に関する $2$ 階微分は, $2$ 階中心差分 
                 \[
                     u_{xx}(x_m, t) \approx \dfrac{\dfrac{u_{m+1} - u_{m}}{h} - \dfrac{u_{m} - u_{m-1}}{h}}{h} = \dfrac{u_{m+1} - 2u_m + u_{m-1}}{h^2} 
                 \] により近似する. 
                 この近似に基づき, ベクトル $\mathbf{u}(t)$ を  
                 \[
                     \mathbf{u}_t = \varepsilon^2 \Delta_h \mathbf{u} + \mu \mathbf{W}(\mathbf{u})
-                \] により決定されるとみなす, ここで 
+                \] により決定する, ここで 
                 \[
                     \mathbf{u} = \begin{pmatrix} 
                         u_1 \cr 
@@ -224,9 +225,9 @@
                 なお, $u_0 = u_M = 0$ は境界条件により与えられているとみなす. 
                 このようにして PDE を近似する常微分方程式系が得られた. 
                 この常微分方程式系に対して, ここでは ($4$ 段陽的) ルンゲ=クッタ法を適用してみよう. 
-                つまり時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, $t_n = nh$ とし, 与えられた $u_m^n$ $(m=0, 1, \dots, M)$ に対し,  
+                つまり時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, $t_n = nh$ とし, 与えられた $\mathbf{u}^n \approx \mathbf{u}(t_n)$ に対し,  
                 \[
-                    \mathbf{f}(\mathbf{u}^n) = \varepsilon^2 \Delta_h\mathbf{u}^n + \mu \mathbf{W}(\mathbf{u}^n)
+                    \mathbf{f}(\mathbf{u}) = \varepsilon^2 \Delta_h\mathbf{u} + \mu \mathbf{W}(\mathbf{u})
                 \] を用いて
                 \[
                     \begin{array}{l} 
@@ -239,7 +240,7 @@
                 \[
                     \mathbf{u}^{n+1} = \mathbf{u}^n + \dfrac{\tau}{6}(\mathbf{k}_1+2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4)
                 \] を計算する. 
-                このようにして得られた $u_m^n$ が $u(x_m, t_n)$ の近似を与えていると思うことができる. 
+                このようにして得られたベクトル $\mathbf{u}^n$ の第 $m$ 成分 $u_m^n$ が $u(x_m, t_n)$ の近似を与えていると思うことができる. 
                 なお, $\mathbf{u}^0$ は初期値から, $u_0^n$ と $u_M^n$ は境界条件から与えればよい. 
             </p>
             <div class="resize">
@@ -356,7 +357,7 @@ plt.show()
                 実際には, 拡散項も含めて 
                 \[
                     J(u) = \int \left(\dfrac{1}{2}u_x^2 + \dfrac{u^4}{4} - \dfrac{u^2}{2} \right)
-                \] と定めると, 汎函数 $J$ の変分 $\delta J$ を用いて $u_t = -\delta J$ という勾配流であると表現することもできる. 
+                \] と定めると, 汎函数 $J$ に関する勾配流とみなすこともできる. 
             </p>
             <p>先ほどの計算例では拡散項と反応項の影響が釣り合うような関数形状から動かなくなる様子を確認できる, つまりこれは与えられたパラメータに対するアレン=カーン方程式の定常解への収束を表現している. 
                 しかしながら, パラメータ $\mu=0$ とすると (方程式は熱方程式となり) 拡散項の影響により解は $u=0$ という定常解に近づく. 
@@ -954,7 +955,7 @@ plt.show()
                         &\qquad\qquad \left.+ \displaystyle\sum_{m=1}^{M-2}a_{m+1}b_{m+1} +  a_Mb_M + \dfrac{1}{2}(a_Mb_M + a_{M+1}b_{M+1})\right)h \cr 
                         &= 2\displaystyle\sum_{m=1}^{M}a_mb_m \cr 
                         &= 2(\nabla_h\mathbf{u}^{n+1/2}, \nabla_hD_{\tau}\mathbf{u}^n)_e \cr 
-                        &= -2(\Delta_h\mathbf{u}^{n+1/2}, D_{\tau}\mathbf{u})_h
+                        &= -2(\Delta_h\mathbf{u}^{n+1/2}, D_{\tau}\mathbf{u}^n)_h
                     \end{array}
                 \] が得られる. 
                 次に第 $2$ 項に注目すると, ベクトル $(\mathbf{E}(\mathbf{u}^{n+1}) - \mathbf{E}(\mathbf{u}^n))/\tau$ の第 $m+1$ 成分は 
