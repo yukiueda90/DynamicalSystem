@@ -65,6 +65,8 @@
                 \] を考えることができる, ここで $u_{xx}$ は関数 $u$ の変数 $x$ に対する $2$ 階偏微分を表し, $k\gt 0$ は拡散係数と呼ばれるパラメータである.  
                 方程式に空間についての $2$ 階微分が含まれているため, これを満たす関数 $u$ を (積分定数に相当する任意性を排除して) 定めるには追加の条件が必要となる. 
                 この例では空間領域 (今回は空間一次元なので $[0, L]$ という区間) の境界における値をしているが, このような条件は <b>境界条件</b> (<b>boundary condition</b>) と呼ばれる. 
+                特に, 求める関数 $u$ 自身の境界上での値を指定する境界条件を <b>ディリクレ境界条件</b> という. 
+                さらに, 求める関数 $u$ の境界上での値が $0$ であることを指定する境界条件を <b>斉次ディリクレ境界条件</b> という (上の例は斉次ディリクレ境界条件が与えられた熱方程式ということになる).
                 また, 初期条件 $u(x, 0) = u_0(x)$ と境界条件が与えられた時間発展 PDE を <b>初期値境界値問題</b> と呼ぶ. 
             </p> 
             <p>熱方程式の解を見つける方法として, 上の問題に対する <b>変数分離法</b> を説明しておこう.
@@ -97,7 +99,7 @@
                 実際, $n=1,2,\dots$ に対し
                 \[
                     \lambda_n = -k(n\pi / L)^2,\quad \varphi_n(x) = \sin \dfrac{n\pi}{L}x 
-                \] は, $k\varphi_n''(x) = \lambda_n\varphi_n(x)$ および $\varphi_n(0) = \varphi_n(x)$ を確かめることができる (これは $\lambda_n$ と $\varphi_n$ が, $\widetilde{A}v = kv_{xx}$ という線形作用素の固有値および対応する <b>固有関数</b> であると説明される). 
+                \] は, $k\varphi_n''(x) = \lambda_n\varphi_n(x)$ および $\varphi_n(0) = \varphi_n(x)$ を確かめることができる (これは $\lambda_n$ と $\varphi_n$ が, 斉次ディリクレ境界条件の下で $\widetilde{A}v = kv_{xx}$ により表される線形作用素 $\widetilde{A}$ の固有値および対応する <b>固有関数</b> であると説明される). 
                 この $\lambda_n$ に対し, 今度は $\eta_n'(t) = \lambda_n \eta_n(t)$ を満たすものを考えると, 
                 \[
                     \eta_n(t) = Ce^{\lambda_n t}
@@ -166,7 +168,7 @@
                     v(x, t) = \displaystyle\sum_{n=0}^\infty c_ne^{\lambda_n t}\varphi_n(x)
                 \] と表される関数 $v$ は $v_t = \widetilde{A}v$ および境界条件を満たす. 
                 このことから, 時間発展偏微分方程式 $u_t = Au$ の定常解 $\widetilde{u}$ に対する線形化問題 $v_t = \widetilde{A}v$ を考えた際に, 線形作用素 $\widetilde{A}$ の全ての固有値が負であれば (最大固有値が負であれば), $\displaystyle\lim_{t\to\infty}v(x, t)=0$ が成立する.  
-                つまり元の時間発展 PDE の解 $u(x, t)$ は定常解 $\widetilde{u}(x)$ に収束し, 従って平衡点 $\widetilde{u}$ は漸近安定であることがわかる. 
+                つまり元の時間発展 PDE の解 $u(x, t)$ は定常解 $\widetilde{u}(x)$ に収束し, 従って定常解 $\widetilde{u}$ は漸近安定であることがわかる. 
             </p>
 
             <p>このように, 定常解付近での局所的な解の挙動については, 定常解の安定性を調べることで説明することができる. 
@@ -179,6 +181,95 @@
         </section>
 
         <hr>
+
+        <section><h2>熱方程式</h2>
+            <p>最初に簡単な例として, 先ほども例として挙げた熱方程式
+                \[
+                    \left\{\begin{array}{l} 
+                        u_t = ku_{xx} \quad\text{in}\quad [0, L], \cr 
+                        u(0, t) = 0, \quad u(L, t) = 0
+                    \end{array}\right.
+                \] 
+                について改めて解説し, その数値計算について補足する (初期条件 $u(x, 0) = u_0(x)$ は適当に与えられているものとする). 
+                まず, $k\gt 0$ は拡散係数と呼ぶのであったことを思い出しておこう. 
+                特に $k$ が正であることから, $u_t = ku_{xx}$ は関数 $u$ が下に凸である部分では $u$ が時間経過により大きくなろうとし, 逆に上に凸である部分では時間経過で小さくなろうとする挙動を表している. 
+                結果的に $u$ の値は &quot;拡散&quot; することで均質化, つまり定数関数 (上の例では斉次ディリクレ境界条件より $u\equiv 0$) に近づこうとする. 
+            </p>  
+            <p>このことを力学系という観点から解説しよう. 
+                以降, 後の記号との対応のために, (空間 $1$ 次元ではあるが) 関数 $u$ の空間変数に関する $2$ 階偏微分 $u_{xx}$ のことを $\Delta u$ と表記することにする. 
+                いま, 作用素 $k\Delta$ は線形であり (従って熱方程式の線形化問題は熱方程式自身である), $\widetilde{u}(x)=0$ が定常解であることも簡単に確認できる. 
+                そして先ほども説明したように, 斉次ディリクレ境界条件の下で作用素 $k\Delta$ の固有値および対応する固有関数は $n=1, 2, \dots$ に対して 
+                \[
+                    \lambda_n = -k(n\pi / L)^2,\quad \varphi_n(x) = \sin \dfrac{n\pi}{L}x 
+                \] であり, 特に最大固有値が $-k(\pi/L)^2\lt 0$ であることから定常解 $\widetilde{u}\equiv 0$ は漸近安定である. 
+            </p>
+            <p>このことを数値計算により確認してみよう. 
+                まず, 区間 $[0, L]$ を $M$ 等分することで空間分割幅を $h = L/M\gt0$ とし, $x_m = mh$ とする. 
+                このとき, 熱方程式の解 $u$ に対し, $u_m(t) \approx u(x_m, t)$ なる関数 $u_m(t)$ を以下のように定める: 
+                空間変数に関する $2$ 階偏微分 $\Delta u$ は $2$ 階中心差分 
+                \[
+                    \Delta u(x_m, t) \approx \dfrac{\dfrac{u_{m+1} - u_{m}}{h} - \dfrac{u_{m} - u_{m-1}}{h}}{h} = \dfrac{u_{m+1} - 2u_m + u_{m-1}}{h^2} 
+                \] により近似する. 
+                この近似に基づき, $m = 1, 2, \dots, M-1$ に対し
+                \[
+                    \dfrac{d}{dt}u_m = k \dfrac{u_{m+1} - 2u_m + u_{m-1}}{h^2} 
+                \] とする, ただし斉次ディリクレ境界条件より $u_0(t) = u_M(t) = 0$ であるとする. 
+                さて, この式は第 $m$ 成分が $u_m$ であるベクトル $\mathbf{u}$ を用いて 
+                \[
+                    \mathbf{u}_t = k\dfrac{1}{h^2}\begin{pmatrix} 
+                        -2u_1 + u_2 \cr 
+                        u_1 - 2u_2 + u_3 \cr 
+                        u_2 - 2u_3 + u_4 \cr 
+                        \vdots \cr 
+                        u_{M-2} - 2u_{M-1} 
+                    \end{pmatrix} = k\underbrace{\dfrac{1}{h^2}\begin{pmatrix} 
+                        -2 & 1 & 0 & \dots & 0 \cr 
+                        1 & -2 & 1 & \dots & 0 \cr 
+                        0 & 1 & -2 & \dots & 0 \cr 
+                        \vdots & \vdots & \vdots & \ddots & \vdots \cr 
+                        0 & 0 & 0 &\dots & -2 
+                    \end{pmatrix}}_{=\Delta_h}\begin{pmatrix} 
+                        u_1 \cr 
+                        u_2 \cr 
+                        u_3 \cr 
+                        \vdots \cr 
+                        u_{M-1} 
+                    \end{pmatrix} = k\Delta_h \mathbf{u}
+                \] と表すことができる. 
+                つまり, 熱方程式
+                \[
+                    \left\{\begin{array}{l} 
+                        u_t = ku_{xx} \quad\text{in}\quad [0, L], \cr 
+                        u(0, t) = 0, \quad u(L, t) = 0
+                    \end{array}\right.
+                \] の近似を与える線形力学系 
+                \[
+                    \mathbf{u}_t = k\Delta_h \mathbf{u}
+                \] を導出することができたことになる. 
+                このような行列 
+                \[
+                    \Delta_h = \dfrac{1}{h^2}\begin{pmatrix} 
+                        -2 & 1 & 0 & \dots & 0 \cr 
+                        1 & -2 & 1 & \dots & 0 \cr 
+                        0 & 1 & -2 & \dots & 0 \cr 
+                        \vdots & \vdots & \vdots & \ddots & \vdots \cr 
+                        0 & 0 & 0 &\dots & -2 
+                    \end{pmatrix} \in \mathbb{R}^{(M-1)\times (M-1)}
+                \] を (斉次ディリクレ境界条件下での) <b>離散ラプラシアン</b> と呼ぶことがある. 
+                あとはこの線形力学系に対し適当な数値計算手法を適用すればよい. 
+                ここでは前進オイラー法を用いてみる: 
+                時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, また $t_n = nh$ とし, 与えられた $\mathbf{u}^n \approx \mathbf{u}(t_n)$ に対し,  
+                \[
+                    \dfrac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\tau} = k\Delta_h\mathbf{u}^n, 
+                \] つまり $\mathbf{u}^{n+1} = (I + k\tau\Delta_h)\mathbf{u}^n$ を満たす $\mathbf{u}^{n+1}$ を求める. 
+                例えば以下のサンプルコードを実行すると, 数値解が時間経過により $0$ に近づいている様子を確認できる: 
+            </p>
+
+
+            <p>ところで, 上のサンプルコードにおいて空間分割幅を大きくしてしまうと, 数値解が発散してしまう様子を確認することができる. 
+                例えば ...
+            </p>
+        </section>
 
         <section><h2>アレン=カーン方程式</h2>
             <p>ここでは <b>アレン=カーン方程式</b> (<b>Allen-Cahn equation</b>)
