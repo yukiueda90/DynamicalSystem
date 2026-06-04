@@ -94,20 +94,33 @@
                         \varphi(0) = \varphi(L) = 0 
                     \end{array}\right. 
                 \] を満たすものを探せば良いことになる. 
-                上で $\varphi$ についての ODE が得られるが, (必要ならば $\psi = \varphi'$ を導入して線形力学系と思うことで) 一般解を得ることができる.  
+            </p>
+            <p>上で得られた $\varphi$ についての ODE について (必要ならば $\psi = \varphi'$ を導入して線形力学系と思うことで) 一般解を得ることができる.  
                 さらに境界条件 (および初期条件から得られる $\varphi(x)\neq0$) が満たされる特殊解を考えることもできる.
                 実際, $n=1,2,\dots$ に対し
                 \[
                     \lambda_n = -k(n\pi / L)^2,\quad \varphi_n(x) = \sin \dfrac{n\pi}{L}x 
-                \] は, $k\varphi_n''(x) = \lambda_n\varphi_n(x)$ および $\varphi_n(0) = \varphi_n(x)$ を確かめることができる (これは $\lambda_n$ と $\varphi_n$ が, 斉次ディリクレ境界条件の下で $\widetilde{A}v = kv_{xx}$ により表される線形作用素 $\widetilde{A}$ の固有値および対応する <b>固有関数</b> であると説明される). 
-                この $\lambda_n$ に対し, 今度は $\eta_n'(t) = \lambda_n \eta_n(t)$ を満たすものを考えると, 
+                \] が, $k\varphi_n''(x) = \lambda_n\varphi_n(x)$ および $\varphi_n(0) = \varphi_n(L) = 0$ を満たすことを確かめることができる. 
+                これは $\lambda_n$ と $\varphi_n$ が, 斉次ディリクレ境界条件の下で $\widetilde{A}v = kv_{xx}$ により表される線形作用素 $\widetilde{A}$ の固有値および対応する <b>固有関数</b> であると説明される. 
+                ちなみに, (境界条件については厳密ではないものの) $\widetilde{A}$ の固有値および固有関数として複素数値のものまで許容するならば 
+                \[
+                    \lambda_n = -k(n\pi / L)^2,\quad \varphi_n(x) = e^{i\frac{n\pi}{L}x} 
+                \] を考えることも可能である. 
+                特に固有関数が $e^{i\frac{n\pi}{L}x}$ という形をしているだろう, という推測から固有値を計算することができるという事実が重要であり, この事実は $2$ 階微分に関する作用素の固有値を計算する際のテクニックとしてしばしば利用される. 
+            </p>
+            <p>ともかく 
+                \[
+                    k\varphi_n'' = \lambda_n\varphi_n
+                \] を満たす $\lambda_n$, $\varphi_n(x)$ の組が得られた. 
+                この $\lambda_n$ に対し, 今度は $\eta_n'(t) = \lambda_n \eta_n(t)$ を満たす関数 $\eta_n(t)$ を考えると 
                 \[
                     \eta_n(t) = Ce^{\lambda_n t}
-                \] が得られる. 
+                \] である. 
                 これらを組み合わせると, 
                 \[
-                    u(x, t) = c_ne^{\lambda_n t}\varphi_n(x) = c_ne^{-k(n\pi/L)^2 t}\sin\dfrac{n\pi}{L}x
-                \] は, $u_t = ku_{xx}$ と境界条件を満たし, さらにこれらの線型結合 
+                    u_n(x, t) = c_ne^{\lambda_n t}\varphi_n(x) = c_ne^{-k(n\pi/L)^2 t}\sin\dfrac{n\pi}{L}x
+                \] は, $(u_n)_t = k(u_n)_{xx}$ と境界条件を満たすことになる. 
+                そのため, これらの線型結合 
                 \[
                     u(x, t) = \sum_{n=1}^{\infty}c_ne^{\lambda_n t}\varphi_n(x) = \sum_{n=1}^{\infty}c_ne^{-k(n\pi/L)^2 t}\sin\dfrac{n\pi}{L}x
                 \] も $u_t = ku_{xx}$ と境界条件を満たす. 
@@ -203,16 +216,15 @@
                     \lambda_n = -k(n\pi / L)^2,\quad \varphi_n(x) = \sin \dfrac{n\pi}{L}x 
                 \] であり, 特に最大固有値が $-k(\pi/L)^2\lt 0$ であることから定常解 $\widetilde{u}\equiv 0$ は漸近安定である. 
             </p>
-            <p>このことを数値計算により確認してみよう. 
+            <p>解が時間経過により定常解 $\widetilde{u}\equiv 0$ に近づく様子を数値計算により確認してみよう. 
                 まず, 区間 $[0, L]$ を $M$ 等分することで空間分割幅を $h = L/M\gt0$ とし, $x_m = mh$ とする. 
                 このとき, 熱方程式の解 $u$ に対し, $u_m(t) \approx u(x_m, t)$ なる関数 $u_m(t)$ を以下のように定める: 
                 空間変数に関する $2$ 階偏微分 $\Delta u$ は $2$ 階中心差分 
                 \[
                     \Delta u(x_m, t) \approx \dfrac{\dfrac{u_{m+1} - u_{m}}{h} - \dfrac{u_{m} - u_{m-1}}{h}}{h} = \dfrac{u_{m+1} - 2u_m + u_{m-1}}{h^2} 
-                \] により近似する. 
-                この近似に基づき, $m = 1, 2, \dots, M-1$ に対し
+                \] により近似することで, $m = 1, 2, \dots, M-1$ に対し
                 \[
-                    \dfrac{d}{dt}u_m = k \dfrac{u_{m+1} - 2u_m + u_{m-1}}{h^2} 
+                    (u_m)_t = k \dfrac{u_{m+1} - 2u_m + u_{m-1}}{h^2} 
                 \] とする, ただし斉次ディリクレ境界条件より $u_0(t) = u_M(t) = 0$ であるとする. 
                 さて, この式は第 $m$ 成分が $u_m$ であるベクトル $\mathbf{u}$ を用いて 
                 \[
@@ -264,12 +276,155 @@
                 \] つまり $\mathbf{u}^{n+1} = (I + k\tau\Delta_h)\mathbf{u}^n$ を満たす $\mathbf{u}^{n+1}$ を求める. 
                 例えば以下のサンプルコードを実行すると, 数値解が時間経過により $0$ に近づいている様子を確認できる: 
             </p>
+            <pre>
+<code>
+import numpy as np 
+import matplotlib.pyplot as plt 
+from matplotlib.animation import FuncAnimation 
 
+# Heat equation: 
+# u_t = k * u_xx in [0, L]
+# u(0, t) = 0, u(L, t) = 0 
 
-            <p>ところで, 上のサンプルコードにおいて空間分割幅を大きくしてしまうと, 数値解が発散してしまう様子を確認することができる. 
-                例えば ...
+# パラメータ 
+k: float = 1.
+
+# 2 階中心差分による空間離散化 
+def Lap(u: np.ndarray, h: float) -> np.ndarray: 
+    vec = np.empty_like(u) 
+    vec[0] = (-2*u[0] + u[1]) / (h**2) 
+    vec[-1] = (u[-2] - 2*u[-1]) / (h**2) 
+    vec[1:-1] = (u[:-2] - 2*u[1:-1] + u[2:]) / (h**2) 
+    return vec 
+
+def f(u: np.ndarray, h: float) -> np.ndarray: 
+    return k * Lap(u, h) 
+
+# 古典的ルンゲ=クッタ (４段陽的ルンゲ=クッタ)
+def runge_kutta(u: np.ndarray, tau: float, h: float) -> np.ndarray:
+    k1 = f(u, h)
+    k2 = f(u + tau/2 * k1, h)
+    k3 = f(u + tau/2 * k2, h)
+    k4 = f(u + tau * k3, h)
+    return u + tau/6 * (k1 + 2*k2 + 2*k3 + k4) 
+
+# 空間領域, 時間区間 
+L: float = 1. 
+T: float = 0.05 
+M: int = 60 
+N: int = 1000 
+x = np.linspace(0, L, M+1) 
+t = np.linspace(0, T, N+1) 
+h: float = L/M 
+tau = float = T/N 
+
+# 初期条件 (境界条件を満たすものを指定)
+u0 = np.sin(3*np.pi*x/L) 
+# 配列の初期化, 初期条件と境界条件の設定 
+u = np.empty((M+1, N+1)) 
+u[:, 0] = u0
+u[0, :] = 0 
+u[-1, :] = 0
+
+# プロットの準備 
+fig, ax = plt.subplots() 
+ax.set_ylim([-1.1, 1.1])
+
+# 初期条件のプロット 
+line, = ax.plot(x, u[:, 0], color='tab:blue', linewidth=2.5)
+# plt.savefig('allen_cahn.pdf') 
+# アニメーションにおける update を定義 
+def update(frame): 
+    line.set_data(x, u[:, frame]) # 更新された u を入力 
+    return 
+
+# 計算 
+for n in range(N): 
+    u[1:-1, n+1] = runge_kutta(u[1:-1, n], tau, h) 
+    
+# プロット 
+step: int = 3
+ani = FuncAnimation(fig, update, frames=range(0, N, step), interval=5)
+# ファイル出力する場合は下のコメントアウトを解除
+ani.save("heat_eq.mp4", writer="ffmpeg", fps=60)
+
+plt.show()
+</code>
+            </pre>
+            <p>実行結果として, 下図のようなアニメーションが得られることを確認できる. 
+                ところで, 上のサンプルコードにおいて, 例えば時間分割幅をそのままに空間分割幅を小さくしすぎてしまうと, 数値解が発散してしまう様子を確認することができる. 
+                例えば上で $M=60$ としている部分を $M=120$ とした (つまり空間分割幅 $h = L/M$ を半分にした) 結果を併せて掲載する: 
+            </p>
+
+            <div class="resize">
+                <video autoplay="true", loop="true">
+                <source src="videos/heat_eq.mp4" type="video/mp4" />
+                </video>
+                <video autoplay="true", loop="true">
+                <source src="videos/heat_eq2.mp4" type="video/mp4" />
+                </video>
+            </div>
+
+            <p>この現象について解説しよう. 
+                まず, 
+                \[
+                    \mathbf{u}^{n+1} = (I+k\tau\Delta_h)\mathbf{u}^n = \dots = (I+k\tau\Delta_h)^{n+1}\mathbf{u}_0
+                \] であることに注目すると, 数値計算の際に行列 $I+k\tau\Delta_h$ を何度も掛け合わせるという操作をしていることになる. 
+                この行列の固有値, 固有ベクトルを調べるために, 離散ラプラシアン $\Delta_h\in\mathbb{R}^{(M-1)\times (M-1)}$ の固有値および対応する固有ベクトルを考える. 
+                ラプラシアンの固有ベクトルの形から, 離散ラプラシアンの固有ベクトルが $j = 1, 2, \dots$ に対し
+                \[
+                    \mathbf{v}_j = \begin{pmatrix} 
+                        \sin j\pi x_1/L \cr 
+                        \sin j\pi x_2/L \cr 
+                        \vdots \cr
+                        \sin j\pi x_{M-1}/L
+                    \end{pmatrix} = 
+                    \begin{pmatrix} 
+                        \sin j\pi /M \cr 
+                        \sin 2j\pi /M \cr 
+                        \vdots \cr
+                        \sin (M-1)j\pi /M
+                    \end{pmatrix}
+                \] という形をしているだろう, という予測に基づき $\Delta_h\mathbf{v}_j$ を計算してみる: 
+                \[
+                    \sin(\alpha-\beta) - 2\sin\alpha + \sin(\alpha+\beta) = 2\sin\alpha(\cos\beta-1) = -4\sin\alpha\sin^2\dfrac{\beta}{2}
+                \] に注意すると,
+                \[
+                    \Delta_h \mathbf{v}_j = -\dfrac{4}{h^2}\sin^2 \dfrac{j\pi}{2M}\mathbf{v}_j
+                \] が得られる ($\sin j\pi x_m/L$ の代わりに $e^{ij\pi x_m/L}$ を利用した方が計算は容易だが, この場合は境界条件の扱いに注意が必要になる). 
+                ここで, $\mathbf{v}_{M+j} = -\mathbf{v}_j$ であり, また $\mathbf{v}_M = \mathbf{0}$ であることから, 
+                \[
+                    -\dfrac{4}{h^2}\sin^2 \dfrac{j\pi}{2M} \quad (j=1, 2, \dots, M-1)
+                \] という $M-1$ 個の固有値が得られたことになり, これが離散ラプラシアン $\Delta_h\in\mathbb{R}^{(M-1)\times (M-1)}$ の全ての固有値である. 
+                以上より, 行列 $I+k\tau\Delta_h$ の固有値 $\lambda_j$ は, 
+                \[
+                    \lambda_j = 1-\dfrac{4k\tau}{h^2}\sin^2 \dfrac{j\pi}{2M} \le 1 \quad (j=1, 2, \dots, M-1)
+                \] である. 
+            </p>
+            <p>もしも $\lambda_j$ たちの中に, $|\lambda_i|\gt 1$ となるものが存在すると, 
+                \[
+                    (I+k\tau \Delta_h)^n\mathbf{e} \to \infty \quad\mbox{as}\quad n\to\infty
+                \] となるベクトル $\mathbf{e}$ が存在してしまうことになる. 
+                実際の数値計算の際には, コンピュータ内部で数値を浮動小数点数として扱う際の丸め誤差が発生するが, もしも $\lambda_j \lt -1$ なる固有値が存在すると, そうした誤差の影響が増幅されてしまう恐れがある, ということを意味している. 
+                先ほどの計算例において, 数値解が発散してしまったのはこのことが原因である. 
+            </p>
+            <p>丸め誤差などの増幅による数値解の発散を防ぐためには, $I+k\tau\Delta_h$ の全ての固有値 $\lambda_j$ が $\lambda_j\ge -1$ を満たしていれば良い. 
+                そのための必要条件として, 
+                \[
+                    1-\dfrac{4k\tau}{h^2} \ge -1,
+                \] すなわち 
+                \[
+                    1 - \dfrac{2k\tau}{h^2} \ge 0 
+                \] を要請すれば良いだろう (行列 $I-k\tau\Delta_h$ の対角成分が正であることを要請していることになる).
+                実際に, サンプルコード内で設定されているパラメータはこの条件を満たしている. 
+                一方で, $M=60$ を $M=120$ などと取り替えてしまうと, 上の条件が満たされなくなり, 実際に丸め誤差の影響が増幅されて数値解が発散してしまう様子が観察されているのである.  
+            </p>
+            <p>なお, 誤差の影響が計算中に減衰する場合, 数値計算手法は安定であるといい, 一方で誤算の影響が増幅される場合, 数値計算手法は不安定であるという. 
+                また, 以上の議論は <b>フォン・ノイマンの安定性解析</b> と呼ばれるものであり, 熱方程式に対する空間 $2$ 階中心差分と時間用的オイラー法の組み合わせによる数値計算手法 (FTCS 法と言及されることもある) の安定性を調べるものである. 
             </p>
         </section>
+
+        <hr>
 
         <section><h2>アレン=カーン方程式</h2>
             <p>ここでは <b>アレン=カーン方程式</b> (<b>Allen-Cahn equation</b>)
