@@ -273,7 +273,7 @@
                 時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, また $t_n = nh$ とし, 与えられた $\mathbf{u}^n \approx \mathbf{u}(t_n)$ に対し,  
                 \[
                     \dfrac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\tau} = k\Delta_h\mathbf{u}^n, 
-                \] つまり $\mathbf{u}^{n+1} = (I + k\tau\Delta_h)\mathbf{u}^n$ を満たす $\mathbf{u}^{n+1}$ を求める. 
+                \] つまり $\mathbf{u}^{n+1} = (I + k\tau\Delta_h)\mathbf{u}^n$ を満たす $\mathbf{u}^{n+1}$ を求める, なお $\mathbf{u}^0$ は初期条件から与える. 
                 例えば以下のサンプルコードを実行すると, 数値解が時間経過により $0$ に近づいている様子を確認できる: 
             </p>
             <pre>
@@ -436,7 +436,7 @@ plt.show()
                 ここでは簡単のために空間 $1$ 次元の場合のみを考え, 境界条件として空間を表す区間の両端で $u=0$ であることを課す (つまり斉次ディリクレ境界条件を課す) ことにする: 
                 \[
                     \left\{\begin{array}{l} 
-                        u_t = \varepsilon^2 u_{xx} + \mu u(1-u^2) \quad \text{in}\quad [0, L], \cr 
+                        u_t = \varepsilon^2 \Delta u + \mu u(1-u^2) \quad \text{in}\quad [0, L], \cr 
                         u(0, t) = u(L, t) = 0.
                     \end{array}\right.
                 \] まずは適当な初期値を与えた際の数値計算結果を観察し, 解の挙動について大雑把に説明しよう. 
@@ -445,31 +445,37 @@ plt.show()
                     W(u) = u(1-u^2)
                 \] とおく. 
                 また数値計算のために, 区間 $[0, L]$ を $M$ 等分することで空間分割幅を $h = L/M\gt0$ とし, $x_m = mh$ とする. 
-                このとき, アレン=カーン方程式の解 $u$ に対し, $u_m(t) \approx u(x_m, t)$ を求めよう. 
-                空間に関する $2$ 階微分は, $2$ 階中心差分 
+                このとき, アレン=カーン方程式の解 $u$ に対し, 空間に関する $2$ 階微分を $2$ 階中心差分により近似することで $u_m(t) \approx u(x_m, t)$ を定める. 
+                これにより,   
                 \[
-                    u_{xx}(x_m, t) \approx \dfrac{\dfrac{u_{m+1} - u_{m}}{h} - \dfrac{u_{m} - u_{m-1}}{h}}{h} = \dfrac{u_{m+1} - 2u_m + u_{m-1}}{h^2} 
-                \] により近似する. 
-                この近似に基づき, ベクトル $\mathbf{u}(t)$ を  
+                    \left\{\begin{array}{l} 
+                        u_t = \varepsilon^2 \Delta u + \mu W(u) \quad \text{in}\quad [0, L], \cr 
+                        u(0, t) = u(L, t) = 0.
+                    \end{array}\right.
+                \] の近似として,  
                 \[
                     \mathbf{u}_t = \varepsilon^2 \Delta_h \mathbf{u} + \mu \mathbf{W}(\mathbf{u})
-                \] により決定する, ここで 
+                \] という常微分方程式系を導出することができる, ここで
                 \[
                     \mathbf{u} = \begin{pmatrix} 
                         u_1 \cr 
                         u_2 \cr 
                         \vdots \cr 
                         u_{M-1} 
-                    \end{pmatrix}\in\mathbb{R}^{M-1},\quad \Delta_h = \begin{pmatrix} 
+                    \end{pmatrix},\quad \Delta_h = \begin{pmatrix} 
                         -2 & 1 & 0 & 0 & \dots & 0 \cr 
                         1 & -2 & 1 & 0 & \dots & 0 \cr 
                         0 & 1 & -2 & 1 & \dots & 0 \cr 
                         \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \cr 
                         0 & 0 & 0 & 0 & \dots & -2 
-                    \end{pmatrix} \in \mathbb{R}^{(M-1)\times (M-1)}
-                \] であり, $\mathbf{W}(\mathbf{u})$ は第 $m$ 成分が $W(u_m) = u_m(1-(u_m)^2)$ であるベクトルである. 
+                    \end{pmatrix}, \quad \mathbf{W}(\mathbf{u}) = \begin{pmatrix} 
+                        u_1(1-(u_1)^2) \cr 
+                        u_2(1-(u_2)^2) \cr 
+                        \vdots \cr 
+                        u_{M-1}(1-(u_{M-1})^2) \cr 
+                    \end{pmatrix} 
+                \] である. 
                 なお, $u_0 = u_M = 0$ は境界条件により与えられているとみなす. 
-                このようにして PDE を近似する常微分方程式系が得られた. 
                 この常微分方程式系に対して, ここでは ($4$ 段陽的) ルンゲ=クッタ法を適用してみよう. 
                 つまり時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, $t_n = nh$ とし, 与えられた $\mathbf{u}^n \approx \mathbf{u}(t_n)$ に対し,  
                 \[
@@ -487,7 +493,7 @@ plt.show()
                     \mathbf{u}^{n+1} = \mathbf{u}^n + \dfrac{\tau}{6}(\mathbf{k}_1+2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4)
                 \] を計算する. 
                 このようにして得られたベクトル $\mathbf{u}^n$ の第 $m$ 成分 $u_m^n$ が $u(x_m, t_n)$ の近似を与えていると思うことができる. 
-                なお, $\mathbf{u}^0$ は初期値から, $u_0^n$ と $u_M^n$ は境界条件から与えればよい. 
+                なお, $\mathbf{u}^0$ は初期値から与える. 
             </p>
             <div class="resize">
                 <video autoplay="true", loop="true">
@@ -586,8 +592,8 @@ plt.show()
                     u_t = \varepsilon^2 u_{xx} + \mu u(1-u^2) \quad \text{in}\quad [0, L] 
                 \]
                 の右辺にある $2$ つの項の作用を, パラメータ $\varepsilon$, $\mu$ により適切に調整したためであるが, 例えば数値計算において $\varepsilon = 0$ としたり $\mu = 0$ としたりすることで, 一方の項を消去し様子の異なる数値計算結果を観察することもできる. 
-                右辺第 $1$ 項の効果 $u_t = u_{xx}$ は, $u_{xx}$ が正の部分 ($u$ が下に凸の部分) では $u$ の値を大きくしようとし, 逆に上に凸の部分を小さくしようとする. 
-                つまり, 関数 $u$ の値が &quot;拡散&quot; し, $u$ の形状が平たくなろうとする効果を表している. 
+                実際, $\mu=0$ のときは第 $1$ 項のみが残り, 方程式は熱方程式となる. 
+                つまり, アレン=カーン方程式の第 $1$ 項は, 熱方程式と同様に, 関数 $u$ の値が &quot;拡散&quot; し, $u$ の形状が平たくなろうとする効果を表している. 
                 このような項は <b>拡散項</b> と呼ばれる. 
                 一方で右辺第 $2$ 項には微分が含まれず, $u$ の値自体の影響で $u$ が変化する効果を表している. 
                 このような項は <b>反応項</b> と呼ばれ, また拡散項と反応項を持つ偏微分方程式は <b>反応拡散方程式</b> と呼ばれる. 
@@ -902,6 +908,8 @@ plt.show()
                         u(x, 0) = u_0(x)
                     \end{array}\right.
                 \] を考えることにする. 
+                特に, 境界における空間 $1$ 階微分 (より正確には法線微分) の値を指定する境界条件は <b>ノイマン境界条件</b> と呼ばれる. 
+                今回は $1$ 階微分の境界値が $0$ であるという条件を課しているが, これは <b>斉次ノイマン境界条件</b> と呼ばれる. 
             </p>
             <p>ところで, カーン=ヒリアード方程式はアレン=カーン方程式と同様に相分離現象を表す数理モデルとして利用されるものであるが, こちらは上のような適切な境界条件の下で質量保存則を満たすという利点がある. 
                 実際, 
@@ -1039,7 +1047,7 @@ plt.show()
                 </li>
                 <li>変分導関数を用いて表されるカーン=ヒリアード方程式 
                     \[
-                        u_t = \left(\dfrac{\delta G}{\delta u}\right)_{xx}
+                        u_t = \left(\dfrac{\delta G}{\delta u}\right)_{xx} = \Delta \dfrac{\delta G}{\delta u}
                     \] の近似として, 
                     \[
                         \mathbf{u}_t = \Delta_h\dfrac{\delta \mathbf{G}}{\delta\mathbf{u}} 
@@ -1052,7 +1060,7 @@ plt.show()
                             \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \cr
                             0 & 0 & 0 & 0 & \dots & -2 
                         \end{pmatrix}\in\mathbb{R}^{(M+1)\times (M+1)}
-                    \] は (境界条件込みの) 離散ラプラシアンである. 
+                    \] は (斉次ノイマン境界境界条件下での) 離散ラプラシアンである. 
                 </li>
             </ol>
             
@@ -1060,12 +1068,12 @@ plt.show()
 
             <p>このようにして, PDE を常微分方程式系により近似することができるが, まずこの近似の性質を考えてみよう. 
                 具体的には, 上の離散ラプラシアン $\Delta_h\in\mathbb{R}^{(M+1)\times(M+1)}$ の性質を調べてみる. 
-                まず, この行列は (ディリクレ境界条件の場合とは異なり) 非対称でありしかも正則ではない. 
+                まず, この行列は (ディリクレ境界条件の場合とは異なり) 対称ではないし正則でもない. 
                 しかしながら, 台形則による数値積分 $S$ や台形則に基づく内積 $(\cdot, \cdot)_h$ と組み合わせると非常に良い性質を満たすことを確認できる. 
                 例えば, 任意のベクトル $\mathbf{v}, \mathbf{w}\in\mathbb{R}^{M+1}$ に対して, 
                 \[
                     S(\Delta_h\mathbf{v}) = 0,\qquad (\Delta_h\mathbf{v}, \mathbf{w})_h = -(\nabla_h\mathbf{v}, \nabla_h\mathbf{w})_e = (\mathbf{v}, \Delta_h\mathbf{w})_h,\qquad (\mathbf{v}, \Delta_h\mathbf{v})_h \le 0 
-                \] が成立する, ただし 
+                \] が成立する, ここで 
                 \[
                     \nabla_h = \dfrac{1}{h}\begin{pmatrix} 
                         -1 & 1 & 0 & \dots & 0 & 0 \cr 
@@ -1230,12 +1238,16 @@ plt.show()
                 \[
                     \dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^n, \mathbf{u}^{n+1})} = -(\varepsilon^2\Delta_h\mathbf{u}^{n+1/2} + \mu \mathbf{W}(\mathbf{u}^{n+1}, \mathbf{u}^n))
                 \] と定めれば良いことがわかった. 
-                従って, カーン=ヒリアード方程式
+                以上より, カーン=ヒリアード方程式
                 \[
-                    u_t = -(\varepsilon^2u_{xx}+\mu u(1-u^2))_{xx}
+                    \left\{\begin{array}{l}
+                        u_t = -\Delta(\varepsilon^2 \Delta u + \mu u(1-u^2)) \quad \text{in}\quad [0, L], \cr
+                        u_x(0, t) = u_x(L, t) = 0, \cr 
+                        u_{xxx}(0, t) = u_{xxx}(L, t) = 0
+                    \end{array}\right.
                 \] に対する離散変分導関数法による数値計算スキームは 
                 \[
-                    \dfrac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\tau} = \Delta_h\left(-(\varepsilon^2\Delta_h\mathbf{u}^{n+1/2} + \mu \mathbf{W}(\mathbf{u}^{n+1}, \mathbf{u}^n))\right)
+                    \dfrac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\tau} = -\Delta_h\left(\varepsilon^2\Delta_h\mathbf{u}^{n+1/2} + \mu \mathbf{W}(\mathbf{u}^{n+1}, \mathbf{u}^n)\right)
                 \] である. 
             </p>
 
@@ -1256,7 +1268,7 @@ plt.show()
                 これを用いて
                 \[
                     \mathbf{F}_n(\mathbf{u}) = \mathbf{u} - \tau \mathbf{f}_n(\mathbf{u}) - \mathbf{u}^n
-                \] およびそのヤコビ行列 $D\mathbf{F}_n(\mathbf{u}) = I - \tau D\mathbf{f}_n(\mathbf{u})$ を計算し, ニュートン法の反復計算
+                \] のヤコビ行列 $D\mathbf{F}_n(\mathbf{u}) = I - \tau D\mathbf{f}_n(\mathbf{u})$ を計算し, ニュートン法の反復計算
                 \[
                     \mathbf{u}^n_{k+1} = \mathbf{u}^n_k - D\mathbf{F}_n(\mathbf{u}^n_k)^{-1}\mathbf{F}_n(\mathbf{u}^n_k)
                 \] により $\mathbf{u}^{n+1}$ を (適当に打ち切ることで近似的に) 求めれば良い. 
