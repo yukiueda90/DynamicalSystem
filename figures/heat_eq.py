@@ -17,17 +17,6 @@ def Lap(u: np.ndarray, h: float) -> np.ndarray:
     vec[1:-1] = (u[:-2] - 2*u[1:-1] + u[2:]) / (h**2) 
     return vec 
 
-def f(u: np.ndarray, h: float) -> np.ndarray: 
-    return k * Lap(u, h) 
-
-# 古典的ルンゲ=クッタ (４段陽的ルンゲ=クッタ)
-def runge_kutta(u: np.ndarray, tau: float, h: float) -> np.ndarray:
-    k1 = f(u, h)
-    k2 = f(u + tau/2 * k1, h)
-    k3 = f(u + tau/2 * k2, h)
-    k4 = f(u + tau * k3, h)
-    return u + tau/6 * (k1 + 2*k2 + 2*k3 + k4) 
-
 # 空間領域, 時間区間 
 L: float = 1. 
 T: float = 0.05 
@@ -52,7 +41,6 @@ ax.set_ylim([-1.1, 1.1])
 
 # 初期条件のプロット 
 line, = ax.plot(x, u[:, 0], color='tab:blue', linewidth=2.5)
-# plt.savefig('allen_cahn.pdf') 
 # アニメーションにおける update を定義 
 def update(frame): 
     line.set_data(x, u[:, frame]) # 更新された u を入力 
@@ -60,7 +48,7 @@ def update(frame):
 
 # 計算 
 for n in range(N): 
-    u[1:-1, n+1] = runge_kutta(u[1:-1, n], tau, h) 
+    u[1:-1, n+1] = u[1:-1, n] + k * tau * Lap(u[1:-1, n], h)
     
 # プロット 
 step: int = 3
