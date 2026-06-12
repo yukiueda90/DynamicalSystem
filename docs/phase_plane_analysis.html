@@ -779,6 +779,36 @@
                 <div class="resize"><img src='./images/energy_function_2d-1.png'></div>
             </div>
 
+            <div class="example">
+                <p>鞍点を持つエネルギーに対する勾配系の解の様子を観察してみよう. 
+                    ここでは, エネルギーとして 
+                    \[
+                        E(x, y) = \dfrac{1}{4}((x^2-1)^2 + (y^2-1)^2 + (x-y)^2) 
+                    \] に対する勾配系 
+                    \[
+                        \begin{pmatrix} 
+                            x' \cr 
+                            y' 
+                        \end{pmatrix} = -\nabla E(\mathbf{x}) = -\begin{pmatrix} 
+                            \partial E/\partial x \cr 
+                            \partial E/\partial y 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            x^3 - (x+y)/2   \cr 
+                            y^3 - (x+y)/2 
+                        \end{pmatrix}
+                    \] を考える. 
+                    このエネルギーは $E(x, y)\ge0$ を満たし, また $E(1, 1) = E(-1, -1) = 0$ を満たすことから, この $2$ 点が漸近安定な平衡点である. 
+                    また, $(0, 0)$ が平衡点であることも簡単にわかるが, エネルギー $E$ のグラフの形状から $(0, 0)$ は鞍点である. 
+                    実際に, エネルギー $E$ のグラフと適当な初期値に対する勾配系の解の軌道をプロットしたものは以下のようになる. 
+                    この解の軌道は鞍点の近くを通る (そうなるように初期値を設定している) が, 鞍点付近では一時的に動きがゆっくりになり, その後でエネルギーの極小値である漸近安定な平衡点に向かって動く様子を確認できる.   
+                </p>
+                <div class="resize">
+                    <video autoplay="true", loop="true">
+                    <source src="videos/double_well.mp4" type="video/mp4" />
+                    </video>
+                </div>
+            </div>
+
             <p>次に <b>ハミルトン系</b> について紹介する:</p> 
 
             <div class="definition" data-name="ハミルトン系">
