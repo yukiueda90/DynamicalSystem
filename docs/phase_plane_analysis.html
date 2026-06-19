@@ -473,7 +473,7 @@
                     \[
                         \omega(\mathbf{x}_0) = \{\mathbf{0}\}
                     \] である. 
-                    一方で, 全ての点は時間に逆行したとき ($t_n\to\infty$ となる任意の点列 $\{t_n\}$ に対して) 発散するため, 任意の $\mathbf{x}_0$ に対し 
+                    一方で, 全ての点は時間に逆行したとき ($t_n\to-\infty$ となる任意の点列 $\{t_n\}$ に対して) 発散するため, 任意の $\mathbf{x}_0$ に対し 
                     \[
                         \alpha(\mathbf{x}_0) = \emptyset
                     \] である. 
@@ -732,7 +732,7 @@
 
             <div class="remark">
                 <ul>
-                    <li>力学系 $\mathbf{x}' = -\nabla E(\mathbf{x})$ の平衡点は $E(\mathbf{x})=0$ を満たす点, すなわちエネルギーの勾配を $0$ にする点 (停留点) である. 
+                    <li>力学系 $\mathbf{x}' = -\nabla E(\mathbf{x})$ の平衡点は $\nabla E(\mathbf{x})=0$ を満たす点, すなわちエネルギーの勾配を $0$ にする点 (停留点) である. 
                     </li>
                     <li>直感的には, 勾配系の解は &quot;エネルギーの坂を転げ落ちる&quot; ように動く. </li>
                     <li>停留点においてエネルギーの極小値が達成されるならば, その停留点は漸近安定な平衡点 (沈点) であり, 極大値が達成されるならば, その停留点は不安定な平衡点, 特に源点である. 
@@ -852,12 +852,12 @@
                     <li>ハミルトン系の解 $\mathbf{x}(t)$ は, 
                         \[
                             \dfrac{d}{dt}H(\mathbf{x}(t)) = \mathbf{x}'\cdot \nabla H(\mathbf{x}) = \begin{pmatrix} 
-                                \nabla_{\mathbf{q}}H(\mathbf{x}) \cr 
-                                \nabla_{\mathbf{p}}H(\mathbf{x}) 
-                            \end{pmatrix} \cdot\begin{pmatrix} 
                                 \nabla_{\mathbf{p}}H(\mathbf{x}) \cr 
                                 -\nabla_{\mathbf{q}}H(\mathbf{x}) 
-                            \end{pmatrix} = 0
+                            \end{pmatrix} \cdot \begin{pmatrix} 
+                                \nabla_{\mathbf{q}}H(\mathbf{x}) \cr 
+                                \nabla_{\mathbf{p}}H(\mathbf{x}) 
+                            \end{pmatrix}  = 0
                         \] を満たす. 
                         すなわち, ハミルトン系の解 $\mathbf{x}(t)$ は, エネルギー (ハミルトニアン) $H$ の値を保存するように動く. 
                         このような特徴を持つ力学系は <b>保存系</b> と呼ばれることがある. 
@@ -871,8 +871,8 @@
                         \] と表すことができる (一方で, 勾配系は 
                         \[
                              \mathbf{x}' = \begin{pmatrix} 
-                                0 & -I \cr 
-                                -I & 0 
+                                -I & 0 \cr 
+                                0 & -I 
                             \end{pmatrix} \nabla E(\mathbf{x})
                         \] と表すことができる).
                     </li>
