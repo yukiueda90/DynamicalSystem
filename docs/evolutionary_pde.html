@@ -82,7 +82,7 @@
                         \varphi(0) = \varphi(L) = 0, \cr 
                         \varphi(x)\eta(0) = u_0(x) 
                     \end{array}\right. 
-                \] を満たすような $\varphi(x)$, $\lambda(t)$ がもしも存在すれば, これらが熱方程式のただ一つの解の表示を与えることになる. 
+                \] を満たすような $\varphi(x)$, $\eta(t)$ がもしも存在すれば, これらが熱方程式のただ一つの解の表示を与えることになる. 
                 ここでは $u_0(x) \not\equiv 0$ である場合を考えることにすると, $\varphi(x)\eta(t)\not\equiv 0$ なので 
                 \[
                     \dfrac{\eta'(t)}{\eta(t)} = k\dfrac{\varphi''(x)}{\varphi(x)} 
@@ -359,7 +359,7 @@ plt.show()
                     \mathbf{u}^{n+1} = (I+k\tau\Delta_h)\mathbf{u}^n = \dots = (I+k\tau\Delta_h)^{n+1}\mathbf{u}_0
                 \] であることに注目すると, 数値計算の際に行列 $I+k\tau\Delta_h$ を何度も掛け合わせるという操作をしていることになる. 
                 この行列の固有値, 固有ベクトルを調べるために, 離散ラプラシアン $\Delta_h\in\mathbb{R}^{(M-1)\times (M-1)}$ の固有値および対応する固有ベクトルを考える. 
-                ラプラシアンの固有ベクトルの形から, 離散ラプラシアンの固有ベクトルが $j = 1, 2, \dots$ に対し
+                ラプラシアンの固有関数の形から, 離散ラプラシアンの固有ベクトルが $j = 1, 2, \dots$ に対し
                 \[
                     \mathbf{v}_j = \begin{pmatrix} 
                         \sin j\pi x_1/L \cr 
@@ -770,7 +770,7 @@ plt.show()
                 これらのアイデアに基づく数値計算は, 以下のように実行すれば良い: 
             </p>
             <ol>
-                <li>第 $m$ 成分が $v_m^n \approx v(x_m, t_n)$ であるベクトル $\mathbf{v}^n$ から, 第 $m$ 成分が $f(u_m^n)$ であるベクトル $\mathbf{f}^n$ を求める. </li> 
+                <li>第 $m$ 成分が $v_m^n \approx v(x_m, t_n)$ であるベクトル $\mathbf{v}^n$ から, 第 $m$ 成分が $f(u_m^n) = f(v_m^n+g(x_m))$ であるベクトル $\mathbf{f}^n$ を求める. </li> 
                 <li>逆離散サイン変換に基づき 
                     \[
                         \widehat{\mathbf{v}}^n = \dfrac{2}{M+1}S\mathbf{v}^n,\quad \widehat{\mathbf{f}}^n = \dfrac{2}{M+1}S\mathbf{f}^n 
@@ -784,7 +784,7 @@ plt.show()
                     \[
                         \mathbf{v}^{n+1} = S\widehat{\mathbf{v}}^{n+1} 
                     \] を計算する. 
-                    このベクトルの各成分が $v(x_m, t_n)$ の近似を表すため, $u(x_m, t_n) = v(x_m, t_n) + g(x_m)$ の近似が得られる. 
+                    このベクトルの各成分が $v(x_m, t_{n+1})$ の近似を表すため, $u(x_m, t_{n+1}) = v(x_m, t_{n+1}) + g(x_m)$ の近似 $u_m^{n+1} = v_m^{n+1} + g(x_m)$ が得られる. 
                 </li>
             </ol>
             <p>なお, 行列 $(I+\tau kA)^{-1}$ は第 $(m, m)$ 成分が 
@@ -990,7 +990,7 @@ plt.show()
                     \[
                         u_{-2} = u_2,\quad u_{-1} = u_1,\quad u_{M+1} = u_{M-1},\quad u_{M+2} = u_{M-2}
                     \] と設定していることを意味している. 
-                    また, 以降現れる全ての $M+1$ 次行ベクトルも同様に ghost point 上での値を設定する.  
+                    また, 以降現れる全ての $M+1$ 次行ベクトルも同様に仮想格子点上での値を設定する.  
                 </li>
                 <li>局所エネルギー $G(u, u_x)$ の ($x_m$ における) 近似を表すベクトル $\mathbf{G}(\mathbf{u})$ を構成する. 
                     ここでは, 
