@@ -887,7 +887,7 @@ plt.show()
                 \[
                     u_t = -(\varepsilon^2 u_{xx} + \mu u(1-u^2))_{xx}
                 \] を考える, ここで $\varepsilon\gt 0$ と $\mu\gt 0$ はパラメータである. 
-                特に, ここでは境界条件 (および初期条件) として, 
+                ここでは境界条件 (および初期条件) として, 
                 \[
                     \left\{\begin{array}{l}
                         u_t = -(\varepsilon^2 u_{xx} + \mu u(1-u^2))_{xx} \quad \text{in}\quad [0, L], \cr
@@ -1069,12 +1069,12 @@ plt.show()
                         \vdots & \vdots & \ddots & \ddots & \vdots & \vdots \cr 
                         0 & 0 & 0 & \dots & -1 & 1 
                     \end{pmatrix} \in \mathbb{R}^{M\times(M+1)} 
-                \] は離散勾配であり, また第 $m$ 成分が $p_m$, $q_m$ であるベクトル $\mathbf{p}$, $\mathbf{q}\in\mathbb{R}^M$ に対して
+                \] であり (これを <b>離散勾配</b> と呼ぶことがある), また第 $m$ 成分が $p_m$, $q_m$ であるベクトル $\mathbf{p}$, $\mathbf{q}\in\mathbb{R}^M$ に対して
                 \[
                     (\mathbf{p}, \mathbf{q})_e = \sum_{m=1}^Mp_mq_mh 
-                \] である (上の式は境界条件を用いると 
+                \] と定める (上の式は境界条件を用いると 
                 \[
-                    \int_0^Lv_{xx}~dx = \left[v_x\right]_0^L = 0,\qquad \int_0^L v_{xx}w~dx = -\int_0^L v_xw_x~dx = \int_0^Lvw_{xx}~dx,\qquad \int_0^Lv_{xx}v~dx = -\int_0^L|v_x|^2~dx \le 0 
+                    \int_0^Lv_{xx}~dx = \left[v_x\right]_0^L = 0,\qquad \int_0^L v_{xx}w~dx = -\int_0^L v_xw_x~dx = \int_0^Lvw_{xx}~dx,\qquad \int_0^Lvv_{xx}~dx = -\int_0^L|v_x|^2~dx \le 0 
                 \] が成立することを再現していると解釈できる). 
                 実際, ベクトル $\Delta_h\mathbf{v}$ の第 $m+1$ 成分が $(v_{m-1}-2v_m+v_{m+1})/h^2$ であることから, 
                 \[
@@ -1127,7 +1127,7 @@ plt.show()
                     \mathbf{u}_t = \Delta_h \dfrac{\delta\mathbf{G}}{\delta\mathbf{u}}
                 \] という常微分方程式を考える, というアイデアを導入した. 
                 ここでは, これに後退オイラー法を適用する: 
-                時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, $t_n = nh$ とする. 
+                時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, $t_n = n\tau$ とする. 
                 このとき, $\mathbf{u}(t_n)$ の近似を与える $\mathbf{u}^n$ を, 
                 \[
                     S\left(\dfrac{\mathbf{G}(\mathbf{u}^{n+1}) - \mathbf{G}(\mathbf{u}^n)}{\tau}\right) = \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^{n})}, \dfrac{\mathbf{u}^{n+1}-\mathbf{u}^n}{\tau}\right)_h 
