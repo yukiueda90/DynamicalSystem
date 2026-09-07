@@ -245,7 +245,121 @@
             <p>常微分方程式により与えられる連続力学系を離散力学系と対応付ける方法の一つとして, 先ほどはポアンカレ写像について名前だけ言及した. 
                 ここでは異なる方法として <b>時間離散化</b>, 特に <b>オイラー法</b> と <b>ルンゲ=クッタ法</b> による時間離散化について解説しよう. 
             </p>
-            
+
+            <p>常微分方程式系 
+                \[
+                    \left\{\begin{array}{rl} 
+                        \mathbf{x}' &= \mathbf{f}(\mathbf{x}), \cr 
+                        \mathbf{x}(0) &= \mathbf{x}_0 
+                    \end{array}\right.
+                \] に対して, 連続的な時刻 $t$ における解 $\mathbf{x}(t)$ の代わりに, 時間刻み $\tau\gt 0$ を用いて 
+                \[
+                    t_n = n\tau \qquad (n=0, 1, \dots)
+                \] と表される <b>離散的</b> な時刻における解 $\mathbf{x}(t_n)$ の近似 $\mathbf{x}_n$ を求めたい. 
+                その際には, 時間変数 $t$ に関する微分 
+                \[
+                    \mathbf{x}'(t_n) = \lim_{h\to 0}\dfrac{\mathbf{x}(t_n+h) - \mathbf{x}(t_n)}{h}
+                \] を $\{\mathbf{x}_n\}$ を用いた式で近似することで, 常微分方程式系に対する近似問題を導出することになる. 
+                このようにして近似問題を導出し, 近似解を定める操作を <b>時間離散化</b> と呼ぶ. 
+            </p>
+            <p>例えば (微分における $h\to 0$ を $\tau\gt 0$ に取り替えて)
+                \[
+                    \mathbf{x}'(t_n) \approx \dfrac{\mathbf{x}(t_{n+1}) - \mathbf{x}(t_n)}{\tau} \approx \dfrac{\mathbf{x}_{n+1} - \mathbf{x}_n}{\tau}
+                \] という近似を用いてみよう (右の式は <b>差分商</b> と呼ばれる). 
+                すると常微分方程式に対して 
+                \[
+                    \dfrac{\mathbf{x}_{n+1} - \mathbf{x}_n}{\tau} = \mathbf{f}(\mathbf{x}_n)
+                \] という近似問題を導出することができるが, これは <b>前進オイラー法</b> (<b>forward Euler method</b>) もしくは <b>陽的オイラー法</b> (<b>explicit Euler method</b>) と呼ばれる. 
+                一方で (微分における $h\to 0$ を $-\tau\lt 0$ に取り替えて) 
+                \[
+                    \mathbf{x}'(t_n) \approx \dfrac{\mathbf{x}(t_n) - \mathbf{x}(t_{n-1})}{\tau} \approx \dfrac{\mathbf{x}_{n} - \mathbf{x}_{n-1}}{\tau}
+                \] という近似を用いて (添え字を一つずらして) 
+                \[
+                    \dfrac{\mathbf{x}_{n+1} - \mathbf{x}_n}{\tau} = \mathbf{f}(\mathbf{x}_{n+1})
+                \] という近似問題を導出することもできるが, これは <b>後退オイラー法</b> (<b>backward Euler method</b>) もしくは <b>隠的オイラー法</b> (<b>implicit Euler method</b>) と呼ばれる. 
+            </p>
+
+            <p>ここまでを定義として整理しておこう: </p>
+
+            <div class="definition" data-name="オイラー法による時間離散化">
+                <p>常微分方程式系 
+                    \[
+                        \left\{\begin{array}{rl} 
+                            \mathbf{x}' &= \mathbf{f}(\mathbf{x}), \cr 
+                            \mathbf{x}(0) &= \mathbf{x}_0 
+                        \end{array}\right.
+                    \] を考える. 
+                    また, 時間刻み幅を $\tau\gt 0$ とし, $t_n = n\tau$ とする. 
+                </p>
+                <ul>
+                    <li>近似解 $\mathbf{x}_n \approx \mathbf{x}(t_n)$ を
+                        \[
+                            \dfrac{\mathbf{x}_{n+1} - \mathbf{x}_n}{\tau} = \mathbf{f}(\mathbf{x}_n)
+                        \] により定める時間離散化を <b>前進オイラー法</b> (<b>forward Euler method</b>) もしくは <b>陽的オイラー法</b> (<b>explicit Euler method</b>) という. 
+                    </li>
+                    <li>近似解 $\mathbf{x}_n \approx \mathbf{x}(t_n)$ を
+                        \[
+                            \dfrac{\mathbf{x}_{n+1} - \mathbf{x}_n}{\tau} = \mathbf{f}(\mathbf{x}_{n+1})
+                        \] により定める時間離散化を <b>後退オイラー法</b> (<b>backward Euler method</b>) もしくは <b>隠的オイラー法</b> (<b>implicit Euler method</b>) という. 
+                    </li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <p>ロジスティック方程式
+                    \[
+                        \left\{\begin{array}{rl} 
+                            x' &= ax(1-x) \cr 
+                            x(0) &= x_0 
+                        \end{array}\right.
+                    \] に対し, オイラー法による時間離散化を考える. 
+                    時間刻み幅を $\tau\gt 0$ としたとき, 前進オイラー法, 後退オイラー法はそれぞれ 
+                    \[
+                        \dfrac{x_{n+1} - x_n}{\tau} = ax_n(1-x_n),\qquad \dfrac{x_{n+1} - x_n}{\tau} = ax_{n+1}(1-x_{n+1})
+                    \] となる. 
+                    前進オイラー法は
+                    \[
+                        x_{n+1} = x_n + a\tau x_n(1-x_n)
+                    \] と式変形することで, 与えられた $x_n$ から $x_{n+1}$ を容易に計算できるが, 後退オイラー法では $x_{n+1}$ を求めるために $2$ 次方程式を解く必要がある.  
+                </p>
+            </div>
+
+            <p>一般に, 自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ に対する前進オイラー法では, 与えられた $\mathbf{x}_n$ から $\mathbf{x}_{n+1}$ を求める際に
+                \[
+                    \mathbf{x}_{n+1} = \mathbf{x}_n + \tau\mathbf{f}(\mathbf{x}_n) 
+                \]
+                と <b>陽的</b> に計算可能である (例えば方程式を解いたりする必要がない). 
+                前進オイラー法が陽的オイラー法とも呼ばれるのはこのためである. 
+                また, 
+                \[
+                    F(\mathbf{x}_n) = \mathbf{x}_n + \tau\mathbf{f}(\mathbf{x}_n) 
+                \] とおくと, 前進オイラー法は $\mathbf{x}_{n+1} = F(\mathbf{x}_n)$ という離散力学系であると思うことができる. 
+            </p>
+            <p>
+                後退オイラー法では, $\mathbf{x}_{n+1}$ を求めるために方程式を解くなど <b>隠的</b> な計算が必要があり手間である. 
+                一方, 多くの場合に後退オイラー法は前進オイラー法よりも『良い』近似解を与えることが知られている. 
+                なお, 与えられた $\mathbf{x}_n$ に対し $\mathbf{x}_{n+1}$ を対応させる写像を構成すれば, やはり後退オイラー法も $\mathbf{x}_{n+1} = F(\mathbf{x}_n)$ という離散力学系であると思うことができる. 
+            </p>
+            <p>実際には, 時間離散化により得られた近似問題を離散力学系であるとみなす解釈は一般的なものとは言い難い. 
+                とはいえ, 離散力学系に関する議論を用いて, 時間離散化の性質を説明することができるため, 興味深い視点である. 
+            </p>
+
+            <div class="example">
+                <p>ここでは, ロジスティック方程式
+                    \[
+                        \left\{\begin{array}{rl} 
+                            x' &= ax(1-x) \cr 
+                            x(0) &= x_0 
+                        \end{array}\right.
+                    \] の解 
+                    \[
+                        x(t) = \dfrac{1}{1-(1-1/x_0)e^{-at}}\qquad (x_0 \neq 0, 1)
+                    \] と, オイラー法により得られる近似解とを比較してみよう. 
+                    ただし, ここでは $a=1$ とし, また初期値は $x_0 = 0.1$ を用いることにする. 
+                    さらに, オイラー法において時間刻み幅は $\tau=0.1$ とする. 
+                </p>
+            </div>
+
         </section>
         
         <section id="section1-2"><h2>1.2: 線形力学系と行列指数関数</h2>
