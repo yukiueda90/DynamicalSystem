@@ -5,6 +5,8 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.17}
 
+\definecolor{tab_blue}{HTML}{1F77B4}
+
 \begin{document}
     \begin{tikzpicture}[baseline]
         \begin{axis}[
@@ -17,13 +19,13 @@
             axis lines = middle, % middle or box
             %axis x line = bottom, % top, middle, bottom, none: axis x line* = ... removes arrow heads
             %axis y line = left, % left, center, right, none: axis y line* = ... removes arrow heads
-            xlabel = {$t$}, ylabel = {$x(t)$}, % axis labels 
+            xlabel = {$t$}, ylabel = {$x$}, % axis labels 
         ]
             % \addplot3[blue, quiver={u={y}, v={-x}}, domain=-1.5:1.5, y domain=-1.5:1.5, samples=12, -latex] (x, y, 0);
-            \addplot[blue, domain=0:1.4, samples=100]({x}, {0});
-            \addplot[blue, domain=0:1.4, samples=100]({x}, {0.1*exp(1.2*x)});
-            \addplot[blue, domain=0:1.4, samples=100]({x}, {0.2*exp(1.2*x)});
-            \addplot[blue, domain=0:1.4, samples=100]({x}, {0.3*exp(1.2*x)});
+            \addplot[color=tab_blue, domain=0:1.4, samples=100, very thick]({x}, {0});
+            \addplot[color=tab_blue, domain=0:1.4, samples=100, very thick]({x}, {0.1*exp(1.2*x)});
+            \addplot[color=tab_blue, domain=0:1.4, samples=100, very thick]({x}, {0.2*exp(1.2*x)});
+            \addplot[color=tab_blue, domain=0:1.4, samples=100, very thick]({x}, {0.3*exp(1.2*x)});
             \node at (0.5, 1.0) {$a=1.2$};
         \end{axis}
     \end{tikzpicture}
@@ -38,13 +40,13 @@
             axis lines = middle, % middle or box
             %axis x line = bottom, % top, middle, bottom, none: axis x line* = ... removes arrow heads
             %axis y line = left, % left, center, right, none: axis y line* = ... removes arrow heads
-            xlabel = {$t$}, ylabel = {$x(t)$}, % axis labels 
+            xlabel = {$t$}, ylabel = {$x$}, % axis labels 
         ]
             % \addplot3[blue, quiver={u={y}, v={-x}}, domain=-1.5:1.5, y domain=-1.5:1.5, samples=12, -latex] (x, y, 0);
-            \addplot[blue, domain=0:1.4, samples=100]({x}, {0});
-            \addplot[blue, domain=0:1.4, samples=100]({x}, {0.2});
-            \addplot[blue, domain=0:1.4, samples=100]({x}, {0.4});
-            \addplot[blue, domain=0:1.4, samples=100]({x}, {0.6});
+            \addplot[color=tab_blue, domain=0:1.4, samples=100, very thick]({x}, {0});
+            \addplot[color=tab_blue, domain=0:1.4, samples=100, very thick]({x}, {0.2});
+            \addplot[color=tab_blue, domain=0:1.4, samples=100, very thick]({x}, {0.4});
+            \addplot[color=tab_blue, domain=0:1.4, samples=100, very thick]({x}, {0.6});
             \node at (0.5, 1.0) {$a=0.0$};
         \end{axis}
     \end{tikzpicture}
@@ -59,13 +61,13 @@
             axis lines = middle, % middle or box
             %axis x line = bottom, % top, middle, bottom, none: axis x line* = ... removes arrow heads
             %axis y line = left, % left, center, right, none: axis y line* = ... removes arrow heads
-            xlabel = {$t$}, ylabel = {$x(t)$}, % axis labels 
+            xlabel = {$t$}, ylabel = {$x$}, % axis labels 
         ]
             % \addplot3[blue, quiver={u={y}, v={-x}}, domain=-1.5:1.5, y domain=-1.5:1.5, samples=12, -latex] (x, y, 0);
-            \addplot[blue, domain=0:1.4, samples=100]({x}, {0});
-            \addplot[blue, domain=0:1.4, samples=100]({x}, {0.3*exp(-1.2*x)});
-            \addplot[blue, domain=0:1.4, samples=100]({x}, {0.6*exp(-1.2*x)});
-            \addplot[blue, domain=0:1.4, samples=100]({x}, {0.9*exp(-1.2*x)});
+            \addplot[color=tab_blue, domain=0:1.4, samples=100, very thick]({x}, {0});
+            \addplot[color=tab_blue, domain=0:1.4, samples=100, very thick]({x}, {0.3*exp(-1.2*x)});
+            \addplot[color=tab_blue, domain=0:1.4, samples=100, very thick]({x}, {0.6*exp(-1.2*x)});
+            \addplot[color=tab_blue, domain=0:1.4, samples=100, very thick]({x}, {0.9*exp(-1.2*x)});
             \node at (0.5, 1.0) {$a=-1.2$};
         \end{axis}
     \end{tikzpicture}
