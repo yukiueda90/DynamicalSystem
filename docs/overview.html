@@ -186,7 +186,41 @@
                 </p>
 
             </div>
-            
+
+            <div class="exercise">
+                <p>常微分方程式
+                    \[
+                        \left\{\begin{array}{rl} 
+                            x' &= x(1-x) - h \cr 
+                            x(0) &= x_0
+                        \end{array}\right.
+                    \] について, $h\lt 1/4$ の場合と $h\gt 1/4$ の場合それぞれに解 $x(t)$ の $t$ を大きくした際の挙動を説明せよ.
+                </p>
+            </div>
+
+            <div class="answer">
+                <p>右辺を $f(x)$ とおくと, この $f(x)$ の符号を調べることで, 点 $x(t)$ の時間経過による増減を判断できる. 
+                    実際に計算すると, $h\lt 1/4$ ならば 
+                    \[
+                        1/2-\sqrt{1/4-h}\lt x(t)\lt 1/2+\sqrt{1/4-h}
+                    \] を満たす点 $x(t)$ は時間経過により増加, そうでなければ減少する. 
+                    一方, $h\gt 1/4$ なら全ての $x(t)$ は時間経過で減少する (下図参照). 
+                </p>
+                
+                <div class="resize"><img src='./images/logistic_phase-1.png'></div>
+
+                <p>この図から, $h\lt 1/4$ のときは $1/2-\sqrt{1/4-h}\lt x_0$ ならば $x(t) \to 1/2+\sqrt{1/4-h}$ であり, そうでなければ $x(t)\to -\infty$ であることがわかる. 
+                    一方で, $h\gt 1/4$ のときは全ての初期値 $x_0$ に対して $x(t)\to -\infty$ となる. 
+                </p>
+
+                <p>この問題については, 上と同様に変数分離を用いて解を手計算で得ることもできる. 
+                    実際に, いくつかの初期値に対する解の様子をプロットした図を以下に掲載する: 
+                </p>
+
+                <div class="resize"><img src='./images/logistic-1.png'></div>
+            </div>
+
+
     
             <div class="example">
                 <p>ここでは一次元非線形離散力学系の例として, <b>ロジスティック写像</b>
@@ -222,7 +256,7 @@
                 <div class="resize"><img src='./images/logistic_map-1.png'></div>
             </div>
 
-            <p>さて, 上では一次元連続力学系の解のプロットと同様のアイデアに基づき一次元離散力学系の解をプロットしたが, 一方で <b>グラフ反復法</b> もしくは <b>クモの巣図法</b> と呼ばれる方法で一次元離散力学系の解の挙動を説明することも多い:  
+            <p>上では一次元離散力学系の解を, 一次元連続力学系の解と同様にプロットしたが, 一方で <b>グラフ反復法</b> もしくは <b>クモの巣図法</b> と呼ばれる方法で一次元離散力学系の解の挙動を説明することも多い:  
             </p>
 
             <div class="definition" data-name="グラフ反復法">
@@ -242,7 +276,7 @@
             <div class="example">
                 <p>実際に, $a = 1.2, 2.8, 3.6$ のときにロジスティック写像の解の挙動をグラフ反復法により表現した図を下に掲載する. 
                     青い線は $x_{n+1} = F(x_n)$, オレンジの線は $x_{n+1} = x_n$ を表しており, 黒い線がグラフ反復法の手順の中で得られる垂直な線および水平な線である. 
-                    青とオレンジの線の交点は $x=1-a^{-1}$ を表しており, 左 ($a=1.2$) と中央 ($a=2.8$) は確かに $x_n\to 1-a^{-1}$ となる様子を表している. 
+                    青とオレンジの線の交点は $x=0, 1-a^{-1}$ を表しており, 左 ($a=1.2$) と中央 ($a=2.8$) は確かに $x_n\to 1-a^{-1}$ となる様子を表している. 
                     一方で, 右 ($a=3.6$) は黒い線が交点の周辺を回り続けており, 点列 $\{x_n\}$ が収束しない様子を確認できる. 
                 </p>
                 <div class="resize"><img src='./images/logistic_cobweb.png'></div>
@@ -417,7 +451,7 @@
 
             <div class="resize"><img src='./images/midpoint_method-1.png'></div>
 
-            <p> このアイデアをさらに発展させることで, <b>古典的 $4$ 段陽的ルンゲ=クッタ</b> が得られる (これを単に <b>ルンゲ=クッタ法</b> と呼ぶことも多い): 
+            <p> このアイデアをさらに発展させることで, <b>古典的 $4$ 段陽的ルンゲ=クッタ法</b> が得られる (これを単に <b>ルンゲ=クッタ法</b> と呼ぶことも多い): 
                 \[
                     \mathbf{x}_{n+1} = \mathbf{x}_n + \dfrac{\tau}{6}\left(\mathbf{k}_1 + 2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4\right),
                 \] ここで 
@@ -454,8 +488,8 @@
                 
                 <div class="resize"><img src='./images/logistic_convergence.png'></div>
                 
-                <p>ここで重要になるのは, 各直線の傾きである (図右下に, 比較のために傾きが $1$, $2$, $4$ の三角形をプロットしている). 
-                    例えば $4$ 段陽的ルンゲ=クッタ法を用いた際の誤差のプロットは, 両対数グラフの上で傾きがおおよそ $4$ の直線になっているが, これは
+                <p>ここで重要なのは各線がおおよそ直線になっていることであり, その傾きに注目する (図右下に, 比較のために傾きが $1$, $2$, $4$ の三角形をプロットしている). 
+                    例えば $4$ 段陽的ルンゲ=クッタ法を用いた際の誤差のプロットは, 両対数グラフの上でおおよそ傾き $4$ の直線になっているが, これは
                     \[
                         \log e \approx 4\log \tau + C,
                     \] つまり $e = O(\tau^4)$ であることを意味しており, 時間刻み幅 $\tau$ を $0$ に近づけたとき, 時刻 $T=2.0$ における誤差が $\tau^4$ のオーダーで減少する様子を表している. 
@@ -493,7 +527,7 @@
                             r\cos\alpha\cr 
                             r\sin\alpha 
                         \end{pmatrix}
-                    \] を考える, ただし $r\ge 0$ とする. 
+                    \] を考える. 
                     この解は 
                     \[
                         \mathbf{x}(t) = \begin{pmatrix} 
@@ -504,7 +538,8 @@
                             r\sin(t+\alpha)
                         \end{pmatrix}
                     \] である (実際に代入して確かめることができる). 
-                    つまり, この二次元連続力学系の解は, 初期値として与えられた点を含む円周上を半時計周りに動く. 
+                    つまり, この連続力学系の解は, 初期値として与えられた点を含む半径 $|r|$ の円周上を半時計周りに動くことがわかる. 
+                    なお, この常微分方程式の右辺は線形であるため, これは二次元線形力学系である. 
                 </p>
             </div>
 
@@ -513,26 +548,26 @@
 
             <div class="definition" data-name="平衡点">
                 <ul>
-                    <li>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ に対し, $\mathbf{f}(\widetilde{\mathbf{x}}) = \mathbf{0}$ を満たす $\widetilde{\mathbf{x}}\in\mathbb{R}^d$ を, この自励系の <b>平衡点</b> (<b>equilibrium point</b>), もしくは <b>平衡解</b> (<b>stationary solution</b>), <b>不動点</b> (<b>fixed point</b>) という. </li>
-                    <li>離散力学系 $\mathbf{x}_{n+1} = F(\mathbf{x}_n)$ に対し, $\widetilde{\mathbf{x}} = F(\widetilde{\mathbf{x}})$ を満たす $\widetilde{\mathbf{x}}\in\mathbb{R}^d$ (つまり写像 $F$ の不動点) を, この離散力学系の <b>平衡点</b> もしくは <b>平衡解</b> という. </li>
+                    <li>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ に対し, $\mathbf{f}(\mathbf{x}_*) = \mathbf{0}$ を満たす $\mathbf{x}_*$ を, この自励系の <b>平衡点</b> (<b>equilibrium point</b>) という. </li>
+                    <li>離散力学系 $\mathbf{x}_{n+1} = F(\mathbf{x}_n)$ に対し, $\mathbf{x}_* = F(\mathbf{x}_*)$ を満たす $\mathbf{x}_*$ (つまり写像 $F$ の <b>不動点</b>) を, この離散力学系の <b>不動点</b> もしくは <b>平衡点</b> という. </li>
                 </ul>
             </div><!-- /definition -->
 
             <div class="remark">
-                <p>$\widetilde{\mathbf{x}}$ が自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点であるとき, 定数関数
+                <p>$\mathbf{x}_*$ が自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点であるとき, 定数関数
                     \[
-                        \mathbf{x}(t) = \widetilde{\mathbf{x}}
-                    \] は $\mathbf{x}' = \mathbf{0} = \mathbf{f}(\mathbf{x})$ を満たすため, 初期値 $\mathbf{x}(0)=\widetilde{\mathbf{x}}$ に対する解である. 
-                    同様に, 離散力学系の初期値 $\mathbf{x}_0$ が平衡点 $\widetilde{\mathbf{x}}$ である場合は, 
+                        \mathbf{x}(t) = \mathbf{x}_*
+                    \] は $\mathbf{x}' = \mathbf{0} = \mathbf{f}(\mathbf{x})$ を満たすため, 初期値 $\mathbf{x}(0)=\mathbf{x}_*$ に対する解である (これを <b>平衡解</b> という). 
+                    同様に, 離散力学系の初期値 $\mathbf{x}_0$ が平衡点 $\mathbf{x}_*$ である場合は, 
                     \[
-                        \mathbf{x}_n = \mathbf{x}_{n-1} = \dots = \mathbf{x}_0 = \widetilde{\mathbf{x}} \quad \text{for all} \quad n
+                        \mathbf{x}_n = \mathbf{x}_{n-1} = \dots = \mathbf{x}_0 = \mathbf{x}_* \quad \text{for all} \quad n
                     \] が成立する. 
                     つまり, 力学系の平衡点とは &quot;時間経過しても動かない点&quot; のことであると解釈できる. 
                 </p>
             </div>
 
             <div class="example">
-                <p>二次元連続力学系 
+                <p>二次元線形力学系 
                     \[
                         \mathbf{x}' = \begin{pmatrix} 
                             x' \cr 
@@ -549,8 +584,8 @@
                 <p>ロジスティック方程式 
                     \[
                         x' = ax(1-x)
-                    \] の平衡点は右辺 $f(x) = (1-x)x$ を $0$ とする $x$ である. 
-                    従って, $a=0$ ならば全ての $\widetilde{x}\in\mathbb{R}$ が平衡点であり, 一方で $a\neq0$ なら $\widetilde{x}=0, 1$ の二つがこの自励系の平衡点である. 
+                    \] の平衡点は右辺 $a(1-x)x$ を $0$ とする $x$ である. 
+                    従って, $a=0$ ならば全ての $x_*\in\mathbb{R}$ が平衡点であり, 一方で $a\neq0$ なら $x_*=0, 1$ の二つがこの自励系の平衡点である. 
                     このように, 力学系の平衡点は複数存在し得る. 
                 </p>
             </div>
@@ -561,11 +596,11 @@
                         x_{n+1} = ax_n(1-x_n)
                     \] の平衡点は, $2$ 次方程式 
                     \[
-                        a\widetilde{x}(1-\widetilde{x}) - \widetilde{x} = 0
-                    \] の解であり, $a=0$ ならば $\widetilde{x} = 0$ のみ, $a\neq0$ ならば $\widetilde{x} = 0, 1-a^{-1}$ の $2$ つ存在する. 
+                        ax_*(1-x_*) - x_* = 0
+                    \] の解であり, $a=0$ ならば $x_* = 0$ のみ, $a\neq0$ ならば $x_* = 0, 1-a^{-1}$ の $2$ つ存在する. 
                 </p>
                 <p>なお, グラフ反復法による解の挙動の説明において, $x_{n+1} = F(x_n)$ と $x_{n+1} = x_n$ という $2$ つの線を用いていたが, 一次元離散力学系の平衡点はそれらの交点である. 
-                    また, 以前の例でいくつかの $a$ に対して点列 $\{x_n\}$ が $1-a^{-1}$ に収束することに言及したが, このことは平衡点の安定性に起因するものである. 
+                    また, 以前の例でいくつかの $a$ に対して点列 $\{x_n\}$ が $1-a^{-1}$ に収束することに言及したが, このことは平衡点の安定性により説明することができる. 
                 </p>
             </div>
 
@@ -597,12 +632,21 @@
                 <ul>
                     <li>$a\lt 1$ ならば平衡点は
                         \[
-                            (x, y) = \left(-1-\sqrt{1-a}, a-2-2\sqrt{1-a}\right), \quad \left(-1+\sqrt{1-a}, a-2+2\sqrt{1-a}\right).
+                            \mathbf{x}_* = \begin{pmatrix} 
+                                -1-\sqrt{1-a} \cr 
+                                a-2-2\sqrt{1-a}
+                            \end{pmatrix}, \quad \begin{pmatrix} 
+                                -1+\sqrt{1-a} \cr 
+                                a-2+2\sqrt{1-a}
+                            \end{pmatrix}.
                         \]
                     </li>
                     <li>$a=1$ ならば平衡点は 
                         \[
-                            (x, y) = (-1, -1).
+                            \mathbf{x}_* = \begin{pmatrix} 
+                                -1 \cr 
+                                -1
+                            \end{pmatrix}.
                         \] 
                     </li>
                     <li>$a\gt 1$ ならば平衡点は存在しない. </li>
@@ -612,10 +656,10 @@
 
             <div class="definition" data-name="ベクトル場と方向場">
                 <ul>
-                    <li>ベクトル値関数 $\mathbf{f}: X \to \mathbb{R}^m$ を <b>ベクトル場</b> という, ただし $X\subset\mathbb{R}^n$ とする. 
-                        ベクトル場 $\mathbf{f}$ は $\mathbb{R}^n$ 上のいくつかの点 $\mathbf{x}\in X$ を始点とし, ベクトル $\mathbf{f}(\mathbf{x})\in\mathbb{R}^m$ に対応した矢印を描いたものとして図示される.  
+                    <li>相空間 $X$ が $X\subset\mathbb{R}^d$ に対して, ベクトル値関数 $\mathbf{f}: X \to \mathbb{R}^d$ を <b>ベクトル場</b> という. 
+                        ベクトル場 $\mathbf{f}$ はいくつかの点 $\mathbf{x}\in X$ を始点とし, ベクトル $\mathbf{f}(\mathbf{x})\in\mathbb{R}^d$ に対応した矢印を描いたものとして図示される.  
                     </li>
-                    <li>ベクトル場を図示する際に, 代わりに各点を始点とするベクトルの向きを保ったまま適当に矢印のスケールを調整したものを <b>方向場</b> という (もしくはこれもベクトル場の図示であると言及されることがある).
+                    <li>ベクトル場を図示する際に, 代わりに各点を始点とするベクトルの向きを保ったまま適当に矢印の大きさを調整したものを <b>方向場</b> という (もしくはこれもベクトル場の図示であると言及されることがある).
                     </li>
                 </ul>
             </div><!-- /definition -->
@@ -631,16 +675,10 @@
                 </p>
                 <div class="resize"><img src='./images/vector_field-1.png'></div>
 				<div class="resize"><img src='./images/direction_field-1.png'></div>
-                <p>ベクトル場の図示において, 例えば $(x, y) = (1, 1)$ を始点とする矢印は $\mathbf{f}(1, 1) = (1, -1)$ に対応している (つまり始点が $(1,1)$, 終点が $(2,0)$ である矢印として表されている).
-                    一方で, 方向場において $(x, y) = (1, 1)$ を始点とする矢印は $\mathbf{f}(1, 1) = (1, -1)$ に対応する方向を指しているが, スケールについては適当に調整されている. 
+                <p>ベクトル場の図示において, 例えば $(x, y) = (1, 1)$ を始点とする矢印は $\mathbf{f}(1, 1) = (-1, 1)$ に対応している (つまり始点が $(1,1)$, 終点が $(0,2)$ である矢印として表されている).
+                    大量の矢印が交わって見にくいが, 方向場では $(x, y) = (1, 1)$ を始点とする矢印は $\mathbf{f}(1, 1) = (-1, 1)$ に対応する方向を指しているものの, 矢印の大きさについては適当に調整されており, 見やすい図となっている. 
                 </p>
             </div><!-- /example -->
-
-            <div class="remark">
-                <p>ベクトル場を図示した場合, 上の例のように複数の矢印が交わって見にくくなることが多い. 
-                    これを回避するために, 矢印の長さについては適当に調整し, ベクトル場の向きにのみ注目したものが方向場である. 
-                </p>
-            </div><!-- /remark -->
 
             <div class="remark">
                 <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ に対し, ベクトル場 $\mathbf{f}$ の図示および方向場は, $\mathbf{x}'$ の向きを表す (つまり時間経過により $\mathbf{x}(t)$ がどの方向に動くかを表す) ものになる.  
@@ -648,62 +686,20 @@
                 </p>
             </div>
 
-            <div class="definition" data-name="相空間と軌道">
+            <div class="definition" data-name="軌道と相図">
                 <ul>
-                    <li>力学系の解 $\mathbf{x}(t)$ が取り得る全ての状態からなる空間を <b>相空間</b> (もしくは <b>状態空間</b>) という. 
-                    </li>
-                    <li>ある自励系の相空間を $X$ とおき, その自励系の解 $\mathbf{x}(t)$ が, 初期値 $\mathbf{x}_0$ に依存することを強調して
+                    <li>相空間 $X$ 上の力学系のフロー $\{\Phi_t\}_{t\in\mathbb{R}}$ もしくは $\{F^n\}_{n\in\mathbb{N}}$ に対し, 
                         \[
-                            \mathbf{x}(t) = S(t)\mathbf{x}_0
-                        \] と表す. このとき写像 $S(t): X \to X$ の族 $\{S(t) : t\in\mathbb{R}\}$ (もしくは $\{S(t) : t\in\mathbb{Z}\}$) を, この自励系の <b>流れ</b> (もしくは <b>フロー</b>) という. 
+                            \{\Phi_t(\mathbf{x}_0) : t\in \mathbb{R}\} \subset X\quad \mbox{もしくは}\quad \{F^n(\mathbf{x}_0) : n\in \mathbb{N}\} \subset X
+                        \] を, 初期値 $\mathbf{x}_0$ に対する <b>軌道</b> (<b>orbit</b>) もしくは <b>解軌道</b> という. 
                     </li>
-                    <li>ある自励系の解 $\mathbf{x}(t)$ に対して (初期値 $\mathbf{x}_0$ に依存することを強調するために流れ $S(t)$ を用いて $\mathbf{x}(t) = S(t)\mathbf{x}_0$ と表すとき), 
-                        \[
-                            \{S(t)\mathbf{x}_0 : t\in \mathbb{R}\} \subset X\quad (\mbox{もしくは }\{S(t)\mathbf{x}_0 : t\in \mathbb{Z}\} \subset X)
-                        \] を, (初期値 $\mathbf{x}_0$ に対する) <b>軌道</b> (<b>trajectory</b>) もしくは <b>解軌道</b> という. 
-                    </li>
-                    <li>ある力学系の (様々な初期値に対する) 軌道の概略を相空間上に表した図を <b>相図</b> (<b>phase portrait</b>) という. </li>
+                    <li>ある力学系の, 様々な初期値に対する軌道の概略を相空間上に表した図を <b>相図</b> (<b>phase portrait</b>) という. </li>
                 </ul>
             </div><!-- /definition -->
 
             <div class="remark">
                 <ul>
-                    <li>数学における流れ (および軌道) は, 本来は力学系とは別に定義されるものであり, そのアイデアを力学系にも応用できると説明されるべきものである. 
-                        また, 非自励系に対しても (時間依存する) 流れを考えることができるが, ここではこれ以上深入りしない. 
-                    </li>
-                    <li>$\{S(t)\}$ が流れであるとき, 各 $t$ に対し $S(t)$ は与えられた点を時刻 $t$ だけ &quot;進める&quot; 写像である.</li> 
-                    <li>以降は, 流れ (フロー) を定める各写像 $S(t): X\to X$ を単にフローと呼ぶことにする. </li>
-                    <li>フロー $S(t)$ は写像であり, $\mathbf{x}(t) = S(t)(\mathbf{x}_0)$ のように表記することも可能ではあるが, この資料では $\mathbf{x}(t) = S(t)\mathbf{x}_0$ と表記することにする. </li>
-                    <li>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ においては, $\mathbf{x}(t) = S(t)\mathbf{x}_0$ が時間経過に伴いどのように動くか, という情報が $\mathbf{f}(\mathbf{x})$ として (時間に無関係なベクトル場として) 与えられることになる. 
-                        従って, ベクトル場 $\mathbf{f}(\mathbf{x})$ (もしくは方向場) を図示することで, $\mathbf{x}(t)$ が時間経過により相空間上をどの向きに動くかをイメージできる, つまり軌道の概形がわかる. 
-                    </li>
-                    <ul>
-                        <li>より直感的には, 自励系の解は $\mathbf{f}$ により与えられた向きと大きさに従い, 時間経過により相空間上を流れる点であるとイメージすることができる.</li>
-                        <li>ただし, 与えられたベクトル場 $\mathbf{f}$ の方向場を図示するには, 大量の点の上で $\mathbf{f}$ の値を計算する必要がある. 
-                            コンピュータを利用しない限り, あまり現実的ではない. 
-                        </li>
-                    </ul>
-                    <li>フロー $S(t)$ は, 
-                        \[
-                            \left\{\begin{array}{rll} 
-                                S(0)\mathbf{x} &= \mathbf{x} & \text{for all}\quad \mathbf{x}\in X, \cr 
-                                S(t)S(s)\mathbf{x} &= S(s+t)\mathbf{x} & \text{for all}\quad\mathbf{x}\in X 
-                            \end{array}\right.
-                        \] を満たす (この性質を <b>半群性</b> と呼ぶことがある). 
-                        特に初期値 $\mathbf{x}_0$ に対する自励系の解 $\mathbf{x}(s) = S(s)\mathbf{x}_0$ を考えると, $\mathbf{x}(s)$ を初期値として時刻 $t$ だけ進めた結果と, $\mathbf{x}(0)=\mathbf{x}_0$ を初期値として時刻 $s+t$ だけ進めた結果が一致する.     
-                        <ul>
-                            <li>特に線形力学系 $\mathbf{x}' = A\mathbf{x}$ に対して, $S(t)\mathbf{x}_0 = e^{tA}\mathbf{x}_0$ である. 
-                                つまり, 写像 $S(t)$ は行列 $e^{tA}$ を左から掛ける操作であり, $S(t) = e^{tA}$ と表記される. 
-                                また 
-                                \[
-                                    S(t)S(s)\mathbf{x}_0 = e^{tA}(e^{sA}\mathbf{x}_0) = e^{(s+t)A}\mathbf{x}_0 = S(s+t)\mathbf{x}_0
-                                \] を確かめることができる. 
-                            </li>
-                        </ul>
-                    </li>
-                    <li>解が一意であるような自励系の相図において, 各軌道は平衡点以外の点において他の軌道や自身と交差することはない (もし平衡点でないある点で交差するならば, その点を初期値とした解 $\mathbf{x}(t)$ が複数存在することになってしまい解の一意性に矛盾する). 
-                    </li>
-                    <li>力学系の平衡点は時間経過により動かないような解のことなので, 軌道が一点からなるような初期値に対応していると解釈できる. 
+                    <li>解が一意であるような自励系の相図において, 各軌道は平衡点以外の点において他の軌道や自身と交差することはない (もし平衡点でない点で交差するならば, その点を初期値とした解 $\mathbf{x}(t)$ が複数存在することになってしまい解の一意性に矛盾する). 
                     </li>
                     <li>力学系の軌道は初期値の違いにより異なる挙動を示す. 
                         この挙動の違いをわかりやすく図で表すものが相図であり, 解を明示的に表示できない場合に相図を描くことで, 解のおおまかな挙動を把握, 説明することが容易となる.  
@@ -718,24 +714,18 @@
             <div class="example">
                 <p>線形力学系 
                     \[
-                        \begin{pmatrix} 
+                        \mathbf{x}' = \begin{pmatrix} 
                             x' \cr 
                             y' 
                         \end{pmatrix} = \begin{pmatrix} 
-                            0 & 1 \cr 
-                            -1 & 0 
-                        \end{pmatrix}\begin{pmatrix} 
-                            x \cr 
-                            y 
-                        \end{pmatrix} = \begin{pmatrix} 
-                            y \cr 
-                            -x 
+                            -y \cr 
+                            x 
                         \end{pmatrix}
-                    \] を考える. この右辺のベクトル場 
+                    \] の右辺のベクトル場 
                     \[
                         \mathbf{f}(x, y) = \begin{pmatrix} 
-                            y \cr 
-                            -x 
+                            -y \cr 
+                            x 
                         \end{pmatrix}
                     \] に対応する方向場が, 
                     \[
@@ -745,28 +735,296 @@
                         \end{pmatrix} 
                     \] が時間経過によりどのように動くかを表していることになるため, 初期値を与えたときの軌道を (ある程度ではあるが) 予想することができる. 
                     <div class="resize"><img src='./images/expected_orbit-1.png'></div>
-                    実際, 一般解を計算すると 
-                    \[
-                        \mathbf{x}(t) = \begin{pmatrix} 
-                            \widetilde{c}_1\cos t + \widetilde{c}_2\sin t \cr 
-                            -\widetilde{c}_1\sin t + \widetilde{c}_2\cos t 
-                        \end{pmatrix} = \begin{pmatrix} 
-                            r\sin(t+\alpha) \cr 
-                            r\cos(t+\alpha) 
-                        \end{pmatrix}
-                    \] と表すことができる, ただし $r = \sqrt{\widetilde{c}_1^2 + \widetilde{c}_2^2}$ であり, $\alpha$ は 
-                    \[
-                        \sin\alpha = \dfrac{\widetilde{c}_1}{r},\quad \cos\alpha = \dfrac{\widetilde{c}_2}{r}
-                    \] を満たすものである. 
-                    このことは, $\mathbf{x}(t) = S(t)\mathbf{x}_0$ は (初期値 $\mathbf{x}_0$ に対応した) 円周上を動くことを意味しており, 方向場の矢印の指す方向に動いていることがわかる. 
-                    以下に, この線形力学系に対する相図の例を掲載する:
+                    実際, この力学系の解 $\mathbf{x}(t)$ は初期値 $\mathbf{x}_0$ に対応した円周上を動くため, 方向場の矢印の指す方向に動いていることがわかる. 
+                    以下に, この線形力学系に対する相図の例を掲載する. 
+                    なお, この例では各軌道が原点, つまりこの力学系の平衡点を中心とする円を描いている. 
+                    このような挙動の線形力学系に対し, 平衡点は <b>渦心点</b> (もしくは <b>センター</b>) であると言うことがある.
                 </p>
+
                 <div class="resize"><img src='./images/center-1.png'></div>
-                <p>相図に描かれている各曲線 (今回は円周) が, 初期値を適当に指定した際の軌道 (つまりこの力学系の解 $\mathbf{x}(t)$ の時間経過による動き) を表している.</p>
-                <p>なお, この例では各軌道が原点, つまりこの力学系の平衡点を中心とする円を描いている. 
-                    このような平衡点は <b>渦心点</b> (もしくは <b>センター</b>) であると言われる.
+
+            </div>
+
+            <div class="definition" data-name="不変集合" id="invariant_set">
+                <p>相空間 $X$ のフロー $\{\Phi_t\}_{t\in\mathbb{R}}$ もしくは $\{F^n\}_{n\in\mathbb{N}}$ を考える.
                 </p>
-            </div><!-- /example -->
+                <ul>
+                    <li>部分集合 $D\subset X$ が, 
+                        \[
+                            \Phi_t(D) = D \quad (t\in\mathbb{R}) \quad\text{もしくは}\quad F(D) = D 
+                        \] を満たすとき, $D$ を <b>不変集合</b> (<b>invariant set</b>) という. 
+                    </li>
+                    <li>部分集合 $D\subset X$ が, 
+                        \[
+                            \Phi_t(D) \subset D \quad (t\ge 0) \quad\text{もしくは}\quad F(D)\subset D
+                        \] を満たすとき, $D$ を <b>正不変集合</b> (<b>positively invariant set</b>) という. 
+                    </li>
+                </ul>
+            </div>
+
+            <div class="remark">
+                <ul>
+                    <li>不変集合 (正不変集合) 内部を初期値として出発した点は, 時間経過により不変集合 (正不変集合) から出て行かない, ということを表している. 
+                        従って, 各不変集合上に限定した解の挙動を考えることができる. 
+                    </li>
+                    <li>平衡点は一点からなる不変集合である. </li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <p>ロジスティック方程式 
+                    \[
+                        x' = ax(1-x)
+                    \] について, $a\gt 0$ ならば $(0, 1)$ や $[0, 1]$ は不変集合であり, また $\{x\in\mathbb{R} : x\ge 0\}$ は正不変集合である. 
+                </p>
+            </div>
+
+            <div class="example">
+                <p>ロジスティック写像 
+                    \[
+                        x_{n+1} = ax_n(1-x_n)
+                    \] について, $0\le a\le 4$ ならば $[0, 1]$ は正不変集合である. 
+                    従って, この場合にはグラフ反復法による解の挙動も, この正不変集合に限ってプロットすれば良い. 
+                </p>
+            </div>
+
+            <div class="definition" data-name="周期軌道">
+                <ul>
+                    <li>相空間 $X$ 上の連続力学系を与えるフロー $\{\Phi_t\}_{t\in\mathbb{R}}$ について, 平衡点でない初期値 $\mathbf{x}_0$ に対して 
+                        \[
+                            \Phi_{t+T}(\mathbf{x}_0) = \Phi_t(\mathbf{x}_0)\quad \text{for all}\quad t\in\mathbb{R} 
+                        \] を満たす $T$ が存在するならば, そのような最小の $T\gt 0$ を <b>周期</b> (<b>period</b>) といい, この初期値 $\mathbf{x}_0$ に対する軌道 $\Gamma = \{\Phi_t(\mathbf{x}_0): t\in\mathbb{R}\}\subset X$ を <b>周期軌道</b> (<b>periodic orbit</b>) という. 
+                    </li>
+                    <li>相空間 $X$ 上の離散力学系 $\{F^n\}_{n\in\mathbb{N}}$ について, 平衡点でない初期値 $\mathbf{x}_0$ に対して, 
+                        \[
+                            \mathbf{x}_n = F^n(\mathbf{x}_0) = \mathbf{x}_0
+                        \] を満たす $n\in\mathbb{Z}_+$ が存在するならば, そのような最小の $n$ を <b>周期</b> といい, 
+                        \[
+                            \{\mathbf{x}_0, \mathbf{x}_1, \dots, \mathbf{x}_{n-1}\}
+                        \] を <b>$n$-周期軌道</b> という. 
+                        また, このような $\mathbf{x}_0$ は <b>$n$-周期点</b> という. 
+                    </li>
+                </p>
+            </div>
+
+            <div class="example">
+                <p>線形力学系 
+                    \[
+                        \mathbf{x}' = \begin{pmatrix} 
+                            x' \cr 
+                            y' 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            -y \cr 
+                            x 
+                        \end{pmatrix}
+                    \] の解は, 初期値 $\mathbf{x}_0$ を出発して円周上を回るため, その軌道は周期軌道である. 
+                    特に, 解 $\mathbf{x}(t)$ は $\mathbf{x}(2\pi) = \mathbf{x}_0$ を満たすため, 上の常微分方程式系の解作用素が定めるフロー $\Phi_t: \mathbb{R}^2\to\mathbb{R}^2$ は, 
+                    \[
+                        \Phi_{t+2\pi}(\mathbf{x}_0) = \Phi_t(\mathbf{x}_0)
+                    \] を満たし, 周期は $2\pi$ である. 
+                </p>
+            </div>
+
+            <div class="example">
+                <p>ロジスティック写像 
+                    \[
+                        x_{n+1} = ax_n(1-x_n)
+                    \] を考える, ただしここでは $a=4$ とする. 
+                    この右辺を $F(x_n)$ とおくと, 
+                    \[
+                        \begin{array}{rl} 
+                            F(x) &= 4x(1-x), \cr
+                            F^2(x) &= 4F(x)(1-F(x)) = 4(4x(1-x))(1-4x(1-x)) 
+                        \end{array}
+                    \] なので, 
+                    \[
+                        4(4x(1-x))(1-4x(1-x)) = x
+                    \] の解 
+                    \[
+                        x = 0,\ \dfrac{3}{4},\ \dfrac{5\pm\sqrt{5}}{8}
+                    \] は $F^2(x) = x$ を満たす. 
+                    このうち $x=0, 3/4$ は平衡点 (つまり $F(x) = x$ を満たす点) であり, 残りの $x= (5\pm\sqrt{5})/8$ が $2$-周期点である. 
+                    実際, 
+                    \[
+                        F\left(\dfrac{5\pm\sqrt{5}}{8}\right) = \dfrac{5\mp\sqrt{5}}{8}, \qquad F^2\left(\dfrac{5\pm\sqrt{5}}{8}\right) = \dfrac{5\pm\sqrt{5}}{8}
+                    \] であることが確かめられるため, 
+                    \[
+                        \left\{\dfrac{5+\sqrt{5}}{8}, \dfrac{5-\sqrt{5}}{8}\right\}
+                    \] という $2$-周期軌道が得られる. 
+                </p>
+                <p>このことはグラフ反復法の図からも読み取ることができる. 
+                    例えば一次元離散力学系 $x_{n+1} = 4x_n(1-x_n)$ に対し, $x_0 = (5\pm\sqrt{5})/8$ に対するグラフ反復法の結果は, 下図左のように回り続けるものになる. 
+                    さらに, $2$-周期解は $F^2$ の不動点であって, $F$ の不動点では無いものである. 
+                    従って, $x_{n+1} = F^2(x_n)$ と $x_{n+1} = x_n$ の交点であって, $x_{n+1} = F(x_n)$ と $x_{n+1} = x_n$ の交点で無いもの, と図形的に判断することもできる (下図右).
+                </p>
+
+                <div class="resize"><img src='./images/logistic_map_periodic_orbit-1.png'></div>
+
+            </div>
+
+            <div class="remark">
+                <p>さらに同様に考えると, $x_{n+1} = 4x_n(1-x_n)$ の $3$-周期点は, $F^3$ の不動点であって $F$, $F^2$ の不動点で無いもの, と図形的に判断でき, 特に $3$-周期点の存在がわかる. 
+                    実は $a=4$ のロジスティック写像には, 任意の $n\in\mathbb{Z}_+$ に対して $n$-周期点が存在する. 
+                    このように様々な周期をもつ周期軌道が存在することは, この離散力学系の複雑な解の挙動の要因である. 
+                    これについては後にカオスを扱う際に改めて言及する.
+                </p>
+            </div>
+
+            <p>この章で説明した概念は, 力学系の解の構造を相空間上で幾何学的に解釈する際に役立つものであり, 例えば解のプロットの際に押さえるべき特徴である. 
+                この資料では, 以降は (二次元以上の) 線形力学系について詳しく解説し, さらに平衡点の安定性やヌルクラインなど, より複雑な概念を導入することで非線形力学系の解の挙動を説明する. 
+            </p>
+
+        </section>
+
+        <hr>
+
+        <section id="section1-A"><h2>サンプルコード</h2>
+            <p>ロジスティック写像に対するグラフ反復法: </p>
+            <div class="resize"><img src='./images/logistic_cobweb.png'></div>
+            <pre>
+<code>
+import numpy as np 
+import matplotlib.pyplot as plt 
+
+# ロジスティック写像 
+# x' = ax(1-x) 
+
+# 時間ステップ数
+N: int = 20
+# パラメータ a
+a_list = [1.2, 2.8, 3.6]
+# プロットの準備
+fig, ax = plt.subplots(1, 3, figsize=(10, 3)) 
+pts = np.linspace(0, 1.0, 500) 
+
+# 各 a に対して計算
+for i, a in enumerate(a_list):
+    ax[i].set_aspect('equal')
+    f = lambda x: a * x * (1-x) # ロジスティック写像
+    ax[i].plot(pts, f(pts), linewidth=2, color='tab:blue') 
+    ax[i].plot(pts, pts, linewidth=2, color='tab:orange')
+    
+    # 初期値
+    x = 0.5
+    # グラフ反復法
+    for _ in range(N): 
+        ax[i].plot([x, x], [x, f(x)], color='k') # 垂直な線
+        ax[i].arrow(x=x, y=x, dx=0, dy=(f(x)-x)/3, head_width=0.015, color='k')
+        ax[i].plot([x, f(x)], [f(x), f(x)], color='k') # 水平な線
+        ax[i].arrow(x=x, y=f(x), dx=(f(x)-x)/3, dy=0, head_width=0.015, color='k')
+        x = f(x) # x の値の更新
+# プロットの出力
+# plt.savefig('logistic_map_cobweb_plot.png')
+plt.show()
+</code>
+            </pre>
+
+            <p>ロジスティック方程式の時間離散化に対する誤差のプロット: </p>
+            <div class="resize"><img src='./images/logistic_convergence.png'></div>
+            <pre>
+<code>
+import numpy as np 
+import matplotlib.pyplot as plt
+
+# ロジスティック方程式
+# x' = ax(1-x) 
+
+# パラメータ a
+a = 2.0
+# 初期値
+x0 = 0.1
+# 時間区間
+T: float = 2.0
+# 時間ステップ数
+N_list = [5, 10, 15, 20, 25, 30, 35, 40]
+# 右辺の関数
+rhs = lambda x: a * x * (1-x)
+# 厳密解
+exact = lambda x: 1 / (1-(1-1/x0)*np.exp(-a*x))
+
+# 前進オイラー法
+def forward_Euler(x0, tau):
+    result: np.ndarray = np.empty(N+1) 
+    result[0] = x0
+    for i in range(N):
+        result[i+1] = result[i] + a * tau * result[i]*(1 - result[i])
+    return result 
+
+# 陽的中点法
+def midpoint_method(x0, tau): 
+    result: np.ndarray = np.empty(N+1) 
+    result[0] = x0
+    for i in range(N):
+        k1 = rhs(result[i]) 
+        k2 = rhs(result[i] + tau/2 * k1)
+        result[i+1] = result[i] + tau * k2
+    return result 
+
+# ルンゲ=クッタ法
+def RungeKutta(x0, tau): 
+    result: np.ndarray = np.empty(N+1) 
+    result[0] = x0
+    for i in range(N):
+        k1 = rhs(result[i]) 
+        k2 = rhs(result[i] + tau/2 * k1)
+        k3 = rhs(result[i] + tau/2 * k2) 
+        k4 = rhs(result[i] + tau * k3)
+        result[i+1] = result[i] + tau/6 * (k1 + 2*k2 + 2*k3 + k4)
+    return result 
+
+# 誤差を記録する準備
+err_forwardEuler = [] 
+err_midpoint = [] 
+err_RungeKutta = []
+# 時間刻み幅を記録する準備
+tau_list = []
+
+for N in N_list:
+    # 時間刻み幅
+    tau: float = T/N 
+    tau_list.append(tau) # 時間刻み幅を記録
+    # 前進オイラー法の実行
+    result = forward_Euler(x0, tau) 
+    error = abs(exact(T) - result[-1]) 
+    err_forwardEuler.append(error) # 誤差を記録
+    # 陽的中点法の実行
+    result = midpoint_method(x0, tau) 
+    error = abs(exact(T) - result[-1]) 
+    err_midpoint.append(error) # 誤差を記録
+    # ルンゲ=クッタ法の実行
+    result = RungeKutta(x0, tau) 
+    error = abs(exact(T) - result[-1]) 
+    err_RungeKutta.append(error) # 誤差を記録
+        
+# プロット
+fig, ax = plt.subplots() 
+ax.plot(tau_list, err_forwardEuler, color='red', marker='o', label='forward Euler')
+ax.plot(tau_list, err_midpoint, color='green', marker='o', label='midpoint method') 
+ax.plot(tau_list, err_RungeKutta, color='blue', marker='o', label='Runge-Kutta') 
+ax.legend() 
+# 収束オーダーの傾き
+xs = 0.25 
+ys = 5e-6 
+ratio = 1.6 
+x1 = xs * ratio 
+y1 = ys * ratio**1 
+ax.plot([xs, x1, x1, xs], [ys, ys, y1, ys], color='k') 
+x2 = xs * ratio 
+y2 = ys * ratio**2 
+ax.plot([xs, x2, x2, xs], [ys, ys, y2, ys], color='k') 
+x4 = xs * ratio 
+y4 = ys * ratio**4 
+ax.plot([xs, x4, x4, xs], [ys, ys, y4, ys], color='k') 
+
+# loglog プロット
+ax.set_xscale('log') 
+ax.set_yscale('log')
+
+# プロットの出力
+# plt.savefig('logistic_equation_convergence.png')
+plt.show()
+</code>
+            </pre>
         </section>
 
         

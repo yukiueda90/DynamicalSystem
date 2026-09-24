@@ -27,23 +27,19 @@
     </div>
     
     <!-- main -->
-    <main role="main"><article id="section3"><h1>3. 解軌道の幾何学的構造</h1>
-        <p>自励系の解 $\mathbf{x}(t)$ を相空間上の軌道として表す場合, 平衡点が漸近安定である場合は平衡点付近の点を初期値とする軌道は平衡点に向けて収束していく. 
-            それでは漸近安定でない平衡点付近の点を初期値とした場合, 自励系の解はどのような軌道を描くだろうか. 
-            平衡点が不安定ならば, 線形力学系の場合には, 平衡点が源点である場合は無限遠に発散するような軌道しか現れず, 鞍点である場合も初期値が安定部分空間上の点でないならば, 軌道は無限遠に発散する. 
-            一方で, 非線形力学系では, 不安定な平衡点付近の点を初期値とする軌道が, (自分自身を含む) 平衡点に近づいたり, <b>リミットサイクル</b> に収束する, といったことが起こり得る.  
-            <!-- また, 平衡点が中立安定である (漸近安定ではないが安定である) という状況は, 線形力学系では実は平衡点が渦心点の場合しか無いが, 非線形力学系には様々な状況が存在する.  -->
+    <main role="main"><article id="section4"><h1>4. 解の大域的幾何構造</h1>
+        <p>線形力学系の場合には, 平衡点が源点である場合は無限遠に発散するような軌道しか現れず, 鞍点である場合も初期値が安定部分空間上の点でないならば, 軌道は無限遠に発散する. 
+            一方で, 非線形力学系では, 不安定な平衡点付近の点を初期値とする軌道が, (自分自身を含む) 平衡点に近づいたり, <b>リミットサイクル</b> に収束する, といったことが起こり得る. 
+            このような非線形力学系の複雑な挙動は, 解の大域的な構造に依るものであり, 平衡点の安定性に基づく局所的な解構造だけでは説明できないものである. 
         </p>
-        <p>一般に, 非線形力学系の解には, 線形力学系では現れない挙動が見られる. 
-            そこで, 非線形力学系の興味深い挙動を明らかにするために, 解の全体の構造を調べたい. 
-            平衡点の安定性に基づく議論は, 解の平衡点付近における局所的な構造を調べる際には有用であったが, 大域的な構造まで調べるためには, 追加のアイデアを導入する必要がある. 
-            そのような議論は一般には複雑なものになるが, 特に自励系が低次元の場合には (例えば $2$ 次元の場合, つまり <b>相平面</b> 上では) 解の大域的な挙動を幾何学的に説明することができる.  
-            これまでも力学系の具体例としては $2$ 次元のものを主に考え, 主に線形力学系に対し相図や軌道の図示により解の挙動を説明してきたが, ここではそうしたアイデアをさらに発展させ, <b>相平面解析</b> に代表される非線形自励系の大域的な解軌道を説明するための幾何学的解釈を紹介する. 
+        <p>特に自励系が低次元の場合には (例えば $2$ 次元の場合, つまり <b>相平面</b> 上では) 解の大域的な挙動を幾何学的に説明することができる.  
+            これまでも力学系の具体例としては $2$ 次元のものを主に考え, 主に線形力学系に対し相図や軌道の図示により解の挙動を説明してきたが, ここではそうしたアイデアをさらに発展させ, <b>相平面解析</b> に代表される非線形自励系の大域的な解構造を説明するための幾何学的解釈を紹介する. 
         </p>
 
-        <section id="section3-1"><h2>3.1: 非線形力学系の解の挙動</h2>
-            <p>まず, ここまでに紹介した様々な概念に追加で, 非線形力学系の解軌道の性質を説明するためのアイデアを導入しよう. 
-                最初に紹介する <b>ヌルクライン</b> (<b>nullcline</b>) は, 特に非線形力学系に対して, 相平面上でのおおよその解の挙動を把握する際に有用である:
+        <section id="section4-1"><h2>4.1: 非線形力学系の解の挙動</h2>
+            <p>ここでは, 非線形力学系に見られる複雑な解の挙動の具体例を見てみよう. 
+            </p>
+            <p>まず, 相平面上でのおおよその解の挙動を把握する際に有用なアイデアである <b>ヌルクライン</b> (<b>nullcline</b>) を紹介する. 
             </p>
 
             <div class="definition" data-name="ヌルクライン"> 
@@ -70,17 +66,18 @@
 
             <div class="remark">
                 <ul>
-                    <li>$x_i$ のヌルクライン上の点では, $x_i' = 0$ が成立する, つまり時間経過により $x_i$ 方向には動かない.</li>
+                    <li>$x_i$ のヌルクライン上の点では, $x_i' = 0$ が成立する, つまり時間経過により $x_i$ 方向には動かない. 
+                        特にすべてのヌルクラインの交点は平衡点である.
+                    </li>
                     <li>ベクトル場 $\mathbf{f}$ が連続ならば, ヌルクラインでのみ流れの &quot;向き&quot; が切り替わる可能性がある. 
-                        つまり, 方向場の矢印の &quot;向き&quot; ($2$ 次元の力学系なら右上, 右下, 左上, 左下) はヌルクラインで区切られた領域内で共通である.</li>
-                    <li>すべてのヌルクラインの交点では, 時間経過によりどの方向にも動かない, つまりすべてのヌルクラインの交点は平衡点である.</li>
-                    <li>あとはヌルクラインで区切られた各領域上でのおおよその方向場から, 相図の概形を描いたり平衡点の安定性の判定が (大雑把に) できる. </li>
+                        つまり, 方向場の矢印の大雑把な &quot;向き&quot; ($2$ 次元の力学系なら右上, 右下, 左上, 左下) はヌルクラインで区切られた連結成分で共通であり, 
+                        これを利用して相図の概形を描いたり平衡点の安定性の予想ができる.</li>
                     <li>ヌルクラインは一般に $d$ 次元力学系に対して定義されるが, これに基づく解軌道の解釈を $3$ 次元以上の力学系に応用することは, あまり実用的では無いだろう (少なくともコンピュータの利用は必須だろう). </li>
                 </ul>
             </div>
 
             <div class="example">
-                <p>非線形力学系 
+                <p>非線形連続力学系 
                     \[
                         \begin{pmatrix} 
                             x' \cr 
@@ -96,43 +93,38 @@
                 <p>同様に, 方向場の矢印は $y$ のヌルクライン $x-2=0$ 上では水平方向を向いている. 
                     さらに $x' = 4y-x^2$ の符号を調べることにより右か左かがわかる.  
                 </p>
-                <p>このことに加えて, 右辺のベクトル場が連続であることに注意すると, ヌルクラインで区切られた領域内部では方向場の矢印の向きが反転することは無い. 
+                <p>このことに加えて, 右辺のベクトル場が連続であることに注意すると, ヌルクラインで区切られた連結成分では方向場の矢印の向きが反転することは無い. 
                     このことを利用すれば, ヌルクライン上の矢印の向きから, $\mathbb{R}^2$ 全体での方向場の概形を得ることができる. 
                     そして方向場の概形から相図の概形を予測することができるのである.
                 </p>
                 <p>以下に, この例に対するヌルクライン, 方向場を掲載する. 
-                    この図だけから (線形安定性解析をするまでも無く), 平衡点 $(x, y) = (2, 1)$ が鞍点であると判断することができる. 
+                    この図だけから (線形安定性解析をするまでも無く), 平衡点 $(x, y) = (2, 1)$ が鞍点であると推測することができる. 
                 </p>
                 <div class="resize"><img src='./images/nullcline-1.png'></div>
             </div>
 
-            <p>次に述べる <b>不変集合</b> のアイデアも, 解軌道のおおよその振る舞いを説明する際に重要なものである:</p>
+            <p>次に, <b>保存量</b> を持つ力学系の解の挙動について解説する. </p>
 
-            <div class="definition" data-name="不変集合">
-                <p>力学系の相空間 $X$ およびフロー $S(t)$ を考える.</p>
-                <ul>
-                    <li>部分集合 $D\subset X$ が, 
-                        \[
-                            \mathbf{x}_0\in D \implies S(t)\mathbf{x}_0 \in D \quad\text{for all}\quad t\in \mathbb{R}
-                        \] を満たすとき, $D$ を <b>不変集合</b> (<b>invariant set</b>) という. 
-                    </li>
-                    <li>部分集合 $D\subset X$ が, 
-                        \[
-                            \mathbf{x}_0\in D \implies S(t)\mathbf{x}_0 \in D \quad\text{for all}\quad t\ge 0
-                        \] を満たすとき, $D$ を <b>正不変集合</b> (<b>positively invariant set</b>) という. 
-                    </li>
-                </ul>
+            <div class="definition" data-name="保存系">
+                <p>$\mathbb{R}^d$ 上の自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ に対し, 領域 $U\subset \mathbb{R}^d$ 上の非定数 $C^1$ 級関数 $H(\mathbf{x})$ で 
+                    \[
+                        \nabla H(\mathbf{x})\cdot\mathbf{f}(\mathbf{x}) = 0 
+                    \] を満たすものが存在するならば, この自励系を <b>保存系</b> (<b>conservative system</b>) と呼び, $H$ を <b>保存量</b> (<b>conserved quantity</b>) もしくは <b>第一積分</b> (<b>first integral</b>) という. 
+                </p>
             </div>
 
             <div class="remark">
-                <p>つまり, 不変集合 (正不変集合) 内部を初期値として出発した点は, 時間経過により不変集合から出て行かない, ということを表している. 
-                    また, 不変集合外部を初期値とする軌道が不変集合に入ることもない. 
-                    従って, 相空間全体での力学系の解の挙動は, 各不変集合上での解の挙動に分けて考えることができる (<a href="stability_theory.html#center_manifold_theory">中心多様体縮約</a> も, 不変集合である中心多様体上に限った解の挙動から平衡点の安定性を判定するものであった). 
+                <p>$H$ が保存系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の保存量ならば, その自励系の解 $\mathbf{x}(t)$ に対して 
+                    \[
+                        \dot{H}(\mathbf{x}) = \dfrac{d}{dt}H(\mathbf{x}(t)) = \nabla H(\mathbf{x}(t))\cdot\mathbf{x}'(t) = \nabla H(\mathbf{x}(t))\cdot\mathbf{f}(\mathbf{x}(t)) = 0 
+                    \] が成立する. 
+                    つまり保存量を持つ自励系の解は, 時間経過により保存量を変化させないようにしか動かない. 
+                    このことは, リアプノフ関数を持つ自励系の解が (局所的に) $\dot{V}(\mathbf{x}) \le 0$ を満たす, つまり解がリアプノフ関数の値を増加させないようにしか動かないことと対照的である. 
                 </p>
             </div>
 
             <div class="example">
-                <p>非線形自励系の例として, ここでは <b>ロトカ・ヴォルテラ方程式</b> (<b>Lotka-Volterra equations</b>)
+                <p>ここでは <b>ロトカ・ヴォルテラ方程式</b> (<b>Lotka-Volterra equations</b>)
                     \[
                         \begin{pmatrix} 
                             x' \cr 
@@ -143,159 +135,166 @@
                         \end{pmatrix} 
                     \] を考える, ただし $a,b,c,d\gt 0$ はパラメータである. 
                     この方程式は, 生物の捕食者, 被捕食者それぞれの個体数 $x$, $y$ の変動を表す数理モデルとして用いられるものである. 
-                    従って, 数理モデルとしては初期値 $(x_0, y_0)$ が領域 
+                    実際, 例えばヌルクラインを描くと解軌道は座標軸を横切ることができないことがわかる. 
+                    従って, 初期値が領域 
                     \[
                         D = \{(x, y)\in\mathbb{R}^2: x\gt 0,\ y\gt 0\}\subset \mathbb{R}^2
-                    \] (つまり $xy$ 平面の第 $1$ 象限) に含まれているならば, 個体数を表す $x(t)$ や $y(t)$ は負にならないことが望ましい. 
-                    この方程式に対しては, 例えばヌルクラインを考えることで, 確かに解の軌道は領域 $D$ に留まり続け, また $D$ の外から $D$ に入ってくる軌道も存在しないことがわかる. 
-                    つまり $D$ はこの自励系の不変集合であることがわかり, 従ってロトカ・ヴォルテラ方程式を領域 $D$ ($xy$ 平面の第 $1$ 象限) に限って考えることができる. 
+                    \] (つまり $xy$ 平面の第 $1$ 象限) に含まれているならば, 解の一意性より解の軌道は領域 $D$ に留まり続け, $D$ は不変集合である (特に個体数を表す $x(t)$ や $y(t)$ は負にならない) ことがわかる. 
                 </p>
+                <p>さらに, ロトカ・ヴォルテラ方程式は不変集合 $D$ 上で
+                    \[
+                        H(\mathbf{x}) = c(x-d\log x) + a(y-b\log y)
+                    \] を保存量として持つことがわかる. 
+                    実際, 
+                    \[
+                        \nabla H(\mathbf{x})\cdot\mathbf{f}(\mathbf{x}) = \begin{pmatrix} 
+                            c(x-d)/x \cr 
+                            a(y- b)/y 
+                        \end{pmatrix}\cdot\begin{pmatrix} 
+                            -a(y - b)x \cr 
+                            c(x - d)y 
+                        \end{pmatrix} = 0
+                    \] である. 
+                    従って, 与えられた初期値 $\mathbf{x}_0$ に対するロトカ・ヴォルテラ方程式の解は 
+                    \[
+                        H(\mathbf{x}) = H(\mathbf{x}_0)
+                    \] という $H$ の等高線上のみを動く. 
+                    いくつかの初期値に対する数値計算の結果を以下に掲載する. 
+                    解の軌道は, 確かに $xy$ 平面の第 $1$ 象限に留まっており, また各初期値に応じた周期軌道を確認できる. 
+                </p>
+
+                <div class="resize"><img src='./images/rotka_volterra.png'></div>
             </div>
 
-            <p>実は <a href="stability_theory.html#stable_set">以前に紹介した</a> 安定集合, 不安定集合も不変集合の一種である. 
-                これらの定義を再掲しておこう:
+            <p>次に, $t\to\pm\infty$ としたときに自励系の解の挙動を説明する概念である <b>極限点</b> と <b>極限集合</b> を導入する. 
+                例えば, 線形力学系であっても, 解が平衡点の周辺をぐるぐる回り続けるようなものが存在するが, 特に非線形力学系では, より複雑な &quot;動き続ける&quot; 解が存在することがある. 
+                極限点および極限集合は, このような挙動を説明する際に有用な概念である.  
             </p>
 
-            <div class="definition" data-name="安定集合, 不安定集合">
-                <p>力学系の相空間 $X$ およびフロー $\{S(t): t\in\mathbb{R}\}$ を考える. </p>
+            <div class="definition" data-name="極限点と極限集合">
+                <p>力学系の相空間 $X$ およびフロー $\{\Phi_t\}_{t\in\mathbb{R}}$ を考える. </p>
                 <ul>
-                    <li>平衡点 $\widetilde{\mathbf{x}}$ に対して, 
+                    <li>ある点列 $\{t_n\}$ が存在し, 
                         \[
-                            W^s(\widetilde{\mathbf{x}}) = \{\mathbf{x}_0\in X : S(t)\mathbf{x}_0 \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to\infty\}
-                        \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>安定集合</b> (<b>stable set</b>) という. 
-                        安定集合が多様体としての構造を持つなら <b>安定多様体</b> (<b>stable manifold</b>) と呼ばれる. 
+                            \left\{\begin{array}{l}
+                                \displaystyle\lim_{n\to\infty}t_n=\infty, \cr 
+                                \displaystyle\lim_{n\to\infty}\Phi_{t_n}(\mathbf{x}_0) = \mathbf{y} \quad\text{in } X
+                            \end{array}\right.
+                        \] が成立するとき, $\mathbf{y}\in X$ は $\mathbf{x}_0\in X$ の <b>$\omega$ 極限点</b> (<b>$\omega$-limit point</b>) であるという.
                     </li>
-                    <li>平衡点 $\widetilde{\mathbf{x}}$ に対して, 
+                    <li>
+                        点 $\mathbf{x}_0\in X$ の全ての $\omega$ 極限点からなる集合を <b>$\omega$ 極限集合</b> (<b>$\omega$-limit set</b>) といい, $\omega(\mathbf{x}_0)$ と表記する, つまり
                         \[
-                            W^u(\widetilde{\mathbf{x}}) = \{\mathbf{x}_0\in X : S(t)\mathbf{x}_0 \to \widetilde{\mathbf{x}} \quad\text{as}\quad t\to-\infty\}
-                        \] を平衡点 $\widetilde{\mathbf{x}}$ の <b>不安定集合</b> (<b>unstable set</b>) という. 
-                        不安定集合が多様体としての構造を持つなら <b>不安定多様体</b> (<b>unstable manifold</b>) と呼ばれる. 
+                            \omega(\mathbf{x}_0) = \{\mathbf{y}\in X : t_n\to \infty \text{ および } \lim_{n\to\infty}\Phi_{t_n}(\mathbf{x}_0)=\mathbf{y} \text{ を満たす点列 $\{t_n\}$ が存在する}\}.
+                        \]
+                    </li>
+                    <li>ある点列 $\{t_n\}$ が存在し, 
+                        \[
+                            \left\{\begin{array}{l}
+                                \displaystyle\lim_{n\to\infty}t_n=-\infty, \cr 
+                                \displaystyle\lim_{n\to\infty}\Phi_{t_n}(\mathbf{x}_0) = \mathbf{y} \quad\text{in } X
+                            \end{array}\right.
+                        \] が成立するとき, $\mathbf{y}\in X$ は $\mathbf{x}_0\in X$ の <b>$\alpha$ 極限点</b> (<b>$\alpha$-limit point</b>) であるという.
+                    </li>
+                    <li>
+                        点 $\mathbf{x}_0\in X$ の全ての $\alpha$ 極限点からなる集合を <b>$\alpha$ 極限集合</b> (<b>$\alpha$-limit set</b>) といい, $\alpha(\mathbf{x}_0)$ と表記する, つまり
+                        \[
+                            \alpha(\mathbf{x}_0) = \{\mathbf{y}\in X : t_n\to -\infty \text{ および } \lim_{n\to\infty}\Phi_{t_n}(\mathbf{x}_0)=\mathbf{y} \text{ を満たす点列 $\{t_n\}$ が存在する}\}.
+                        \]
                     </li>
                 </ul>
             </div>
 
-            <div class="remark">
-                <ul>
-                    <li>中心多様体が線形化問題の中心部分空間に接する不変集合であったように, 安定多様体は線形化問題の安定部分空間に接する不変集合である. 
-                    また不安定多様体も同様である.
-                    </li> 
-                    <li>平衡点近傍での局所的な安定多様体, 不安定多様体を考えることもできる. 
-                        これらは <b>局所安定多様体</b>, <b>局所不安定多様体</b> と呼ばれ, $W^s_{\mathrm{loc}}(\widetilde{\mathbf{x}})$, $W^u_{\mathrm{loc}}(\widetilde{\mathbf{x}})$ と表記されることがある. 
-                    </li>
-                    <li>線形力学系では, 安定部分空間, 不安定部分空間 (および中心部分空間) からおおよその相図を得ることができていたが, 非線形力学系も同様に安定多様体, 不安定多様体 (および中心多様体) が相図の概形を説明する. 
-                    </li>
-                    <li>与えられた非線形力学系の安定多様体, 不安定多様体を具体的に求めることは一般には困難である. 
-                        中心多様体と同様に, 平衡点周辺に限った多項式近似は可能ではあるが, 実用的ではないだろう. 
-                    </li>
-                    <li>実用上は, 得られた解軌道がなぜそのようになるのか, を説明する際に安定多様体と不安定多様体に基づく幾何学的解釈がなされることがある. 
-                    </li>
-                </ul>
+            <p>なお, 極限集合内の点を初期値とする軌道は極限集合内に留まる, つまり極限集合は不変集合である. 
+            </p>
+
+            <div class="example">
+                <p>線形力学系 
+                    \[
+                        \mathbf{x}' = \begin{pmatrix} 
+                            -1 & 0 \cr 
+                            0 & -2 
+                        \end{pmatrix}\mathbf{x}
+                    \] の平衡点 $\mathbf{0}$ は漸近安定である. 
+                    つまり全ての点は時間経過により ($t_n\to\infty$ となる任意の点列 $\{t_n\}$ に対して) $\mathbf{0}$ に収束する. 
+                    従って任意の $\mathbf{x}_0$ に対し 
+                    \[
+                        \omega(\mathbf{x}_0) = \{\mathbf{0}\}
+                    \] である. 
+                    一方で, $\mathbf{0}$ 以外の全ての点は時間に逆行したとき ($t_n\to-\infty$ となる任意の点列 $\{t_n\}$ に対して) 発散するため, 
+                    \[
+                        \alpha(\mathbf{0}) = \{\mathbf{0}\},\qquad \alpha(\mathbf{x}_0) = \emptyset \quad \text{for all}\quad \mathbf{x}_0\neq\mathbf{0}
+                    \] である. 
+                </p>
             </div>
 
             <div class="example">
-                <p>先ほども考えた自励系 
+                線形力学系 
+                \[
+                    \mathbf{x}' = \begin{pmatrix} 
+                        0 & 1 \cr 
+                        -1 & 0 
+                    \end{pmatrix}\mathbf{x}
+                \] の解は, 初期値 $\mathbf{x}_0$ と同一円周上を動き続ける. 
+                つまり半径 $r=\|\mathbf{x}_0\|$ の円周上の任意の点 $\mathbf{y}$ に対して, 点列 $\{t_n\}$ を適切に取りさえすれば 
+                \[
+                    \Phi_{t_n}(\mathbf{x}_0) = \mathbf{x}(t_n) \to \mathbf{y} \quad\text{as}\quad n\to\infty
+                \] となるようにできる.
+                従って
+                \[
+                    \omega(\mathbf{x}_0) = \{\mathbf{y}\in\mathbb{R}^2 : \|\mathbf{y}\| = \|\mathbf{x}_0\|\}
+                \] である ($\alpha$ 極限集合についても同様である). 
+            </div> 
+
+            <div class="example">
+                <p>例として <b>ファン・デル・ポール振動子</b> (<b>van der Pol oscillator</b>)
+                    \[
+                        x'' - \mu(1-x^2)x' + x = 0
+                    \] を考えよう, ただし $\mu\gt0$ はパラメータである. 
+                    いま, $y=x'$ を導入して上の式を常微分方程式系に書き換えると 
                     \[
                         \begin{pmatrix} 
                             x' \cr 
                             y' 
                         \end{pmatrix} = \begin{pmatrix} 
-                            4y-x^2 \cr 
-                            x-2 
+                            y \cr 
+                            \mu(1-x^2)y - x
                         \end{pmatrix}
-                    \] を例に, 数値計算によりいくつかの解の軌道を描くと下図のようになる. 
-                    平衡点 $(x,y) = (2,1)$ は鞍点であるが, これに対応して安定多様体 (緑の線) と不安定多様体 (赤の線) が存在している (ただし, この図では数値計算で近似的に求めた安定多様体, 不安定多様体をプロットしている). 
+                    \] という自励系が得られる. 
+                    これについて, $\mu = 1.0$ のとき初期値 $(0.1, 0.1)$ に対する軌道と初期値 $(3.1, 3.1)$ に対する軌道を以下に掲載する:
                 </p>
-                <div class="resize"><img src='./images/stable_manifold.png'></div>
+                <div class="resize"><img src='./images/van_der_Pol_oscillator.png'></div>
+                <p>これらの計算結果から, 異なる初期値に対するこの自励系の $\omega$ 極限集合は同一の周期軌道になることが示唆される. 
+                    なお, このことをきちんと確認するためには, 後に述べるポアンカレ・ベンディクソンの定理を利用することになる. </p>
             </div>
 
-            <div class="exercise">
-                <p>自励系 
-                    \[
-                        \begin{pmatrix} 
-                            x' \cr 
-                            y' 
-                        \end{pmatrix} = \begin{pmatrix} 
-                            x \cr 
-                            -y + x^2 
-                        \end{pmatrix}
-                    \] のフローを $S(t)$ とおく. 
-                    この自励系について, $\mathbf{0}$ は不安定な平衡点であり,  
-                    \[
-                        W^s(\mathbf{0}) = \{(x,y)\in\mathbb{R}^2 : x=0\}, \quad W^u(\mathbf{0}) = \{(x,y)\in\mathbb{R}^2 : y = x^2/3\} 
-                    \] はそれぞれ平衡点 $\mathbf{0}$ の安定多様体, 不安定多様体である. 
-                    これに関して以下を確認せよ: 
-                </p>
-                <ul>
-                    <li>初期値 $\mathbf{x}_0 \in W^s(\mathbf{0})$ に対する解 $\mathbf{x}(t) = S(t)\mathbf{x}_0$ は $\mathbf{x}(t)\in W^s(\mathbf{0})$ および $\displaystyle\lim_{t\to\infty}S(t)\mathbf{x}_0\to \mathbf{0}$ を満たす. 
-                    </li>
-                    <li>
-                        初期値 $\mathbf{x}_0 \in W^u(\mathbf{0})$ に対する解 $\mathbf{x}(t) = S(t)\mathbf{x}_0$ は $\mathbf{x}(t)\in W^u(\mathbf{0})$ および $\displaystyle\lim_{t\to-\infty}S(t)\mathbf{x}_0\to \mathbf{0}$ を満たす. 
-                    </li>
-                    <li>平衡点 $\mathbf{0}$ における線形化問題の安定部分空間は $W^s(\mathbf{0})$ に一致し, 不安定部分空間は $\mathbf{0}$ において $W^u(\mathbf{0})$ に接する.</li>
-                </ul>
-            </div>
-
-            <div class="answer">
-                <ul>
-                    <li>まず, 初期値 $(x_0, y_0)$ に対し, 与えられた非線形自励系の解は 
-                        \[
-                            x(t) = x_0e^t,\quad y' = -y+x_0^2e^{2t}
-                        \] を満たす. 
-                    </li>
-                    <li>特に $x_0=0$ ならば, $x(t) = 0$ かつ $y(t) = e^{-t}y_0$ である. 
-                        従って任意の $\mathbf{x}_0 \in W^s(\mathbf{0})$ に対し $\mathbf{x}(t)\in W^s(\mathbf{0})$ であり, $\displaystyle\lim_{t\to\infty}S(t)\mathbf{0}\to \mathbf{0}$ である. 
-                        つまり $W^s(\mathbf{0})$ は確かに不変集合であり, また安定多様体である. 
-                    </li>
-                    <li>特に $y_0 = x_0^2/3$ ならば (このとき $\mathbf{x}(t) \in W^u(\mathbf{0})$ となるはずであることから), 
-                        \[
-                            x(t) = x_0e^t,\quad y(t) = \dfrac{x(t)^2}{3} = \dfrac{x_0^2e^{2t}}{3} 
-                        \] とおくと, 確かにこれは $x' = x$, $y' = -y+x^2$ を満たすため, 与えられた初期値に対する自励系の特殊解である. 
-                        従って任意の $\mathbf{x}_0 \in W^u(\mathbf{0})$ に対し $\mathbf{x}(t)\in W^u(\mathbf{0})$ であり, また $\displaystyle\lim_{t\to-\infty}S(t)\mathbf{0}\to \mathbf{0}$ も確かめられる. 
-                        つまり $W^u(\mathbf{0})$ は確かに不変集合であり, また不安定多様体である. 
-                    </li>
-                    <li>平衡点 $\mathbf{0}$ における線形化問題は 
-                        \[
-                            \mathbf{x}' = \begin{pmatrix} 
-                                1 & 0 \cr 
-                                0 & -1 
-                            \end{pmatrix}\mathbf{x}
-                        \] であり, 固有値は $\lambda = 1, -1$, 対応する固有ベクトルは 
-                        \[
-                            \mathbf{v}_1 = \begin{pmatrix} 
-                                1 \cr 
-                                0 
-                            \end{pmatrix},\quad \mathbf{v}_2 = \begin{pmatrix} 
-                                0 \cr 
-                                1 
-                            \end{pmatrix}
-                        \] である. 
-                        固有値 (実部) の符号に注目すると, $\mathbf{v}_2$ で張られる空間が安定部分空間, $\mathbf{v}_1$ で張られる空間が不安定部分空間である. 
-                    </li>
-                </ul>
-            </div>
-
-            <hr>
-
-            <p>上で述べた概念の具体例を挙げつつ, それらが解のどのような挙動を説明しているかを考えていこう. 
-                ここでは, 安定多様体と不安定多様体が表す解の挙動の中でも特徴的なものを解説する. 
+            <p>次に, 安定多様体と不安定多様体により説明される解の挙動の中でも特徴的なものを解説する. 
             </p>
 
             <div class="definition" data-name="ホモクリニック軌道">
-                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 (鞍点) $\widetilde{\mathbf{x}}$ に対して, 
+                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の平衡点 (鞍点) $\mathbf{x}_*$ に対して, 
                     \[
-                        \lim_{t\to-\infty}\mathbf{x}(t) = \lim_{t\to\infty}\mathbf{x}(t) = \widetilde{\mathbf{x}}
+                        \lim_{t\to-\infty}\mathbf{x}(t) = \lim_{t\to\infty}\mathbf{x}(t) = \mathbf{x}_*
                     \] を満たす解 $\mathbf{x}(t)$ の軌道が存在するならば, それを <b>ホモクリニック軌道</b> (<b>homoclinic orbit</b>) という. 
                 </p>
             </div>
 
-            <p>ホモクリニック軌道は, 安定多様体 $W^s(\widetilde{\mathbf{x}})$ と不安定多様体 $W^u(\widetilde{\mathbf{x}})$ を用いて 
+            <p>ホモクリニック軌道は, 安定多様体 $W^s(\mathbf{x}_*)$ と不安定多様体 $W^u(\mathbf{x}_*)$ を用いて 
                 \[
-                    W^s(\widetilde{\mathbf{x}}) \cap W^u(\widetilde{\mathbf{x}})
+                    W^s(\mathbf{x}_*) \cap W^u(\mathbf{x}_*)
                 \] に含まれる軌道であると説明される. 
+                また, $\mathbf{x}_*$ に対するホモクリニック軌道上の点 $\mathbf{x}$ に対して
+                \[
+                    \alpha(\mathbf{x}) = \omega(\mathbf{x}) = \{\mathbf{x_*}\}
+                \] である. 
             </p>
 
-            <div class="example">
-                <p>方程式 $x'' - x + x^3 = 0$ に対し, $y=x'$ を導入することで自励系 
+            <div class="example" id="duffing_equation">
+                <p>例として <b>ダフィング方程式</b> (<b>Duffing equation</b>) 
+                    \[
+                        x'' - x + x^3 = 0
+                    \] を考える. 
+                    ここで $y=x'$ を導入することで自励系 
                     \[
                         \begin{pmatrix} 
                             x' \cr 
@@ -304,25 +303,29 @@
                             y \cr 
                             x - x^3 
                         \end{pmatrix}
-                    \] を考える. 
-                    平衡点は $\widetilde{\mathbf{x}}_1 = \mathbf{0}$, $\widetilde{\mathbf{x}}_2 = (-1,0)$, $\widetilde{\mathbf{x}}_3 = (1,0)$ の $3$ 点である. 
-                    右辺をベクトル場 $\mathbf{f}(\mathbf{x})$ とおくと, そのヤコビ行列は 
+                    \] が得られる. 
+                    平衡点は $\mathbf{x}_{*1} = \mathbf{0}$, $\mathbf{x}_{*2} = (-1,0)$, $\mathbf{x}_{*3} = (1,0)$ の $3$ 点であり, 線形安定性解析より平衡点 $\mathbf{x}_{*1} = \mathbf{0}$ は鞍点であることがわかる. 
+                </p>
+                <p>ところで, ダフィング方程式から導出した自励系は
                     \[
-                        D\mathbf{f}(\mathbf{x}) = \begin{pmatrix} 
-                            0 & 1 \cr 
-                            1-3x^2 & 0 
-                        \end{pmatrix}
-                    \] であることから, 線形安定性解析より平衡点 $\widetilde{\mathbf{x}}_1 = \mathbf{0}$ は不安定, 特に鞍点であることがわかる. 
+                        H(\mathbf{x}) = \dfrac{x^4}{4} - \dfrac{x^2}{2} + \dfrac{y^2}{2}
+                    \] を保存量に持つ. 
+                    従って, この問題の解は $H$ の等高線上を動くことになる. 
+                    以下に関数 $H$ のグラフおよび $H(\mathbf{x})$ の値が $0$ となる等高線をプロットした図を示す. 
+                    この等高線上にある平衡点は鞍点 $\mathbf{x}_{*1} = \mathbf{0}$ のみであり, $\mathbf{0}$ に近づく軌道と離れる軌道の両方が存在するが, それは $\mathbf{x}_{*1}$ を通る $H$ の等高線しか存在し得ない. 
+                    従って図中の黒い線は $\mathbf{x}_{*1} = \mathbf{0}$ に対する安定多様体 $W^s(\mathbf{0})$ であり, 同時に不安定多様体 $W^u(\mathbf{0})$ でもある. 
+                    つまり平衡点左右の各黒い線がそれぞれホモクリニック軌道を表している. 
                 </p>
-                <p>さて, 実はこの平衡点に対してはホモクリニック軌道が存在する. 
-                    ここでは厳密には説明しないが, 例えば数値計算において $\widetilde{\mathbf{x}}_1=\mathbf{0}$ 近くの初期値を適当に設定すると, 下図のような軌道を見つけることができる. 
-                    実際のホモクリニック軌道は, 平衡点から &quot;無限にゆっくり&quot; 離れ, ぐるりと回って &quot;無限にゆっくり&quot; 平衡点に近づくため, 数値計算により厳密に表現することはできないが, おおよその挙動としては下図のようになる. 
-                </p>
-                <div class="resize"><img src='./images/Duffing_equation.png'></div>
+
+                <div class="resize"><img src='./images/hamiltonian-1.png'></div>
+                    
+                
                 <p>ホモクリニック軌道は不安定平衡点から出発した点が同じ点に収束する軌道であり, その存在は直感的には奇妙なことに思える. 
                     実際, このような軌道は安定多様体と不安定多様体が &quot;ぴったり重なって&quot; (平衡点以外に) 共通部分を持つ場合のみ存在する. 
-                    ホモクリニック軌道は安定多様体に (不安定多様体にも) 完璧に重なっているため, 平衡点に収束することができるが, 少しでもずれるとこのような動きは実現できない. 
-                    例えば, 上の式に少しの摂動を加えると, 安定多様体と不安定多様体が共通部分を持たなくなり, ホモクリニック軌道も存在しなくなる: 
+                </p>
+                
+                <p>例えば, 上の式に少しの摂動を加えるとホモクリニック軌道も存在しなくなる. 
+                    これに関連して, ダフィング方程式に周期外力を加えた 
                     \[
                         \begin{pmatrix} 
                             x' \cr 
@@ -331,34 +334,34 @@
                             y \cr 
                             x - x^3 + 0.01 \cos(t)
                         \end{pmatrix}
-                    \] ここでは, この摂動を加えた方程式の解の挙動について考えてみよう. 
-                    この力学系 (自励系では無いことに注意) の安定多様体と不安定多様体は, 先ほどのホモクリニック軌道から時刻に応じて少しずつずれたものである. 
-                    平衡点付近に初期値を設定すると, 不安定多様体に沿うようにして平衡点から離れ, 安定多様体に沿うようにして平衡点に近づいていく. 
-                    そして平衡点に近づくと, 再び不安定多様体の影響で平衡点から離れるように動くが, その向きがどの時刻に, どのように平衡点に近づいたかによって異なるため, この方程式の解は <b>カオス的挙動</b> を見せる (下図).  
+                    \] の解の挙動について考えてみよう. 
+                    この力学系 (自励系では無いことに注意) では, もともと一致していた安定多様体と不安定多様体が周期外力の摂動によって分離する. 
+                    実際に数値計算を行うと, 以下に示すように複雑な挙動を観察することができる. 
                 </p>
-                <!-- <div class="resize"><img src='./images/Duffing_equation2.png'></div> -->
                  <div class="resize">
                     <video autoplay="true", loop="true">
                     <source src="videos/duffing_equation.mp4" type="video/mp4" />
                     </video>
                 </div>
-                <p>このように, ホモクリニック軌道は少しの摂動でカオス的な挙動を導出するという興味深い構造を持つ. 
-                    なお, ここで例として挙げた方程式は <b>ダフィング方程式</b> (<b>Duffing equation</b>) と呼ばれるものである. 
-                </p>
             </div>
 
             <div class="definition" data-name="ヘテロクリニック軌道">
-                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の異なる $2$ つの平衡点 $\widetilde{\mathbf{x}}_1$, $\widetilde{\mathbf{x}}_2$ に対して, 
+                <p>自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の異なる $2$ つの平衡点 $\mathbf{x}_{*1}$, $\mathbf{x}_{*2}$ に対して, 
                     \[
-                        \lim_{t\to-\infty}\mathbf{x}(t) = \widetilde{\mathbf{x}}_1,\quad \lim_{t\to\infty}\mathbf{x}(t) = \widetilde{\mathbf{x}}_2
+                        \lim_{t\to-\infty}\mathbf{x}(t) = \mathbf{x}_{*1},\quad \lim_{t\to\infty}\mathbf{x}(t) = \mathbf{x}_{*2}
                     \] を満たす解 $\mathbf{x}$ の軌道が存在するならば, それを <b>ヘテロクリニック軌道</b> (<b>heteroclinic orbit</b>) という. 
                 </p>
             </div>
 
-            <p>ヘテロクリニック軌道は, 安定多様体 $W^s(\widetilde{\mathbf{x}}_2)$ と不安定多様体 $W^u(\widetilde{\mathbf{x}}_1)$ を用いて 
+            <p>ヘテロクリニック軌道は, 安定多様体 $W^s(\mathbf{x}_{*2})$ と不安定多様体 $W^u(\mathbf{x}_{*1})$ を用いて 
                 \[
-                    W^u(\widetilde{\mathbf{x}}_1) \cap W^s(\widetilde{\mathbf{x}}_2)
+                    W^u(\mathbf{x}_{*1}) \cap W^s(\mathbf{x}_{*2})
                 \] に含まれる軌道であると説明される. 
+                また, ヘテロクリニック軌道に含まれる点 $\mathbf{x}$ に対し, 
+                \[
+                    \alpha(\mathbf{x}) = \mathbf{x}_{*1},\quad \omega(\mathbf{x}) = \{\mathbf{x}_{*2}\}
+                \] である. 
+
             </p>
 
             <div class="example">
@@ -378,30 +381,35 @@
                 </p>
                 <p>まず, 
                     \[
-                        \widetilde{\mathbf{x}}_0 = (0, 0, 0),\quad \widetilde{\mathbf{x}}_1 = (1, 0, 0),\quad \widetilde{\mathbf{x}}_2 = (0, 1, 0),\quad \widetilde{\mathbf{x}}_3 = (0, 0, 1),\quad \widetilde{\mathbf{x}}_4 = \left(\dfrac{1}{1+a}, \dfrac{1}{1+a}, \dfrac{1}{1+a}\right)
+                        \mathbf{x}_{*0} = \begin{pmatrix} 
+                            0 \cr 
+                            0 \cr 
+                            0
+                        \end{pmatrix},\quad \mathbf{x}_{*1} = \begin{pmatrix} 
+                            1 \cr 
+                            0 \cr 
+                            0
+                        \end{pmatrix},\quad \mathbf{x}_{*2} = \begin{pmatrix} 
+                            0 \cr 
+                            1 \cr 
+                            0 
+                        \end{pmatrix},\quad \mathbf{x}_{*3} = \begin{pmatrix} 
+                            0 \cr 
+                            0 \cr 
+                            1
+                        \end{pmatrix},\quad \mathbf{x}_{*4} = \begin{pmatrix} 
+                            \dfrac{1}{1+a} \cr 
+                            \dfrac{1}{1+a} \cr 
+                            \dfrac{1}{1+a} 
+                        \end{pmatrix}
                     \] が平衡点であることが確認できる. 
-                    また, 右辺を $\mathbf{f}(\mathbf{x})$ とおくと, ヤコビ行列が 
+                    また, 
                     \[
-                        D\mathbf{f}(\mathbf{x}) = \begin{pmatrix} 
-                            1-2x-ay & -ax & 0 \cr 
-                            0 & 1-2y-ax & -ay \cr 
-                            -az & 0 & 1-2z-ax 
-                        \end{pmatrix} 
-                    \] となるため, 線形安定性解析より $\widetilde{\mathbf{x}}_0$, $\widetilde{\mathbf{x}}_1$, $\widetilde{\mathbf{x}}_2$, $\widetilde{\mathbf{x}}_3$ は不安定な平衡点であることがわかる. 
-                    平衡点 $\widetilde{\mathbf{x}}_4$ については, 
-                    \[
-                        \det(\lambda I - D\mathbf{f}(\widetilde{\mathbf{x}}_4)) = \dfrac{1}{(1+a)^3}((\widetilde{\lambda}+1)^3 + a^3),\quad \text{ただし}\quad \widetilde{\lambda} = (1+a)\lambda
-                    \] となるため, これを $0$ とする $\widetilde{\lambda}$ が得られれば, 特に固有値の符号を判定することができる. 
-                    いま, $\det(\lambda I - D\mathbf{f}(\widetilde{\mathbf{x}}_4)) = 0$ の解の一つは $\widetilde{\lambda} = -(1+a)$ であることは簡単にわかるため, 残り二つは $2$ 次方程式の解の公式より求めることができる:  
-                    \[
-                        \widetilde{\lambda} = -(1+a),\quad \dfrac{1}{2}\left((a-2)\pm \sqrt{3}ai\right).
-                    \] 従って $a\gt 2$ ならば平衡点 $\widetilde{\mathbf{x}}_4$ は不安定であることがわかる. 
-                </p>
-                <p>ここでは $a\gt 2$ の場合を考える. 
-                    このとき, 実は平衡点 $\widetilde{\mathbf{x}}_1$ から $\widetilde{\mathbf{x}}_2$ へのヘテロクリニック軌道が存在し, また同様に $\widetilde{\mathbf{x}}_2$ から $\widetilde{\mathbf{x}}_3$, $\widetilde{\mathbf{x}}_3$ から $\widetilde{\mathbf{x}}_1$ へのヘテロクリニック軌道が存在する. 
+                        x=0,\quad y=0,\quad z=0 
+                    \] で表される平面は全て不変集合であり, 実は平衡点 $\mathbf{x}_{*1}$ から $\mathbf{x}_{*2}$ へのヘテロクリニック軌道が存在し, また同様に $\mathbf{x}_{*2}$ から $\mathbf{x}_{*3}$, さらに $\mathbf{x}_{*3}$ から $\mathbf{x}_{*1}$ へのヘテロクリニック軌道が存在する. 
                     つまりヘテロクリニック軌道によるループが存在することになるが, これを <b>ヘテロクリニックサイクル</b> (<b>heteroclinic cycle</b>) と呼ぶことがある. 
+                    特に $a\gt 2$ の場合は, このヘテロクリニックサイクルが周辺の解軌道に強く影響する. 
                     数値計算では, ヘテロクリニックサイクルの近くを通りながら動き続ける軌道を見つけることができる (下図).
-
                 </p>
                 <div class="resize">
                     <video autoplay="true", loop="true">
@@ -414,206 +422,102 @@
 
         <hr>
 
-        <section id="section3-2"><h2>3.2: 極限集合とリミットサイクル</h2>
-            <p>上の例からも推測できるが, $t\to\infty$ としたときに自励系の解が収束も発散もしないことがある. 
-                例えば, 線形力学系であっても, 解が平衡点の周辺をぐるぐる回り続けるようなものが存在するが, 特に非線形力学系では, より複雑な &quot;動き続ける&quot; 解が存在することがある. 
-                ここでは, そのような挙動を説明するアイデアを導入し, 数値計算により更なる実例を紹介する. 
+        <section id="section4-2"><h2>4.2: リミットサイクル</h2>
+            
+            <p>非線形連続力学系の解でも, ロトカ・ヴォルテラ方程式の解は初期値に応じた周期軌道を描き, 一方でファン・デル・ポール振動子の解はある周期軌道に収束するような軌道を描く. 
+                後者のような周期軌道は特に <b>リミットサイクル</b> と呼ばれるものであり, これも非線形力学系の解の挙動を表す重要な概念である. 
+                ここでは, リミットサイクルと関連するアイデアについて紹介しよう.  
             </p>
 
-            <div class="definition" data-name="極限点と極限集合">
-                <p>力学系の相空間 $X$ およびフロー $\{S(t): t\in\mathbb{R}\}$ を考える. </p>
-                <ul>
-                    <li>ある点列 $\{t_n\}$ が存在し, 
+            <div class="definition" data-name="リミットサイクル">
+                <p>連続力学系の周期軌道 $\Gamma = \{\Phi_t(\mathbf{x}_0)\}_{t\in\mathbb{R}}\subset X$ が孤立している (すぐ近くに他の周期軌道が存在しない) とき, $\Gamma$ を <b>リミットサイクル</b> (<b>limit cycle</b>) という. 
+                    <ul>
+                        <li>$\Gamma$ に十分近い任意の $\mathbf{x}_1\not\in \Gamma$ に対して
                         \[
-                            \left\{\begin{array}{l}
-                                \displaystyle\lim_{n\to\infty}t_n=\infty, \cr 
-                                \displaystyle\lim_{n\to\infty}S(t_n)\mathbf{x}_0 = \mathbf{y} \quad\text{in } X
-                            \end{array}\right.
-                        \] が成立するとき, $\mathbf{y}\in X$ は $\mathbf{x}_0\in X$ の <b>$\omega$ 極限点</b> (<b>$\omega$-limit point</b>) であるという.
-                    </li>
-                    <li>
-                        点 $\mathbf{x}_0\in X$ の全ての $\omega$ 極限点からなる集合を <b>$\omega$ 極限集合</b> (<b>$\omega$-limit set</b>) といい, $\omega(\mathbf{x}_0)$ と表記する, つまり
-                        \[
-                            \omega(\mathbf{x}_0) = \{\mathbf{y}\in X : t_n\to \infty,\ S(t_n)\mathbf{x}_0\to\mathbf{y} \text{ を満たす点列 $\{t_n\}$ が存在する}\}.
+                            \omega(\mathbf{x}_1) = \Gamma
                         \]
-                    </li>
-                    <li>ある点列 $\{t_n\}$ が存在し, 
+                        が成立するとき, $\Gamma$ は <b>漸近安定なリミットサイクル</b> (もしくは単に安定なリミットサイクル) であるという.</li>
+                        <li>$\Gamma$ に十分近い任意の $\mathbf{x}_1\not\in \Gamma$ に対して
                         \[
-                            \left\{\begin{array}{l}
-                                \displaystyle\lim_{n\to\infty}t_n=-\infty, \cr 
-                                \displaystyle\lim_{n\to\infty}S(t_n)\mathbf{x}_0 = \mathbf{y} \quad\text{in } X
-                            \end{array}\right.
-                        \] が成立するとき, $\mathbf{y}\in X$ は $\mathbf{x}_0\in X$ の <b>$\alpha$ 極限点</b> (<b>$\alpha$-limit point</b>) であるという.
-                    </li>
-                    <li>
-                        点 $\mathbf{x}_0\in X$ の全ての $\alpha$ 極限点からなる集合を <b>$\alpha$ 極限集合</b> (<b>$\alpha$-limit set</b>) といい, $\alpha(\mathbf{x}_0)$ と表記する, つまり
-                        \[
-                            \alpha(\mathbf{x}_0) = \{\mathbf{y}\in X : t_n\to -\infty,\ S(t_n)\mathbf{x}_0\to\mathbf{y} \text{ を満たす点列 $\{t_n\}$ が存在する}\}.
+                            \alpha(\mathbf{x}_1) = \Gamma
                         \]
-                    </li>
-                </ul>
-            </div>
-
-            <p>直感的には時刻 $t$ を大きくしたとき (もしくは小さくしたとき) に, 解 $\mathbf{x}(t)$ が &quot;どこに近づくか&quot; を表すものが極限点, 極限集合である. 
-                特に, 解 $\mathbf{x}(t)$ が収束しないという状況, 例えばある範囲を動き続けるという状況であっても, &quot;どこを動き続けるか&quot; を説明できる. 
-                なお, 極限集合内の点を初期値とする軌道は極限集合内に留まる, つまり極限集合は不変集合である. 
-            </p>
-
-            <div class="example">
-                <p>線形力学系 
-                    \[
-                        \mathbf{x}' = \begin{pmatrix} 
-                            -1 & 0 \cr 
-                            0 & -2 
-                        \end{pmatrix}\mathbf{x}
-                    \] を考える. 
-                    行列固有値は $-1$, $-2$ であり, 全ての固有値 (の実部) が負であるため, 平衡点 $\mathbf{0}$ は漸近安定である. 
-                    つまり $\mathbf{0}$ はこの線形力学系の沈点であり, 全ての点は時間経過により ($t_n\to\infty$ となる任意の点列 $\{t_n\}$ に対して) $\mathbf{0}$ に収束する. 
-                    従って任意の $\mathbf{x}_0$ に対し 
-                    \[
-                        \omega(\mathbf{x}_0) = \{\mathbf{0}\}
-                    \] である. 
-                    一方で, 全ての点は時間に逆行したとき ($t_n\to-\infty$ となる任意の点列 $\{t_n\}$ に対して) 発散するため, 任意の $\mathbf{x}_0$ に対し 
-                    \[
-                        \alpha(\mathbf{x}_0) = \emptyset
-                    \] である. 
-                </p>
-            </div>
-
-            <div class="example">
-                線形力学系 
-                \[
-                    \mathbf{x}' = \begin{pmatrix} 
-                        0 & 1 \cr 
-                        -1 & 0 
-                    \end{pmatrix}\mathbf{x}
-                \] を考える. 
-                行列固有値は $\pm i$ であり, 初期値 $\mathbf{x}_0 = (r\cos\alpha, r\sin\alpha)$ に対する特殊解は 
-                \[
-                    \mathbf{x}(t) = \begin{pmatrix} 
-                        r\cos(t+\alpha) \cr 
-                        -r\sin(t+\alpha) 
-                    \end{pmatrix}
-                \] である. 
-                このとき, 半径 $r=\|\mathbf{x}_0\|$ の円周上の任意の点 $\mathbf{y}$ に対して, 点列 $\{t_n\}$ を適切に取りさえすれば, $S(t_n)\mathbf{x}_0 = \mathbf{x}(t_n) \to \mathbf{y}$ となるようにできる. 
-                つまり
-                \[
-                    \omega(\mathbf{x}_0) = \{\mathbf{y}\in\mathbb{R}^2 : \|\mathbf{y}\| = \|\mathbf{x}_0\|\}
-                \] である ($\alpha$ 極限集合についても同様である). 
-                このように, $\mathbf{x}(t)$ が一点に収束しない場合でも, 極限集合を考えることで解の挙動をわかりやすく説明できる. 
-            </div> 
-
-            <div class="definition" data-name="周期軌道とリミットサイクル">
-                <ul>
-                    <li>力学系の相空間 $X$ およびフロー $\{S(t): t\in\mathbb{R}\}$ について, 平衡点でない初期値 $\mathbf{x}_0$ に対して 
-                        \[
-                            S(t+T)\mathbf{x}_0 = S(t)\mathbf{x}_0\quad \text{for all}\quad t\in\mathbb{R} \quad(\text{離散力学系に対しては }\mathbb{Z})
-                        \] を満たす $T$ が存在するならば, 初期値 $\mathbf{x}_0$ に対する軌道 $\Gamma = \{S(t)\mathbf{x}_0: t\in\mathbb{R}\}\subset X$ (離散力学系に対しては $\{S(t)\mathbf{x}_0: t\in\mathbb{Z}\}\subset X$) を <b>周期軌道</b> (<b>periodic orbit</b>) という. 
-                        また, このとき $T$ を <b>周期</b> (<b>period</b>) という. 
-                    </li>
-                    <li>連続力学系の周期軌道 $\Gamma = \{S(t)\mathbf{x}_0: t\in\mathbb{R}\}\subset X$ が存在し, また $\omega(\mathbf{x}_1) = \Gamma$ もしくは $\alpha(\mathbf{x}_1) = \Gamma$ を満たす $\mathbf{x}_1\not\in \Gamma$ が存在するならば, 周期軌道 $\Gamma$ を <b>リミットサイクル</b> (<b>limit cycle</b>) という. 
-                        特に, 
-                        <ul>
-                            <li>$\Gamma$ に十分近い任意の $\mathbf{x}_1\not\in \Gamma$ に対して
-                            \[
-                                \omega(\mathbf{x}_1) = \Gamma
-                            \]
-                            が成立するとき, $\Gamma$ は <b>安定なリミットサイクル</b> であるという.</li>
-                            <li>$\Gamma$ に十分近い任意の $\mathbf{x}_1\not\in \Gamma$ に対して
-                            \[
-                                \alpha(\mathbf{x}_1) = \Gamma
-                            \]
-                            が成立するとき, $\Gamma$ は <b>不安定なリミットサイクル</b> であるという.</li>
-                        </ul>
-                    </li>
+                        が成立するとき, $\Gamma$ は <b>不安定なリミットサイクル</b> であるという.</li>
+                    </ul>
                 </p>
             </div>
 
             <div class="remark">
-                <ul>
-                    <li>ある初期値に対する連続力学系の周期軌道は, 存在するならば必ず閉曲線となる. </li>
-                    <li>線形力学系の場合は楕円形や楕円体上に巻き付くような形の周期軌道しか現れないが, 非線形力学系の場合はより複雑な形の周期軌道やリミットサイクルが現れることがある. </li>
-                    <li>リミットサイクルは非線形力学系でしか現れない. </li>
-                </ul>
+                <p>平衡点と同様に, ある方向からは近づくが反対側からは離れていくような挙動をするリミットサイクルも存在する. 
+                    そのようなリミットサイクルはやはり <b>半安定</b> であるということがある. 
+                </p>
             </div>
 
-            <p>安定なリミットサイクルは, 近くの点を初期値とする全ての軌道を &quot;引き寄せる&quot; 効果があると言える. 
-                このような性質を持つ $\omega$ 極限集合を <b>アトラクター</b> という. 
-                以下に定義という形で述べるが, 実際にはアトラクターの統一的な定義は存在していないように思われる. 
-                以下の記述も厳密さには欠けるものであることに注意:
+            <p>周辺の軌道を引き寄せる効果を持つ $\omega$ 極限集合は安定なリミットサイクルに限らない (例えば漸近安定な平衡点や, 高次元の場合はより複雑な幾何構造のものもある). 
+                このような性質を持つ $\omega$ 極限集合を総称して <b>アトラクター</b> という. 
+                以下に定義という形で述べるが, 実際にはには文献によっていくつかの定義が用いられる. 
             </p>
             
             <div class="definition" data-name="アトラクター">
-                <p>力学系の相空間 $X$ およびフロー $\{S(t): t\in\mathbb{R}\}$ を考える. 
-                    このフローについて, ある初期値に対する $\omega$ 極限集合となる不変集合 $A\subset X$ を考える. 
-                    さらに 
+                <p>相空間 $X$ は距離空間であるとする. 
+                    相空間 $X$ 上のフロー $\{\Phi_t\}_{t\in\mathbb{R}}$ が定める力学系のコンパクトな不変集合 $A$ が, ある近傍 $U$ の全ての点 $\mathbf{x}\in U$ に対し, 
                     \[
-                        B = \{\mathbf{x}_0\in X : \omega(\mathbf{x}_0) = A\}
-                    \] と定める.  
-                    もしも $B\supsetneq A$ であるならば, $B$ を不変集合 $A$ の <b>吸引領域</b> (<b>region of attraction</b>) もしくは <b>ベイスン</b> (<b>basin</b>) といい, $A$ を <b>アトラクター</b> (<b>attractor</b>) もしくは <b>吸引集合</b> という. 
+                        \lim_{t\to\infty}\operatorname{dist}(\Phi_t(\mathbf{x}), A) = 0
+                    \] を満たすとき, $A$ を <b>アトラクター</b> (<b>attractor</b>) もしくは <b>吸引集合</b> といい, 
+                    \[
+                        B(A) = \{\mathbf{x}\in X: \lim_{t\to\infty}\operatorname{dist}(\Phi_t(\mathbf{x}), A)=0\}
+                    \] を $A$ の <b>吸引領域</b> (<b>region of attraction</b>) もしくは <b>ベイスン</b> (<b>basin</b>) という. 
                 </p>
             </div>
             
-            <div class="remark">
-                <ul>
-                    <li>$\omega$ 極限集合の定義より, 任意の $\mathbf{x}_0\in B$ に対し $t_n\to\infty$ なる点列 $\{t_n\}$ を適切に選べば, $S(t_n)\mathbf{x}_0$ の収束先がアトラクター $A$ の元となる. 
-                    </li>
-                    <li>アトラクターが $1$ 点からなる集合ならば, その点が漸近安定な平衡点であることを意味しているが, そうでないならば吸引領域 $B$ に初期値を持つ全ての軌道は $A$ に &quot;引き寄せられ&quot;, $A$ の内部もしくは $A$ の限りなく近くを動き続けることになる.
-                    </li>
-                    <ul>
-                        <li>上でも述べたように, 安定なリミットサイクルはアトラクターの一種である.
-                        </li>
-                    </ul>
-                </ul>
-            </div>
-
             <div class="example">
-                <p>例として <b>ファン・デル・ポール振動子</b> (<b>van der Pol oscillator</b>)
-                    \[
-                        x'' - \mu(1-x^2)x' + x = 0
-                    \] を考えよう, ただし $\mu\gt0$ はパラメータである. 
-                    いま, $y=x'$ を導入して上の式を常微分方程式系に書き換えると 
+                <p>例として 
                     \[
                         \begin{pmatrix} 
                             x' \cr 
-                            y' 
+                            y' \cr 
+                            z' 
                         \end{pmatrix} = \begin{pmatrix} 
-                            y \cr 
-                            \mu(1-x^2)y - x
+                            x(1-x^2-y^2)-y \cr 
+                            y(1-x^2-y^2)+x \cr 
+                            -z 
                         \end{pmatrix}
-                    \] という自励系が得られる. 
-                    線形安定性解析より, この自励系の平衡点 $\mathbf{0}$ は不安定な平衡点である.
-                    これについて, $\mu = 1.0$ のとき初期値 $(0.1, 0.1)$ に対する軌道と初期値 $(3.1, 3.1)$ に対する軌道を以下に掲載する:
+                    \] を考える. 
+                    この問題については, 円柱座標系 
+                    \[
+                        x = r\cos\theta,\quad y = r\sin\theta 
+                    \] により座標変換すると 
+                    \[
+                        \begin{pmatrix} 
+                            r' \cr 
+                            \theta' \cr 
+                            z' 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            r(1-r^2) \cr 
+                            1 \cr 
+                            -z 
+                        \end{pmatrix}
+                    \] となるため, $r\neq 0$ ならば解は $xy$ 平面上の半径 $1$ の円に近づき回り続けることがわかる. 
+                    つまり周期軌道 
+                    \[
+                        \Gamma = \{(x, y, z)\in\mathbb{R}^3 : x^2+y^2=1,\quad z=0\}
+                    \] はアトラクターであり, また安定なリミットサイクルである. 
+                    さらに, このアトラクターのベイスンは 
+                    \[
+                        B(\Gamma) = \{(x, y, z)\in\mathbb{R}^3 : x^2+y^2\gt 0\}
+                    \] である. 
                 </p>
-                <div class="resize"><img src='./images/van_der_Pol_oscillator.png'></div>
-                <p>この計算結果から推測できるように, この自励系には安定なリミットサイクルが存在する. 
-                    異なる初期値を選んだとしても, 解の軌道は時間経過で同じ閉曲線に限りなく近づいていく. </p>
-            </div>
+                <p>いくつかの初期値に対する数値計算例を以下に示す: </p>
 
-            <div class="exercise">
-                <ul>
-                    <li>ファン・デル・ポール振動子に対する数値計算を実行し, 上の例と異なる初期値に対しても解の軌道が安定なリミットサイクルに近づく様子を確認せよ. </li>
-                    <li>$2$ 次元ロトカ・ヴォルテラ方程式
-                        \[
-                            \begin{pmatrix} 
-                                x' \cr 
-                                y' 
-                            \end{pmatrix} = \begin{pmatrix} 
-                                a (b-y)x \cr 
-                                -c (d-x)y 
-                            \end{pmatrix} \quad (a,b,c,d\gt 0) 
-                        \] に対する数値計算を実行し, 周期軌道 (の近似) が得られること, およびリミットサイクルが存在しない (と思われる) ことを確認せよ. </li>
-                </ul>
-            </div>
+                <div class="resize"><img src='./images/stable_limit_cycle.png'></div>
 
-            <hr> 
+            </div>
 
             <p>さて, 上では数値計算結果からリミットサイクルの存在を推測できると言及したが, 与えられた自励系のリミットサイクルの存在を数学的に証明することは一般にはそれほど容易ではない. 
-                とはいえ, $2$ 次元の自励系に限れば実は以下の定理が成立することが知られている: 
+                とはいえ, 二次元の自励系に限れば実は以下の定理が成立することが知られている: 
             </p>
 
             <div class="theorem" data-name="ポアンカレ・ベンディクソンの定理">
-                <p>$2$ 次元自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ について, ベクトル場 $\mathbf{f}$ は $C^1$ 級であるとする. 
+                <p><span class="wave">二次元自励系</span>  $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ について, ベクトル場 $\mathbf{f}$ は $C^1$ 級であるとする. 
                     また, 初期値 $\mathbf{x}_0$ に対する解 $\mathbf{x}(t)$ について, 正の半軌道
                     \[
                         \{\mathbf{x}(t)\in\mathbb{R}^2 : t\ge 0\}
@@ -623,106 +527,316 @@
             </div>
 
             <div class="remark">
-                <p>直感的には, $C^1$ ベクトル場 $\mathbf{f}$ に対する $2$ 次元自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の解の挙動は, 
+                <p>大雑把に言えば, $C^1$ ベクトル場 $\mathbf{f}$ に対する 二次元自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の解の挙動は, 
                 </p>
                 <ul>
                     <li>発散する, </li>
                     <li>平衡点に収束する (漸近安定な平衡点に収束する, 安定多様体上の初期値が鞍点に収束するなど), </li> 
-                    <li>安定なリミットサイクルに近づく, </li>
-                    <li>ホモクリニック軌道やヘテロクリニック軌道などに近づく</li>
+                    <li>ホモクリニック軌道やヘテロクリニック軌道など, 平衡点とそれらを結ぶ軌道などに近づく, </li>
+                    <li>安定なリミットサイクルに近づく, もしくは初期値に応じた周期軌道を動く </li>
                 </ul>
-                <p>のいずれかに限られ, 例えばカオス的な挙動は現れない (ダフィング方程式では摂動を加えて <span class="wave">非自励系</span> にすることでカオス的挙動を導出していた).
+                <p>のいずれかに限られ, 例えばカオス的な挙動は現れない (周期外力を加えたダフィング方程式は <span class="wave">非自励系</span> であったことに注意).
                 </p>
             </div>
 
-            <p>ポアンカレ・ベンディクソンの定理の詳細な証明はここでは説明しないが, この定理が $2$ 次元に限られるのはジョルダンの閉曲線定理を用いるためである. 
-                また, 証明に際して以下に述べる <b>ポアンカレ写像</b> を利用することになる: 
+            <p>ポアンカレ・ベンディクソンの定理の詳細な証明はここでは説明しないが, この定理が二次元に限られるのは平面特有の性質, 特に <b>ジョルダンの閉曲線定理</b> を用いるためである:  
+            </p>
+
+            <div class="theorem" data-name="ジョルダンの閉曲線定理">
+                <p>$\mathbb{R}^2$ 上の自己交差を持たない閉曲線 (ジョルダン曲線) は, $\mathbb{R}^2$ を曲線内部と外部に二分する. 
+                </p>
+            </div>
+
+            <p>この定理の主張は直感的には明らかに思えるが, 証明は非常に複雑なのでここでは言及しない. 
+                ともかく, ポアンカレ・ベンディクソンの定理は $\mathbb{R}^2$ 上の自励系にしか適用できないものであることに注意してほしい. 
+            </p>
+
+            <p>また, ポアンカレ・ベンディクソンの定理の証明に際して用いられる <b>ポアンカレ写像</b> は (二次元自励系に限らず利用される) 重要なアイデアであり, 簡単に言及しておく: 
             </p>
 
             <div class="definition" data-name="ポアンカレ写像">
-                <p>$n$ 次元自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ を考える. 対応するフローを $\{S(t): t\in\mathbb{R}\}$ と表記する. </p>
+                <p>$n$ 次元自励系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ のフローを $\{\Phi_t\}_{t\in\mathbb{R}}$ と表記する. </p>
                 <ul>
                     <li>$n-1$ 次元超局面 $\Sigma$ が, $\Sigma$ 上の全ての点でベクトル場 $\mathbf{f}$ に接しないとき (つまり $\Sigma$ が $\mathbf{f}$ に対し横断的であるとき), $\Sigma$ を <b>ポアンカレ断面</b> (<b>Poincaré section</b>) という. </li>
-                    <li>$\mathbf{x}\in\Sigma$ に対し, 
+                    <li>$\mathbf{x}\in\Sigma$ であって, $\mathbf{x}$ からの軌道が再び $\Sigma$ に戻るような点 $\mathbf{x}$ に対し
                         \[
-                            \tau(\mathbf{x}) = \inf\{t\gt 0 : S(t)\mathbf{x}\in \Sigma\}
+                            \tau(\mathbf{x}) = \inf\{t\gt 0 : \Phi_t(\mathbf{x})\in \Sigma\}
                         \] とおく. 
                         このとき, 
                         \[
-                            P(\mathbf{x}) = S(\tau(\mathbf{x}))\mathbf{x} 
+                            P(\mathbf{x}) = \Phi_{\tau(\mathbf{x})}\mathbf{x} 
                         \] を <b>ポアンカレ写像</b> (<b>Poincaré map</b>) という. 
                     </li>
                 </ul>
             </div> 
 
-            <p>$2$ 次元自励系を例に, ポアンカレ写像のアイデアを説明しよう. 
+            <p>二次元自励系を例に, ポアンカレ写像のアイデアを説明しよう. 
                 ベクトル場 $\mathbf{f}$ と交差する曲線 $\Sigma$ を適当に取り, $\mathbf{x}\in \Sigma$ を適当に取る. 
                 このとき, $\mathbf{x}\in\Sigma$ を通る軌道が再び $\Sigma$ と交わるとき, その交点が $P(\mathbf{x})$ である.
             </p>
             <p>一般にはポアンカレ写像が存在するとは限らないが, ポアンカレ・ベンディクソンの定理の仮定の下では存在することが示され, これを用いると $\Sigma\cap\omega(\mathbf{x})$ 上の点に収束する $\Sigma$ 上の点列
                 \[
-                    \mathbf{x}, \quad P(\mathbf{x}), \quad P^2(\mathbf{x}), \dots
-                \] を構成することができ, これを証明に用いることができる. 
-                解の軌道がリミットサイクルに近づく, という挙動は (直感的には理解しやすいものの) 数学的には扱いづらいが, ポアンカレ写像を用いることで &quot;点列の収束&quot; に置き換えて扱うことができる. 
-                これがポアンカレ写像の有用性であり, リミットサイクルのような周期的な挙動を説明する際にしばしば用いられる. 
+                    \mathbf{x}_0, \qquad \mathbf{x}_1 = P(\mathbf{x}_0), \qquad \mathbf{x}_2 = P(\mathbf{x}_1) = P^2(\mathbf{x}_0), \dots
+                \] を構成することができ, これを定理の証明に用いることができる. 
+                具体的には, 二次元連続力学系に対するポアンカレ断面は一次元になることから, ポアンカレ写像 $P$ により構成される離散力学系は一次元であり, その平衡点 $x_*$ は 
+                \[
+                    |P(x_*)| \lt 1 
+                \] ならば離散力学系の平衡点は漸近安定であると判定できるが, これは元の連続力学系が安定なリミットサイクルを持つことを意味している.
+            </p>
+            <p>
                 下図はパラメータ $\mu=0.5$ を用いたファン・デル・ポール振動子に対するポアンカレ断面の例 (オレンジ色) と, その際のポアンカレ写像の様子を表したものである. 
                 右側は左の図中の四角で囲った部分の拡大を表している. 
             </p>
+            
             <div class="resize"><img src='./images/poincare_map.png'></div>
-            <p>なお, $\mathbf{x}_0\in\Sigma$ に対し, 
-                \[
-                    \mathbf{x}_1 = P(\mathbf{x}_0),\quad \mathbf{x}_2 = P(\mathbf{x}_1), \quad \dots
-                \] とみなすことで, 連続力学系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ の解とポアンカレ断面の交点は, 離散力学系 $\mathbf{x}_{n+1} = P(\mathbf{x}_n)$ により表されることになる. 
-                このように, ポアンカレ写像により連続力学系と離散力学系を対応付け, 離散力学系の性質を用いて連続力学系の性質を説明することは, 特にカオス的挙動の解析において頻繁に用いられるテクニックである. 
-            </p>
 
-        </section>
-
-            <!-- <div class="exercise">
-                <p>非線形力学系 
+            <div class="example">
+                <p>上で例として挙げた 
                     \[
                         \begin{pmatrix} 
                             x' \cr 
-                            y' 
+                            y' \cr 
+                            z' 
                         \end{pmatrix} = \begin{pmatrix} 
-                            x - xy \cr 
-                            xy - y 
+                            x(1-x^2-y^2)-y \cr 
+                            y(1-x^2-y^2)+x \cr 
+                            -z 
                         \end{pmatrix}
-                    \] の $x\gt 0$, $y\gt 0$ における相図の概形を描画せよ. 
+                    \] の周期軌道 
+                    \[
+                        \Gamma = \{(x, y, z)\in\mathbb{R}^3 : x^2+y^2=1,\quad z=0\}
+                    \] についてもう一度考えてみよう. 
+                    例えば 
+                    \[
+                        \Sigma = \{(x, 0, z)\in\mathbb{R}^3 : x\gt 0\}
+                    \] をポアンカレ断面としてみると, ポアンカレ写像 $P$ は二次元離散力学系を導出することとなり, $\Gamma$ と $\Sigma$ の交点はその離散力学系の平衡点である. 
+                    そこで, この平衡点が漸近安定であることを示せば, 対応する周期軌道 $\Gamma$ が安定なリミットサイクルの存在を証明したことになる. 
+                </p>
+                <p>ここでは, ポアンカレ写像 $P$ が定める離散力学系に対して <a href=#stability_theory.html/linear_stability_analysis>線形安定性解析</a> を試みる: つまりヤコビ行列 $DP$ の平衡点における固有値を調べればよい. 
+                    まず, 円柱座標系に座標変換すると 
+                    \[
+                        \begin{pmatrix} 
+                            r' \cr 
+                            \theta' \cr 
+                            z' 
+                        \end{pmatrix} = \begin{pmatrix} 
+                            r(1-r^2) \cr 
+                            1 \cr 
+                            -z 
+                        \end{pmatrix}
+                    \] であったことを思い出すと, $\theta' = 1$ より初期値 $\mathbf{x}_0\in\Sigma$ の軌道は周期 $2\pi$ ごとにポアンカレ断面に戻ってくることになり, また不動点が 
+                    \[
+                        \begin{pmatrix} 
+                            1 \cr 
+                            0 
+                        \end{pmatrix}
+                    \] であることがわかる. 
+                    ここで座標変換 $\rho = r-1$ を導入すると, ポアンカレ写像が定める離散力学系の平衡点 
+                    \[
+                        \mathbf{p}_* = \begin{pmatrix} 
+                            \rho_* \cr 
+                            z_* 
+                        \end{pmatrix} = \mathbf{0}
+                    \]の近くでは 
+                    \[
+                        \rho'(t) = (\rho+1)(1-(\rho+1)^2) \approx -2\rho, \qquad z'(t) = -z,    
+                    \] つまり 
+                    \[
+                        \rho(t) \approx e^{-2t}\rho(0),\qquad z(t) = e^{-t}z(0)
+                    \] であり, これを用いると
+                    \[
+                        P(\mathbf{p}) = \begin{pmatrix} 
+                            \rho(t+2\pi) \cr 
+                            z(t+2\pi) 
+                        \end{pmatrix} \approx \begin{pmatrix} 
+                            e^{-4\pi}\rho(t) \cr 
+                            e^{-2\pi}z(t)
+                        \end{pmatrix}
+                    \] である. 
+                    以上より, 
+                    \[
+                        DP(\mathbf{p}_*) = \begin{pmatrix}  
+                            e^{-4\pi} & 0 \cr 
+                            0 & e^{-2\pi} 
+                        \end{pmatrix}
+                    \] が得られ, その固有値 $\lambda_1 = e^{-4\pi}$, $\lambda_2 = e^{-2\pi}$ はどちらも $|\lambda_i|\lt 1$ を満たすことから, $\mathbf{p}_*$ は漸近安定な平衡点である. 
+                    このように, ポアンカレ写像を直接求めるのではなく, 離散力学系の平衡点付近での線形化問題さえ考えれば良い. 
+                    これは, 平衡点近傍でのポアンカレ写像の一次近似 $DP(\mathbf p_*)$ は, 周期軌道からの微小なずれが一周期の間にどの程度増幅, 減衰するかによって調べられることを意味している. 
                 </p>
             </div>
 
-            <div class="answer">
-                <p>この力学系は非線形であり, 解の明示的な表示を与えることは困難である. 
-                    ただし自励系であるため, 右辺のベクトル場に対応する方向場を考えれば各初期値に対する軌道の概形を予想できる. 
-                    いくつかの点において具体的に計算することが望ましいが, 大雑把には $x\gt 0$, $y\gt 0$ において
-                </p>
-                <ul>
-                    <li>$0\lt x\lt 1$ のとき $y'\lt 0$, </li>
-                    <li>$x=1$ のとき $y'=0$, </li>
-                    <li>$1\lt x$ のとき $y'\gt 0$, </li>
-                    <li>$0\lt y\lt 1$ のとき $x'\gt 0$, </li>
-                    <li>$y=1$ のとき $x'=0$, </li>
-                    <li>$1\lt y$ のとき $x'\lt 0$</li>
-                </ul>
-                <p>であることに注目すれば, 方向場における各点での矢印の向きはおおよそ決定できる (なお, このベクトル場は連続であり勾配も大きくならないため, $x$ や $y$ が多少変化しても矢印の向きが急激に変化する心配はない).        
-                </p>
-            </div>  -->
+            <p>一般の周期軌道については, その軌道に沿った線形化方程式（変分方程式）を一周期だけ解くことで, ポアンカレ写像の固定点における固有値に対応する量を求めることができる. 
+                これを体系化するのが <b>フロケ理論</b> である. 
+                この資料では言及しないが, 興味があれば調べてみると良い.  
+            </p>
+
+            <hr>
+
+            <p>さて, ここまでの数値計算では安定なリミットサイクルを例としたため, 適当な初期値から長時間の数値計算を実行することで周期軌道を見つけることができていた. 
+                一方で, このアイデアでは一般の初期値を不安定なリミットサイクルに収束させて見つけることができない. 
+                ここでは不安定な周期軌道も見つけることができる数値計算手法として <b>狙い撃ち法</b> (もしくは <b>シューティング法</b>, <b>shooting method</b>) を紹介しよう. 
+            </p>
+
+            <p>$\mathbb{R}^d$ 上の連続力学系 $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ を与えるフロー $\{\Phi_t\}_{t\in\mathbb{R}}$ を考える. 
+                このとき, この連続力学系の周期軌道を見つけるという問題は, 時刻 $t=T$ における <b>終端条件</b>
+                \[
+                    \Phi_T(\mathbf{x}_0) = \mathbf{x}_0 
+                \] が満たされるように (終端条件を狙い撃ちするように) 初期条件 $\mathbf{x}_0$ を調整する, という問題に帰着される. 
+                このように, 所望の終端条件を満たす初期条件などを, 
+                \[
+                    \Phi_T(\mathbf{x}_0) - \mathbf{x}_0 = \mathbf{0}
+                \] の数値解として求める手法を狙い撃ち法と総称する. 
+            </p>
+            <p>ただし, 今回は初期値 $\mathbf{x}_0\in\mathbb{R}^d$ だけでなく時刻 $T$ も求める必要がある. 
+                一方, $\Phi_T(\mathbf{x}_0) - \mathbf{x}_0 = \mathbf{0}$ という式は $d$ 個の方程式の連立を意味しており, 未知数 $(\mathbf{x}_0, T)\in\mathbb{R}^{d+1}$ を見つけるためには方程式が一つ足りていない. 
+                そこで, $\mathbf{x}_0$ が存在し得る超曲面を指定する式 
+                \[
+                    g(\mathbf{x}_0) = 0
+                \] を併せて解くことにしよう (この条件は <b>位相条件</b> と呼ばれることがある, ポアンカレ断面の指定に相当するアイデアである). 
+                つまり, 
+                \[
+                    F(\mathbf{x}_0, T) = \begin{pmatrix} 
+                        \Phi_T(\mathbf{x}_0) - \mathbf{x}_0 \cr 
+                        g(\mathbf{x}_0) 
+                    \end{pmatrix} = \mathbf{0}
+                \] を満たす $(\mathbf{x}_0, T)$ を求めれば良いが, ここではニュートン法による反復計算を考えてみる: 
+                \[
+                    \begin{pmatrix} 
+                        \mathbf{x}_0^{(k+1)} \cr  
+                        T^{(k+1)}
+                    \end{pmatrix} = \begin{pmatrix} 
+                        \mathbf{x}_0^{(k)} \cr  
+                        T^{(k)}
+                    \end{pmatrix} - DF(\mathbf{x}_0^{(k)}, T^{(k)})^{-1}F(\mathbf{x}_0^{(k)}, T^{(k)})
+                \] いま, ヤコビ行列 $DF(\mathbf{x}_0, T)$ は ($\mathbf{x}_0$ に関するヤコビ行列を与える $D_{\mathbf{x}_0}$ を用いて)
+                \[
+                    DF(\mathbf{x}_0, T) = \begin{pmatrix} 
+                        D_{\mathbf{x}_0}\Phi_T(\mathbf{x}_0) - I & \dfrac{\partial}{\partial T}\Phi_T(\mathbf{x}_0) \cr 
+                        D_{\mathbf{x}_0}g(\mathbf{x}_0) & 0 
+                    \end{pmatrix}
+                \] というブロック行列となる. 
+                いま, 
+                \[
+                    \dfrac{\partial}{\partial t}\Phi_t(\mathbf{x}_0) = \mathbf{x}'(t) = \mathbf{f}(\mathbf{x}(t)),\qquad D_{\mathbf{x}_0}g(\mathbf{x}_0) = \nabla g(\mathbf{x}_0)^{\operatorname{T}}
+                \] であることは良い. 
+                また, $M(t) = D_{\mathbf{x}_0}\Phi_t(\mathbf{x}_0)$ とおくと, $M(0) = I$ および
+                \[
+                    M' = \dfrac{\partial}{\partial t}D_{\mathbf{x}_0}\Phi_t(\mathbf{x}_0) = D_{\mathbf{x}_0}\mathbf{x}'(t) = D\mathbf{f}(\mathbf{x}(t))D_{\mathbf{x}_0}\mathbf{x}(t) = D\mathbf{f}(\mathbf{x}(t))M
+                \] が得られる. 
+                これに対する数値計算により $M(T)$ が得られれば, 
+                \[
+                     DF(\mathbf{x}_0, T)^{-1} = \begin{pmatrix} 
+                        M(T) - I & \mathbf{f}(\mathbf{x}(T)) \cr 
+                        \nabla g(\mathbf{x}_0)^{\operatorname{T}} & 0 
+                    \end{pmatrix}^{-1}
+                \] を計算することでニュートン法の反復計算が実行可能である. 
+            </p>
+
+            <p>具体例として, $a\gt 0$ に対し
+                \[
+                    \begin{pmatrix} 
+                        x' \cr 
+                        y' 
+                    \end{pmatrix} = \begin{pmatrix} 
+                        -y + ax(x^2+y^2-1)(4-x^2-y^2) \cr 
+                        x + ay(x^2+y^2-1)(4-x^2-y^2) 
+                    \end{pmatrix}
+                \] を考えてみよう. 
+                数値計算の前に厳密解の挙動について考えてみる. 
+                上を円柱座標系に座標変換すると
+                \[
+                    \left\{\begin{array}{rl} 
+                        r' &= ar(r^2-1)(4-r^2) \cr 
+                        \theta' &= 1 
+                    \end{array}\right.
+                \] となることから, $r=1$, $r=2$ は周期 $2\pi$ の周期軌道であり, $r=1$ は不安定なリミットサイクル, $r=2$ は安定なリミットサイクルである. 
+                また, $r=0$ (つまり原点) は漸近安定な平衡点である. 
+            </p>
+
+            <p>実際の数値計算の結果を以下に掲載する. 
+                赤と緑の線は初期値を適当に設定したものであり, 原点と $r=2$ で表されるリミットサイクルにそれぞれ収束している様子を確認できる. 
+                一方で, 青い線は狙い撃ち法に基づき計算した初期値に対する計算結果であり, 不安定な周期軌道を捉えることができている. 
+            </p>
+
+            <div class="resize"><img src='./images/shooting_method.png'></div>
+
+            <p>それでは, 上の問題に対する狙い撃ち法に基づく数値計算を考えてみよう. 
+                ここでは位相条件 $g(\mathbf{x}_0) = 0$ を与える関数 $g$ として 
+                \[
+                    g(x_0, y_0) = y_0 
+                \] を用いることにする. 
+                また, 数値計算の際には $x_0\gt 0$ と設定することにすれば, これは初期値が
+                \[
+                    \Sigma = \{(x, y)\in\mathbb{R}^2: x\gt 0,\ y=0\}
+                \] というポアンカレ断面上にあると仮定していることに相当する. 
+                次に, 記号の簡単のために $s=x^2+y^2$ とおくと
+                \[
+                    \mathbf{f}(\mathbf{x}) = \begin{pmatrix} 
+                        -y + ax(s-1)(4-s) \cr 
+                        x + ay(s-1)(4-s) 
+                    \end{pmatrix}
+                \] より 
+                \[
+                    D\mathbf{f}(\mathbf{x}) = \begin{pmatrix} 
+                        a(s-1)(4-s) + 2ax^2(5-2s) & -1 + 2axy(5-2s) \cr 
+                        1+2axy(5-2s) & a(s-1)(4-s) + 2ay^2(5-s2) 
+                    \end{pmatrix}
+                \] である. 
+                あとは狙い撃ち法に基づき, 適当に定めた $\mathbf{x}_0^{(0)}$ および $T^{(0)}$ に対し, 例えば
+            </p>
+
+            <ol>
+                <li>与えられた $\mathbf{x}_0^{(k)}$, $T^{(k)}$ に対し, $\mathbf{x}' = \mathbf{f}(\mathbf{x})$ と $M' = D\mathbf{f}(\mathbf{x})M$ をルンゲ=クッタ法で計算して $\mathbf{x}(T^{(k)})$, $M(T^{(k)})$ をそれぞれ求める: 時間ステップ数 $N$ に対し, 
+                    \[
+                        \tau = \dfrac{T^{(k)}}{N},\quad t_n = n\tau, \quad \mathbf{x}_n \approx \mathbf{x}(t_n),\quad M_n \approx M(t_n)
+                    \] に基づき
+                    <ul>
+                        <li>$\mathbf{k}_1 = \mathbf{f}(\mathbf{x}_n), \quad K_1 = D\mathbf{f}(\mathbf{x}_n)M_n$, </li>
+                        <li>$\mathbf{k}_2 = \mathbf{f}\left(\mathbf{x}_n + \dfrac{\tau}{2}\mathbf{k}_1\right), \quad K_2 = D\mathbf{f}\left(\mathbf{x}_n + \dfrac{\tau}{2}\mathbf{k}_1\right)\left(M_n + \dfrac{\tau}{2}K_1\right)$, </li>
+                        <li>$\mathbf{k}_3 = \mathbf{f}\left(\mathbf{x}_n + \dfrac{\tau}{2}\mathbf{k}_2\right), \quad K_3 = D\mathbf{f}\left(\mathbf{x}_n + \dfrac{\tau}{2}\mathbf{k}_2\right)\left(M_n + \dfrac{\tau}{2}K_2\right)$, </li>
+                        <li>$\mathbf{k}_4 = \mathbf{f}(\mathbf{x}_n + \tau\mathbf{k}_3), \quad K_4 = D\mathbf{f}(\mathbf{x}_n + \tau\mathbf{k}_3)(M_n + \tau K_3)$, </li>
+                        <li>$\mathbf{x}_{n+1} = \mathbf{x}_n + \dfrac{\tau}{6}(\mathbf{k}_1 + 2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4), \quad M_{n+1} = M_n + \dfrac{\tau}{6}(K_1 + 2K_2 + 2K_3 + K_4)$</li>
+                    </ul> と計算する,   
+                </li>
+                <li>ヤコビ行列 
+                    \[
+                        DF(\mathbf{x}_0^{(k)}, T^{(k)}) = \begin{pmatrix} 
+                            M(T^{(k)}) - I & \mathbf{f}(\mathbf{x}(T^{(k)})) \cr 
+                            \nabla g(\mathbf{x}_0^{(k)})^{\operatorname{T}} & 0 
+                        \end{pmatrix}
+                    \] を求める. </li>
+                <li>ニュートン法による更新
+                    \[
+                        \begin{pmatrix} 
+                            \mathbf{x}_0^{(k+1)} \cr  
+                            T^{(k+1)}
+                        \end{pmatrix} = DF(\mathbf{x}_0^{(k)}, T^{(k)})^{-1}\begin{pmatrix} 
+                            \mathbf{x}_0^{(k)} \cr  
+                            T^{(k)}
+                        \end{pmatrix}
+                    \] を計算する
+                </li>
+            </ol>
+            <p>という手順で反復計算し, 適当に打ち切ることで不安定な周期軌道を与える $\mathbf{x}_0$, $T$ が得られると期待される. </p>
+            
+
+        </section>
 
         <hr>
 
-        <section id="section3-3"><h2>3.3: エネルギーに基づく解釈</h2>
-            <p><a href="./stability_theory.html#section2-3">2.3: リアプノフの安定性定理</a> において言及した勾配系 
+        <section id="section4-3"><h2>4.3: 勾配系とハミルトン系</h2>
+            <p><a href="./stability_theory.html#sectio3-2">3.2: リアプノフの安定性定理</a> において言及した勾配系 
                 \[
-                    \mathbf{x} = -\nabla E(\mathbf{x})
-                \] は, エネルギー $E: \mathbb{R}^d\to\mathbb{R}$ を小さくする方向に解が動くと説明することができるものであった. 
-                勾配系のようにエネルギーを用いて表される力学系は, (相空間の次元が小さいならば) エネルギーを表す関数のプロットから解の挙動を推測することができる. 
-                このアイデアについて簡単に紹介しよう. 
+                    \mathbf{x}' = -\nabla E(\mathbf{x})
+                \] は, エネルギー $E: \mathbb{R}^d\to\mathbb{R}$ の最急降下方向に解が動くと説明することができるものであった. 
+                また, 保存系は保存量を一定に保つように解が動く. 
+                そのため, これらの力学系は (相空間の次元が小さいならば) エネルギーや保存量を表す関数のプロットから解の挙動を推測することができる. 
+                ここでは, このアイデアについて簡単に紹介し, また保存系の一例として <b>ハミルトン系</b> についても言及する.  
             </p>
             <p>まずは勾配系の定義を改めて述べる: </p>
 
             <div class="definition" data-name="勾配系">
-                <p>スカラー値関数 $E: \mathbb{R}^d\to\mathbb{R}$ に対して, 
+                <p>$C^1$ 級関数 $E: \mathbb{R}^d\to\mathbb{R}$ に対して, 
                     \[
                         \mathbf{x}' = -\nabla E(\mathbf{x})
                     \] という力学系を <b>勾配系</b> (<b>gradient system</b>) もしくは <b>勾配流</b> (<b>gradient flow</b>) という.
@@ -735,25 +849,24 @@
                     <li>力学系 $\mathbf{x}' = -\nabla E(\mathbf{x})$ の平衡点は $\nabla E(\mathbf{x})=0$ を満たす点, すなわちエネルギーの勾配を $0$ にする点 (停留点) である. 
                     </li>
                     <li>直感的には, 勾配系の解は &quot;エネルギーの坂を転げ落ちる&quot; ように動く. </li>
-                    <li>停留点においてエネルギーの極小値が達成されるならば, その停留点は漸近安定な平衡点 (沈点) であり, 極大値が達成されるならば, その停留点は不安定な平衡点, 特に源点である. 
-                        どちらにも該当しない停留点は不安定な平衡点であり, 特に鞍点である. 
+                    <li>以上より, エネルギー関数の形状から平衡点の安定性を判断できる場合がある. 
                     </li>
                 </ul>
             </div>
 
             <div class="example">
-                <p>例として一次元力学系
+                <p>例としてロジスティック方程式
                     \[
-                        x' = (1-x)x
-                    \] を考える. 
-                    右辺を $f(x) = (1-x)x$ とおくと, 平衡点は $f(x)=0$ となる $x=0, 1$ であり, その符号を考えることで, 下図 ($1$ 次元力学系に対する相図に相当する) のように安定性を判断できる. 
+                        x' = f(x) = ax(1-x)
+                    \] を考える, ただし $a\gt 0$ とする. 
+                    平衡点は $x=0, 1$ であり, その符号を考えることで, 下図のように安定性を判断できる. 
                 </p>
                 <div class="resize"><img src='./images/stable_equilibrium_1D-crop-1.png'></div>
-                <p>ところで, $E(x) = x^3/3 - x^2/2$ とおくと, この問題は 
+                <p>ところで, $E(x) = a(x^3/3 - x^2/2)$ とおくと, ロジスティック方程式は
                     \[
                         x' = -\dfrac{dE}{dx}(x)
                     \] という勾配系であると解釈できる. 
-                    従って, 関数 $E(x)$ のグラフのプロットから平衡点を見つけ, その安定性を判定することができる. 
+                    従って, 関数 $E(x)$ の停留点が平衡点であり, グラフの形状からその安定性を判定することができる (下図). 
                 </p>
                 <div class="resize"><img src='./images/energy_function_1d-1.png'></div>
             </div>
@@ -793,8 +906,8 @@
                             \partial E/\partial x \cr 
                             \partial E/\partial y 
                         \end{pmatrix} = \begin{pmatrix} 
-                            x^3 - (x+y)/2   \cr 
-                            y^3 - (x+y)/2 
+                            -x^3 + (x+y)/2   \cr 
+                            -y^3 + (x+y)/2 
                         \end{pmatrix}
                     \] を考える. 
                     このエネルギーは $E(x, y)\ge0$ を満たし, また $E(1, 1) = E(-1, -1) = 0$ を満たすことから, この $2$ 点が漸近安定な平衡点である. 
@@ -809,16 +922,18 @@
                 </div>
             </div>
 
+            <hr>
+
             <p>次に <b>ハミルトン系</b> について紹介する:</p> 
 
             <div class="definition" data-name="ハミルトン系">
-                <p>スカラー値関数 $H: \mathbb{R}^{2d}\to\mathbb{R}$ について, $\mathbf{x}\in\mathbb{R}^{2d}$ を 
+                <p>$C^1$ 級関数 $H: \mathbb{R}^{2d}\to\mathbb{R}$ について, $\mathbf{x}\in\mathbb{R}^{2d}$ を 
                     \[
                         \mathbf{x} = \begin{pmatrix} 
                             \mathbf{q} \cr 
                             \mathbf{p} 
                         \end{pmatrix},\quad (\mathbf{p}, \mathbf{q}\in\mathbb{R}^d)
-                    \] と表す. また, 
+                    \] と表し, また 
                     \[
                         \nabla H(\mathbf{x}) = \begin{pmatrix} 
                             \nabla_{\mathbf{q}}H(\mathbf{x}) \cr 
@@ -832,8 +947,7 @@
                             \vdots \cr 
                             \partial H/\partial p_d(\mathbf{x}) 
                         \end{pmatrix}
-                    \] と表記する. 
-                    このとき, 
+                    \] と表記するとき, 
                     \[
                         \mathbf{x}' = \begin{pmatrix} 
                             \mathbf{q}' \cr 
@@ -842,8 +956,7 @@
                             \nabla_{\mathbf{p}}H(\mathbf{x}) \cr 
                             -\nabla_{\mathbf{q}}H(\mathbf{x}) 
                         \end{pmatrix}
-                    \] を <b>ハミルトン系</b> (<b>Hamiltonian system</b>) という. 
-                    このとき, $H$ をエネルギーもしくは <b>ハミルトニアン</b> という. 
+                    \] を <b>ハミルトン系</b> (<b>Hamiltonian system</b>) といい, $H$ をエネルギーもしくは <b>ハミルトニアン</b> という. 
                 </p>
             </div>
 
@@ -851,7 +964,7 @@
                 <ul>
                     <li>ハミルトン系の解 $\mathbf{x}(t)$ は, 
                         \[
-                            \dfrac{d}{dt}H(\mathbf{x}(t)) = \mathbf{x}'\cdot \nabla H(\mathbf{x}) = \begin{pmatrix} 
+                            \dot{H}(\mathbf{x}) = \dfrac{d}{dt}H(\mathbf{x}(t)) = \mathbf{x}'\cdot \nabla H(\mathbf{x}) = \begin{pmatrix} 
                                 \nabla_{\mathbf{p}}H(\mathbf{x}) \cr 
                                 -\nabla_{\mathbf{q}}H(\mathbf{x}) 
                             \end{pmatrix} \cdot \begin{pmatrix} 
@@ -859,28 +972,31 @@
                                 \nabla_{\mathbf{p}}H(\mathbf{x}) 
                             \end{pmatrix}  = 0
                         \] を満たす. 
-                        すなわち, ハミルトン系の解 $\mathbf{x}(t)$ は, エネルギー (ハミルトニアン) $H$ の値を保存するように動く. 
-                        このような特徴を持つ力学系は <b>保存系</b> と呼ばれることがある. 
+                        つまり, ハミルトン系はハミルトニアンを保存量とする保存系である
                     </li>
                     <li>ハミルトン系は
                         \[
-                            \mathbf{x}' = \begin{pmatrix} 
+                            \mathbf{x}' = \underbrace{\begin{pmatrix} 
                                 0 & I \cr 
                                 -I & 0 
-                            \end{pmatrix} \nabla H(\mathbf{x})
+                            \end{pmatrix}}_{=J} \nabla H(\mathbf{x})
                         \] と表すことができる (一方で, 勾配系は 
                         \[
                              \mathbf{x}' = \begin{pmatrix} 
                                 -I & 0 \cr 
                                 0 & -I 
                             \end{pmatrix} \nabla E(\mathbf{x})
-                        \] と表すことができる).
+                        \] と表すことができる). 
+                        なお, $J$ は歪対称行列 (つまり $J^{\operatorname{T}} = -J$) であり, また $J^{-1} = -J$ より 
+                        \[
+                            J^{\operatorname{T}} = -J = J^{-1},\qquad J^2 = -I
+                        \] が成立する. 
                     </li>
                 </ul>
             </div>
 
             <div class="example">
-                <p>ダフィング方程式の際に考えた 
+                <p>ダフィング方程式から導出された
                     \[
                         \begin{pmatrix} 
                             x' \cr 
@@ -889,90 +1005,51 @@
                             y \cr 
                             x-x^3 
                         \end{pmatrix} 
-                    \] についてもう一度考えてみよう. 
-                    この自励系について $(0,0)$ は鞍点であり, ホモクリニック軌道が存在するのだった. 
-                </p>
-                <p>ところで, $H(x, y) = x^4/4 - x^2/2 + y^2/2$ とすると, この問題は 
-                    \[
-                        \begin{pmatrix} 
-                            x' \cr 
-                            y' 
-                        \end{pmatrix} = \begin{pmatrix} 
-                            \partial H/\partial y \cr 
-                            -\partial H/\partial x 
-                        \end{pmatrix} 
-                    \] というハミルトン系であると解釈できる. 
-                    従って, この問題の解は初期値 $\mathbf{x}_0 = (x_0, y_0)$ により与えられた $H(x_0, y_0)$ の等高線上を動くことになる. 
-                    下図がエネルギー関数および $H(x, y)$ の値が $0$ となる等高線をプロットしたものである. 
-                    この等高線上にある平衡点は $\mathbf{0}$ のみであり, この平衡点は線形安定性解析より不安定であることがわかる. 
-                    従って $\mathbf{0}$ から離れるように動く軌道が存在するが, 平衡点以外の点で解の動きが止まることは起こり得ないため, 解の軌道は再び $\mathbf{0}$ に近づくように動くことになる, つまり図中の黒い線はホモクリニック軌道を表していることがわかる. 
-                </p>
-                <div class="resize"><img src='./images/hamiltonian-1.png'></div>
+                    \] は,  $H(x, y) = x^4/4 - x^2/2 + y^2/2$ をハミルトニアンとするハミルトン系である. 
             </div>
 
-            <hr>
-
-            <p>記号の簡単のために 
-                \[
-                    J = \begin{pmatrix} 
-                        0 & -I \cr 
-                        I & 0 
-                    \end{pmatrix}\in\mathbb{R}^{d\times d}
-                \] を導入しよう. このとき, 
-                \[
-                    J^{-1} = \begin{pmatrix} 
-                        0 & I \cr 
-                        -I & 0 
-                    \end{pmatrix}
-                \] に注意すると, ハミルトン系は $\mathbf{x}' = J^{-1}\nabla H(\mathbf{x})$ と表すことができる. 
-                ここで, このハミルトン系のフローを $S(t): \mathbf{R}^d\to\mathbf{R}^d$ と表す, つまり解は $\mathbf{x}(t) = S(t)\mathbf{x}_0$ と表すことができるとする. 
-                このとき, 以下が成立することが知られている:
+            <p>ハミルトン系は, 厳密には <b>シンプレクティック構造</b> を持つ力学系であると説明される. 
+                以降, シンプレクティック性とその数値計算への利用について紹介しよう: 
             </p>
 
             <div class="theorem" data-name="ハミルトン系のシンプレクティック性">
-                <p>エネルギー $H:\mathbb{R}^d\to\mathbb{R}$ は十分滑らかであるとする. 
-                    このとき, ハミルトン系 $\mathbf{x}' = J^{-1}\nabla H(\mathbf{x})$ のフロー $S(t): \mathbb{R}^d\to\mathbb{R}^d$ に対して, 
+                <p>ハミルトニアン $H:\mathbb{R}^d\to\mathbb{R}$ は十分滑らかであるとする. 
+                    このとき, ハミルトン系 $\mathbf{x}' = J\nabla H(\mathbf{x})$ のフロー $\{\Phi_t\}_{t\in\mathbb{R}}$ に対して, 
                     \[
-                        \left(DS(t)(\mathbf{x}_0)\right)^{\operatorname{T}} J (DS(t)(\mathbf{x}_0)) = J 
-                    \] が成立する, ただし, 
-                    \[
-                        DS(t)(\mathbf{x}_0) = \dfrac{\partial S(t)}{\partial \mathbf{x}_0}(\mathbf{x}_0)
-                    \] は $\mathbf{x}_0$ を変数とする関数 $S(t)$ のヤコビ行列である. 
+                        \left(D\Phi_t(\mathbf{x}_0)\right)^{\operatorname{T}} J (D\Phi_t(\mathbf{x}_0)) = J 
+                    \] が成立する. 
                 </p>
             </div>
 
             <div class="remark">
-                <ul>
-                    <li>一般に, 
-                        \[
-                            M^{\operatorname{T}}JM = J
-                        \] を満たす行列 $M$ を <b>斜交行列</b> (<b>symplectic matrix</b>) もしくは <b>シンプレクティック行列</b> という. 
-                        上の定理は, ハミルトン系のフロー $S(t)$ を $\mathbf{x}_0$ を変数とする関数とみなしたときのヤコビ行列 $DS(t) \in\mathbb{R}^{d\times d}$ がシンプレクティック行列となることを意味している. 
-                    </li>
-                    <li>なお, ハミルトン系のこのような性質を <b>シンプレクティック性</b> という. 
-                        シンプレクティック性は, ハミルトン系を特徴づける性質の一つであり, これは後述の <b>シンプレクティック解法</b> のように数値計算にも利用される. 
-                    </li>
-                </ul>
+                <p>一般に, 
+                    \[
+                        M^{\operatorname{T}}JM = J
+                    \] を満たす行列 $M$ を <b>斜交行列</b> (<b>symplectic matrix</b>) もしくは <b>シンプレクティック行列</b> という. 
+                    上の定理は, ハミルトン系の時間発展写像 $\Phi_t$ のヤコビ行列 $D\Phi_t \in\mathbb{R}^{d\times d}$ がシンプレクティック行列となることを意味している. 
+                </p>
             </div>
 
             <div class="proof">
-                <p>この証明中のみ, フロー $S(t): \mathbb{R}^d\to\mathbb{R}^d$ に対して $S(t)(\mathbf{x}_0)$ のように表記することにする. 
-                    記号の簡単のために 
+                <p>記号の簡単のために 
                     \[
-                        F(t)(\mathbf{x}_0) = \dfrac{\partial S(t)}{\partial \mathbf{x}_0}(\mathbf{x}_0)
-                    \] とおく, このとき $(F(t)(\mathbf{x}_0))^{\operatorname{T}} J(F(t)(\mathbf{x}_0)) = J$ を示せば良いことになる. 
-                    まず, $S(0)(\mathbf{x}_0) = \mathbf{x}_0$ であることから, $F(0)(\mathbf{x}_0) = I$ となるため $(F(0)(\mathbf{x}_0))^{\operatorname{T}} J(F(0)(\mathbf{x}_0)) = J$ が得られる. 
+                        Y(t) = \dfrac{\partial \Phi_t}{\partial \mathbf{x}_0}(\mathbf{x}_0)
+                    \] とおく, このとき $Y(t)^{\operatorname{T}} J Y(t) = J$ を示せば良いことになる. 
+                    まず, $\Phi_0(\mathbf{x}_0) = \mathbf{x}_0$ であることから, $Y(0) = I$ であり, 従って  
+                    \[
+                        Y(0)^{\operatorname{T}} J Y(0) = I^{\operatorname{T}}JI = J 
+                    \] が得られる. 
                     あとは 
                     \[
-                        \dfrac{d}{dt}(F(t)(\mathbf{x}_0))^{\operatorname{T}} J(F(t)(\mathbf{x}_0)) = 0 \in\mathbb{R}^{d\times d}
+                        \dfrac{d}{dt}(Y(t)^{\operatorname{T}} J Y(t)) = 0 \in\mathbb{R}^{d\times d}
                     \] であることを証明すれば良い. 
                 </p>
                 <p>いま, ハミルトン系の式より
                     \[
-                        \dfrac{d}{dt}S(t)(\mathbf{x}_0) = \mathbf{x}' = J^{-1}\nabla H(S(t)(\mathbf{x}_0))
+                        \dfrac{d}{dt}\Phi_t(\mathbf{x}_0) = \mathbf{x}' = J\nabla H(\Phi_t(\mathbf{x}_0))
                     \] であることに注意すると
                     \[
-                        \dfrac{d}{dt}F(t)(\mathbf{x}_0) = J^{-1}\nabla^2 H(S(t)\mathbf{x}_0)\left(\dfrac{\partial S(t)}{\partial\mathbf{x}_0}(\mathbf{x}_0)\right) = J^{-1}\nabla^2 H(S(t)\mathbf{x}_0)(F(t)(\mathbf{x}_0))
+                        \dfrac{d}{dt}Y(t) = J\nabla^2 H(\Phi_t(\mathbf{x}_0))\left(\dfrac{\partial \Phi_t}{\partial\mathbf{x}_0}(\mathbf{x}_0)\right) = J\nabla^2 H(\Phi_t(\mathbf{x}_0))Y(t)
                     \] が得られる, ここで $\nabla^2 H$ は関数 $H: \mathbb{R}^d\to\mathbb{R}$ に対するヘッセ行列 
                     \[
                         \nabla^2 H (\mathbf{x}) = \begin{pmatrix} 
@@ -982,67 +1059,77 @@
                             \dfrac{\partial^2 H}{\partial x_d\partial x_1}(\mathbf{x}) & \dfrac{\partial^2 H}{\partial x_d\partial x_2}(\mathbf{x}) & \dots & \dfrac{\partial^2 H}{\partial x_d^2}(\mathbf{x}) \cr 
                         \end{pmatrix} 
                     \] であり, 特に対称行列であることに注意. 
-                    このことと $(J^{-1})^{\operatorname{T}} = -J^{-1}$ であることから 
+                    これと $J^{\operatorname{T}} = J^{-1}$ と $J^2= -I$ より 
                     \[
-                        \dfrac{d}{dt}(F^{\operatorname{T}}JF) = (J^{-1}\nabla^2 H F)^{\operatorname{T}}JF + F^{\operatorname{T}}JJ^{-1}\nabla^2 H F = - F^{\operatorname{T}}(\nabla^2 H)^{\operatorname{T}}F + F^{\operatorname{T}}\nabla^2 HF = 0
+                        \dfrac{d}{dt}(Y^{\operatorname{T}}JY) = (J\nabla^2 H Y)^{\operatorname{T}}JY + Y^{\operatorname{T}}JJ\nabla^2 H Y = Y^{\operatorname{T}}(\nabla^2 H)^{\operatorname{T}}Y - Y^{\operatorname{T}}\nabla^2 HY = 0
                     \] となり, 欲しい式が得られる. 
                 </p>
             </div>
 
-        </section>
+            <hr>
 
-        <hr>
-
-        <section id="section3-A"><h2>数値計算: 構造保存型数値解法</h2>
-            <p>先ほど言及したように, 勾配系の解はエネルギーを小さくするように動く, ハミルトン系の解はエネルギーを保存するように動く, という性質がある. 
-                さらに, ハミルトン系にはシンプレクティック性と呼ばれる性質があることも言及した. 
-                さて, オイラー法やルンゲ=クッタ法の数値計算結果がこれらの性質を再現するかというと, 一般にはそうとは限らない. 
-            </p>
-            <p>簡単な例として, $x'' = -dV/dx$ という問題に $y = x'$ を導入することで得られる 
+            <p>それでは, ハミルトン系に対する数値計算を考えていこう. 
+                簡単な例として, 
                 \[
-                    \begin{pmatrix} 
-                        x' \cr 
-                        y' 
+                    H(\mathbf{x}) = \dfrac{x^2}{2} + \dfrac{y^2}{2}
+                \] というハミルトニアンに対するハミルトン系を考えてみよう. 
+                具体的に式を書くと, 
+                \[
+                    \mathbf{x}' = \begin{pmatrix} 
+                        \partial H/\partial y \cr 
+                        -\partial H/\partial x 
                     \end{pmatrix} = \begin{pmatrix} 
                         y \cr 
-                        -dV/dx
+                        -x 
                     \end{pmatrix} = \begin{pmatrix} 
-                        \partial_y H \cr 
-                        -\partial_x H 
-                    \end{pmatrix}
-                \] というハミルトン系を考えよう, ただし $H(x, y) = V(x) + y^2/2$ である. 
-                特に $V(x) = x^2/2$ のとき, エネルギーは $H(x, y) = (x^2+y^2)/2$ であり, このハミルトン系は <a href="section1-A">数値計算: オイラー法</a> において考えた調和振動子に一致する. 
-                前進オイラー法と後退オイラー法の数値解がエネルギーを保存しない (数値解は厳密解と比較して膨張したり縮小したりする) ということは既に確認した通りである. 
+                        0 & 1 \cr 
+                        -1 & 0 
+                    \end{pmatrix}\mathbf{x}
+                \] という線形力学系になるが, これは <a href="linear_dynamical_system.html#section2-3">2.3: 二階常微分方程式と数値計算</a> において言及した調和振動子に他ならない. 
+                この問題に対するオイラー法は, 「『同一円周上を動く』という厳密解の性質を再現しない」ことを紹介したが, 実は「『ハミルトニアンを一定に保つ』というハミルトン系の性質を再現しない」という弱点もある. 
+                厳密解とオイラー法による数値計算結果の比較を再掲する: 
             </p>
+
+            <div class="resize"><img src='./images/harmonic_oscillator.png'></div>
 
             <p>さて, オイラー法やルンゲ=クッタ法などは多くの問題に対して適用可能であるという利点がある (このことから <b>汎用解法</b> と総称されることがある) が, 勾配系やハミルトン系のような問題に対しては, 数値解が厳密解の性質を再現するように特別に設計された数値計算手法が用いられることもある. 
                 このような発想に基づく数値計算手法を (汎用解法と対比して) <b>構造保存型数値解法</b> (<b>structure-preserving numerical method</b>) と呼ぶことがある. 
                 ここでは, 特にハミルトン系に対する構造保存型数値解法として, エネルギー保存を再現する <b>エネルギー保存解法</b> とシンプレクティック性を再現する <b>シンプレクティック解法</b> の具体例を紹介しよう. 
             </p>
 
-            <p>まず, エネルギー保存解法の具体例として, (一般化された) ハミルトン系に対する <b>離散勾配法</b> を述べる: </p>
+            <p>以降, 
+                \[
+                    H(\mathbf{x}) = V(x) + \dfrac{y^2}{2},\qquad V(x) = \dfrac{x^4}{4} 
+                \] というハミルトニアンに対するハミルトン系
+                \[
+                    \mathbf{x}' = J^{-1}\nabla H(\mathbf{x}) = \begin{pmatrix} 
+                        y \cr 
+                        -x^3 
+                    \end{pmatrix} 
+                \] に対する数値計算を考えよう. 
+                まず, エネルギー保存解法の具体例として, ハミルトン系に対する <b>離散勾配法</b> を述べる: </p>
 
             <div class="definition" data-name="離散勾配法">
-                <p>歪対称行列 $A\in \mathbb{R}^{d\times d}$ を用いて 
+                <p>$C^1$ 級写像 $H$ をハミルトニアンとするハミルトン系
                     \[
-                        \mathbf{x}' = A\nabla H(\mathbf{x})
-                    \] と表される問題を考える. 
-                    いま, エネルギー $H: \mathbb{R}^d\to\mathbb{R}$ の勾配 $\nabla H: \mathbb{R}^d\to\mathbb{R}^d$ に対し, 以下を満たす <b>離散勾配</b> $\overline{\nabla}H: \mathbb{R}^d\times\mathbb{R}^d\to\mathbb{R}^d$ を定める: 
+                        \mathbf{x}' = J\nabla H(\mathbf{x})
+                    \] を考える. 
+                    いま, ハミルトニアン $H$ に対し, 以下を満たす <b>離散勾配</b> $\overline{\nabla}H: \mathbb{R}^d\times\mathbb{R}^d\to\mathbb{R}^d$ を定める: 
                     \[
                         \left\{\begin{array}{cl}
                             H(\mathbf{x}) - H(\widehat{\mathbf{x}}) = (\overline{\nabla}H(\mathbf{x}, \widehat{\mathbf{x}}))\cdot(\mathbf{x} - \widehat{\mathbf{x}}) & \text{for all }\mathbf{x},\ \widehat{\mathbf{x}}\in\mathbb{R}^d, \cr 
                             \overline{\nabla}H(\mathbf{x}, \mathbf{x}) = \nabla H(\mathbf{x}) & \text{for all }\mathbf{x}\in\mathbb{R}^d.
                         \end{array}\right.
-                    \] これを用いて, $\mathbf{x}' = A\nabla H(\mathbf{x})$ に対して 
+                    \] これを用いて, $\mathbf{x}' = J^{-1}\nabla H(\mathbf{x})$ に対して 
                     \[
-                        \dfrac{\mathbf{x}_{n+1} - \mathbf{x}_n}{\tau} = A\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n)
+                        \dfrac{\mathbf{x}_{n+1} - \mathbf{x}_n}{\tau} = J^{-1}\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n)
                     \] という数値計算を行う. 
                     この手法を <b>離散勾配法</b> (<b>discrete gradient method</b>) という. 
                 </p>
             </div>
 
             <div class="exercise">
-                <p>エネルギー $H$ に対する離散勾配 $\overline{\nabla}H$ が存在するとき, 歪対称行列 $A$ を用いて表される $\mathbf{x}' = A\nabla H(\mathbf{x})$ という力学系に対する離散勾配法により得られる数値計算結果 $\mathbf{x}_n$ が, 
+                <p>ハミルトン系 $\mathbf{x}' = J^{-1}\nabla H(\mathbf{x})$ に対する離散勾配法により得られる数値計算結果 $\mathbf{x}_n$ が, 
                     \[
                         H(\mathbf{x}_n) = \dots = H(\mathbf{x}_0)
                     \] を満たすことを証明せよ, ただし $\mathbf{x}_0$ は与えられた初期値とする.
@@ -1054,59 +1141,50 @@
                     \[
                         \begin{array}{rl} 
                             H(\mathbf{x}_{n+1}) - H(\mathbf{x}_n) &= (\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)) \cdot (\mathbf{x}_{n+1} - \mathbf{x}_n) \cr 
-                            &= \tau\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)^{\operatorname{T}}A\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n) 
+                            &= \tau\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)^{\operatorname{T}}J^{-1}\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n) 
                         \end{array}
                     \] が得られる. 
-                    ここで, 任意のベクトル $\mathbf{v}\in\mathbb{R}^{d}$ に対し $\mathbf{v}^{\operatorname{T}}A\mathbf{v}$ はスカラー値であること, および $A$ が歪対称行列であることから $A^{\operatorname{T}} = -A$ であることに注意すると, 
+                    ここで, 任意のベクトル $\mathbf{v}\in\mathbb{R}^{d}$ に対し $\mathbf{v}^{\operatorname{T}}J^{-1}\mathbf{v}$ はスカラー値であること, および $J^{-1}$ が歪対称行列であることから 
                     \[
                         \begin{array}{rl} 
-                            \mathbf{v}^{\operatorname{T}}A\mathbf{v} &= \left(\mathbf{v}^{\operatorname{T}}A\mathbf{v}\right)^{\operatorname{T}} \quad(\because \text{$\mathbf{v}^{\operatorname{T}}A\mathbf{v}$ はスカラー値}) \cr 
-                            &= \mathbf{v}^{\operatorname{T}}A^{\operatorname{T}}\mathbf{v} \cr 
-                            &= -\mathbf{v}^{\operatorname{T}}A\mathbf{v} \quad (\because \text{$A$ は歪対称})
+                            \mathbf{v}^{\operatorname{T}}J^{-1}\mathbf{v} &= \left(\mathbf{v}^{\operatorname{T}}J^{-1}\mathbf{v}\right)^{\operatorname{T}} \quad(\because \text{$\mathbf{v}^{\operatorname{T}}J^{-1}\mathbf{v}$ はスカラー値}) \cr 
+                            &= \mathbf{v}^{\operatorname{T}}(J^{-1})^{\operatorname{T}}\mathbf{v} \cr 
+                            &= -\mathbf{v}^{\operatorname{T}}J^{-1}\mathbf{v} \quad (\because \text{$J^{-1}$ は歪対称})
                         \end{array}
-                    \] が得られるため, 任意の $\mathbf{v}\in\mathbb{R}^{d}$ に対し $\mathbf{v}^{\operatorname{T}}A\mathbf{v} = 0$ である. 
+                    \] が得られるため, 任意の $\mathbf{v}\in\mathbb{R}^{d}$ に対し $\mathbf{v}^{\operatorname{T}}J^{-1}\mathbf{v} = 0$ である. 
                     これを用いると 
                     \[
-                        H(\mathbf{x}_{n+1}) - H(\mathbf{x}_n) = \tau\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)^{\operatorname{T}}A\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n) = 0
+                        H(\mathbf{x}_{n+1}) - H(\mathbf{x}_n) = \tau\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)^{\operatorname{T}}J^{-1}\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n) = 0
                     \] となるため, 
                     \[
                         H(\mathbf{x}_{n+1}) = H(\mathbf{x}_n) = \dots = H(\mathbf{x}_0) 
-                    \] が得られる, すなわち離散勾配法によるエネルギーの保存が証明される. 
+                    \] が得られる. 
                 </p>
             </div>
 
-            <p>一般に, 与えられたエネルギー $H$ に対する離散勾配は存在するとは限らず, また複数存在し得る. 
-                ここでは離散勾配の具体的な構成例を一つだけ紹介しよう. 
-                先ほども考えた $H(\mathbf{x}) = V(x) + y^2/2$ において, 今度は $V(x) = x^4/4$ としてみる. 
-                このとき, 
+            <p>与えられたハミルトニアン $H$ に対する離散勾配は一般に一意ではなく, 様々な構成法が存在する. 
+                ここでは
                 \[
                     H(\mathbf{x}) = \dfrac{x^4}{4} + \dfrac{y^2}{2},\quad \nabla H(\mathbf{x}) = \begin{pmatrix} 
                         x^3 \cr 
                         y 
                     \end{pmatrix}, 
-                \] である. 
-                ここで, 
+                \] に対する離散勾配の具体的な構成例として,  
                 \[
                     \overline{\nabla}H(\mathbf{x}, \widehat{\mathbf{x}}) = \begin{pmatrix} 
                         (x^3 + x^2\widehat{x} + x\widehat{x}^2 + \widehat{x}^3) / 4 \cr 
                         (y + \widehat{y}) / 2 
                     \end{pmatrix}
                 \] と定めてみる. 
-                これは確かに $H$ に対する離散勾配となっている (これは Itoh-Abe 法による構成と一致している) ため, ハミルトン系 
+                これは確かに $H$ に対する離散勾配となっているため, ハミルトン系 
                 \[
-                    \mathbf{x}' = \begin{pmatrix} 
-                        0 & 1 \cr 
-                        -1 & 0 
-                    \end{pmatrix} \nabla H(\mathbf{x}) = \begin{pmatrix} 
+                    \mathbf{x}' = J\nabla H(\mathbf{x}) = \begin{pmatrix} 
                         y \cr 
                         -x^3 
                     \end{pmatrix} 
                 \] に対して, 
                 \[
-                    \dfrac{\mathbf{x}_{n+1} - \mathbf{x}_n}{\tau} = \begin{pmatrix} 
-                        0 & 1 \cr 
-                        -1 & 0 
-                    \end{pmatrix} \overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n) = \begin{pmatrix} 
+                    \dfrac{\mathbf{x}_{n+1} - \mathbf{x}_n}{\tau} = J^{-1}\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n) = \begin{pmatrix} 
                         (y_{n+1} + y_n) / 2 \cr 
                         -(x_{n+1}^3 + x_{n+1}^2x_n + x_{n+1}x_n^2 + x_n^3) / 4 
                     \end{pmatrix}
@@ -1116,36 +1194,30 @@
             <p>これは陰的非線形な計算スキームであり, 陽的ルンゲ=クッタ法ほど手軽に計算できないものの, ニュートン法などを用いることで計算可能である. 
                 例えば, 与えられた $\mathbf{x}_n = (x_n, y_n)$ に対し, 
                 \[
-                    \mathbf{F}_n(\mathbf{x}) = \mathbf{x} - \mathbf{x}_n - \tau \begin{pmatrix} 
+                    \mathbf{F}(\mathbf{x}) = \mathbf{x} - \mathbf{x}_n - \tau \begin{pmatrix} 
                         (y + y_n) / 2 \cr 
                         -(x^3 + x_n x^2 + x_n^2 x + x_n^3) / 4 
                     \end{pmatrix}
-                \] とおき, $\mathbf{F}_n(\mathbf{x}_{n+1}) = \mathbf{0}$ を満たす $\mathbf{x}_{n+1}$ をニュートン法 
+                \] とおき, $\mathbf{F}(\mathbf{x}_{n+1}) = \mathbf{0}$ を満たす $\mathbf{x}_{n+1}$ をニュートン法 
                 \[
-                    \mathbf{x}^{k+1} = \mathbf{x}^k - D\mathbf{F}_n(\mathbf{x}^k)^{-1}\mathbf{F}_n(\mathbf{x}^k)
-                \] による反復計算の収束先として求める: $\mathbf{x}_{n+1} = \displaystyle\lim_{k\to\infty}\mathbf{x}^k$ (実際には適当なところで反復計算を打ち切ることになる). 
-                また, $\mathbf{F}_n(\mathbf{x}) = \mathbf{0}$ の解は複数存在し得るが, $\tau$ が十分小さいならば $\mathbf{x}_n$ に最も近いものを $\mathbf{x}_{n+1}$ とするのが良いだろう. 
-                実際の数値計算では, 単純にニュートン法の初期値を $\mathbf{x}^0 = \mathbf{x}_n$ と設定した際の収束先を $\mathbf{x}_{n+1}$ とみなせば十分だろう. 
+                    \mathbf{x}^{(k+1)} = \mathbf{x}^{(k)} - D\mathbf{F}(\mathbf{x}^{(k)})^{-1}\mathbf{F}(\mathbf{x}^{(k)})
+                \] による反復計算を適当に打ち切って定める. 
+                いま, $\tau$ が十分小さいならば陰関数定理より $\mathbf{x}_n$ の近傍で一意に解 $\mathbf{x}_{n+1}$ が存在すると期待される. 
+                そのため, ニュートン法の初期値を $\mathbf{x}^{(0)} = \mathbf{x}_n$ と設定した際の反復計算で得られた結果を $\mathbf{x}_{n+1}$ とみなすことにする. 
             </p>
 
             <hr>
 
-            <p>次に, シンプレクティック解法の具体例を紹介する. 
-                ハミルトン系は, 先ほどと同じ $x'' = -dV/dx$ から導出される 
+            <p>次に, シンプレクティック解法の具体例として, ここではハミルトン系 
                 \[
-                    H(\mathbf{x}) = V(x) + y^2/2, \quad V(x) = x^4/4, \quad 
-                    \mathbf{x}' = \begin{pmatrix} 
-                        0 & 1 \cr 
-                        -1 & 0 
-                    \end{pmatrix} \nabla H(\mathbf{x}) = \begin{pmatrix} 
+                    \mathbf{x}' = J^{-1}\nabla H(\mathbf{x}) = \begin{pmatrix} 
                         y \cr 
                         -V'(x) 
-                    \end{pmatrix}  = \begin{pmatrix} 
+                    \end{pmatrix} = \begin{pmatrix} 
                         y \cr 
                         -x^3 
                     \end{pmatrix} 
-                \] を用いることにする. 
-                例えば非標準的なルンゲ=クッタ法の一種なども含め, 様々な数値計算手法がシンプレクティック解法に属すると解釈されるが, ここでは <b>Störmer-Verlet 法</b> を上のハミルトン系に適用してみる:  
+                \] に対して, <b>Störmer-Verlet 法</b> を適用してみる:  
                 \[
                     \left\{\begin{array}{rl}
                         x_{n+1/2} &= x_n + \dfrac{\tau}{2}y_n, \cr 
@@ -1161,81 +1233,205 @@
                         \dfrac{y_{n+1} - y_n}{\tau} &= - V'(x_{n+1/2}), \cr 
                         \dfrac{x_{n+1} - x_{n+1/2}}{\tau/2} &= y_{n+1}.
                     \end{array}\right.
-                \] を意味しており, つまり $x'' = -dV/dx$ に対する中心 $2$ 階差分近似 
+                \] を意味しており, つまり $x'' = y' = -V'(x)$ に対して
                 \[
                     \dfrac{\dfrac{x_{n+1}-x_{n+1/2}}{\tau/2} - \dfrac{x_{n+1/2}-x_n}{\tau/2}}{\tau} = -V'(x_{n+1/2})
-                \] に相当している. 
+                \] とみなしていることに相当している. 
             </p>
             <p>さて, これがシンプレクティック性を再現していることを確認しよう. 
-                いま, $3$ つの関数 $S_1(\tau)$, $S_2(\tau)$, $S_3(\tau): \mathbb{R}^2\to\mathbb{R}^2$ を 
+                いま, $2$ つの写像 $\Phi_1$, $\Phi_2: \mathbb{R}^2\to\mathbb{R}^2$ を 
                 \[
-                    S_1(\tau)(\mathbf{x}) = \begin{pmatrix} 
+                    \Phi_1(\mathbf{x}) = \begin{pmatrix} 
                         x + \dfrac{\tau}{2}y \cr 
                         y 
-                    \end{pmatrix}, \quad S_2(\tau)(\mathbf{x}) = \begin{pmatrix} 
+                    \end{pmatrix}, \quad \Phi_2(\mathbf{x}) = \begin{pmatrix} 
                         x \cr 
                         y - \tau V'(x) 
-                    \end{pmatrix}, \quad S_3(\tau)(\mathbf{x}) = \begin{pmatrix} 
-                        x + \dfrac{\tau}{2}y \cr 
-                        y 
                     \end{pmatrix}
-                \] と定めると, Störmer-Verlet 法により得られる式は 
+                \] と定めると, Störmer-Verlet 法は 
                 \[
-                    \mathbf{x}_{n+1} = (S_3(\tau)\circ S_2(\tau)\circ S_1(\tau))(\mathbf{x}_n)
-                \] と表すことができる. 
-                そこで, 
+                    \mathbf{x}_{n+1} = \underbrace{(\Phi_1\circ \Phi_2\circ \Phi_1)}_{=F}(\mathbf{x}_n)
+                \] という離散力学系とみなせる. 
+                ここで, 合成関数のヤコビ行列は 
                 \[
-                    S_d(\tau) = S_3(\tau)\circ S_2(\tau)\circ S_1(\tau)
-                \] とおくと, これが離散的なフローである. 
-                合成関数のヤコビ行列は 
-                \[
-                    DS_d(\tau) = DS_3(\tau) DS_2(\tau) DS_1(\tau)
+                    DF(\mathbf{x}) = D\Phi_1(\Phi_2(\Phi_1(\mathbf{x}))) D\Phi_2(\Phi_1(\mathbf{x})) D\Phi_1(\mathbf{x})
                 \] となることと,
                 \[
-                    J = \begin{pmatrix} 
-                        0 & -1 \cr 
-                        1 & 0 
-                    \end{pmatrix}
-                \] であることに注意すると, 各ヤコビ行列を具体的に計算することで 
-                \[
-                    \begin{array}{rl} 
-                        (DS_d(\tau))^{\operatorname{T}}J(DS_d(\tau)) &= (DS_1(\tau))^{\operatorname{T}} (DS_2(\tau))^{\operatorname{T}} (DS_3(\tau))^{\operatorname{T}} J (DS_3(\tau)) (DS_2(\tau)) (DS_1(\tau)) \cr 
-                        &= (DS_1(\tau))^{\operatorname{T}} (DS_2(\tau))^{\operatorname{T}} \begin{pmatrix} 
+                    \begin{array}{c} 
+                        D\Phi_1(\mathbf{x})^{\operatorname{T}}JD\Phi_1(\mathbf{x})^{\operatorname{T}} = \begin{pmatrix} 
                             1 & 0 \cr 
                             \tau/2 & 1 
-                        \end{pmatrix} J \begin{pmatrix} 
+                        \end{pmatrix} \begin{pmatrix} 
+                            0 & -1 \cr 
+                            1 & 0 
+                        \end{pmatrix} \begin{pmatrix} 
                             1 & \tau/2 \cr 
                             0 & 1 
-                        \end{pmatrix} (DS_2(\tau)) (DS_1(\tau)) \cr 
-                        &= (DS_1(\tau))^{\operatorname{T}} \begin{pmatrix} 
+                        \end{pmatrix} = J, \cr
+                        D\Phi_2(\mathbf{x})^{\operatorname{T}}JD\Phi_2(\mathbf{x}) = \begin{pmatrix} 
                             1 & -\tau V''(x) \cr 
                             0 & 1 
-                        \end{pmatrix} J \begin{pmatrix} 
+                        \end{pmatrix} \begin{pmatrix} 
+                            0 & -1 \cr 
+                            1 & 0 
+                        \end{pmatrix} \begin{pmatrix} 
                             1 & 0 \cr 
                             -\tau V''(x) & 1 
-                        \end{pmatrix} (DS_1(\tau)) \cr 
-                        &= \begin{pmatrix} 
-                            1 & 0 \cr 
-                            \tau/2 & 1 
-                        \end{pmatrix} J \begin{pmatrix} 
-                            1 & \tau/2 \cr 
-                            0 & 1 
-                        \end{pmatrix} = J 
+                        \end{pmatrix} = J
                     \end{array}
-                \] となる, すなわちシンプレクティック性を再現できていることを確認できる. 
-                なお, シンプレクティック解法は陽的とは限らないものの, この Störmer-Verler 法に関しては陽的スキームであり, 従ってニュートン法などは必要ない. 
+                \] であること (つまり $D\Phi_1$, $D\Phi_2$ がシンプレクティック行列であること) から
+                \[
+                    \begin{array}{rl} 
+                        DF(\mathbf{x})^{\operatorname{T}}J DF(\mathbf{x}) &= D\Phi_1(\Phi_2(\Phi_1(\mathbf{x})))^{\operatorname{T}} D\Phi_2(\Phi_1(\mathbf{x}))^{\operatorname{T}} \underbrace{D\Phi_1(\mathbf{x})^{\operatorname{T}} J D\Phi_1(\mathbf{x})}_{=J} D\Phi_2(\Phi_1(\mathbf{x})) D\Phi_1(\Phi_2(\Phi_1(\mathbf{x}))) \cr 
+                        &= \dots \cr 
+                        &= J 
+                    \end{array}
+                \] となるが, これがシンプレクティック性の再現となっている. 
+                なお, シンプレクティック解法は陽的とは限らないものの, 今回の問題に対する Störmer-Verler 法に関しては陽的スキームとなり, 従ってニュートン法などは必要ない. 
             </p>
 
-            <hr> 
-
-            <p>それではルンゲ=クッタ法, 離散勾配法, Störmer-Verler 法による数値計算を比較してみよう. 
+            <p>それでは $4$ 段陽的ルンゲ=クッタ法, 離散勾配法, Störmer-Verler 法による数値計算を比較してみよう. 
                 数値計算結果 (左のプロット) を見てみると, ルンゲ=クッタ法による結果と比較して ($T$ が大きい場合であっても) 離散勾配法とシンプレクティック解法による数値解は縮小してしまうことが無い. 
                 また右のプロット (横軸が $n$, 縦軸が $H(\mathbf{x}_n)$) を見ると, 離散勾配法による数値解はエネルギーを一定を保っていることを確認できる. 
                 シンプレクティック法による数値計算結果は, エネルギーを一定に保っているわけではないが, エネルギーがある範囲に収まっている様子が観察できる. 
-                シンプレクティック解法は厳密解を定性的に良く近似することが知られており, 特に陽的なものはエネルギー保存解法より好んで用いられることが多いが, 不安定平衡点近傍での挙動が悪化したり, 時間刻み幅の制御と組み合わせると良い性質を保証できないなどの弱点もあり, やはり万能というわけではない. 
+                シンプレクティック解法は厳密解を定性的に良く近似することが知られており, 特に陽的なものはエネルギー保存解法より好んで用いられることもあるが, 時間刻み幅の制御と組み合わせると良い性質を保証できないなどの弱点もあり, やはり万能というわけではない. 
             </p>
-            <p>計算に用いたパラメータについては, 以下のサンプルコードを参照: </p>
+            
             <div class="resize"><img src='./images/hamiltonian_system.png'></div>
+
+        </section>
+
+        <hr> 
+
+        <section id="section4-A"><h2>サンプルコード</h2>
+
+            <p>狙い撃ち法: </p>
+
+            <div class="resize"><img src='./images/shooting_method.png'></div>
+
+            <pre>
+<code>
+import numpy as np
+import matplotlib.pyplot as plt
+
+# x' = -y + ax(x^2+y^2-1)(4-x^2-y^2),
+# y' = x + ay(x^2+y^2-1)(4-x^2-y^2) 
+
+# パラメータ 
+a: float = 0.02
+
+# 右辺のベクトル場
+def f(x):
+    s = x[0]**2 + x[1]**2 
+    r1 = a * (s - 1) * (4 - s) 
+    return np.array([
+        -x[1] + x[0] * r1, 
+        x[0] + x[1] * r1 
+    ])
+# ヤコビ行列
+def Df(x): 
+    s = x[0]**2 + x[1]**2 
+    r1 = a * (s - 1) * (4 - s) 
+    r2 = a * (5 - 2*s)
+    return np.array([ 
+        [r1 + 2 * x[0]**2 * r2, -1 + 2 * x[0] * x[1] * r2], 
+        [1 + 2 * x[0] * x[1] * r2, r1 + 2 * x[1]**2 * r2]
+    ])
+
+# 古典的ルンゲ=クッタ (４段陽的ルンゲ=クッタ)
+def runge_kutta(x: np.ndarray, M: np.ndarray, tau: float):
+    k1 = f(x)
+    K1 = Df(x) @ M
+    k2 = f(x + tau/2 * k1)
+    K2 = Df(x + tau/2 * k1) @ (M + tau/2 * K1)
+    k3 = f(x + tau/2 * k2)
+    K3 = Df(x + tau/2 * k2) @ (M + tau/2 * K2)
+    k4 = f(x + tau * k3)
+    K4 = Df(x + tau * k3) @ (M + tau * K3) 
+    x = x + tau/6 * (k1 + 2*k2 + 2*k3 + k4) 
+    M = M + tau/6 * (K1 + 2*K2 + 2*K3 + K4) 
+    return x, M
+
+# フローから x(T), M(T) を計算
+def flow_map(q0: np.ndarray, time_steps: int = None): 
+    x = q0[:-1]
+    T = q0[-1]
+    M = np.eye(2)
+    if time_steps is None: 
+        time_steps = 3000
+    tau = T/time_steps 
+    for _ in range(time_steps): 
+        x, M = runge_kutta(x, M, tau) 
+    return x, M
+
+# ニュートン法を適用する写像
+def F(q0: np.ndarray, x: np.ndarray): 
+    # x は x, M = flow_map(q0) の出力を用いる
+    return np.hstack((x - q0[:-1], q0[1]))
+
+# プロット作成用にルンゲ=クッタ法を解く
+def save_orbit(x0: np.ndarray, tau: float, N: int): 
+    x = np.empty((2, N+1))
+    x[:, 0] = x0
+    for i in range(N):
+        k1 = f(x[:, i])
+        k2 = f(x[:, i] + tau/2 * k1)
+        k3 = f(x[:, i] + tau/2 * k2)
+        k4 = f(x[:, i] + tau * k3)
+        x[:, i+1] = x[:, i] + tau/6 * (k1 + 2*k2 + 2*k3 + k4) 
+    return x
+
+# プロットの準備
+fig, ax = plt.subplots() 
+fig.tight_layout()
+ax.set_aspect('equal')
+tau: float = 1e-2 
+N: int = 3000
+# (比較用) 適当な初期値から軌道をプロット
+x0 = [0.8, 0.0]
+x = save_orbit(x0, tau, N) 
+ax.plot(x[0], x[1], color='tab:red')
+x0 = [1.2, 0.0]
+x = save_orbit(x0, tau, N) 
+ax.plot(x[0], x[1], color='tab:green')
+
+# 狙い撃ち法による反復の初期設定
+q0 = np.array([
+    1.05,   # r=1 に近い x0
+    0,      # 位相条件より y0 = 0
+    6.1     # 2\pi に近い T
+])
+
+# ニュートン法の反復
+for _ in range(100):
+    # x(T), M(T) の計算 
+    x, M = flow_map(q0) 
+    if np.linalg.norm(F(q0, x)) < 1e-10: 
+        break
+    # ヤコビ行列の計算 
+    J = np.zeros((3, 3))
+    J[:2, :2] = M - np.eye(2)
+    J[:2, 2] = f(x)
+    J[2, 0] = 0.0
+    J[2, 1] = 1.0
+    J[2, 2] = 0.0
+    # ニュートン法による更新 
+    d = np.linalg.solve(J, F(q0, x)) 
+    q0 -= d
+
+# 狙い撃ち法で求めた初期値から計算した軌道のプロット 
+x = save_orbit(q0[:-1], tau, N) 
+ax.plot(x[0], x[1], color='tab:blue')
+
+plt.savefig('shooting_method.png')    
+plt.show()
+</code>
+            </pre>
+
+            <p>離散勾配法と Störmer-Verler 法の比較: </p>
+
+            <div class="resize"><img src='./images/hamiltonian_system.png'></div>
+
             <pre>
 <code>
 import numpy as np 
