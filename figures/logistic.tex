@@ -6,6 +6,9 @@
 \pgfplotsset{compat=1.17}
 \usepackage{multido}
 
+\definecolor{tab_blue}{HTML}{1F77B4}
+\definecolor{tab_orange}{HTML}{FF7F0E}
+
 \begin{document}
     \begin{tikzpicture}[baseline]
         \begin{axis}[
@@ -16,11 +19,11 @@
             axis lines = middle, % middle or box
             %axis x line = bottom, % top, middle, bottom, none: axis x line* = ... removes arrow heads
             %axis y line = left, % left, center, right, none: axis y line* = ... removes arrow heads
-            xlabel = {$t$}, ylabel = {$x(t)$}, % axis labels 
+            xlabel = {$t$}, ylabel = {$x$}, % axis labels 
         ]
             % \multido{\i=0+1}{7}{
             \foreach \i in {0, 1, ..., 13}{
-                \addplot gnuplot [raw gnuplot, mark=none, thick, solid, blue] {
+                \addplot gnuplot [raw gnuplot, mark=none, thick, solid, color=tab_blue] {
                     plot 'data_logistic1.txt' index \i
                 };
             }
@@ -36,11 +39,11 @@
             axis lines = middle, % middle or box
             %axis x line = bottom, % top, middle, bottom, none: axis x line* = ... removes arrow heads
             %axis y line = left, % left, center, right, none: axis y line* = ... removes arrow heads
-            xlabel = {$t$}, ylabel = {$x(t)$}, % axis labels 
+            xlabel = {$t$}, ylabel = {$x$}, % axis labels 
         ]
             % \multido{\i=0+1}{7}{
             \foreach \i in {0, 1, ..., 13}{
-                \addplot gnuplot [raw gnuplot, mark=none, thick, solid, blue] {
+                \addplot gnuplot [raw gnuplot, mark=none, thick, solid, color=tab_blue] {
                     plot 'data_logistic2.txt' index \i
                 };
             }

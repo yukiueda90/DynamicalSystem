@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-# x' = y-x^2
-# y' = -y
+# x' = y
+# y' = -y - 3(x-1)^3
 
 # ベクトル場を定義
 def f(x: np.ndarray) -> np.ndarray:
@@ -20,11 +20,9 @@ def runge_kutta(x: np.ndarray, tau: float) -> np.ndarray:
     k4 = f(x + tau * k3)
     return x + tau/6 * (k1 + 2*k2 + 2*k3 + k4)
 
-# 時間区間分割
-T: float = 15
+# 時間刻み 
+tau: float = 5e-3 
 N: int = 3000
-t = np.linspace(0, T, N+1)
-tau: float = T/N
 
 # 初期条件
 M: int = 19
@@ -46,16 +44,16 @@ for i in range(N):
   for j in range(M):
     x[j, :, i+1] = runge_kutta(x[j, :, i], tau)
 
+# アニメーション作成の準備
 fig, ax = plt.subplots()
 fig.tight_layout()
 ax.set_aspect('equal')
-# optional: fix axis limits (important!)
-ax.set_xlim(0.65, 1.35)
-ax.set_ylim(-0.32, 0.32)
-
-# initial plot (empty)
 points = []
 lines = []
+# 描画範囲を固定
+ax.set_xlim(0.65, 1.35)
+ax.set_ylim(-0.32, 0.32)
+# 中心多様体の近似のプロット
 xc = np.linspace(-0.2, 0.2, 100)
 line, = ax.plot(1.0 + xc, phi(xc), linewidth=5, color='tab:red')
 lines.append(line)
@@ -64,25 +62,21 @@ for j in range(M):
   line, = ax.plot([], [], color='tab:blue')
   points.append(point) 
   lines.append(line)
-# define update in animation
+# アニメーションによる更新を定義
 def update(frame):
-    # artists = []
-
     for i in range(M):
         xn = x[i, :, frame]
-        # update point
+        # 点のデータを追加
         points[i].set_data([xn[0]], [xn[1]])
-        # update trajectory
+        # 軌道のデータを追加
         lines[i+1].set_data(x[i, 0, :frame+1], x[i, 1, :frame+1])
-        # artists.extend([points[i], lines[i+1]])
     return
-    # return artists
 
+# アニメーション
 step: int = 5
 ani = FuncAnimation(fig, update, frames=range(0, x.shape[2], step), interval=10)
-ani.save("animation.mp4", writer="ffmpeg", fps=60)
+# ani.save("center_manifold.mp4", writer="ffmpeg", fps=60)
 
 # プロット
-# ax.plot(x[0], x[1], color='tab:blue')
 plt.show()
 

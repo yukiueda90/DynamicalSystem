@@ -5,6 +5,10 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.17}
 
+\definecolor{tab_blue}{HTML}{1F77B4}
+\definecolor{tab_green}{HTML}{2CA02C}
+\definecolor{tab_red}{HTML}{D62728}
+
 \begin{document}
     \begin{tikzpicture}[baseline]
         \begin{axis}[
@@ -19,31 +23,33 @@
             %axis y line = left, % left, center, right, none: axis y line* = ... removes arrow heads
             %xlabel = {$x$}, ylabel = {$y$}, % axis labels 
         ]
-            \addplot[blue, domain=-1.5:1.5, samples=100]({x}, {-x});
-            \addplot[blue, domain=-1:1, samples=100]({3*x}, {x});
-            \addplot[blue, domain=-1.0:0.5, samples=100]({0.2*exp(-2*x)+0.2*3*exp(2*x)}, {0.2*(-exp(-2*x))+0.2*exp(2*x)});
-            \addplot[blue, domain=-1.0:0.5, samples=100]({0.3*exp(-2*x)+0.3*3*exp(2*x)}, {0.3*(-exp(-2*x))+0.3*exp(2*x)});
-            \addplot[blue, domain=-1.0:0.5, samples=100]({-0.3*exp(-2*x)+0.2*3*exp(2*x)}, {-0.3*(-exp(-2*x))+0.2*exp(2*x)});
-            \addplot[blue, domain=-1.0:0.5, samples=100]({-0.6*exp(-2*x)+0.3*3*exp(2*x)}, {-0.6*(-exp(-2*x))+0.3*exp(2*x)});
-            \addplot[blue, domain=-1.0:0.5, samples=100]({0.3*exp(-2*x)-0.2*3*exp(2*x)}, {0.3*(-exp(-2*x))-0.2*exp(2*x)});
-            \addplot[blue, domain=-1.0:0.5, samples=100]({0.6*exp(-2*x)-0.3*3*exp(2*x)}, {0.6*(-exp(-2*x))-0.3*exp(2*x)});
-            \addplot[blue, domain=-1.0:0.5, samples=100]({-0.2*exp(-2*x)-0.2*3*exp(2*x)}, {-0.2*(-exp(-2*x))-0.2*exp(2*x)});
-            \addplot[blue, domain=-1.0:0.5, samples=100]({-0.3*exp(-2*x)-0.3*3*exp(2*x)}, {-0.3*(-exp(-2*x))-0.3*exp(2*x)});
+            \addplot[ultra thick, tab_green!75, domain=-1.5:1.5, samples=100]({x}, {-x});
+            \addplot[ultra thick, tab_red!75, domain=-1.5:1.5, samples=100]({3*x}, {x});
+            \addplot[color=tab_blue, domain=-1.5:1.5, samples=100]({x}, {-x});
+            \addplot[color=tab_blue, domain=-1:1, samples=100]({3*x}, {x});
+            \addplot[color=tab_blue, domain=-1.0:0.5, samples=100]({0.2*exp(-2*x)+0.2*3*exp(2*x)}, {0.2*(-exp(-2*x))+0.2*exp(2*x)});
+            \addplot[color=tab_blue, domain=-1.0:0.5, samples=100]({0.3*exp(-2*x)+0.3*3*exp(2*x)}, {0.3*(-exp(-2*x))+0.3*exp(2*x)});
+            \addplot[color=tab_blue, domain=-1.0:0.5, samples=100]({-0.3*exp(-2*x)+0.2*3*exp(2*x)}, {-0.3*(-exp(-2*x))+0.2*exp(2*x)});
+            \addplot[color=tab_blue, domain=-1.0:0.5, samples=100]({-0.6*exp(-2*x)+0.3*3*exp(2*x)}, {-0.6*(-exp(-2*x))+0.3*exp(2*x)});
+            \addplot[color=tab_blue, domain=-1.0:0.5, samples=100]({0.3*exp(-2*x)-0.2*3*exp(2*x)}, {0.3*(-exp(-2*x))-0.2*exp(2*x)});
+            \addplot[color=tab_blue, domain=-1.0:0.5, samples=100]({0.6*exp(-2*x)-0.3*3*exp(2*x)}, {0.6*(-exp(-2*x))-0.3*exp(2*x)});
+            \addplot[color=tab_blue, domain=-1.0:0.5, samples=100]({-0.2*exp(-2*x)-0.2*3*exp(2*x)}, {-0.2*(-exp(-2*x))-0.2*exp(2*x)});
+            \addplot[color=tab_blue, domain=-1.0:0.5, samples=100]({-0.3*exp(-2*x)-0.3*3*exp(2*x)}, {-0.3*(-exp(-2*x))-0.3*exp(2*x)});
             
-            \addplot[blue, variable=\t, samples=2, domain=0.3:0.9, -latex, quiver={u={-t}, v={t}, scale arrows=0.1}]({t}, {-t});
-            \addplot[blue, variable=\t, samples=2, domain=0.3:0.9, -latex, quiver={u={t}, v={-t}, scale arrows=0.1}]({-t}, {t});
-            \addplot[blue, variable=\t, samples=2, domain=0.1:0.3, -latex, quiver={u={3*t}, v={t}, scale arrows=0.1}]({3*t}, {t});
-            \addplot[blue, variable=\t, samples=2, domain=0.1:0.3, -latex, quiver={u={-3*t}, v={-t}, scale arrows=0.1}]({-3*t}, {-t});
+            \addplot[color=tab_blue, variable=\t, samples=2, domain=0.3:0.9, -latex, quiver={u={-t}, v={t}, scale arrows=0.1}]({t}, {-t});
+            \addplot[color=tab_blue, variable=\t, samples=2, domain=0.3:0.9, -latex, quiver={u={t}, v={-t}, scale arrows=0.1}]({-t}, {t});
+            \addplot[color=tab_blue, variable=\t, samples=2, domain=0.1:0.3, -latex, quiver={u={3*t}, v={t}, scale arrows=0.1}]({3*t}, {t});
+            \addplot[color=tab_blue, variable=\t, samples=2, domain=0.1:0.3, -latex, quiver={u={-3*t}, v={-t}, scale arrows=0.1}]({-3*t}, {-t});
             % sign change because of derivative
-            \addplot[blue, variable=\t, samples=2, domain=-0.6:0.2, -latex, quiver={u={-0.2*exp(-2*t)+0.2*3*exp(2*t)}, v={-0.2*(-exp(-2*t))+0.2*exp(2*t)}, scale arrows=0.1}]({0.2*exp(-2*t)+0.2*3*exp(2*t)}, {0.2*(-exp(-2*t))+0.2*exp(2*t)});
-            \addplot[blue, variable=\t, samples=2, domain=-0.6:0.0, -latex, quiver={u={-0.3*exp(-2*t)+0.3*3*exp(2*t)}, v={-0.3*(-exp(-2*t))+0.3*exp(2*t)}, scale arrows=0.1}]({0.3*exp(-2*t)+0.3*3*exp(2*t)}, {0.3*(-exp(-2*t))+0.3*exp(2*t)});
-            \addplot[blue, variable=\t, samples=2, domain=-0.4:0.2, -latex, quiver={u={0.3*exp(-2*t)+0.2*3*exp(2*t)}, v={0.3*(-exp(-2*t))+0.2*exp(2*t)}, scale arrows=0.1}]({-0.3*exp(-2*t)+0.2*3*exp(2*t)}, {-0.3*(-exp(-2*t))+0.2*exp(2*t)});
-            \addplot[blue, variable=\t, samples=2, domain=-0.2:0.2, -latex, quiver={u={0.6*exp(-2*t)+0.3*3*exp(2*t)}, v={0.6*(-exp(-2*t))+0.3*exp(2*t)}, scale arrows=0.1}]({-0.6*exp(-2*t)+0.3*3*exp(2*t)}, {-0.6*(-exp(-2*t))+0.3*exp(2*t)});
-            \addplot[blue, variable=\t, samples=2, domain=-0.4:0.2, -latex, quiver={u={-0.3*exp(-2*t)-0.2*3*exp(2*t)}, v={-0.3*(-exp(-2*t))-0.2*exp(2*t)}, scale arrows=0.1}]({0.3*exp(-2*t)-0.2*3*exp(2*t)}, {0.3*(-exp(-2*t))-0.2*exp(2*t)});
-            \addplot[blue, variable=\t, samples=2, domain=-0.2:0.2, -latex, quiver={u={-0.6*exp(-2*t)-0.3*3*exp(2*t)}, v={-0.6*(-exp(-2*t))-0.3*exp(2*t)}, scale arrows=0.1}]({0.6*exp(-2*t)-0.3*3*exp(2*t)}, {0.6*(-exp(-2*t))-0.3*exp(2*t)});
+            \addplot[color=tab_blue, variable=\t, samples=2, domain=-0.6:0.2, -latex, quiver={u={-0.2*exp(-2*t)+0.2*3*exp(2*t)}, v={-0.2*(-exp(-2*t))+0.2*exp(2*t)}, scale arrows=0.1}]({0.2*exp(-2*t)+0.2*3*exp(2*t)}, {0.2*(-exp(-2*t))+0.2*exp(2*t)});
+            \addplot[color=tab_blue, variable=\t, samples=2, domain=-0.6:0.0, -latex, quiver={u={-0.3*exp(-2*t)+0.3*3*exp(2*t)}, v={-0.3*(-exp(-2*t))+0.3*exp(2*t)}, scale arrows=0.1}]({0.3*exp(-2*t)+0.3*3*exp(2*t)}, {0.3*(-exp(-2*t))+0.3*exp(2*t)});
+            \addplot[color=tab_blue, variable=\t, samples=2, domain=-0.4:0.2, -latex, quiver={u={0.3*exp(-2*t)+0.2*3*exp(2*t)}, v={0.3*(-exp(-2*t))+0.2*exp(2*t)}, scale arrows=0.1}]({-0.3*exp(-2*t)+0.2*3*exp(2*t)}, {-0.3*(-exp(-2*t))+0.2*exp(2*t)});
+            \addplot[color=tab_blue, variable=\t, samples=2, domain=-0.2:0.2, -latex, quiver={u={0.6*exp(-2*t)+0.3*3*exp(2*t)}, v={0.6*(-exp(-2*t))+0.3*exp(2*t)}, scale arrows=0.1}]({-0.6*exp(-2*t)+0.3*3*exp(2*t)}, {-0.6*(-exp(-2*t))+0.3*exp(2*t)});
+            \addplot[color=tab_blue, variable=\t, samples=2, domain=-0.4:0.2, -latex, quiver={u={-0.3*exp(-2*t)-0.2*3*exp(2*t)}, v={-0.3*(-exp(-2*t))-0.2*exp(2*t)}, scale arrows=0.1}]({0.3*exp(-2*t)-0.2*3*exp(2*t)}, {0.3*(-exp(-2*t))-0.2*exp(2*t)});
+            \addplot[color=tab_blue, variable=\t, samples=2, domain=-0.2:0.2, -latex, quiver={u={-0.6*exp(-2*t)-0.3*3*exp(2*t)}, v={-0.6*(-exp(-2*t))-0.3*exp(2*t)}, scale arrows=0.1}]({0.6*exp(-2*t)-0.3*3*exp(2*t)}, {0.6*(-exp(-2*t))-0.3*exp(2*t)});
             
-            \addplot[blue, variable=\t, samples=2, domain=-0.6:0.2, -latex, quiver={u={0.2*exp(-2*t)-0.2*3*exp(2*t)}, v={0.2*(-exp(-2*t))-0.2*exp(2*t)}, scale arrows=0.1}]({-0.2*exp(-2*t)-0.2*3*exp(2*t)}, {-0.2*(-exp(-2*t))-0.2*exp(2*t)});
-            \addplot[blue, variable=\t, samples=2, domain=-0.6:0.0, -latex, quiver={u={0.3*exp(-2*t)-0.3*3*exp(2*t)}, v={0.3*(-exp(-2*t))-0.3*exp(2*t)}, scale arrows=0.1}]({-0.3*exp(-2*t)-0.3*3*exp(2*t)}, {-0.3*(-exp(-2*t))-0.3*exp(2*t)});
+            \addplot[color=tab_blue, variable=\t, samples=2, domain=-0.6:0.2, -latex, quiver={u={0.2*exp(-2*t)-0.2*3*exp(2*t)}, v={0.2*(-exp(-2*t))-0.2*exp(2*t)}, scale arrows=0.1}]({-0.2*exp(-2*t)-0.2*3*exp(2*t)}, {-0.2*(-exp(-2*t))-0.2*exp(2*t)});
+            \addplot[color=tab_blue, variable=\t, samples=2, domain=-0.6:0.0, -latex, quiver={u={0.3*exp(-2*t)-0.3*3*exp(2*t)}, v={0.3*(-exp(-2*t))-0.3*exp(2*t)}, scale arrows=0.1}]({-0.3*exp(-2*t)-0.3*3*exp(2*t)}, {-0.3*(-exp(-2*t))-0.3*exp(2*t)});
             
 
             % \addplot[blue, variable=\t, samples=2, domain=-0.5:0.5, -latex, quiver={u={-1.5*exp(-t)}, v={0.5*exp(t)}, scale arrows=0.1}]({1.5*exp(-t)}, {0.5*exp(t)});

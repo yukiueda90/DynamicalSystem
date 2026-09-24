@@ -14,13 +14,14 @@ fig, ax = plt.subplots()
 ax.set_aspect('equal')
 
 # 時間区間分割
+T: float = 2*np.pi
 N: int = 150
-t = np.linspace(0, 2*np.pi, N+1)
-tau: float = 2*np.pi / N
+tau: float = T / N # 時間刻み幅
+tn = tau * np.arange(N+1)
 
 # 厳密解のプロット
-x = np.cos(t)
-y = np.sin(t)
+x = np.cos(tn)
+y = -np.sin(tn)
 ax.plot(x, y, label='exact solution')
 
 # 前進オイラー法

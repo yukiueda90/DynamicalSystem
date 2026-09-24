@@ -43,7 +43,8 @@ ax0 = fig.add_subplot(121, projection='3d')
 ax1 = fig.add_subplot(122, projection='3d')
 ax0.plot(solution[:, 0], solution[:, 1], solution[:, 2])
 # ax.set_title("Lorenz Attractor")
-y0 = [-1.0, -1.0, -1.0]  # 初期値
+
+y0 = [1.0+1e-6, 1.0, 1.0]  # 初期値
 # odeintの設定と実行
 solution = odeint(
     func=lorenz,
@@ -60,4 +61,5 @@ ax1.set_xlabel("x")
 ax1.set_ylabel("y")
 ax1.set_zlabel("z")
 fig.tight_layout()
+plt.savefig('lorenz1.png')
 plt.show()

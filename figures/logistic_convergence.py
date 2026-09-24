@@ -11,6 +11,8 @@ a = 2.0
 x0 = 0.1
 # final time  
 T: float = 2.0
+# list of number of time steps 
+N_list = [5, 10, 15, 20, 25, 30, 35, 40]
 # right hand side 
 rhs = lambda x: a * x * (1-x)
 # exact solution 
@@ -52,8 +54,7 @@ err_midpoint = []
 err_RungeKutta = []
 tau_list = []
 
-# number of time steps 
-for N in [5, 10, 15, 20, 25, 30, 35, 40]:
+for N in N_list:
     # time step size 
     tau: float = T/N 
     tau_list.append(tau)
@@ -80,17 +81,19 @@ ax.legend()
 xs = 0.25 
 ys = 5e-6 
 ratio = 1.6 
-x1 = xs * ratio 
+xr = xs * ratio 
+ax.plot([xs, xr], [ys, ys], color='k') 
+
 y1 = ys * ratio**1 
-ax.plot([xs, x1, x1, xs], [ys, ys, y1, ys], color='k') 
-x2 = xs * ratio 
+ax.plot([xs, xr], [ys, y1], color='k') 
 y2 = ys * ratio**2 
-ax.plot([xs, x2, x2, xs], [ys, ys, y2, ys], color='k') 
-x4 = xs * ratio 
+ax.plot([xs, xr], [ys, y2], color='k') 
 y4 = ys * ratio**4 
-ax.plot([xs, x4, x4, xs], [ys, ys, y4, ys], color='k') 
+ax.plot([xs, xr], [ys, y4], color='k')
 
+ax.plot([xr, xr], [ys, y4], color='k')
 
+# loglog plot
 ax.set_xscale('log') 
 ax.set_yscale('log')
 

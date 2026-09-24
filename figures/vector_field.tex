@@ -5,6 +5,8 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.17}
 
+\definecolor{tab_blue}{HTML}{1F77B4}
+
 \begin{document}
     \begin{tikzpicture}[baseline]
         \begin{axis}[
@@ -18,7 +20,7 @@
             %axis y line = left, % left, center, right, none: axis y line* = ... removes arrow heads
             %xlabel = {$x$}, ylabel = {$y$}, % axis labels 
         ]
-            \addplot3[blue, quiver={u={y}, v={-x}}, domain=-1.5:1.5, y domain=-1.5:1.5, samples=12, -latex] (x, y, 0);
+            \addplot3[color=tab_blue, quiver={u={-y}, v={x}}, domain=-1.5:1.5, y domain=-1.5:1.5, samples=12, -latex] (x, y, 0);
         \end{axis}
     \end{tikzpicture}
 \end{document}

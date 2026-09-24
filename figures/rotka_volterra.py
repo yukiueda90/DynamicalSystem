@@ -53,16 +53,19 @@ with open(fname, 'w') as f:
     f.write(f'# dy/dt = {c} * xy - {d} * y \n')
 
 fig, ax = plt.subplots() 
+fig.tight_layout()
+ax.set_aspect('equal')
 x0: float = 1.0
 for i, y0 in enumerate(np.linspace(0.1, 0.8, 7)):
     result = solve(x0, y0)    
-    ax.plot(result[0, :], result[1, :], color='b') 
+    ax.plot(result[0, :], result[1, :], color='tab:blue') 
     with open(fname, 'a') as f: 
         f.write(f'# index {i}, initial condition: (x, y) = ({x0}, {y0}): \n')
         for data in result.T:
             f.write(f'{data[0]} {data[1]} \n')
         f.write('\n\n')
 
+plt.savefig('rotka_volterra.png')
 plt.show()
 
 
