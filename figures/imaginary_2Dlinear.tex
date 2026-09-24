@@ -1,0 +1,87 @@
+% !TEX TS-program = pdfLaTeX+shellescape
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+
+\definecolor{tab_blue}{HTML}{1F77B4}
+\definecolor{tab_green}{HTML}{2CA02C}
+\definecolor{tab_red}{HTML}{D62728}
+
+\begin{document}
+    \pgfmathsetmacro{\p}{3}
+    \begin{tikzpicture}[
+        baseline,
+        declare function = {
+            solx(\x,\y,\t) = exp(-\t) * ((cos(deg(\p*\t))+sin(deg(\p*\t)))*\x - 2*sin(deg(\p*\t))*\y);
+            soly(\x,\y,\t) = exp(-\t) * (sin(deg(\p*\t))*\x + (cos(deg(\p*\t))-sin(deg(\p*\t)))*\y);
+            derx(\x,\y,\t) = exp(-\t) * (((\p-1)*cos(deg(\p*\t)) - (\p+1)*sin(deg(\p*\t)))*\x + 2*(sin(deg(\p*\t)) - \p*cos(deg(\p*\t)))*\y);
+            dery(\x,\y,\t) = exp(-\t) * ((-sin(deg(\p*\t))+\p*cos(deg(\p*\t)))*\x - ((\p+1)*cos(deg(\p*\t)) + (\p-1)*sin(deg(\p*\t)))*\y);
+            % solx(\x,\y,\t) = exp(-\t) * ((cos(\t)+sin(\t))*\x - 2*sin(\t)*\y);
+            % soly(\x,\y,\t) = exp(-\t) * (sin(\t)*\x + (cos(\t)-sin(\t))*\y);
+            % derx(\x,\y,\t) = exp(-\t) * (-2*sin(\t)*\x + 2*(sin(\t)-cos(\t))*\y);
+            % dery(\x,\y,\t) = exp(-\t) * ((-sin(\t)+cos(\t))*\x - 2*cos(\t)*\y);
+        }
+        ]
+        \begin{axis}[
+            scale=0.6, % scale
+            % view = {0}{90},
+            xmin=-1.48,xmax=1.48,ymin=-1.48,ymax=1.48, % range of plot
+            % legend style={at={(axis cs: 1,0)}, anchor=south east}, % position of legends
+            % unit vector ratio = {1, 1, 1}, % aspect ratio
+            unit vector ratio = {1, 1}, % aspect ratio
+            % axis lines = box, % middle or box
+            %axis x line = bottom, % top, middle, bottom, none: axis x line* = ... removes arrow heads
+            %axis y line = left, % left, center, right, none: axis y line* = ... removes arrow heads
+            %xlabel = {$x$}, ylabel = {$y$}, % axis labels 
+        ]
+            % line
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(1.5, 0.0, t)}, {soly(1.5, 0.0, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(1.5, 0.5, t)}, {soly(1.5, 0.5, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(1.5, 1.0, t)}, {soly(1.5, 1.0, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(1.5, 1.5, t)}, {soly(1.5, 1.5, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(1.0, 1.5, t)}, {soly(1.0, 1.5, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(0.5, 1.5, t)}, {soly(0.5, 1.5, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(0.0, 1.5, t)}, {soly(0.0, 1.5, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(-0.5, 1.5, t)}, {soly(-0.5, 1.5, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(-1.0, 1.5, t)}, {soly(-1.0, 1.5, t)});
+            % \addplot[blue, variable=\t, domain=0.0:5.0, samples=80]({solx(-1.5, 1.5, t)}, {soly(-1.5, 1.5, t)});
+            % \addplot[blue, variable=\t, domain=0.0:5.0, samples=80]({solx(-1.5, 1.0, t)}, {soly(-1.5, 1.0, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(-1.5, 0.5, t)}, {soly(-1.5, 0.5, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(-1.5, 0.0, t)}, {soly(-1.5, 0.0, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(-1.5, -0.5, t)}, {soly(-1.5, -0.5, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(-1.5, -1.0, t)}, {soly(-1.5, -1.0, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(-1.5, -1.5, t)}, {soly(-1.5, -1.5, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(-1.0, -1.5, t)}, {soly(-1.0, -1.5, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(-0.5, -1.5, t)}, {soly(-0.5, -1.5, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(0.0, -1.5, t)}, {soly(0.0, -1.5, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(0.5, -1.5, t)}, {soly(0.5, -1.5, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(1.0, -1.5, t)}, {soly(1.0, -1.5, t)});
+            % \addplot[blue, variable=\t, domain=0.0:5.0, samples=80]({solx(1.5, -1.5, t)}, {soly(1.5, -1.5, t)});
+            % \addplot[blue, variable=\t, domain=0.0:5.0, samples=80]({solx(1.5, -1.0, t)}, {soly(1.5, -1.0, t)});
+            \addplot[color=tab_blue, variable=\t, domain=0.0:5.0, samples=80]({solx(1.5, -0.5, t)}, {soly(1.5, -0.5, t)});        
+            % arrow
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(1.5, 0.0, t)}, v={dery(1.5, 0.0, t)}, scale arrows=0.01}]({solx(1.5, 0.0, t)}, {soly(1.5, 0.0, t)});
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(1.5, 0.5, t)}, v={dery(1.5, 0.5, t)}, scale arrows=0.01}]({solx(1.5, 0.5, t)}, {soly(1.5, 0.5, t)});
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(1.5, 1.0, t)}, v={dery(1.5, 1.0, t)}, scale arrows=0.01}]({solx(1.5, 1.0, t)}, {soly(1.5, 1.0, t)});
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(1.5, 1.5, t)}, v={dery(1.5, 1.5, t)}, scale arrows=0.01}]({solx(1.5, 1.5, t)}, {soly(1.5, 1.5, t)});
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(0.0, 1.5, t)}, v={dery(0.0, 1.5, t)}, scale arrows=0.01}]({solx(0.0, 1.5, t)}, {soly(0.0, 1.5, t)});
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(-0.5, 1.5, t)}, v={dery(-0.5, 1.5, t)}, scale arrows=0.01}]({solx(-0.5, 1.5, t)}, {soly(-0.5, 1.5, t)});
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(-1.0, 1.5, t)}, v={dery(-1.0, 1.5, t)}, scale arrows=0.01}]({solx(-1.0, 1.5, t)}, {soly(-1.0, 1.5, t)});
+            % \addplot[blue, variable=\t, samples=2, domain=0.0:0.4, -latex, quiver={u={derx(-1.5, 1.5, t)}, v={dery(-1.5, 1.5, t)}, scale arrows=0.01}]({solx(-1.5, 1.5, t)}, {soly(-1.5, 1.5, t)});
+            % \addplot[blue, variable=\t, samples=2, domain=0.0:0.4, -latex, quiver={u={derx(-1.5, 1.0, t)}, v={dery(-1.5, 1.0, t)}, scale arrows=0.01}]({solx(-1.5, 1.0, t)}, {soly(-1.5, 1.0, t)});
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(-1.5, 0.5, t)}, v={dery(-1.5, 0.5, t)}, scale arrows=0.01}]({solx(-1.5, 0.5, t)}, {soly(-1.5, 0.5, t)});
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(-1.5, 0.0, t)}, v={dery(-1.5, 0.0, t)}, scale arrows=0.01}]({solx(-1.5, 0.0, t)}, {soly(-1.5, 0.0, t)});
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(-1.5, -0.5, t)}, v={dery(-1.5, -0.5, t)}, scale arrows=0.01}]({solx(-1.5, -0.5, t)}, {soly(-1.5, -0.5, t)});
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(-1.5, -1.0, t)}, v={dery(-1.5, -1.0, t)}, scale arrows=0.01}]({solx(-1.5, -1.0, t)}, {soly(-1.5, -1.0, t)});
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(-1.5, -1.5, t)}, v={dery(-1.5, -1.5, t)}, scale arrows=0.01}]({solx(-1.5, -1.5, t)}, {soly(-1.5, -1.5, t)});
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(0.0, -1.5, t)}, v={dery(0.0, -1.5, t)}, scale arrows=0.01}]({solx(0.0, -1.5, t)}, {soly(0.0, -1.5, t)});
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(0.5, -1.5, t)}, v={dery(0.5, -1.5, t)}, scale arrows=0.01}]({solx(0.5, -1.5, t)}, {soly(0.5, -1.5, t)});
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(1.0, -1.5, t)}, v={dery(1.0, -1.5, t)}, scale arrows=0.01}]({solx(1.0, -1.5, t)}, {soly(1.0, -1.5, t)});
+            % \addplot[blue, variable=\t, samples=2, domain=0.0:0.4, -latex, quiver={u={derx(1.5, -1.5, t)}, v={dery(1.5, -1.5, t)}, scale arrows=0.01}]({solx(1.5, -1.5, t)}, {soly(1.5, -1.5, t)});
+            % \addplot[blue, variable=\t, samples=2, domain=0.0:0.4, -latex, quiver={u={derx(1.5, -1.0, t)}, v={dery(1.5, -1.0, t)}, scale arrows=0.01}]({solx(1.5, -1.0, t)}, {soly(1.5, -1.0, t)});
+            \addplot[color=tab_blue, variable=\t, samples=3, domain=0.0:0.5, -latex, quiver={u={derx(1.5, -0.5, t)}, v={dery(1.5, -0.5, t)}, scale arrows=0.01}]({solx(1.5, -0.5, t)}, {soly(1.5, -0.5, t)});    
+        \end{axis}
+    \end{tikzpicture}
+\end{document}

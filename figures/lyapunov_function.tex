@@ -1,0 +1,67 @@
+\documentclass[]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+
+\definecolor{tab_blue}{HTML}{1F77B4}
+
+\begin{tikzpicture}
+
+\pgfmathdeclarefunction{sinr}{1}{%
+    \pgfmathparse{sin(deg(#1))}%
+}
+\pgfmathdeclarefunction{cosr}{1}{%
+    \pgfmathparse{cos(deg(#1))}%
+}
+
+\pgfmathdeclarefunction{solx}{5}{%
+    \pgfmathparse{
+        exp(-#3*#5)*(#1*cosr(#4*#5)+#2*sinr(#4*#5))
+    }%
+}
+
+\pgfmathdeclarefunction{soly}{5}{%
+    \pgfmathparse{
+        exp(-#3*#5)*(-#1*sinr(#4*#5)+#2*cosr(#4*#5))
+    }%
+}
+
+
+\begin{axis}[
+    axis equal image,
+    axis lines=middle,
+    xmin=-2.2, xmax=2.2,
+    ymin=-2.2, ymax=2.2,
+    xlabel={$x$},
+    ylabel={$y$},
+    ticks=none,
+    width=9cm,
+    height=9cm,
+    clip=false,
+]
+
+% Lyapunov function V(x,y)=x^2+y^2 の等高線
+\foreach \c in {0.25, 0.5, 1, 2, 3}{
+    \addplot[domain=0:360, samples=100, thick, gray] ({sqrt(\c)*cos(x)}, {sqrt(\c)*sin(x)});
+}
+% ベクトル場：x'=-x, y'=-y
+% \addplot[quiver={u={-x}, v={-y}, scale arrows=0.15,}, -stealth, samples=9, domain=-2:2, y domain=-2:2,] {0};
+
+\addplot[domain=0:5, samples=200, very thick, color=tab_blue] ({solx(1.5, 0.5, 1.0, 5.0, x)}, {soly(1.5, 0.5, 1.0, 5.0, x)});
+
+% \addplot[domain=0:5, samples=200, thick, blue] ({solx(-0.5,1.3,x)}, {soly(-0.5,1.3,x)});
+
+% \addplot[domain=0:5, samples=200, thick, blue] ({solx(-1.2,-0.7,x)}, {soly(-1.2,-0.7,x)});
+
+% equilibrium
+\addplot[only marks, mark=*, mark size=2pt] coordinates {(0,0)};
+
+\node[anchor=south west] at (axis cs:1.05,1.1) {$V(\mathbf{x})=\mathrm{const.}$};
+
+\node[anchor=south west] at (axis cs:0.08,0.08) {$x_*$};
+
+\end{axis}
+\end{tikzpicture}
+
+\end{document}
