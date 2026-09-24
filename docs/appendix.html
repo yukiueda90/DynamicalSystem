@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>力学系入門</title>
+    <!-- style -->
+    <link rel="stylesheet" href="./common/style.css">
+    <!-- mathjax -->
+    <script src="./common/import_mathjax.js"></script>
+</head>
+
+<body>
+    <header>
+        <!-- (no header) -->
+    </header>
+
+    <!-- contents -->
+    <div class="wrapper">
+
+    <!-- sidebar -->
+    <div class="side" id="sidebar"></div>
+
+    <div class="hamburger" onclick="toggleSidebar()">
+        ☰
+    </div>
+    
+    <!-- main -->
+    <main role="main"><article id="section5"><h1>A. 補足</h1>
+        <section id="sectionA-1"><h2>時間離散化の誤差解析</h2>
+            <p></p>
+
+        </section>
+
+        <hr> 
+        
+        <p>ここまでに常微分方程式系 (ODE system) として記述される連続力学系
+            \[
+                \mathbf{x}' = \mathbf{f}(\mathbf{x})
+            \] について主に紹介したが, ここからは偏微分方程式 (Partial Differential Equations, PDE) について述べる. 
+            偏微分方程式は関数の偏導関数を含む微分方程式であり, ここでは特に時間 $t$ に加えて異なる変数 (特に空間変数) に関する微分が現れる問題を考えたい. 
+            抽象的には作用素 $A: H\to H$ を用いて  
+            \[
+                \dfrac{\partial u}{\partial t} = Au
+            \] のように表される時間発展偏微分方程式の解 $u(x, t)$ を考えることになるが, 常微分方程式系との違いとして, 
+        </p>
+        <ul>
+            <li>常微分方程式系の場合 $\mathbf{x}(t)\in\mathbb{R}^d$ であったが, 時間発展 PDE の場合は $u(\cdot, t)\in H$ (つまり各時刻 $t$ に対し, $x\mapsto u(x, t)$ という関数 $u(\cdot, t)$ は $H$ の元) であり, 多くの場合 $H$ として無限次元の関数空間を考えることになる. 
+            </li>
+            <li>常微分方程式系の場合 $\mathbf{f}$ は微分などを含んでいなかったが, 時間発展 PDE の場合は作用素 $A$ として空間変数に関する微分を含むもの (例えば微分作用素, 楕円型作用素など) を考えることになる. 
+            </li>
+        </ul>
+        <p>これらについて厳密に議論するには, 関数解析や偏微分方程式論の知識が必要になるが, ここではそれらを前提とせず, 常微分方程式系 (特に連続力学系) に関する議論のアナロジーとして, 「実は時間発展 PDE でも同様の議論が可能である」という紹介に終始することにする. 
+            また, PDE に対する数値計算手法も併せて紹介し, いくつかの具体例に対して解の挙動を観察する. 
+        </p>
+        
+        <section><h2>PDE の力学系的解釈</h2>
+            <p>以降, 時間発展 PDE では, 時間変数 $t$ と空間変数 $x$ に依存する関数 $u(x, t)$ を扱うことにする.
+                また, 記号の簡単のために 
+                \[
+                    u_t = \dfrac{\partial u}{\partial t}
+                \] と表記する. 
+            </p>
+            <p>時間発展 PDE の簡単な例として, 例えば一次元熱方程式 
+                \[
+                    \left\{\begin{array}{l} 
+                        u_t = ku_{xx} \quad\text{in}\quad [0, L], \cr 
+                        u(0, t) = 0, \quad u(L, t) = 0, \cr
+                        u(x, 0) = u_0(x)
+                    \end{array}\right.
+                \] を考えることができる, ここで $u_{xx}$ は関数 $u$ の変数 $x$ に対する $2$ 階偏微分を表し, $k\gt 0$ は拡散係数と呼ばれるパラメータである.  
+                方程式に空間についての $2$ 階微分が含まれているため, これを満たす関数 $u$ を (積分定数に相当する任意性を排除して) 定めるには追加の条件が必要となる. 
+                この例では空間領域 (今回は空間一次元なので $[0, L]$ という区間) の境界における値をしているが, このような条件は <b>境界条件</b> (<b>boundary condition</b>) と呼ばれる. 
+                特に, 求める関数 $u$ 自身の境界上での値を指定する境界条件を <b>ディリクレ境界条件</b> という. 
+                さらに, 求める関数 $u$ の境界上での値が $0$ であることを指定する境界条件を <b>斉次ディリクレ境界条件</b> という (上の例は斉次ディリクレ境界条件が与えられた熱方程式ということになる).
+                また, 初期条件 $u(x, 0) = u_0(x)$ と境界条件が与えられた時間発展 PDE を <b>初期値境界値問題</b> と呼ぶ. 
+            </p> 
+            <p>熱方程式の解を見つける方法として, 上の問題に対する <b>変数分離法</b> を説明しておこう.
+                まず, 上で与えた境界条件の下で熱方程式の解が存在するならば一意であることは容易に証明できる. 
+                そこで, 
+                \[
+                    u(x, t) = \varphi(x)\eta(t)
+                \] という形で熱方程式の解となるものが存在するかを考えてみる, もしもこのような解を構成できたならば, それがただ一つの解ということになる. 
+                上を熱方程式に代入することで, 
+                \[
+                    \left\{\begin{array}{rl}  
+                        \varphi(x)\eta'(t) = k\varphi''(x)\eta(t) \cr
+                        \varphi(0) = \varphi(L) = 0, \cr 
+                        \varphi(x)\eta(0) = u_0(x) 
+                    \end{array}\right. 
+                \] を満たすような $\varphi(x)$, $\eta(t)$ がもしも存在すれば, これらが熱方程式のただ一つの解の表示を与えることになる. 
+                ここでは $u_0(x) \not\equiv 0$ である場合を考えることにすると, $\varphi(x)\eta(t)\not\equiv 0$ なので 
+                \[
+                    \dfrac{\eta'(t)}{\eta(t)} = k\dfrac{\varphi''(x)}{\varphi(x)} 
+                \] が得られるが, この両辺は $x$ にも $t$ にも依存しないため, これを $\lambda\in\mathbb{R}$ とおく. 
+                すると $\varphi(x)$ として 
+                \[
+                    \left\{\begin{array}{rl} 
+                        k\varphi''(x) = \lambda\varphi(x), \cr 
+                        \varphi(0) = \varphi(L) = 0 
+                    \end{array}\right. 
+                \] を満たすものを探せば良いことになる. 
+            </p>
+            <p>上で得られた $\varphi$ についての ODE について (必要ならば $\psi = \varphi'$ を導入して線形力学系と思うことで) 一般解を得ることができる.  
+                さらに境界条件 (および初期条件から得られる $\varphi(x)\neq0$) が満たされる特殊解を考えることもできる.
+                実際, $n=1,2,\dots$ に対し
+                \[
+                    \lambda_n = -k(n\pi / L)^2,\quad \varphi_n(x) = \sin \dfrac{n\pi}{L}x 
+                \] が, $k\varphi_n''(x) = \lambda_n\varphi_n(x)$ および $\varphi_n(0) = \varphi_n(L) = 0$ を満たすことを確かめることができる. 
+                これは $\lambda_n$ と $\varphi_n$ が, 斉次ディリクレ境界条件の下で $\widetilde{A}v = kv_{xx}$ により表される線形作用素 $\widetilde{A}$ の固有値および対応する <b>固有関数</b> であると説明される. 
+                ちなみに, (境界条件については厳密ではないものの) $\widetilde{A}$ の固有値および固有関数として複素数値のものまで許容するならば 
+                \[
+                    \lambda_n = -k(n\pi / L)^2,\quad \varphi_n(x) = e^{i\frac{n\pi}{L}x} 
+                \] を考えることも可能である. 
+                特に固有関数が $e^{i\frac{n\pi}{L}x}$ という形をしているだろう, という推測から固有値を計算することができるという事実が重要であり, この事実は $2$ 階微分に関する作用素の固有値を計算する際のテクニックとしてしばしば利用される. 
+            </p>
+            <p>ともかく 
+                \[
+                    k\varphi_n'' = \lambda_n\varphi_n
+                \] を満たす $\lambda_n$, $\varphi_n(x)$ の組が得られた. 
+                この $\lambda_n$ に対し, 今度は $\eta_n'(t) = \lambda_n \eta_n(t)$ を満たす関数 $\eta_n(t)$ を考えると 
+                \[
+                    \eta_n(t) = Ce^{\lambda_n t}
+                \] である. 
+                これらを組み合わせると, 
+                \[
+                    u_n(x, t) = c_ne^{\lambda_n t}\varphi_n(x) = c_ne^{-k(n\pi/L)^2 t}\sin\dfrac{n\pi}{L}x
+                \] は, $(u_n)_t = k(u_n)_{xx}$ と境界条件を満たすことになる. 
+                そのため, これらの線型結合 
+                \[
+                    u(x, t) = \sum_{n=1}^{\infty}c_ne^{\lambda_n t}\varphi_n(x) = \sum_{n=1}^{\infty}c_ne^{-k(n\pi/L)^2 t}\sin\dfrac{n\pi}{L}x
+                \] も $u_t = ku_{xx}$ と境界条件を満たす. 
+                あとは初期条件 
+                \[
+                    u(x, 0) = \sum_{n=1}^{\infty}c_n\sin\dfrac{n\pi}{L}x = u_0(x)
+                \]
+                が満たされるように係数 $c_n$ を決定することで, 初期値境界値問題の解 $u(x, t)$ が構成できることになる. 
+                従って, 初期条件として与えられる $u_0$ がフーリエ級数展開可能ならば, 変数分離法によりただ一つの解を具体的に構成することができる. 
+            </p>
+
+            <p>上の熱方程式も含め, 適切な時間発展 PDE は <b>無限次元力学系</b> として解釈することで, 力学系の様々な概念に対応するアイデアを導入することが可能である. 
+                まずは常微分方程式系における平衡点に相当するものとして, <b>定常解</b> という概念を導入する:  
+                時間発展 PDE $u_t = Au$ に対し, $A\widetilde{u} = 0$ (および与えられた境界条件) を満たす関数 $\widetilde{u}(x)$ を定常解という. 
+                つまり定常解は時間経過で動かない解であり, 実際に初期条件として $u(x, 0) = \widetilde{u}(x)$ が与えられたなら, 任意の $t\ge0$ に対して $u(x, t) = \widetilde{u}(x)$ が成立する. 
+                定常解に対しては, 安定性, 漸近安定性, 不安定性が平衡点のそれらと同様に定義される. 
+            </p>
+            <p>定常解は時間経過により動かないような解であるが, 時間発展 PDE においては関数形状を保ちながら一定速度で動き続ける解も興味深い対象である. 
+                特に空間一次元の時間発展 PDE に対し, ある関数 $\varphi: \mathbb{R}\to\mathbb{R}$ を用いて 
+                \[
+                    u(x, t) = \varphi(x-ct)
+                \] と表される解 $u(x, t)$ が存在するならば, このような解は <b>進行波解</b> (<b>traveling wave solution</b>) と呼ばれる, ここで定数 $c$ は解の進行速度を表す. 
+                進行波解に対しても, ある種の安定性を定義することができるが, ここでは説明は省略する. 
+            </p>
+
+            <hr>
+
+            <p>さて, 常微分方程式系の平衡点に対する線形安定性解析と同様に, 時間発展 PDE の定常解 (や進行波解) に対する線形安定性解析が可能である. 
+                ここでは具体的として, 
+                \[
+                    u_t = Au = ku_{xx} + f(u)  
+                \] という問題の定常解 $\widetilde{u}(x)$ に対する線形安定性解析の手順を (大雑把にではあるが) 確認しよう, ただし $f$ は非線形な作用素とし (従って $A$ は非線形な作用素である) 十分に微分可能とする, また境界条件は適当に与えられているとする. 
+                いま, 関数 $u(x, t)$ が $\widetilde{u}(x)$ に近いような各 $t$ に対して 
+                \[
+                    f(u) = f(\widetilde{u}) + f'(\widetilde{u})(u-\widetilde{u}) + R(u)
+                \] という表示を考える, ここで $R(u)$ は $u$ が $\widetilde{u}$ に近ければ十分に定数関数 $0$ に近いとする. 
+                ここで $\widetilde{u}(x)$ が定常解であることから 
+                \[
+                    0 = A\widetilde{u} = k\widetilde{u}_{xx} + f(\widetilde{u})
+                \] であることと, ($\widetilde{u}$ は $t$ に依存しないため) $\widetilde{u}_t=0$ であることから, 
+                \[
+                    (u-\widetilde{u})_t = u_t = ku_{xx} + f(u) = k(u-\widetilde{u})_{xx} + f'(\widetilde{u})(u-\widetilde{u}) + R(u)
+                \] と変形できる. 
+                あとは, $R(u)$ は十分 $0$ に近いと思って無視して, また $v=u-\widetilde{u}$ とおくと 
+                \[
+                    v_t = \widetilde{A}v = kv_{xx} + f'(\widetilde{u})v 
+                \] という式 (および境界条件) が得られる, 上のように定められる作用素 $\widetilde{A}$ は線形であることに注意.  
+                これは常微分方程式系のときと同様に <b>線形化方程式</b> と呼ばれ, $u(x, t)$ が定常解 $\widetilde{u}(x)$ に十分近いような時刻 $t$ では元の問題の近似を与えている. 
+                従って, その安定性は元の時間発展 PDE $u_t = ku_{xx} + f(u)$ の安定性を判断する際に重要な情報となる. 
+            </p>
+            <p>実際, 適切な線形作用素 $\widetilde{A}$ および境界条件に対して (熱方程式のときと同様に) 
+                \[
+                    \widetilde{A}\varphi_n = \lambda_n \varphi_n
+                \] および境界条件を満たす無限個の実数 $\lambda_i$ および対応する実関数 $\varphi_i(x)$, つまり固有値および対応する固有関数が存在する (一般には固有値および固有関数は実数とは限らないが, 適切な線形作用素に対しては実数となることが知られている). 
+                固有ベクトルと同様に, $0$ は固有関数とは認められないことに注意. 
+                これらを用いて
+                \[
+                    v(x, t) = \displaystyle\sum_{n=0}^\infty c_ne^{\lambda_n t}\varphi_n(x)
+                \] と表される関数 $v$ は $v_t = \widetilde{A}v$ および境界条件を満たす. 
+                このことから, 時間発展偏微分方程式 $u_t = Au$ の定常解 $\widetilde{u}$ に対する線形化問題 $v_t = \widetilde{A}v$ を考えた際に, 線形作用素 $\widetilde{A}$ の全ての固有値が負であれば (最大固有値が負であれば), $\displaystyle\lim_{t\to\infty}v(x, t)=0$ が成立する.  
+                つまり元の時間発展 PDE の解 $u(x, t)$ は定常解 $\widetilde{u}(x)$ に収束し, 従って定常解 $\widetilde{u}$ は漸近安定であることがわかる. 
+            </p>
+
+            <p>このように, 定常解付近での局所的な解の挙動については, 定常解の安定性を調べることで説明することができる. 
+                一方で, 解の大域的な挙動についても, やはり常微分方程式系と同様に &quot;幾何学的&quot; な解釈が可能である. 
+                実際には, 時間発展 PDE では多くの場合相空間として無限次元関数空間を扱うことになるため, 具体的なイメージや作図は不可能である. 
+                それでも, 極限集合, アトラクター, エネルギーや勾配流といった様々な概念が時間発展 PDE の解析に利用される. 
+                また, パラメータを含む時間発展 PDE に対しては分岐についても常微分方程式系に対するそれと同様に定義される. 
+                ここでは上で挙げた概念たちの詳細な定義は述べないが, 常微分方程式系として表される力学系におけるアイデアと同様のものであると思って以下の具体例を確認して欲しい. 
+            </p>
+        </section>
+
+        <hr>
+
+        <section><h2>熱方程式</h2>
+            <p>最初に簡単な例として, 先ほども例として挙げた熱方程式
+                \[
+                    \left\{\begin{array}{l} 
+                        u_t = ku_{xx} \quad\text{in}\quad [0, L], \cr 
+                        u(0, t) = 0, \quad u(L, t) = 0
+                    \end{array}\right.
+                \] 
+                について改めて解説し, その数値計算について補足する (初期条件 $u(x, 0) = u_0(x)$ は適当に与えられているものとする). 
+                まず, $k\gt 0$ は拡散係数と呼ぶのであったことを思い出しておこう. 
+                特に $k$ が正であることから, $u_t = ku_{xx}$ は関数 $u$ が下に凸である部分では $u$ が時間経過により大きくなろうとし, 逆に上に凸である部分では時間経過で小さくなろうとする挙動を表している. 
+                結果的に $u$ の値は &quot;拡散&quot; することで均質化, つまり定数関数 (上の例では斉次ディリクレ境界条件より $u\equiv 0$) に近づこうとする. 
+            </p>  
+            <p>このことを力学系という観点から解説しよう. 
+                以降, 後の記号との対応のために, (空間 $1$ 次元ではあるが) 関数 $u$ の空間変数に関する $2$ 階偏微分 $u_{xx}$ のことを $\Delta u$ と表記することにする. 
+                いま, 作用素 $k\Delta$ は線形であり (従って熱方程式の線形化問題は熱方程式自身である), $\widetilde{u}(x)=0$ が定常解であることも簡単に確認できる. 
+                そして先ほども説明したように, 斉次ディリクレ境界条件の下で作用素 $k\Delta$ の固有値および対応する固有関数は $n=1, 2, \dots$ に対して 
+                \[
+                    \lambda_n = -k(n\pi / L)^2,\quad \varphi_n(x) = \sin \dfrac{n\pi}{L}x 
+                \] であり, 特に最大固有値が $-k(\pi/L)^2\lt 0$ であることから定常解 $\widetilde{u}\equiv 0$ は漸近安定である. 
+            </p>
+            <p>解が時間経過により定常解 $\widetilde{u}\equiv 0$ に近づく様子を数値計算により確認してみよう. 
+                まず, 区間 $[0, L]$ を $M$ 等分することで空間分割幅を $h = L/M\gt0$ とし, $x_m = mh$ とする. 
+                このとき, 熱方程式の解 $u$ に対し, $u_m(t) \approx u(x_m, t)$ なる関数 $u_m(t)$ を以下のように定める: 
+                空間変数に関する $2$ 階偏微分 $\Delta u$ は $2$ 階中心差分 
+                \[
+                    \Delta u(x_m, t) \approx \dfrac{\dfrac{u_{m+1} - u_{m}}{h} - \dfrac{u_{m} - u_{m-1}}{h}}{h} = \dfrac{u_{m+1} - 2u_m + u_{m-1}}{h^2} 
+                \] により近似することで, $m = 1, 2, \dots, M-1$ に対し
+                \[
+                    (u_m)_t = k \dfrac{u_{m+1} - 2u_m + u_{m-1}}{h^2} 
+                \] とする, ただし斉次ディリクレ境界条件より $u_0(t) = u_M(t) = 0$ であるとする. 
+                さて, この式は第 $m$ 成分が $u_m$ であるベクトル $\mathbf{u}$ を用いて 
+                \[
+                    \mathbf{u}_t = k\dfrac{1}{h^2}\begin{pmatrix} 
+                        -2u_1 + u_2 \cr 
+                        u_1 - 2u_2 + u_3 \cr 
+                        u_2 - 2u_3 + u_4 \cr 
+                        \vdots \cr 
+                        u_{M-2} - 2u_{M-1} 
+                    \end{pmatrix} = k\underbrace{\dfrac{1}{h^2}\begin{pmatrix} 
+                        -2 & 1 & 0 & \dots & 0 \cr 
+                        1 & -2 & 1 & \dots & 0 \cr 
+                        0 & 1 & -2 & \dots & 0 \cr 
+                        \vdots & \vdots & \vdots & \ddots & \vdots \cr 
+                        0 & 0 & 0 &\dots & -2 
+                    \end{pmatrix}}_{=\Delta_h}\begin{pmatrix} 
+                        u_1 \cr 
+                        u_2 \cr 
+                        u_3 \cr 
+                        \vdots \cr 
+                        u_{M-1} 
+                    \end{pmatrix} = k\Delta_h \mathbf{u}
+                \] と表すことができる. 
+                つまり, 熱方程式
+                \[
+                    \left\{\begin{array}{l} 
+                        u_t = k\Delta u \quad\text{in}\quad [0, L], \cr 
+                        u(0, t) = 0, \quad u(L, t) = 0
+                    \end{array}\right.
+                \] の近似を与える線形力学系 
+                \[
+                    \mathbf{u}_t = k\Delta_h \mathbf{u}
+                \] を導出することができたことになる. 
+                このような行列 
+                \[
+                    \Delta_h = \dfrac{1}{h^2}\begin{pmatrix} 
+                        -2 & 1 & 0 & \dots & 0 \cr 
+                        1 & -2 & 1 & \dots & 0 \cr 
+                        0 & 1 & -2 & \dots & 0 \cr 
+                        \vdots & \vdots & \vdots & \ddots & \vdots \cr 
+                        0 & 0 & 0 &\dots & -2 
+                    \end{pmatrix} \in \mathbb{R}^{(M-1)\times (M-1)}
+                \] を (斉次ディリクレ境界条件下での) <b>離散ラプラシアン</b> と呼ぶことがある. 
+                あとはこの線形力学系に対し適当な数値計算手法を適用すればよい. 
+                ここでは前進オイラー法を用いてみる: 
+                時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, また $t_n = n\tau$ とし, 与えられた $\mathbf{u}^n \approx \mathbf{u}(t_n)$ に対し,  
+                \[
+                    \dfrac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\tau} = k\Delta_h\mathbf{u}^n, 
+                \] つまり $\mathbf{u}^{n+1} = (I + k\tau\Delta_h)\mathbf{u}^n$ を満たす $\mathbf{u}^{n+1}$ を求める, なお $\mathbf{u}^0$ は初期条件から与える. 
+                例えば以下のサンプルコードを実行すると, 数値解が時間経過により $0$ に近づいている様子を確認できる: 
+            </p>
+            <pre>
+<code>
+import numpy as np 
+import matplotlib.pyplot as plt 
+from matplotlib.animation import FuncAnimation 
+
+# Heat equation: 
+# u_t = k * u_xx in [0, L]
+# u(0, t) = 0, u(L, t) = 0 
+
+# パラメータ 
+k: float = 1.
+
+# 2 階中心差分による空間離散化 
+def Lap(u: np.ndarray, h: float) -> np.ndarray: 
+    vec = np.empty_like(u) 
+    vec[0] = (-2*u[0] + u[1]) / (h**2) 
+    vec[-1] = (u[-2] - 2*u[-1]) / (h**2) 
+    vec[1:-1] = (u[:-2] - 2*u[1:-1] + u[2:]) / (h**2) 
+    return vec 
+
+# 空間領域, 時間区間 
+L: float = 1. 
+T: float = 0.05 
+M: int = 60 
+N: int = 1000 
+x = np.linspace(0, L, M+1) 
+t = np.linspace(0, T, N+1) 
+h: float = L/M 
+tau = float = T/N 
+
+# 初期条件 (境界条件を満たすものを指定)
+u0 = np.sin(3*np.pi*x/L) 
+# 配列の初期化, 初期条件と境界条件の設定 
+u = np.empty((M+1, N+1)) 
+u[:, 0] = u0
+u[0, :] = 0 
+u[-1, :] = 0
+
+# プロットの準備 
+fig, ax = plt.subplots() 
+ax.set_ylim([-1.1, 1.1])
+
+# 初期条件のプロット 
+line, = ax.plot(x, u[:, 0], color='tab:blue', linewidth=2.5)
+# アニメーションにおける update を定義 
+def update(frame): 
+    line.set_data(x, u[:, frame]) # 更新された u を入力 
+    return 
+
+# 計算 
+for n in range(N): 
+    u[1:-1, n+1] = u[1:-1, n] + k * tau * Lap(u[1:-1, n], h)
+    
+# プロット 
+step: int = 3
+ani = FuncAnimation(fig, update, frames=range(0, N, step), interval=5)
+# ファイル出力する場合は下のコメントアウトを解除
+ani.save("heat_eq.mp4", writer="ffmpeg", fps=60)
+
+plt.show()
+</code>
+            </pre>
+            <p>実行結果として, 下図のようなアニメーションが得られることを確認できる. 
+                ところで, 上のサンプルコードにおいて, 例えば時間分割幅をそのままに空間分割幅を小さくしすぎてしまうと, 数値解が発散してしまう様子を確認することができる. 
+                例えば上で $M=60$ としている部分を $M=102$ とした結果を併せて掲載する: 
+            </p>
+
+            <div class="resize">
+                <video autoplay="true", loop="true">
+                <source src="videos/heat_eq.mp4" type="video/mp4" />
+                </video>
+                <video autoplay="true", loop="true">
+                <source src="videos/heat_eq2.mp4" type="video/mp4" />
+                </video>
+            </div>
+
+            <p>この現象について解説しよう. 
+                まず, 
+                \[
+                    \mathbf{u}^{n+1} = (I+k\tau\Delta_h)\mathbf{u}^n = \dots = (I+k\tau\Delta_h)^{n+1}\mathbf{u}_0
+                \] であることに注目すると, 数値計算の際に行列 $I+k\tau\Delta_h$ を何度も掛け合わせるという操作をしていることになる. 
+                この行列の固有値, 固有ベクトルを調べるために, 離散ラプラシアン $\Delta_h\in\mathbb{R}^{(M-1)\times (M-1)}$ の固有値および対応する固有ベクトルを考える. 
+                ラプラシアンの固有関数の形から, 離散ラプラシアンの固有ベクトルが $j = 1, 2, \dots$ に対し
+                \[
+                    \mathbf{v}_j = \begin{pmatrix} 
+                        \sin j\pi x_1/L \cr 
+                        \sin j\pi x_2/L \cr 
+                        \vdots \cr
+                        \sin j\pi x_{M-1}/L
+                    \end{pmatrix} = 
+                    \begin{pmatrix} 
+                        \sin j\pi /M \cr 
+                        \sin 2j\pi /M \cr 
+                        \vdots \cr
+                        \sin (M-1)j\pi /M
+                    \end{pmatrix}
+                \] という形をしているだろう, という予測に基づき $\Delta_h\mathbf{v}_j$ を計算してみる: 
+                \[
+                    \sin(\alpha-\beta) - 2\sin\alpha + \sin(\alpha+\beta) = 2\sin\alpha(\cos\beta-1) = -4\sin\alpha\sin^2\dfrac{\beta}{2}
+                \] に注意すると,
+                \[
+                    \Delta_h \mathbf{v}_j = -\dfrac{4}{h^2}\sin^2 \dfrac{j\pi}{2M}\mathbf{v}_j
+                \] が得られる ($\sin j\pi x_m/L$ の代わりに $e^{ij\pi x_m/L}$ を利用した方が計算は容易だが, この場合は境界条件の扱いに注意が必要になる). 
+                ここで, $\mathbf{v}_{M+j} = -\mathbf{v}_j$ であり, また $\mathbf{v}_M = \mathbf{0}$ であることから, 
+                \[
+                    -\dfrac{4}{h^2}\sin^2 \dfrac{j\pi}{2M} \quad (j=1, 2, \dots, M-1)
+                \] という $M-1$ 個の固有値が得られたことになり, これが離散ラプラシアン $\Delta_h\in\mathbb{R}^{(M-1)\times (M-1)}$ の全ての固有値である. 
+                以上より, 行列 $I+k\tau\Delta_h$ の固有値 $\lambda_j$ は, 
+                \[
+                    \lambda_j = 1-\dfrac{4k\tau}{h^2}\sin^2 \dfrac{j\pi}{2M} \le 1 \quad (j=1, 2, \dots, M-1)
+                \] である. 
+            </p>
+            <p>もしも $\lambda_j$ たちの中に, $|\lambda_i|\gt 1$ となるものが存在すると, 
+                \[
+                    (I+k\tau \Delta_h)^n\mathbf{e} \to \infty \quad\mbox{as}\quad n\to\infty
+                \] となるベクトル $\mathbf{e}$ が存在してしまうことになる. 
+                実際の数値計算の際には, コンピュータ内部で数値を浮動小数点数として扱う際の丸め誤差が発生するが, もしも $\lambda_j \lt -1$ なる固有値が存在すると, そうした誤差の影響が増幅されてしまう恐れがある, ということを意味している. 
+                先ほどの計算例において, 数値解が発散してしまったのはこのことが原因である. 
+            </p>
+            <p>丸め誤差などの増幅による数値解の発散を防ぐためには, $I+k\tau\Delta_h$ の全ての固有値 $\lambda_j$ が $\lambda_j\ge -1$ を満たしていれば良い. 
+                そのための必要条件として, 
+                \[
+                    1-\dfrac{4k\tau}{h^2} \ge -1,
+                \] すなわち 
+                \[
+                    1 - \dfrac{2k\tau}{h^2} \ge 0 
+                \] を要請すれば良いだろう (行列 $I-k\tau\Delta_h$ の対角成分が正であることを要請していることになる).
+                実際に, サンプルコード内で設定されているパラメータはこの条件を満たしている. 
+                一方で, $M=60$ を $M=102$ などと取り替えてしまうと, 上の条件が満たされなくなり, 実際に丸め誤差の影響が増幅されて数値解が発散してしまう様子が観察されているのである.  
+            </p>
+            <p>なお, 誤差の影響が計算中に減衰する場合, 数値計算手法は安定であるといい, 一方で誤算の影響が増幅される場合, 数値計算手法は不安定であるという. 
+                また, 以上の議論は <b>フォン・ノイマンの安定性解析</b> と呼ばれるものであり, 熱方程式に対する空間 $2$ 階中心差分と時間用的オイラー法の組み合わせによる数値計算手法 (FTCS 法と言及されることもある) の安定性を調べるものである. 
+            </p>
+        </section>
+
+        <hr>
+
+        <section><h2>アレン=カーン方程式</h2>
+            <p>ここでは <b>アレン=カーン方程式</b> (<b>Allen-Cahn equation</b>)
+                \[
+                    u_t = \varepsilon^2 \Delta u + \mu u(1-u^2)
+                \]
+                を例として扱う, ここで $\varepsilon\gt0$ と $\mu\gt 0$ はパラメータである.  
+                この方程式は, 混合物質の相分離現象 (例えば水と油が時間経過により分離する様子など) を表現する数理モデルとして扱われる. 
+                ここでは簡単のために空間 $1$ 次元の場合のみを考え, 境界条件として空間を表す区間の両端で $u=0$ であることを課す (つまり斉次ディリクレ境界条件を課す) ことにする: 
+                \[
+                    \left\{\begin{array}{l} 
+                        u_t = \varepsilon^2 \Delta u + \mu u(1-u^2) \quad \text{in}\quad [0, L], \cr 
+                        u(0, t) = u(L, t) = 0.
+                    \end{array}\right.
+                \] まずは適当な初期値を与えた際の数値計算結果を観察し, 解の挙動について大雑把に説明しよう. 
+                まず, 記号の簡単のために 
+                \[
+                    W(u) = u(1-u^2)
+                \] とおく. 
+                また数値計算のために, 区間 $[0, L]$ を $M$ 等分することで空間分割幅を $h = L/M\gt0$ とし, $x_m = mh$ とする. 
+                このとき, アレン=カーン方程式の解 $u$ に対し, 空間に関する $2$ 階微分を $2$ 階中心差分により近似することで $u_m(t) \approx u(x_m, t)$ を定める. 
+                これにより,   
+                \[
+                    \left\{\begin{array}{l} 
+                        u_t = \varepsilon^2 \Delta u + \mu W(u) \quad \text{in}\quad [0, L], \cr 
+                        u(0, t) = u(L, t) = 0.
+                    \end{array}\right.
+                \] の近似として,  
+                \[
+                    \mathbf{u}_t = \varepsilon^2 \Delta_h \mathbf{u} + \mu \mathbf{W}(\mathbf{u})
+                \] という常微分方程式系を導出することができる, ここで
+                \[
+                    \mathbf{u} = \begin{pmatrix} 
+                        u_1 \cr 
+                        u_2 \cr 
+                        \vdots \cr 
+                        u_{M-1} 
+                    \end{pmatrix},\quad \Delta_h = \dfrac{1}{h^2}\begin{pmatrix} 
+                        -2 & 1 & 0 & 0 & \dots & 0 \cr 
+                        1 & -2 & 1 & 0 & \dots & 0 \cr 
+                        0 & 1 & -2 & 1 & \dots & 0 \cr 
+                        \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \cr 
+                        0 & 0 & 0 & 0 & \dots & -2 
+                    \end{pmatrix}, \quad \mathbf{W}(\mathbf{u}) = \begin{pmatrix} 
+                        u_1(1-(u_1)^2) \cr 
+                        u_2(1-(u_2)^2) \cr 
+                        \vdots \cr 
+                        u_{M-1}(1-(u_{M-1})^2) \cr 
+                    \end{pmatrix} 
+                \] である. 
+                なお, $u_0 = u_M = 0$ は境界条件により与えられているとみなす. 
+                この常微分方程式系に対して, ここでは ($4$ 段陽的) ルンゲ=クッタ法を適用してみよう. 
+                つまり時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, $t_n = nh$ とし, 与えられた $\mathbf{u}^n \approx \mathbf{u}(t_n)$ に対し,  
+                \[
+                    \mathbf{f}(\mathbf{u}) = \varepsilon^2 \Delta_h\mathbf{u} + \mu \mathbf{W}(\mathbf{u})
+                \] を用いて
+                \[
+                    \begin{array}{l} 
+                        \mathbf{k}_1 = \mathbf{f}(\mathbf{u}^n), \cr 
+                        \mathbf{k}_2 = \mathbf{f}\left(\mathbf{u}^n + \dfrac{\tau}{2}\mathbf{k}_1\right), \cr 
+                        \mathbf{k}_3 = \mathbf{f}\left(\mathbf{u}^n + \dfrac{\tau}{2}\mathbf{k}_2\right), \cr 
+                        \mathbf{k}_4 = \mathbf{f}\left(\mathbf{u}^n + \tau \mathbf{k}_3\right) 
+                    \end{array}
+                \] を計算し, 
+                \[
+                    \mathbf{u}^{n+1} = \mathbf{u}^n + \dfrac{\tau}{6}(\mathbf{k}_1+2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4)
+                \] を計算する. 
+                このようにして得られたベクトル $\mathbf{u}^n$ の第 $m$ 成分 $u_m^n$ が $u(x_m, t_n)$ の近似を与えていると思うことができる. 
+                なお, $\mathbf{u}^0$ は初期値から与える. 
+            </p>
+            <div class="resize">
+                <video autoplay="true", loop="true">
+                <source src="videos/allen_cahn.mp4" type="video/mp4" />
+                </video>
+            </div>
+            <pre>
+<code>
+import numpy as np 
+import matplotlib.pyplot as plt 
+from matplotlib.animation import FuncAnimation 
+
+# Allen-Cahn equation: 
+# u_t = eps * u_xx + mu * u(1-u^2) in [0, L]
+# u(0, t) = 0, u(L, t) = 0 
+
+# パラメータ 
+eps: float = 0.1 
+mu: float = 20.0
+
+# 2 階中心差分による空間離散化 
+def Lap(u: np.ndarray, h: float) -> np.ndarray: 
+    vec = np.empty_like(u) 
+    vec[0] = (-2*u[0] + u[1]) / (h**2) 
+    vec[-1] = (u[-2] - 2*u[-1]) / (h**2) 
+    vec[1:-1] = (u[:-2] - 2*u[1:-1] + u[2:]) / (h**2) 
+    return vec 
+
+def W(u: np.ndarray) -> np.ndarray: 
+    return u * (1 - u**2)
+
+def f(u: np.ndarray, h: float) -> np.ndarray: 
+    return eps**2 * Lap(u, h) + mu * W(u)
+
+# 古典的ルンゲ=クッタ (４段陽的ルンゲ=クッタ)
+def runge_kutta(u: np.ndarray, tau: float, h: float) -> np.ndarray:
+    k1 = f(u, h)
+    k2 = f(u + tau/2 * k1, h)
+    k3 = f(u + tau/2 * k2, h)
+    k4 = f(u + tau * k3, h)
+    return u + tau/6 * (k1 + 2*k2 + 2*k3 + k4) 
+
+# 空間領域, 時間区間 
+L: float = 1. 
+T: float = 0.3 
+M: int = 300 
+N: int = 5000 
+x = np.linspace(0, L, M+1) 
+t = np.linspace(0, T, N+1) 
+h: float = L/M 
+tau = float = T/N 
+
+# 初期条件 (境界条件を満たすものを指定)
+u0 = 0.6 * np.sin(3*np.pi*x/L) 
+# 配列の初期化, 初期条件と境界条件の設定 
+u = np.empty((M+1, N+1)) 
+u[:, 0] = u0
+u[0, :] = 0 
+u[-1, :] = 0
+
+# プロットの準備 
+fig, ax = plt.subplots() 
+ax.set_ylim([-1.1, 1.1])
+
+# 初期条件のプロット 
+line, = ax.plot(x, u[:, 0], color='tab:blue', linewidth=2.5)
+# plt.savefig('allen_cahn.pdf') 
+# アニメーションにおける update を定義 
+def update(frame): 
+    line.set_data(x, u[:, frame]) # 更新された u を入力 
+    return 
+
+# 計算 
+for n in range(N): 
+    u[1:-1, n+1] = runge_kutta(u[1:-1, n], tau, h) 
+    
+# プロット 
+step: int = 10
+ani = FuncAnimation(fig, update, frames=range(0, N, step), interval=5)
+# ファイル出力する場合は下のコメントアウトを解除
+# ani.save("allen_cahn.mp4", writer="ffmpeg", fps=60)
+
+plt.show()
+# Google Colab でアニメーションを表示するには 
+# plt.show() をコメントアウトし, 代わりに以下のようにする (時間がかかるので注意): 
+# from matplotlib import rc
+# from IPython.display import HTML
+# rc('animation', html='jshtml')
+# ani 
+
+</code>
+            </pre>
+            <p>サンプルコードのパラメータを用いて計算することで上のアニメーションのような挙動を観察できる. 
+                これは方程式
+                \[
+                    u_t = \varepsilon^2 u_{xx} + \mu u(1-u^2) \quad \text{in}\quad [0, L] 
+                \]
+                の右辺にある $2$ つの項の作用を, パラメータ $\varepsilon$, $\mu$ により適切に調整したためであるが, 例えば数値計算において $\varepsilon = 0$ としたり $\mu = 0$ としたりすることで, 一方の項を消去し様子の異なる数値計算結果を観察することもできる. 
+                実際, $\mu=0$ のときは第 $1$ 項のみが残り, 方程式は熱方程式となる. 
+                つまり, アレン=カーン方程式の第 $1$ 項は, 熱方程式と同様に, 関数 $u$ の値が &quot;拡散&quot; し, $u$ の形状が平たくなろうとする効果を表している. 
+                このような項は <b>拡散項</b> と呼ばれる. 
+                一方で右辺第 $2$ 項には微分が含まれず, $u$ の値自体の影響で $u$ が変化する効果を表している. 
+                このような項は <b>反応項</b> と呼ばれ, また拡散項と反応項を持つ偏微分方程式は <b>反応拡散方程式</b> と呼ばれる. 
+            </p>
+            <p>アレン=カーン方程式の反応項にのみ注目した $u_t = \mu u(1-u^2)$ について, 簡単のため $\mu=1$ とし, さらに (空間変数を無視して) 一次元力学系と思うことにすると, これは 
+                \[
+                    E(u) = \dfrac{u^4}{4} - \dfrac{u^2}{2} 
+                \] というエネルギーに対する勾配系 $u_t = -E'(u)$ となる. 
+                エネルギー $E$ の形状に注目すると, $u=\pm1$ が安定な平衡点であり, $u=0$ は不安定な平衡点である. 
+                結果的に, アレン=カーン方程式の反応項は, $u$ の値が $u=\pm 1$ に近づこうとする効果を表している. 
+                実際, 先ほどの計算例でも, 関数 $u$ の大部分が $u=\pm1$ となるように動いている様子を確認できる. 
+                なお, 上の $E$ のようなエネルギーは相分離現象などを記述する際にしばしば用いられるものであり, 関数の形状から <b>二重井戸型ポテンシャル</b> (<b>double-well potential</b>) と言及される. 
+                実際には, 拡散項も含めて 
+                \[
+                    J(u) = \int \left(\dfrac{1}{2}u_x^2 + \dfrac{u^4}{4} - \dfrac{u^2}{2} \right)
+                \] と定めると, 汎函数 $J$ に関する勾配流とみなすこともできる. 
+            </p>
+            <p>先ほどの計算例では拡散項と反応項の影響が釣り合うような関数形状から動かなくなる様子を確認できる, つまりこれは与えられたパラメータに対するアレン=カーン方程式の定常解への収束を表現している. 
+                しかしながら, パラメータ $\mu=0$ とすると (方程式は熱方程式となり) 拡散項の影響により解は $u=0$ という定常解に近づく. 
+                つまり, パラメータ $\mu$ を変化させることで分岐が発生し, $\mu$ を大きくすることで $u=0$ 以外の安定な定常解が生じると推測できる.
+            </p>
+
+            <hr>
+
+            <p>アレン=カーン方程式の分岐について解析的に確かめてみよう. 
+                まず, 定常解 $\widetilde{u}(x)$ は 
+                \[
+                    \left\{\begin{array}{l} 
+                        0 = \widetilde{u}_{xx} + \dfrac{\mu}{\varepsilon^2}\widetilde{u}(1-\widetilde{u}^2)\quad \text{in}\quad [0, L], \cr
+                        \widetilde{u}(0) = \widetilde{u}(L) = 0 
+                    \end{array}\right.
+                \] を満たしていることから, $\lambda = \mu/\varepsilon^2$ の値に注目して定常解の安定性を考えてみる. 
+                自明な定常解 $\widetilde{u}=0$ については, 線形安定性解析より 
+                \[
+                    \left\{\begin{array}{l} 
+                        v_t = v_{xx} + \lambda v \quad \text{in} \quad [0, L], \cr 
+                        v(0) = v(L) = 0 
+                    \end{array}\right.
+                \] を考えれば良いことになる ($\widetilde{u}$ が十分 $0$ に近ければ $\widetilde{u}^3$ は無視してしまってもよいだろう, ということに相当している). 
+                ここで, $\widetilde{A}v = v_{xx} + \lambda v$ なる線形作用素 $\widetilde{A}$ について (境界条件も考慮して) 
+                \[
+                    \left\{\begin{array}{l} 
+                        \widetilde{A}\varphi_n = \lambda_n\varphi_n, \cr 
+                        \varphi_n(0) = \varphi_n(L) = 0 
+                    \end{array}\right.
+                \] を満たす固有値 $\lambda_i$ と固有関数 $\varphi_i(x)$ を考えると 
+                \[
+                    \varphi_n(x) = \sin\dfrac{n \pi}{L}x,\quad \lambda_n = \lambda - (n\pi/L)^2\qquad (i=1, 2, \dots)
+                \] である. 
+                特に最大固有値は $\lambda_1 = \lambda - (\pi/L)^2$ であり, これが負ならば定常解 $\widetilde{u} = 0$ は安定であり, 正ならば不安定である. 
+                従って, $\lambda = (\pi/L)^2$ において定常解 $0$ は安定から不安定に転じ, 実は $0$ でない安定な定常解が生じる (さらに言えば, 実はこの分岐は超臨界ピッチフォーク分岐である). 
+                さらに $n=2, 3, \dots$ に対し, $\lambda = (n \pi/L)^2$ でも (定常解 $\widetilde{u} = 0$ における不安定多様体の次元が増加し) ピッチフォーク状の分岐が起こる. 
+                結果的に, $\lambda = \mu/\varepsilon^2$ が十分に大きければ, 大量の分岐により生じた大量の定常解が存在することになる. 
+                実際, 先ほどの数値計算例において異なる初期値 (たとえば波数の異なるサインカーブ) を用いることで, 異なる定常解を容易に見つけることができる. 
+            </p>
+        </section>
+
+        <hr>
+
+        <section><h2>フィッシャー = KPP 方程式</h2>
+            <p>ここまでの例でも見たように, 反応拡散方程式 (もしくはその線形化問題) に対して, 三角関数の線型結合により記述される関数の利用は有用な解析テクニックである. 
+                一般には, 非線形な反応拡散方程式の解そのものを, 熱方程式の場合と同様に三角関数の線型結合により構成することは不可能であるが, 解の近似を構成する際には, このアイデアを応用することが可能である. 
+                このような数値計算手法は <b>スペクトル法</b> (<b>spectral method</b>) と呼ばれるものの典型例であり, 簡単な形をした空間領域上のなだらかな解を極めて高精度に近似することが可能であることが知られる. 
+                ここでは, <b>フィッシャー = KPP 方程式</b> (<b>Fisher-KPP equation</b>) 
+                \[
+                    u_t = ku_{xx} + ru(1-u) \quad \text{in}\quad \mathbb{R}
+                \] 
+                を具体例に, 三角関数に基づくスペクトル法による空間半離散化について解説しよう. 
+                なお, この方程式は (無限区間上で考えた際に) 進行波解を持つことが知られ, 伝播現象を表すシンプルな数理モデルとして扱われるものである. 
+                ただし, 数値計算の都合上, 無限区間を厳密に扱うことができないため, ここでは代わりに 
+                \[
+                    \left\{\begin{array}{l} 
+                        u_t = ku_{xx} + ru(1-u) \quad \text{in}\quad [0, L], \cr 
+                        u(0, t) = 1,\quad u(L, t) = 0
+                    \end{array}\right.
+                \] を考えることにする (初期条件は適当に与えることにする). 
+            </p>
+            <p>まず, 記号の簡単のために $f(u) = u(1-u)$ とおく. 
+                次に, 方程式を斉次ディリクレ境界条件に帰着させるために, 例えば $g(x) = 1-x/L$ を用いて 
+                \[
+                    v(x, t) = u(x, t) - g(x) 
+                \] とおく. この $v$ は ($g_t = g_{xx} = 0$ であることに注意すると)
+                \[
+                    \left\{\begin{array}{l} 
+                        v_t = kv_{xx} + rf(u) \quad \text{in}\quad [0, L], \cr 
+                        v(0, t) = v(L, t) = 0
+                    \end{array}\right. \tag{$\ast$}
+                \] を満たすので, この解となる $v$ の近似を計算し, それに関数 $g$ を加えたものを $u(x, t) = v(x, t) + g(x)$ の近似とすれば良い. 
+            </p>
+            <p>それではこの問題に対する, 三角関数に基づくスペクトル法のアイデアを説明しよう. 
+                まず, フーリエ級数展開によれば $L^2(0, L)$ の直交基底として三角関数を用いることができるのだった. 
+                今回は斉次ディリクレ境界条件を課していることを考慮し, 
+                \[
+                    \varphi_j(x) = \sin \dfrac{j\pi}{L}x
+                \] たちの線型結合により, 解の近似を与える関数を構成しよう. 
+                具体的には, 関数
+                \[
+                    v_h(x, t) = \sum_{j=1}^M \widehat{v}_j(t) \varphi_j(x),\quad u_h(x, t) = v_h(x, t) + g(x)
+                \] が $v(x, t)$, $u(x, t)$ それぞれの近似となるように, つまり ($\ast$) 式を &quot;近似的に&quot; 満たすように $\widehat{v}_j(t)$ を適切に定めれば良い. 
+                そこで, ここでは ($\ast$) 式の両辺に <b>テスト関数</b> として $\varphi_m(x)$ を掛け合わせて積分した 
+                \[
+                    \int_0^L (v_h)_t\varphi_m ~dx = \int_0^L (k(v_h)_{xx} + rf(u_h))\varphi_m ~dx \quad \text{for all}\quad m = 1, \dots, M 
+                \] が満たされることを要請してみよう.  
+                三角関数の直交性に注意すると 
+                \[
+                    \int_0^L \varphi_i(x)\varphi_j(x) ~dx = \dfrac{L}{2}\delta_{ij}
+                \] となることから, 上の式は 
+                \[
+                    (\widehat{v}_m)_t = -k\left(\dfrac{m\pi}{L}\right)^2\widehat{v}_m + r\widehat{f}_m \quad\text{for all}\quad m = 1,\dots, M
+                \] と変形することができる, ここで 
+                \[
+                    \widehat{f}_m = \dfrac{2}{L}\int_0^L f(u_h)\varphi_m~dx
+                \] である (つまり $v_h$, $f(v_h)$ のフーリエ変換により空間 $2$ 階微分を $-(m\pi/L)^2$ に置き換えたことに相当している). 
+                記号の簡単のために, 第 $m$ 成分がフーリエ係数 $\widehat{v}_m$, $\widehat{f}_m$ であるベクトルをそれぞれ $\widehat{\mathbf{v}}$, $\widehat{\mathbf{f}}$ とおき, また $(m, m)$ 成分が $-(m\pi/L)^2$ である対角行列を $A$ とおく. 
+                すると, 上の式は 
+                \[
+                    \widehat{\mathbf{v}}_t = k A\widehat{\mathbf{v}} + r \widehat{\mathbf{f}}
+                \] という常微分方程式系に他ならない. 
+                これが三角関数に基づくスペクトル法による空間半離散化であり, 時間発展 PDE を常微分方程式系で近似することができた. 
+            </p>
+
+            <hr>
+
+            <p>あとは上の常微分方程式系に対する適当な数値計算手法を適用して $\widehat{\mathbf{v}}$ を求めれば, そこから関数 $v_h(x, t)$ を求めることができるが, その前にスペクトル法に関連する計算テクニックを導入しよう. 
+                ここでは区間 $[0, L]$ を $M+1$ 等分し $h = L/(M+1)$, $x_m = mh$ とおき, 
+                \[
+                    v_m(t) = v_h(x_m, t) = \sum_{j=1}^M \widehat{v}_j(t) \varphi_j(x_m),\quad u_m(t) = v_m(t) + g(x_m)\quad\text{for all}\quad m=1, \dots, M.
+                \] とおく ($v_0(t) = v_{M+1}(t) = 0$ は明らか). 
+                以降, 第 $m$ 成分が $v_m(t)$, $f(u_m)$ であるベクトルをそれぞれ $\mathbf{v}$, $\mathbf{f}$ と表記することにする. 
+                特に $\mathbf{v}$ に注目すると, 
+                \[
+                    \mathbf{v} = \begin{pmatrix} 
+                        v_1 \cr 
+                        \vdots \cr 
+                        v_M 
+                    \end{pmatrix} = \begin{pmatrix} 
+                        \displaystyle\sum_{j=1}^M \widehat{v}_j\varphi_j(x_1) \cr 
+                        \vdots \cr 
+                        \displaystyle\sum_{j=1}^M \widehat{v}_j\varphi_j(x_M) 
+                    \end{pmatrix} = \begin{pmatrix} 
+                        \varphi_1(x_1) & \varphi_2(x_1) & \dots & \varphi_M(x_1) \cr 
+                        \varphi_1(x_2) & \varphi_2(x_2) & \dots & \varphi_M(x_2) \cr 
+                        \vdots & \vdots & \ddots & \vdots \cr 
+                        \varphi_1(x_M) & \varphi_2(x_M) & \dots & \varphi_M(x_M) 
+                    \end{pmatrix} \widehat{\mathbf{v}} 
+                \] が得られるが, 定義より
+                \[
+                    \varphi_j(x_m) = \sin \left(\dfrac{j\pi}{L}m\dfrac{L}{M+1}\right) = \sin\dfrac{jm\pi}{M+1}\quad (1\le j\le M,\ 0\le m\le M+1)
+                \] となるため, 行列 
+                \[
+                    S = \begin{pmatrix} 
+                        \varphi_1(x_1) & \varphi_2(x_1) & \dots & \varphi_M(x_1) \cr 
+                        \varphi_1(x_2) & \varphi_2(x_2) & \dots & \varphi_M(x_2) \cr 
+                        \vdots & \vdots & \ddots & \vdots \cr 
+                        \varphi_1(x_M) & \varphi_2(x_M) & \dots & \varphi_M(x_M) 
+                    \end{pmatrix} \in\mathbb{R}^{M\times M}
+                \] は対称行列となり, また詳細は省略するが, 実は 
+                \[
+                    S^{-1} = \dfrac{2}{M+1}S
+                \] となることが知られている. 
+                従って, 
+                \[
+                    \mathbf{v} = S\widehat{\mathbf{v}},\quad \widehat{\mathbf{v}} = \dfrac{2}{M+1}S\mathbf{v} 
+                \] と相互に変換することが可能である. 
+                これは <b>離散フーリエ変換</b> (特にこの場合は <b>離散サイン変換</b>) と呼ばれるものであり, フーリエ変換やフーリエ逆変換に相当する計算を極めて簡単に実行することができる, 重要なテクニックである. 
+            </p>
+
+            <hr>
+
+            <p>ここまでの議論を踏まえて, 実際に数値計算を試みよう. 
+                まず, 数値計算では非線形項 $f$ について
+                \[
+                    \widehat{\mathbf{f}} = \dfrac{2}{M+1}S\mathbf{f} 
+                \] としてしまうことにする. 
+                これは $\mathbf{f} = S\widehat{\mathbf{v}}$, つまり 
+                \[
+                    \sum_{j=1}^M\widehat{f}_j\varphi_j(x_m)\approx f(u_m) 
+                \] という近似を用いて数値計算を行うことを意味している. 
+                次に, 常微分方程式系 
+                \[
+                    \widehat{\mathbf{v}}_t = k A\widehat{\mathbf{v}} + r \widehat{\mathbf{f}}
+                \] の数値計算の際に, 時間区間 $[0, T]$ を $N$ 分割し $\tau = T/N$, $t_n = n\tau$ とおき, 与えられた $\widehat{\mathbf{v}}^n \approx \widehat{\mathbf{v}}(t_n)$ および $\widehat{\mathbf{f}}^n\approx \widehat{\mathbf{f}}(t_n)$ に対し 
+                \[
+                    \dfrac{\widehat{\mathbf{v}}^{n+1} - \widehat{\mathbf{v}}^{n}}{\tau} = k A\widehat{\mathbf{v}}^{n+1} + r\widehat{\mathbf{f}}^n 
+                \] という <b>半陰的オイラー法</b> (<b>semi-implicit Euler</b>) を採用することにする. 
+                これらのアイデアに基づく数値計算は, 以下のように実行すれば良い: 
+            </p>
+            <ol>
+                <li>第 $m$ 成分が $v_m^n \approx v(x_m, t_n)$ であるベクトル $\mathbf{v}^n$ から, 第 $m$ 成分が $f(u_m^n) = f(v_m^n+g(x_m))$ であるベクトル $\mathbf{f}^n$ を求める. </li> 
+                <li>逆離散サイン変換に基づき 
+                    \[
+                        \widehat{\mathbf{v}}^n = \dfrac{2}{M+1}S\mathbf{v}^n,\quad \widehat{\mathbf{f}}^n = \dfrac{2}{M+1}S\mathbf{f}^n 
+                    \] をそれぞれ計算する. </li> 
+                <li>半陰的オイラー法に基づき, 
+                    \[
+                        \widehat{\mathbf{v}}^{n+1} = (I+\tau kA)^{-1}(\widehat{\mathbf{v}}^n + \tau r\widehat{\mathbf{f}}^n)
+                    \] と定める. 
+                </li>
+                <li>離散サイン変換により 
+                    \[
+                        \mathbf{v}^{n+1} = S\widehat{\mathbf{v}}^{n+1} 
+                    \] を計算する. 
+                    このベクトルの各成分が $v(x_m, t_{n+1})$ の近似を表すため, $u(x_m, t_{n+1}) = v(x_m, t_{n+1}) + g(x_m)$ の近似 $u_m^{n+1} = v_m^{n+1} + g(x_m)$ が得られる. 
+                </li>
+            </ol>
+            <p>なお, 行列 $(I+\tau kA)^{-1}$ は第 $(m, m)$ 成分が 
+                \[
+                    \dfrac{1}{1+\tau k(m\pi/L)^2}
+                \] である対角行列であり, 従って半陰的オイラー法の計算は
+                \[
+                    \widehat{v}^{n+1}_m = \dfrac{\widehat{v}^n_m + \tau r \widehat{f}^n_m}{1+\tau k(m\pi/L)^2}\quad \text{for all}\quad m=1, \dots, M
+                \] と表すことができ, 容易に計算可能である. 
+            </p>
+                
+                
+                
+            <pre>
+<code>
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+# パラメータ 
+k: float = 1.0 
+r: float = 5.0
+
+# 空間領域, 時間区間
+L: float = 50.0 
+T: float = 5.0 
+M: int = 500 
+N: int = 1000 
+x = np.linspace(0, L, M+2) 
+t = np.linspace(0, T, N+1)
+h: float = L/(M+1) 
+tau: float = T/N 
+# m と離散サイン変換の行列
+m = np.arange(1, M+1)
+S = np.sin(np.pi * np.outer(m, m) / (M+1))
+
+
+# 初期化
+u = np.empty((M+2, N+1))
+# 境界条件を満たす関数
+g = 1 - x/L
+# 初期条件
+u[:, 0] = 1 * (x < L/10) + (1 + np.cos((x-L/10)/(L/8)*np.pi))/2 * (np.logical_and(x >= L/10, x < L/10 + L/8)) 
+# 斉次ディリクレ境界条件を満たす関数
+v = u[:, 0] - g                        
+
+# 初期条件のプロット
+fig, ax = plt.subplots()
+line, = ax.plot(x, u[:, 0], lw=2)
+# アニメーションにおける update を定義 
+def update(frame):
+    line.set_ydata(u[:, frame])
+    return line,
+
+# 計算
+for n in range(N): 
+    f = u[:, n] * (1 - u[:, n])
+    v_hat = 2/(M+1) * S @ v[1:-1]
+    f_hat = 2/(M+1) * S @ f[1:-1]
+    v_hat = (v_hat + tau * r * f_hat) / (1 + tau * k * (m*np.pi/L)**2)
+    v[1:-1] = S @ v_hat
+    u[:, n+1] = v + g
+
+# プロット
+step: int = 2
+ani = FuncAnimation(fig, update, frames=range(0, N, step), interval=5)
+# ファイル出力する場合は下のコメントアウトを解除
+# ani.save("fisher_kpp.mp4", writer="ffmpeg", fps=60)
+
+plt.show()
+# Google Colab でアニメーションを表示するには 
+# plt.show() をコメントアウトし, 代わりに以下のようにする (時間がかかるので注意): 
+# from matplotlib import rc
+# from IPython.display import HTML
+# rc('animation', html='jshtml')
+# ani 
+</code>
+            </pre>
+            <div class="resize">
+                <video autoplay="true", loop="true">
+                <source src="videos/fisher_kpp.mp4" type="video/mp4" />
+                </video>
+            </div>
+            <p>サンプルコードによる数値計算の結果を上に示す. 
+                初期値は適当に (境界条件を満たすものを) 与えているが, 時間経過によりある形状に速やかに近づき, その形状を維持しつつ右に移動する進行波解を数値的に再現できていることを確認できる. 
+                ただし, この問題については境界条件の影響で, 進行する波が右端に近づくと形状が崩れてしまう. 
+                上のサンプルコードでは $T=5.0$ としているが, これを大きくすると解が崩れて計算が破綻してしまうため注意. 
+                また, 上のサンプルコードでは離散サイン変換の計算において, わかりやすさのために行列ベクトル積を素直に計算している (numpy では A @ v で行列 $A$ とベクトル $v$ の積を計算できる) が, 実際には, <b>高速フーリエ変換</b> (<b>Fast Fourier Transform</b>, FFT) など, 離散フーリエ変換を効率的に計算するテクニックを利用するべきだろう. 
+                Python では, scipy.fft モジュールで簡単に FFT を利用できるため, 興味があれば試してみると良い. 
+            </p>
+
+        </section>
+
+        <hr>
+
+        <section><h2>カーン=ヒリアード方程式</h2>
+            <p><a href="phase_plane_analysis.html#section3-A">数値計算: 構造保存型数値解法</a> において, 構造保存型数値解法の一例としてハミルトン系に対する離散勾配法を紹介した. 
+                ここでは時間発展 PDE に対する構造保存型数値解法の一種として, <b>離散変分導関数法</b> (<b>discrete variational derivative method</b>) を紹介しよう. 
+                例として <b>カーン=ヒリアード方程式</b> (<b>Cahn-Hilliard equation</b>)  
+                \[
+                    u_t = -(\varepsilon^2 u_{xx} + \mu u(1-u^2))_{xx}
+                \] を考える, ここで $\varepsilon\gt 0$ と $\mu\gt 0$ はパラメータである. 
+                ここでは境界条件 (および初期条件) として, 
+                \[
+                    \left\{\begin{array}{l}
+                        u_t = -(\varepsilon^2 u_{xx} + \mu u(1-u^2))_{xx} \quad \text{in}\quad [0, L], \cr
+                        u_x(0, t) = u_x(L, t) = 0, \cr 
+                        u_{xxx}(0, t) = u_{xxx}(L, t) = 0, \cr 
+                        u(x, 0) = u_0(x)
+                    \end{array}\right.
+                \] を考えることにする. 
+                特に, 境界における空間 $1$ 階微分 (より正確には法線微分) の値を指定する境界条件は <b>ノイマン境界条件</b> と呼ばれる. 
+                今回は $1$ 階微分の境界値が $0$ であるという条件を課しているが, これは <b>斉次ノイマン境界条件</b> と呼ばれる. 
+            </p>
+            <p>ところで, カーン=ヒリアード方程式はアレン=カーン方程式と同様に相分離現象を表す数理モデルとして利用されるものであるが, こちらは上のような適切な境界条件の下で質量保存則を満たすという利点がある. 
+                実際, 
+                \[
+                    \begin{array}{rl} 
+                        \dfrac{d}{dt}\displaystyle\int_0^L u~dx &= \displaystyle\int_0^L u_t ~dx \cr 
+                        &= \displaystyle\int_0^L -(\varepsilon^2 u_{xx} + \mu u(1-u^2))_{xx} ~dx \cr 
+                        &= \left[-\varepsilon^2 u_{xxx} - \mu u_x - 3\mu u^2u_x\right]_0^L = 0
+                    \end{array}
+                \] であるため, $u$ を区間 $[0, L]$ 上で積分した値は時間 $t$ には依存しない, つまり質量が時間経過により変化しないことがわかる. 
+                さらに, この問題については, 
+                \[
+                    E(u) = \dfrac{u^4}{4} - \dfrac{u^2}{2},\qquad G(u, u_x) = \dfrac{\varepsilon^2}{2}u_x^2 +\mu E(u),\qquad J(u) = \int_0^L G(u, u_x)~dx
+                \] により定められる $J(u)$ が, 時間とともに減少するということもわかる, ここで $E(u)$ は二重井戸型ポテンシャルであり, また $G(u, u_x)$, $J(u)$ はそれぞれカーン=ヒリアード方程式の <b>局所エネルギー</b>, <b>全エネルギー</b> と呼ばれることがある. 
+                このことを確認するために, $G(u, u_x)$ に対する <b>変分導関数</b> 
+                \[
+                    \dfrac{\delta G}{\delta u} = \dfrac{\partial G}{\partial u} - \dfrac{\partial}{\partial x}\dfrac{\partial G}{\partial u_x} 
+                \] を導入しよう. 
+                なお, この変分導関数は, $J$ の変分を計算する際に
+                \[
+                    \left.\dfrac{d}{d\varepsilon}\right|_{\varepsilon=0}J(u+\varepsilon v) = \int_0^L\left(\dfrac{\partial G}{\partial u}v + \dfrac{\partial G}{\partial u_x}v_x\right)~dx = \int_0^L\dfrac{\delta G}{\delta u}v~dx \quad \text{for all}\quad v\in C^{\infty}_0(0, L)
+                \] を満たすものである. 
+                上の $G(u, u_x)$ の変分導関数を実際に計算すると, 
+                \[
+                    \dfrac{\delta G}{\delta u} = -\mu u + \mu u^3 - \dfrac{\partial}{\partial x}\varepsilon^2 u_x = -(\varepsilon^2 u_{xx} + \mu u (1-u^2))
+                \] が得られる. 
+                つまりカーン=ヒリアード方程式は 
+                \[
+                    u_t = \left(\dfrac{\delta G}{\delta u}\right)_{xx}
+                \] であると思うことができる. 
+                また, 境界条件から
+                \[
+                    \left\{\begin{array}{rll} 
+                        \dfrac{\partial G}{\partial u_x} &= 0 & (x=0, L), \cr 
+                        \left(\dfrac{\delta G}{\delta u}\right)_x &= 0 & (x=0, L)
+                    \end{array}\right.
+                \] が得られることも用いると, 実際に 
+                \[
+                    \begin{array}{rl} 
+                        \dfrac{d}{dt}J(u) &= \displaystyle\int_0^L \dfrac{\partial G(u, u_x)}{\partial t}~dx \cr 
+                        &= \displaystyle\int_0^L\left(\dfrac{\partial G}{\partial u}u_t + \dfrac{\partial G}{\partial u_x}u_{xt}\right)~dx \cr 
+                        &= \displaystyle\int_0^L \dfrac{\partial G}{\partial u}u_t ~ dx + \underbrace{\left[\dfrac{\partial G}{\partial u_x}u_t\right]_0^L}_{=0} -\int_0^L \dfrac{\partial}{\partial x}\dfrac{\partial G}{\partial u_x}u_{t}~dx \cr 
+                        &= \displaystyle\int_0^L \dfrac{\delta G}{\delta u}u_t ~ dx \cr 
+                        &= \displaystyle\int_0^L \dfrac{\delta G}{\delta u}\left(\dfrac{\delta G}{\delta u}\right)_{xx} ~ dx \cr 
+                        &= \underbrace{\left[\dfrac{\delta G}{\delta u}\left(\dfrac{\delta G}{\delta u}\right)_{x}\right]_0^L}_{=0} - \displaystyle\int_0^L \left(\dfrac{\delta G}{\delta u}\right)_{x}^2 ~ dx \le 0
+                    \end{array}
+                \] のように式変形することで, $J(u)$ は時間 $t$ について単調減少であることが確かめられる (もちろん変分導関数を用いずに式変形することで同じ結論を得ることもできる). 
+            </p>
+            <p>さて, 単純な $4$ 階差分に基づく計算やスペクトル法など汎用解法による数値計算結果がこのような性質を再現するとは限らないことは想像に難くないだろう. 
+                なお, この問題に対する単純な差分法は, 計算に用いる区間分割をどれだけ細かくしても発散してしまうことさえあり, 適切な数値計算結果を得ることが難しい例として知られている. 
+                そこで, 上で述べた性質を再現するように構成された構造保存型数値解法を考えたい. 
+                そのために, カーン=ヒリアード方程式そのものではなく, 変分導関数を用いて表される等式や不等式に対する近似を構成しよう. 
+                このようなアイデアに基づく数値計算手法を <b>離散変分導関数法</b> という. 
+            </p>
+
+            <hr>
+
+            <p>カーン=ヒリアード方程式に対する離散変分導関数法のアイデアについて具体的に説明しよう. 
+                本来, 離散変分導関数法において空間離散化と時間離散化は同時に説明されることが多いが, ここでは空間半離散化により常微分方程式系を導出し, その後で後退オイラー法を適用する, という順序で解説してみる. 
+                区間 $[0, L]$ を $M$ 等分することで空間分割幅を $h = L/M\gt0$ とし, $x_m = mh$ とする. 
+                このとき, カーン=ヒリアード方程式の解 $u$ に対し, $u(x_m, t)$ の近似を与える $u_m$ ($m=0, 1, \dots, M$) を求めたい. 
+                以降, $u_m$ を第 $m+1$ 成分としてもつベクトルを $\mathbf{u}(t)\in\mathbb{R}^{M+1}$ と表記する:
+                \[
+                    \mathbf{u} = \begin{pmatrix} 
+                        u_0 \cr 
+                        u_1 \cr 
+                        \vdots \cr
+                        u_M 
+                    \end{pmatrix} \in \mathbb{R}^{M+1}.
+                \] 境界条件の違いから, アレン=カーン方程式のときとは異なっていることに注意. 
+                以降現れる $M+1$ 次行ベクトルの各成分も同様に表記する. 
+            </p>
+
+            <ol>
+                <li>境界条件 
+                    \[
+                        \left\{\begin{array}{rll}
+                            u_x(0, t) &= u_x(L, t) &= 0, \cr
+                            u_{xxx}(0, t) &= u_{xxx}(L, t) &= 0
+                        \end{array}\right.
+                    \] を近似する. 
+                    ここでは, $u_{-2}$, $u_{-1}$, $u_{M+1}$, $u_{M+2}$ を, 
+                    \[
+                        \left\{\begin{array}{l} 
+                            \dfrac{u_1 - u_{-1}}{2h} = \dfrac{u_{M+1} - u_{M-1}}{2h} = 0, \cr 
+                            \dfrac{u_2 - 2u_1 + 2u_{-1} - u_{-2}}{2h^3} = \dfrac{u_{M+2} - 2u_{M+1} + 2u_{M-1} - u_{M-2}}{2h^3} = 0
+                        \end{array}\right.
+                    \] が満たされるように定めることで, 境界条件の近似とする. 
+                    境界条件の扱いを容易にするために値が設定される仮想的な点を <b>仮想格子点</b> (もしくは ghost point) と呼ぶことがあるが, 上は仮想格子点上での $u_m$ の値を 
+                    \[
+                        u_{-2} = u_2,\quad u_{-1} = u_1,\quad u_{M+1} = u_{M-1},\quad u_{M+2} = u_{M-2}
+                    \] と設定していることを意味している. 
+                    また, 以降現れる全ての $M+1$ 次行ベクトルも同様に仮想格子点上での値を設定する.  
+                </li>
+                <li>局所エネルギー $G(u, u_x)$ の ($x_m$ における) 近似を表すベクトル $\mathbf{G}(\mathbf{u})$ を構成する. 
+                    ここでは, 
+                    \[
+                        G(u, u_x) = \dfrac{\varepsilon^2}{2}u_x^2 +\mu E(u) 
+                    \] の近似 $\mathbf{G}(\mathbf{u})\in\mathbb{R}^{M+1}$ の第 $m+1$ 成分 $G_m(\mathbf{u})$ を
+                    \[
+                        G_m(\mathbf{u}) = \dfrac{\varepsilon^2}{2}\underbrace{\dfrac{\left(\dfrac{u_m - u_{m-1}}{h}\right)^2 + \left(\dfrac{u_{m+1} - u_m}{h}\right)^2}{2}}_{=A_m(\mathbf{u})} + \mu E(u_m) 
+                    \] と定めよう. 
+                    さらに, 第 $m+1$ 成分が $A_m(\mathbf{u})$, $E(u_m)$ であるベクトルをそれぞれ $\mathbf{A}(\mathbf{u})$, $\mathbf{E}(\mathbf{u})$ と表すことで 
+                    \[
+                        \mathbf{G}(\mathbf{u}) = \dfrac{\varepsilon^2}{2}\mathbf{A}(\mathbf{u}) + \mu \mathbf{E}(\mathbf{u})
+                    \] と表記する. 
+                </li>
+                <li>全エネルギー $J(u)$ の近似を表す $J_h(\mathbf{u})$ を構成する. 
+                    ここでは,  
+                    \[
+                        J(u) = \int_0^L G(u, u_x)~dx
+                    \] の近似 $J_h(\mathbf{u}^n)$ を, 積分に対する台形則により定めよう: 
+                    \[
+                        J_h(\mathbf{u}) = \left(\dfrac{1}{2}G_0(\mathbf{u}) + \sum_{m=1}^{M-1}G_m(\mathbf{u}) + \dfrac{1}{2}G_M(\mathbf{u})\right)h.
+                    \] 以降, 記号の簡単のために, ベクトル $\mathbf{v}, \mathbf{w}\in\mathbb{R}^{M+1}$ に対し, 
+                    \[
+                        S(\mathbf{v}) = \left(\dfrac{1}{2}v_0 + \sum_{m=1}^{M-1}v_m + \dfrac{1}{2}v_M\right)h,\qquad (\mathbf{v}, \mathbf{w})_h = \left(\dfrac{1}{2}v_0w_0 + \sum_{m=1}^{M-1}v_mw_m + \dfrac{1}{2}v_Mw_M\right)h
+                    \]
+                    と表記することにする.  
+                    つまり全エネルギー $J(u)$ の近似は 
+                    \[
+                        J_h(\mathbf{u}) = S(\mathbf{G}(\mathbf{u}))
+                    \] と表される. 
+                </li>
+                <li>変分導関数を用いて表される, 連鎖律 
+                    \[
+                        \dfrac{d}{dt}J(u) = \int_0^L\dfrac{\delta G}{\delta u}u_t~dx \le 0
+                    \] を (積分については先ほどと同じく台形則を用いて) 
+                    \[
+                        S\left(\dfrac{d}{dt}\mathbf{G}(\mathbf{u})\right) = \dfrac{d}{dt}J_h(\mathbf{u}) = \left(\dfrac{\delta \mathbf{G}}{\delta\mathbf{u}}, \mathbf{u}_t\right)_h 
+                    \] という離散的な &quot;連鎖律&quot; で近似することで, これを満たす 
+                    \[
+                        \dfrac{\delta \mathbf{G}}{\delta\mathbf{u}}\in\mathbb{R}^{M+1}
+                    \] を定めることができたと仮定する.
+                </li>
+                <li>変分導関数を用いて表されるカーン=ヒリアード方程式 
+                    \[
+                        u_t = \left(\dfrac{\delta G}{\delta u}\right)_{xx} = \Delta \dfrac{\delta G}{\delta u}
+                    \] の近似として, 
+                    \[
+                        \mathbf{u}_t = \Delta_h\dfrac{\delta \mathbf{G}}{\delta\mathbf{u}} 
+                    \] を得る, ここで 
+                    \[
+                        \Delta_h = \dfrac{1}{h^2}\begin{pmatrix} 
+                            -2 & 2 & 0 & 0 & \dots & 0 \cr 
+                            1 & -2 & 1 & 0 & \dots & 0 \cr 
+                            0 & 1 & -2 & 1 & \dots & 0 \cr 
+                            \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \cr
+                            0 & 0 & 0 & 0 & \dots & -2 
+                        \end{pmatrix}\in\mathbb{R}^{(M+1)\times (M+1)}
+                    \] は (斉次ノイマン境界境界条件下での) 離散ラプラシアンである. 
+                </li>
+            </ol>
+            
+            <hr>
+
+            <p>このようにして, PDE を常微分方程式系により近似することができるが, まずこの近似の性質を考えてみよう. 
+                具体的には, 上の離散ラプラシアン $\Delta_h\in\mathbb{R}^{(M+1)\times(M+1)}$ の性質を調べてみる. 
+                まず, この行列は (ディリクレ境界条件の場合とは異なり) 対称ではないし正則でもない. 
+                しかしながら, 台形則による数値積分 $S$ や台形則に基づく内積 $(\cdot, \cdot)_h$ と組み合わせると非常に良い性質を満たすことを確認できる. 
+                例えば, 任意のベクトル $\mathbf{v}, \mathbf{w}\in\mathbb{R}^{M+1}$ に対して, 
+                \[
+                    S(\Delta_h\mathbf{v}) = 0,\qquad (\Delta_h\mathbf{v}, \mathbf{w})_h = -(\nabla_h\mathbf{v}, \nabla_h\mathbf{w})_e = (\mathbf{v}, \Delta_h\mathbf{w})_h,\qquad (\mathbf{v}, \Delta_h\mathbf{v})_h \le 0 
+                \] が成立する, ここで 
+                \[
+                    \nabla_h = \dfrac{1}{h}\begin{pmatrix} 
+                        -1 & 1 & 0 & \dots & 0 & 0 \cr 
+                        0 & -1 & 1 & \dots & 0 & 0 \cr 
+                        \vdots & \vdots & \ddots & \ddots & \vdots & \vdots \cr 
+                        0 & 0 & 0 & \dots & -1 & 1 
+                    \end{pmatrix} \in \mathbb{R}^{M\times(M+1)} 
+                \] であり (これを <b>離散勾配</b> と呼ぶことがある), また第 $m$ 成分が $p_m$, $q_m$ であるベクトル $\mathbf{p}$, $\mathbf{q}\in\mathbb{R}^M$ に対して
+                \[
+                    (\mathbf{p}, \mathbf{q})_e = \sum_{m=1}^Mp_mq_mh 
+                \] と定める (上の式は境界条件を用いると 
+                \[
+                    \int_0^Lv_{xx}~dx = \left[v_x\right]_0^L = 0,\qquad \int_0^L v_{xx}w~dx = -\int_0^L v_xw_x~dx = \int_0^Lvw_{xx}~dx,\qquad \int_0^Lvv_{xx}~dx = -\int_0^L|v_x|^2~dx \le 0 
+                \] が成立することを再現していると解釈できる). 
+                実際, ベクトル $\Delta_h\mathbf{v}$ の第 $m+1$ 成分が $(v_{m-1}-2v_m+v_{m+1})/h^2$ であることから, 
+                \[
+                    \begin{array}{rl} 
+                        S(\Delta_h\mathbf{v}) &= \left(\dfrac{1}{2}(-2v_0+2v_1) + \displaystyle\sum_{m=1}^{M-1}(v_{m-1}-2v_m+v_{m+1}) + \dfrac{1}{2}(2v_{M-1}-2v_M)\right)\dfrac{h}{h^2} \cr 
+                        &= -(v_0-v_1) + \displaystyle\sum_{m=1}^{M-1}((v_{m-1}-v_m) - (v_m-v_{m+1})) + (v_{M-1}-v_M) \cr 
+                        &= 0,
+                    \end{array}
+                \]
+                \[
+                    \begin{array}{rl} 
+                        (\Delta_h\mathbf{v}, \mathbf{w})_h &= \left(\dfrac{1}{2}(-2v_0+2v_1)w_0 + \displaystyle\sum_{m=1}^{M-1}(v_{m-1}-2v_m+v_{m+1})w_m + \dfrac{1}{2}(2v_{M-1}-2v_M)w_M\right)\dfrac{h}{h^2} \cr 
+                        &= \left((-v_0 + v_1)w_0 + (v_0 - v_1)w_1 + \displaystyle\sum_{m=2}^{M-1}(v_{m-1}-v_m)w_m + \sum_{m=1}^{M-2}(-v_m+v_{m+1})w_m + (-v_{M-1}+v_M)w_{M-1} + (v_{M-1}-v_M)w_M\right)\dfrac{h}{h^2} \cr 
+                        &= \left((-v_0+v_1)(w_0-w_1) + \displaystyle\sum_{m=2}^{M-1}(-v_{m-1}+v_m)(w_{m-1} - w_m) + (-v_{M-1}+v_M)(w_{M-1}-w_M)\right)\dfrac{h}{h^2} \cr
+                        &= -\displaystyle\sum_{m=1}^M\dfrac{-v_{m-1}+v_m}{h}\dfrac{-w_{m-1}+w_m}{h}h \cr 
+                        &= -(\nabla_h\mathbf{v}, \nabla_h\mathbf{w})_e \cr 
+                        &= \dots \cr 
+                        &= (\mathbf{v}, \Delta_h\mathbf{w})_h
+                    \end{array}
+                \] および
+                \[
+                    \begin{array}{rl} 
+                        (\mathbf{v}, \Delta_h\mathbf{v})_h &= -(\nabla_h\mathbf{v}, \nabla_h\mathbf{v})_e \cr 
+                        &= -\displaystyle\sum_{m=1}^{M}\left(\dfrac{v_{m-1}-v_{m}}{h}\right)^2h \cr 
+                        &\le 0
+                    \end{array}
+                \] を確かめることができる. 
+            </p>
+            <p>また, これらの性質から特に 
+                \[
+                    \dfrac{d}{dt}S(\mathbf{u}) = S(\mathbf{u}_t) = S\left(\Delta_h\dfrac{\delta\mathbf{G}}{\delta\mathbf{u}}\right) = 0,
+                \]
+                \[
+                    \dfrac{d}{dt}J_h(\mathbf{u}) = \left(\dfrac{\delta\mathbf{G}}{\delta\mathbf{u}}, \mathbf{u}_t\right)_h = \left(\dfrac{\delta\mathbf{G}}{\delta\mathbf{u}}, \Delta_h \dfrac{\delta\mathbf{G}}{\delta\mathbf{u}}\right)_h \le 0
+                \] が成立することになるが, これらは 
+                \[
+                    \dfrac{d}{dt}\int_0^Lu~dx = 0,\qquad \dfrac{d}{dt}J(u) \le 0 
+                \] を再現していると解釈ができる. 
+                つまり, 変分導関数に基づく方程式の記述を利用することで, 元の方程式の構造を保存するような空間微分の適切な近似ができているのである. 
+            </p>
+
+            <hr>
+
+            <p>それでは, 次に時間離散化についても考えてみよう. 
+                ここまでの議論で, 
+                \[
+                    S\left(\dfrac{d}{dt}\mathbf{G}(\mathbf{u})\right) = \left(\dfrac{\delta \mathbf{G}}{\delta\mathbf{u}}, \mathbf{u}_t\right)_h 
+                \] を満たす $\delta \mathbf{G}/\delta\mathbf{u}\in\mathbb{R}^{M+1}$ に対し 
+                \[
+                    \mathbf{u}_t = \Delta_h \dfrac{\delta\mathbf{G}}{\delta\mathbf{u}}
+                \] という常微分方程式を考える, というアイデアを導入した. 
+                ここでは, これに後退オイラー法を適用する: 
+                時間区間 $[0, T]$ を $N$ 等分することで時間分割幅を $\tau = T/N\gt0$ とし, $t_n = n\tau$ とする. 
+                このとき, $\mathbf{u}(t_n)$ の近似を与える $\mathbf{u}^n$ を, 
+                \[
+                    S\left(\dfrac{\mathbf{G}(\mathbf{u}^{n+1}) - \mathbf{G}(\mathbf{u}^n)}{\tau}\right) = \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^{n})}, \dfrac{\mathbf{u}^{n+1}-\mathbf{u}^n}{\tau}\right)_h 
+                \] を満たす <b>離散変分導関数</b> $\delta \mathbf{G}/\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)\in\mathbb{R}^{M+1}$ に対し 
+                \[
+                    \dfrac{\mathbf{u}^{n+1}-\mathbf{u}^n}{\tau} = \Delta_h \dfrac{\delta\mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}
+                \] を解くことで決定しよう. 
+                離散変分導関数を具体的にどのように構成するか, という問題はあるが, その前に上の式から得られる $\mathbf{u}^{n+1}$ の性質を確認しておくと, 
+                \[
+                    \begin{array}{rl} 
+                        S(\mathbf{u}^{n+1}) - S(\mathbf{u}^n) &= \tau S\left(\dfrac{\mathbf{u}^{n+1}-\mathbf{u}^n}{\tau}\right) \cr 
+                        &= \tau S\left(\Delta_h\dfrac{\delta\mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right) \cr 
+                        &= 0,
+                    \end{array}
+                \] および 
+                \[
+                    \begin{array}{rl} 
+                        J_h(\mathbf{u}^{n+1}) - J_h(\mathbf{u}^n) &= S(\mathbf{G}(\mathbf{u}^{n+1})) - S(\mathbf{G}(\mathbf{u}^n)) \cr 
+                        &= \tau S\left(\dfrac{\mathbf{G}(\mathbf{u}^{n+1}) - \mathbf{G}(\mathbf{u}^n)}{\tau}\right) \cr 
+                        &= \tau \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^{n})}, \dfrac{\mathbf{u}^{n+1}-\mathbf{u}^n}{\tau}\right)_h \cr 
+                        &= \tau \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^{n})}, \Delta_h\dfrac{\delta\mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right)_h \cr
+                        & \le 0
+                    \end{array}
+                \] が満たされていることがわかる. 
+                つまり, この数値計算により得られる $\mathbf{u}^n$ は, 時間経過による体積保存とエネルギー減衰という構造を再現することが数学的に保証される. 
+                このことが, 離散変分導関数法の大きな利点である. 
+            </p>
+
+            <hr>
+
+            <p>それでは, 離散変分導関数 
+                \[
+                    \dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^n, \mathbf{u}^{n+1})}
+                \] の具体的な構成を試みよう. 
+                以降, さらなる記号の簡単のために 
+                \[
+                    D_{\tau}u_m^n = \dfrac{u^{n+1}_m - u^n_m}{\tau},\quad D_{\tau}\mathbf{u}^n = \dfrac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\tau}, \quad u^{n+1/2}_m = \dfrac{u^{n+1}_m + u^n_m}{2}, \quad \mathbf{u}^{n+1/2} = \dfrac{\mathbf{u}^{n+1} + \mathbf{u}^n}{2}
+                \] という表記を導入しよう. 
+                さらに, 後のために
+                \[
+                    a_m = \dfrac{-u_{m-1}^{n+1/2}+u_m^{n+1/2}}{h},\qquad  b_m = \dfrac{-D_{\tau}u_{m-1}^n + D_{\tau}u_m^n}{h}
+                \] と表記することにする. 
+                境界条件より 
+                \[
+                    a_0 = -a_1,\quad b_0 = -b_1,\quad a_{M+1} = -a_{M},\quad b_{M+1} = -b_{M}
+                \] であることに注意.
+                また, $a_m$, $b_m$ を第 $m$ 成分にもつベクトルはそれぞれ $\nabla_h\mathbf{u}^{n+1/2}$, $\nabla_hD_{\tau}\mathbf{u}^n\in\mathbb{R}^M$ であることが重要である.  
+                さて, 離散変分導関数を定義する式を変形することで, 
+                \[
+                    \begin{array}{rl} 
+                        \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^n, \mathbf{u}^{n+1})}, D_{\tau}\mathbf{u}^n\right)_h &= S\left(\dfrac{\mathbf{G}(\mathbf{u}^{n+1}) - \mathbf{G}(\mathbf{u}^n)}{\tau}\right) \cr 
+                        &= \dfrac{\varepsilon^2}{2}S\left(\dfrac{\mathbf{A}(\mathbf{u}^{n+1})-\mathbf{A}(\mathbf{u}^n)}{\tau}\right) + \mu S\left(\dfrac{\mathbf{E}(\mathbf{u}^{n+1})-\mathbf{E}(\mathbf{u}^n)}{\tau}\right)
+                    \end{array}
+                \] となる. 
+                まず第 $1$ 項に注目すると, ベクトル $(\mathbf{A}(\mathbf{u}^{n+1}) - \mathbf{A}(\mathbf{u}^n))/\tau$ の第 $m+1$ 成分は 
+                \[
+                    \begin{array}{rl} 
+                        \dfrac{A_m(\mathbf{u}^{n+1}) - A_m(\mathbf{u}^n)}{\tau} &= \dfrac{1}{2\tau h^2}\left(((u^{n+1}_m-u^{n+1}_{m-1})^2 + (u^{n+1}_{m+1}-u^{n+1}_m)^2) - ((u^{n}_m-u^{n}_{m-1})^2 + (u^{n}_{m+1}-u^{n}_m)^2)\right) \cr 
+                        &= \dfrac{1}{2\tau h^2}\left(((u^{n+1}_m-u^{n+1}_{m-1}) + (u^n_m-u^n_{m-1}))((u^{n+1}_m-u^{n+1}_{m-1}) - (u^n_m-u^n_{m-1})) \right. \cr 
+                        &\qquad\qquad\qquad  \left. + ((u^{n+1}_{m+1}-u^{n+1}_{m}) + (u^n_{m+1}-u^n_{m}))((u^{n+1}_{m+1}-u^{n+1}_{m}) - (u^n_{m+1}-u^n_{m}))\right) \cr 
+                        &= \dfrac{1}{h^2}\left((u^{n+1/2}_m - u^{n+1/2}_{m-1})(D_{\tau}u_m^n - D_{\tau}u^n_{m-1}) + (u^{n+1/2}_{m+1}-u^{n+1/2}_m)(D_{\tau}u^n_{m+1} - D_{\tau}u^n_m)\right) \cr 
+                        &= a_mb_m + a_{m+1}b_{m+1}
+                    \end{array}
+                \] である. 
+                従って, 
+                \[
+                    \begin{array}{rl} 
+                        S\left(\dfrac{\mathbf{A}(\mathbf{u}^{n+1})-\mathbf{A}(\mathbf{u}^n)}{\tau}\right) &= \left(\dfrac{1}{2}(a_0b_0+a_1b_1) + a_1b_1 + \displaystyle\sum_{m=2}^{M-1}a_mb_m\right. \cr 
+                        &\qquad\qquad \left.+ \displaystyle\sum_{m=1}^{M-2}a_{m+1}b_{m+1} +  a_Mb_M + \dfrac{1}{2}(a_Mb_M + a_{M+1}b_{M+1})\right)h \cr 
+                        &= 2\displaystyle\sum_{m=1}^{M}a_mb_m \cr 
+                        &= 2(\nabla_h\mathbf{u}^{n+1/2}, \nabla_hD_{\tau}\mathbf{u}^n)_e \cr 
+                        &= -2(\Delta_h\mathbf{u}^{n+1/2}, D_{\tau}\mathbf{u}^n)_h
+                    \end{array}
+                \] が得られる. 
+                次に第 $2$ 項に注目すると, ベクトル $(\mathbf{E}(\mathbf{u}^{n+1}) - \mathbf{E}(\mathbf{u}^n))/\tau$ の第 $m+1$ 成分は 
+                \[
+                    \begin{array}{rl} 
+                        \dfrac{E(u^{n+1}_m) - E(u^n_m)}{\tau} &= \dfrac{1}{\tau}\left(\left(\dfrac{(u^{n+1}_m)^4}{4} - \dfrac{(u^{n+1}_m)^2}{2}\right) - \left(\dfrac{(u^{n}_m)^4}{4} - \dfrac{(u^{n}_m)^2}{2}\right)\right) \cr 
+                        &= \dfrac{1}{\tau} \left(\dfrac{(u^{n+1}_m)^2 - (u^n_m)^2}{2} \left(\dfrac{(u^{n+1}_m)^2 + (u^n_m)^2}{2} - 1\right)\right) \cr 
+                        &= \dfrac{u^{n+1}_m + u^n_m}{2}\left(\dfrac{(u^{n+1}_m)^2 + (u^n_m)^2}{2} - 1\right) \dfrac{u^{n+1}_m - u^n_m}{\tau} \cr 
+                        &= u^{n+1/2}_m\left(\dfrac{(u^{n+1}_m)^2 + (u^n_m)^2}{2} - 1\right)D_{\tau}u^n_m
+                    \end{array}
+                \] である. 
+                従って, 第 $m+1$ 成分が 
+                \[
+                    u^{n+1/2}_m\left(1- \dfrac{(u^{n+1}_m)^2 + (u^n_m)^2}{2}\right)
+                \] であるベクトルを $\mathbf{W}(\mathbf{u}^{n+1}, \mathbf{u}^n)\in\mathbb{R}^{M+1}$ とおくと, 
+                \[
+                    S\left(\dfrac{\mathbf{E}(\mathbf{u}^{n+1})-\mathbf{E}(\mathbf{u}^n)}{\tau}\right) = \left(-\mathbf{W}(\mathbf{u}^{n+1}, \mathbf{u}^n), D_{\tau}\mathbf{u}^n\right)_h
+                \] が得られる. 
+            </p>
+            <p>以上より, 
+                \[
+                    \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^n, \mathbf{u}^{n+1})}, D_{\tau}\mathbf{u}^n\right)_h = \left(-(\varepsilon^2\Delta_h\mathbf{u}^{n+1/2} + \mu \mathbf{W}(\mathbf{u}^{n+1}, \mathbf{u}^n)), D_{\tau}\mathbf{u}^n\right)_h
+                \] が得られたため, 離散変分導関数は 
+                \[
+                    \dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^n, \mathbf{u}^{n+1})} = -(\varepsilon^2\Delta_h\mathbf{u}^{n+1/2} + \mu \mathbf{W}(\mathbf{u}^{n+1}, \mathbf{u}^n))
+                \] と定めれば良いことがわかった. 
+                以上より, カーン=ヒリアード方程式
+                \[
+                    \left\{\begin{array}{l}
+                        u_t = -\Delta(\varepsilon^2 \Delta u + \mu u(1-u^2)) \quad \text{in}\quad [0, L], \cr
+                        u_x(0, t) = u_x(L, t) = 0, \cr 
+                        u_{xxx}(0, t) = u_{xxx}(L, t) = 0
+                    \end{array}\right.
+                \] に対する離散変分導関数法による数値計算スキームは 
+                \[
+                    \dfrac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\tau} = -\Delta_h\left(\varepsilon^2\Delta_h\mathbf{u}^{n+1/2} + \mu \mathbf{W}(\mathbf{u}^{n+1}, \mathbf{u}^n)\right)
+                \] である. 
+            </p>
+
+            <p>これをニュートン法で計算してみよう. その際には, 与えられた $\mathbf{u}^n$ に対し定められる関数 
+                \[
+                    \mathbf{f}_n(\mathbf{u}) = -\Delta_h\left(\varepsilon^2\left(\Delta_h\dfrac{\mathbf{u} + \mathbf{u}^n}{2}\right) + \mu\mathbf{W}(\mathbf{u}, \mathbf{u}^n)\right)  
+                \] のヤコビ行列を計算する必要がある. 
+                ここで, ヤコビ行列を計算する際には $\mathbf{u}^n$ は定数と思えば良いこと, および離散ラプラシアンに関する連鎖率 
+                \[
+                    D(\Delta_h \mathbf{g}(\mathbf{u})) = \Delta_h D(\mathbf{g}(\mathbf{u}))
+                \] が成立することに注意すれば, 
+                \[
+                    D\mathbf{f}_n(\mathbf{u}) = -\dfrac{\varepsilon^2}{2}\Delta_h^2 - \dfrac{\mu}{2}\Delta_h + \dfrac{\mu}{4}\Delta_h D(\mathbf{T}(\mathbf{u}))
+                \] である, ただし $\mathbf{T}(\mathbf{u})$ は第 $m$ 成分が $(u_m + u_m^n)((u_m)^2 + (u_m^n)^2)$ であるベクトルであり, 従って $D(\mathbf{T}(\mathbf{u}))$ は対角行列であり, その $(m, m)$ 成分 $d_m$ は 
+                \[
+                    d_m = 3(u_m)^2 + 2(u_mu_m^n) + (u_m^n)^2
+                \] である. 
+                これを用いて
+                \[
+                    \mathbf{F}_n(\mathbf{u}) = \mathbf{u} - \tau \mathbf{f}_n(\mathbf{u}) - \mathbf{u}^n
+                \] のヤコビ行列 $D\mathbf{F}_n(\mathbf{u}) = I - \tau D\mathbf{f}_n(\mathbf{u})$ を計算し, ニュートン法の反復計算
+                \[
+                    \mathbf{u}^n_{k+1} = \mathbf{u}^n_k - D\mathbf{F}_n(\mathbf{u}^n_k)^{-1}\mathbf{F}_n(\mathbf{u}^n_k)
+                \] により $\mathbf{u}^{n+1}$ を (適当に打ち切ることで近似的に) 求めれば良い. 
+            </p>
+            <p>以下にサンプルコードとその実行結果を掲載する: </p>
+            <pre>
+<code>
+import numpy as np 
+import matplotlib.pyplot as plt 
+from matplotlib.animation import FuncAnimation 
+
+# Allen-Cahn equation: 
+# u_t = - (eps * u_xx + mu * u(1-u^2))_xx in [0, L]
+# u(0, t) = 0, u(L, t) = 0 
+
+# パラメータ 
+eps: float = 0.1 
+mu: float = 20.0
+
+# 空間領域, 時間区間 
+L: float = 1. 
+T: float = 0.002 
+M: int = 100 
+N: int = 15000 
+x = np.linspace(0, L, M+1) 
+t = np.linspace(0, T, N+1) 
+h: float = L/M 
+tau: float = T/N 
+
+# 離散ラプラシアン 
+Lap: np.ndarray = (-2 * np.eye(M+1) + np.eye(M+1, k=1) + np.eye(M+1, k=-1)) / (h**2)
+# 境界条件を考慮 
+Lap[0, 1] = 2 / (h**2)
+Lap[-1, -2] = 2 / (h**2)
+
+# 関数 W
+def W(u: np.ndarray, u_prev: np.ndarray) -> np.ndarray: 
+    u_mid = (u + u_prev) / 2 
+    return u_mid * (1 - (u**2 + u_prev**2) / 2)
+# 離散化された右辺 
+def f(u: np.ndarray, u_prev: np.ndarray) -> np.ndarray: 
+    u_mid = (u + u_prev) / 2 
+    return -Lap @ (eps**2 * Lap @ u_mid + mu * u_mid * (1 - (u**2 + u_prev**2) / 2))
+# ヤコビ行列 
+def df(u: np.ndarray, u_prev: np.ndarray) -> np.ndarray: 
+    DT = np.diag(3*(u**2) + 2*u*u_prev + u_prev**2)
+    return -(eps**2)/2 * Lap @ Lap - mu/2 * Lap + mu/4 * Lap @ DT
+
+
+# ニュートン法
+def newton(x_prev: np.ndarray, tau: float, tol: float = 1e-6, max_iter: int = 30) -> np.ndarray: 
+    x = x_prev 
+    for _ in range(max_iter): 
+        F = x - tau*f(x, x_prev) - x_prev 
+        DF = np.eye(M+1) - tau*df(x, x_prev)
+        x = x - np.linalg.solve(DF, F)
+    if np.linalg.norm(np.linalg.solve(DF, F)) < tol:
+       return x
+    raise ValueError('Newton method did not converge.')
+
+# 初期条件 (境界条件を満たすものを指定)
+u0 = 0.7 * np.cos(3*np.pi*x/L) 
+# 配列の初期化, 初期条件の設定 
+u = np.empty((M+1, N+1)) 
+u[:, 0] = u0
+
+# プロットの準備 
+fig, ax = plt.subplots() 
+ax.set_ylim([-1.1, 1.1])
+
+# 初期条件のプロット 
+line, = ax.plot(x, u[:, 0], color='tab:blue') 
+# アニメーションにおける update を定義 
+def update(frame): 
+    line.set_data(x, u[:, frame]) # 更新された u を入力 
+    return 
+
+# 計算 
+for n in range(N): 
+    u[:, n+1] = newton(u[:, n], tau, h) 
+
+# プロット 
+step: int = 30
+ani = FuncAnimation(fig, update, frames=range(0, N, step), interval=5)
+# ファイル出力する場合は下のコメントアウトを解除
+ani.save("cahn_hilliard.mp4", writer="ffmpeg", fps=60)
+
+plt.show()  
+</code>
+            </pre>
+            <div class="resize">
+                <video autoplay="true", loop="true">
+                <source src="videos/cahn_hilliard.mp4" type="video/mp4" />
+                </video>
+            </div>
+            <p>アレン=カーン方程式と同様に, 関数 $u$ の大部分が $u=\pm 1$ となるように動いている様子を観察することができる. 
+                なお, 上のサンプルコードではわかりやすさのために離散ラプラシアンを表す疎行列 $\Delta_h$ の定義や行列積の計算を素朴に記述しているが, 計算速度のことを考慮するとやはり効率的な計算テクニックを利用するべきだろう. 
+            </p>
+        </section>
+
+    </article>
+    </main>
+    </div>
+
+</body>
+
+<!-- javascript -->
+<script src="./common/create_statement_block.js"></script>
+<script src="./common/function_toggleSidebar.js"></script>
+<script src="./common/import_sidebar.js"></script>
+
+</html>
