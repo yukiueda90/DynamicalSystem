@@ -12,17 +12,17 @@ L: float = 50.0
 T: float = 5.0 
 M: int = 500 
 N: int = 1000 
-x = np.linspace(0, L, M+2) 
+x = np.linspace(0, L, M+1) 
 t = np.linspace(0, T, N+1)
-h: float = L/(M+1) 
+h: float = L/M 
 tau: float = T/N 
 # m と離散サイン変換の行列
-m = np.arange(1, M+1)
-S = np.sin(np.pi * np.outer(m, m) / (M+1))
+m = np.arange(1, M)
+S = 2/M * np.sin(np.pi * np.outer(m, m) / M)
 
 
 # 初期化
-u = np.empty((M+2, N+1))
+u = np.empty((M+1, N+1))
 # 境界条件を満たす関数
 g = 1 - x/L
 # 初期条件
@@ -43,18 +43,18 @@ for n in range(N):
     f = r * u[:, n] * (1 - u[:, n])
     # v_hat = dst(v[1:-1], type=1, norm='ortho')
     # f_hat = dst(f[1:-1], type=1, norm='ortho')
-    v_hat = 2/(M+1) * S @ v[1:-1]
-    f_hat = 2/(M+1) * S @ f[1:-1]
+    v_hat = S @ v[1:-1]
+    f_hat = S @ f[1:-1]
     v_hat = (v_hat + tau * f_hat) / (1 + tau * k * (m*np.pi/L)**2)
     # v[1:-1] = idst1(v_hat, type=1, norm='ortho')
-    v[1:-1] = S @ v_hat
+    v[1:-1] = M/2*S @ v_hat
     u[:, n+1] = v + g
 
 # プロット
 step: int = 2
 ani = FuncAnimation(fig, update, frames=range(0, N, step), interval=5)
 # ファイル出力する場合は下のコメントアウトを解除
-ani.save("fisher_kpp.mp4", writer="ffmpeg", fps=60)
+# ani.save("fisher_kpp.mp4", writer="ffmpeg", fps=60)
 
 plt.show()
 # Google Colab でアニメーションを表示するには 
