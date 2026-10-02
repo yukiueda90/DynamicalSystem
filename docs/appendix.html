@@ -1414,8 +1414,7 @@
                 \] および 
                 \[
                     \begin{array}{rl} 
-                        \dfrac{J_h(\mathbf{u}^{n+1}) - J_h(\mathbf{u}^n)}{\tau} &= \dfrac{S(\mathbf{G}(\mathbf{u}^{n+1})) - S(\mathbf{G}(\mathbf{u}^n))}{\tau} \cr 
-                        &= S\left(\dfrac{\mathbf{G}(\mathbf{u}^{n+1}) - \mathbf{G}(\mathbf{u}^n)}{\tau}\right) \cr 
+                        \dfrac{J_h(\mathbf{u}^{n+1}) - J_h(\mathbf{u}^n)}{\tau} &= S\left(\dfrac{\mathbf{G}(\mathbf{u}^{n+1}) - \mathbf{G}(\mathbf{u}^n)}{\tau}\right) \cr 
                         &= \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^{n})}, \dfrac{\mathbf{u}^{n+1}-\mathbf{u}^n}{\tau}\right)_h \cr 
                         &= \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^{n})}, L_h\dfrac{\delta\mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right)_h \cr
                         & \le 0
@@ -1486,7 +1485,7 @@
                 <li>カーン=ヒリアード方程式: 
                     \[
                         \begin{array}{c} 
-                            u_t = -\Delta_N(\varepsilon^2 \Delta_N u + \gamma W(u)), \quad\text{where} \quad W(u) = u(1-u^2), \cr
+                            u_t = \Delta_N\dfrac{\delta G}{\delta u} = -\Delta_N(\varepsilon^2 \Delta_N u + \gamma W(u)), \quad\text{where} \quad W(u) = u(1-u^2), \cr
                             \dfrac{d}{dt}\displaystyle\int_0^L u~dx = \int_0^L\Delta_N\dfrac{\delta G}{\delta u}~dx = 0, \cr
                             \dfrac{d}{dt}J(u) = \displaystyle\int_0^L\dfrac{\delta G}{\delta u}u_t~dx = \displaystyle\int_0^L \dfrac{\delta G}{\delta u}\Delta_N\dfrac{\delta G}{\delta u} ~ dx \le 0
                         \end{array}
@@ -1495,7 +1494,7 @@
                 <li>空間半離散化: 
                     \[
                         \begin{array}{c} 
-                            \mathbf{u}_t = -L_h(\varepsilon^2 L_h\mathbf{u} + \gamma \mathbf{W}(\mathbf{u})) \quad\text{where}\quad W_m = u_m(1-(u_m)^2), \cr
+                            \mathbf{u}_t = L_h\dfrac{\delta\mathbf{G}}{\delta\mathbf{u}} =  -L_h(\varepsilon^2 L_h\mathbf{u} + \gamma \mathbf{W}(\mathbf{u})) \quad\text{where}\quad W_m = u_m(1-(u_m)^2), \cr
                             \dfrac{d}{dt}S(\mathbf{u}) = S\left(L_h\dfrac{\delta \mathbf{G}}{\delta\mathbf{u}}\right) = 0, \cr
                             \dfrac{d}{dt}J_h(\mathbf{u}) = \left(\dfrac{\delta \mathbf{G}}{\delta\mathbf{u}}, \mathbf{u}_t\right)_h = \left(\dfrac{\delta \mathbf{G}}{\delta\mathbf{u}}, L_h\dfrac{\delta \mathbf{G}}{\delta\mathbf{u}}\right)_h \le 0
                         \end{array}
@@ -1504,7 +1503,7 @@
                 <li>時間離散化: 
                     \[
                         \begin{array}{c} 
-                            \dfrac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\tau} = -L_h\left(\varepsilon^2L_h\mathbf{u}^{n+1/2} + \gamma \mathbf{W}(\mathbf{u}^{n+1}, \mathbf{u}^n)\right) \quad\text{where}\quad W_m = u_m^{n+1/2}\left(1-\dfrac{(u_m^{n+1})^2 + (u_m^n)^2}{2}\right), \cr
+                            \dfrac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\tau} = L_h\dfrac{\delta\mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)} = -L_h\left(\varepsilon^2L_h\mathbf{u}^{n+1/2} + \gamma \mathbf{W}(\mathbf{u}^{n+1}, \mathbf{u}^n)\right) \quad\text{where}\quad W_m = u_m^{n+1/2}\left(1-\dfrac{(u_m^{n+1})^2 + (u_m^n)^2}{2}\right), \cr
                             \dfrac{S(\mathbf{u}^{n+1}) - S(\mathbf{u}^n)}{\tau} = S\left(L_h\dfrac{\delta\mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right) = 0, \cr 
                             \dfrac{J_h(\mathbf{u}^{n+1}) - J_h(\mathbf{u}^n)}{\tau} = \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^{n})}, \dfrac{\mathbf{u}^{n+1}-\mathbf{u}^n}{\tau}\right)_h = \left(\dfrac{\delta \mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^{n})}, L_h\dfrac{\delta\mathbf{G}}{\delta(\mathbf{u}^{n+1}, \mathbf{u}^n)}\right)_h \le 0
                         \end{array}
