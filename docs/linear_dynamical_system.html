@@ -54,7 +54,7 @@
                 \[
                     \mathbf{x}(t) = e^{tA}\mathbf{x}_0,\qquad \mathbf{x}_n = A^n\mathbf{x}_0
                 \] と表すことができる. 
-                ここで, 右は単に行列のべき乗であり既知であると思われるが, 左の連続力学系に対する解の表示には <b>行列指数関数</b> が現れる. 
+                ここで, 右は単に現れる $A^n$ は行列のべき乗であり既知であると思われるが, 左の連続力学系に対する解の表示には <b>行列指数関数</b> $e^{tA}$ が現れる. 
                 ここでは, この行列指数関数による解の表示や, 関連する時間離散化による近似について解説しよう. 
             </p>
             
@@ -77,7 +77,7 @@
             <p>写像 $\mathbf{f}:\mathbb{R}^d\to\mathbb{R}^d$ が線形であるとは, 任意の $c_1, c_2\in\mathbb{R}$ および $\mathbf{x}, \mathbf{y}\in\mathbb{R}^d$ に対し
                 \[
                     \mathbf{f}(c_1\mathbf{x} + c_2\mathbf{y}) = c_1\mathbf{f}(\mathbf{x}) + c_2\mathbf{f}(\mathbf{y})
-                \] が成り立つことであり, 従って $\mathbf{x}$ を標準基底 $\mathbf{e}_1, \dots, \mathbf{e}_d$ の線型結合により 
+                \] が成り立つことであり, 従って $\mathbf{x}$ を標準基底 $\mathbf{e}_1, \dots, \mathbf{e}_d\in\mathbb{R}^d$ の線型結合により 
                 \[
                     \mathbf{x} = \begin{pmatrix} 
                         x_1 \cr 
@@ -154,7 +154,7 @@
                         <li>なお, 
                             \[
                                 \|e^{A}\| = \left\|\displaystyle\sum_{k=0}^\infty \dfrac{A^k}{k!}\right\| \le \displaystyle\sum_{k=0}^\infty \dfrac{\|A\|^k}{k!} = e^{\|A\|}
-                            \] であることから, 任意の $A\in\mathbb{R}^{d\times d}$ に対し $e^{A}\in\mathbb{R}^{d\times d}$ は well-defined である ($e^A$ の成分に $\infty$ が現れたりすることは無い). 
+                            \] であることから, 任意の $A\in\mathbb{R}^{d\times d}$ に対し $e^{A}\in\mathbb{R}^{d\times d}$ は well-defined である ($e^A$ の成分に $\infty$ が現れたりすることは無いため, 確かに $e^A\in\mathbb{R}^{d\times d}$ である). 
                         </li>
                     </ul>
                 </div>
@@ -173,7 +173,7 @@
                 <div class="proof">
                     <ol>
                         <li>証明略.</li>
-                        <li>$e^{tA}$ を定める級数は (ワイエルシュトラスの $M$ 判定法より) 任意の有界区間上で一様収束する. 
+                        <li>$e^{tA}$ を定める級数は (ワイエルシュトラスの $M$ 判定法などにより) 任意の有界区間上で一様収束する. 
                             また, 各項を微分した級数も同様に任意の有界区間上で一様収束することを示せるため, 項別微分可能である: 
                             \[
                                 \begin{array}{rl} 
@@ -213,21 +213,20 @@
                 </p>
             </div>
 
-            <p>上の例題より, $\mathbf{x}' = A\mathbf{x}$ は確かに連続力学系であることがわかる. 
-                実際, $\Phi_t(\mathbf{x}) = e^{tA}\mathbf{x}$ により定義される時間発展写像 $\Phi_t: \mathbb{R}^d\to\mathbb{R}^d$ たちの族 $\{\Phi_t\}_{t\in\mathbb{R}}$ は, 
+            <p>いま, $\Phi_t(\mathbf{x}) = e^{tA}\mathbf{x}$ により定義される時間発展写像 $\Phi_t: \mathbb{R}^d\to\mathbb{R}^d$ たちの族 $\{\Phi_t\}_{t\in\mathbb{R}}$ は, 
                 \[
                     \begin{array}{cl} 
                         \Phi_0 = \operatorname{id}_{\mathbb{R}^d} &\quad (\because e^O = I), \cr 
                         \Phi_s\circ\Phi_t = \Phi_{s+t} &\quad (\because e^{tA}e^{sA} = e^{(t+s)A})
                     \end{array}
-                \] を満たすためフローであり, $\mathbf{x}' = A\mathbf{x}$ はこのフローが定める連続力学系である. 
+                \] を満たすためフローであり, また上の例題より $\mathbf{x}' = A\mathbf{x}$ はこのフローが定める連続力学系である. 
             </p>
 
             <hr>
 
             <p>次は, 行列指数関数による解の表示 $\mathbf{x}(t) = e^{tA}\mathbf{x}_0$ と, 行列 $A$ の固有値, 固有ベクトルとの対応を見てみよう.</p> 
 
-            <div class="theorem">
+            <div class="theorem" id="linear_combination_solution">
                 <p>線形常微分方程式系 
                     \[
                         \mathbf{x}' = A\mathbf{x}
@@ -965,7 +964,8 @@
             <p>上の $3$ つの分類では, いずれの場合も $\mathbf{x}' = A\mathbf{x}$ の解 $\mathbf{x}(t) = e^{tA}\mathbf{x}(0)$ に対する, 行列 $A$ の固有値 $\lambda_i$ と固有ベクトル $\mathbf{v}_i$ を用いた表示において,  $e^{\lambda_i t}$ もしくは $e^{\operatorname{Re}\lambda_i t}$ という部分が含まれる.  
                 もっと言えば, $|e^{\lambda_i t}|$ は $\operatorname{Re}\lambda_i\gt 0$ ならば $t\to\infty$ のとき無限大に発散し, $\operatorname{Re}\lambda_i\lt 0$ ならば $t\to\infty$ のとき $0$ に収束するが, これが解の挙動に現れることになる. 
                 特に, 全ての固有値の実部が負であれば, 解 $\mathbf{x}(t)$ は $\mathbf{0}$ に収束することも確かめれれる. 
-                上では $2$ 次方程式の解の公式に基づき $3$ つの場合分けを考えたが, 一般に $d$ 次元線形力学系に対し, 行列 $A$ の固有値が実数であるか否か, 固有値の重複度, 固有値実部の符号が解の挙動を説明するために重要な情報となる. 
+            </p>
+            <p>上では $2$ 次方程式の解の公式に基づき $3$ つの場合分けを考えたが, 一般に $d$ 次元線形力学系に対し, 行列 $A$ の固有値が実数であるか否か, 固有値の重複度, 固有値実部の符号が解の挙動を説明するために重要な情報となる. 
             </p>
 
         </section>
@@ -1011,7 +1011,7 @@
                     このとき, ばねの振動が従う運動方程式として, 質量 $m\gt 0$ とばね定数 $k\gt 0$ を用いて
                 \[
                     ma(t) = F(t) = -cv(t) - kx(t) 
-                \] と表されるものを考えることができる (これを減衰振動子という). 
+                \] と表されるものを考えることができる (これを <b>減衰振動子</b> という). 
                 これも上と同様に, $v(t) = x'(t)$ および $a(t) = v'(t)$ に注意すると 
                 \[
                     \begin{pmatrix} 
@@ -1036,7 +1036,7 @@
                         x(0) &= 1, \cr 
                         x'(0) &= 0, 
                     \end{array}\right.
-                \] という数理モデル (これを調和振動子という) に対する数値計算について述べる. 
+                \] という数理モデル (これを <b>調和振動子</b> という) に対する数値計算について述べる. 
                 ただし, この例に対しては
                 \[
                     \mathbf{x}' = \underbrace{\begin{pmatrix}   
@@ -1129,7 +1129,7 @@
             </p>
             <p>幸い, 時間区間分割幅 $\tau$ を小さくすることで, 厳密解 (単位円) と数値解の誤差を小さくすることができるが, 厳密解から徐々に離れてしまうことは間違いない.  
                 このように, 数値計算結果が一見して破綻していない, プログラムがエラーを出すこと無く計算を終えた, というだけでは, 得られた結果が厳密解の &quot;性質&quot; まで再現しているとは限らない. 
-                そのため, 精密なコンピュータシミュレーションのためには数値計算手法の数学的な性質をきちんと調べる必要があるのである. 
+                そのため, 精密なコンピュータシミュレーションのためには, 数理モデルとして与えられる方程式や数値計算手法の数学的な性質をきちんと調べる必要があるのである. 
             </p>
             <p>例えばこの問題, つまり 
                 \[

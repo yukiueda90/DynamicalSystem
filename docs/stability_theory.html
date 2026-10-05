@@ -220,11 +220,11 @@
                 \] に適用することで 
                 \[
                     x_{n+1} = R(\tau\lambda)x_n
-                \] という離散力学系が導出されるとき, この $R(z)$ を <b>安定性関数</b> と呼ばれることがある. 
+                \] という離散力学系が導出されるとき, この $R(z)$ を <b>安定性関数</b> と呼ぶことがある. 
                 安定性関数は, 
                 \[
                     |R(z)| \lt 1 
-                \] が満たされれば, テスト方程式の漸近安定な平衡点 $x_*=0$ が, 離散化後にも漸近安定な平衡点になることを意味するが, 
+                \] が満たされれば, テスト方程式の漸近安定な平衡点 $x_*=0$ が, 離散化後にも漸近安定な平衡点になることを意味するが, これに関連して
                 \[
                     S = \{z\in\mathbb{C} : |R(z)|\lt 1\}
                 \] を, その数値計算手法の <b>絶対安定領域</b> (<b>region of absolute stability</b>) という. 
@@ -310,8 +310,8 @@
                     \end{pmatrix}\in\mathbb{R}^{2\times 2}
                 \] は $C^1$ 級写像 $\mathbf{f}$ のヤコビ行列であり, 剰余項 $\mathbf{R}(\mathbf{x})$ は 
                 \[
-                    \dfrac{\|\mathbf{R}(\mathbf{x})\|}{\|\mathbf{x}-\mathbf{x}_*\|}\to\mathbf{0} \quad\text{as}\quad \mathbf{x}\to\mathbf{x}_*, 
-                \] つまり $\mathbf{R}(\mathbf{x}) = o(\|\mathbf{x}-\mathbf{x}_*\|)$ である. 
+                    \dfrac{\|\mathbf{R}(\mathbf{x})\|}{\|\mathbf{x}-\mathbf{x}_*\|}\to\mathbf{0} \quad\text{as}\quad \mathbf{x}\to\mathbf{x}_* 
+                \] を満たす, つまり $\mathbf{R}(\mathbf{x}) = o(\|\mathbf{x}-\mathbf{x}_*\|)$ である. 
                 従って 
                 \[
                     \mathbf{x}' = D\mathbf{f}(\mathbf{x}_*)(\mathbf{x}-\mathbf{x}_*) + o(\|\mathbf{x}-\mathbf{x}_*\|)
@@ -432,7 +432,7 @@
                         \end{pmatrix}
                     \] と表記することにすると, 平衡点は $\mathbf{f}(\mathbf{x}_*) = \mathbf{0}$ を満たす $\mathbf{x}_*$ であり, 具体的には 
                     \[
-                        \mathbf{x}_{*}^{(1)} = (0,0),\quad \mathbf{x}_*^{(2)} = (1,1)
+                        \mathbf{x}_{*1} = (0,0),\quad \mathbf{x}_{*2} = (1,1)
                     \] の $2$ 点である. 
                     ヤコビ行列を計算すると 
                     \[
@@ -442,16 +442,16 @@
                         \end{pmatrix},\quad 
                     \] なので, 各平衡点において
                     \[
-                        D\mathbf{f}(\mathbf{x}_*^{(1)}) = \begin{pmatrix} 
+                        D\mathbf{f}(\mathbf{x}_{*1}) = \begin{pmatrix} 
                             2 & 0 \cr 
                             1 & -1 
-                        \end{pmatrix},\quad D\mathbf{f}(\mathbf{x}_*^{(2)}) = \begin{pmatrix} 
+                        \end{pmatrix},\quad D\mathbf{f}(\mathbf{x}_{*2}) = \begin{pmatrix} 
                             -1 & -1 \cr 
                             1 & -1 
                         \end{pmatrix}
                     \] が得られる. 
-                    いま, $D\mathbf{f}(\mathbf{x}_*^{(1)})$ の固有値は $\lambda=2, -1$ であり, (実部が) 正の固有値が含まれるため, 平衡点 $\mathbf{x}_*^{(1)}$ は不安定である. 
-                    一方, $D\mathbf{f}(\mathbf{x}_*^{(2)})$ の固有値は $\lambda=-1\pm i$ であり, 全ての固有値の実部が負であるため, 平衡点 $\mathbf{x}_*^{(2)}$ は漸近安定である. 
+                    いま, $D\mathbf{f}(\mathbf{x}_{*1})$ の固有値は $\lambda=2, -1$ であり, (実部が) 正の固有値が含まれるため, 平衡点 $\mathbf{x}_{*1}$ は不安定である. 
+                    一方, $D\mathbf{f}(\mathbf{x}_{*2})$ の固有値は $\lambda=-1\pm i$ であり, 全ての固有値の実部が負であるため, 平衡点 $\mathbf{x}_{*2}$ は漸近安定である. 
                 </p>
             </div>
 
@@ -1479,10 +1479,10 @@
                     \[
                         \varphi(x_c) = a_2x_c^2 + a_3x_c^3 
                     \] という $3$ 次多項式で中心多様体の近似を試みる. 
-                    このとき, $x_c$ が十分に $0$ に近いことに注意して, 
+                    このとき, $x_c$ が十分に $0$ に近いことに注意すると, 
                     \[
                         \underbrace{-3\varphi'(x_c)(x_c + \varphi(x_c))^3}_{=O(x_c^4)} - (-\varphi(x_c) + 3(x_c+\varphi(x_c))^3) = a_2x_c^2 + (a_3-3)x_c^3 + O(x_c^4)
-                    \] が得られることから, $a_2=0$, $a_3 = 3$ とすれば良い: 
+                    \] が得られることから, 例えば $a_2=0$, $a_3 = 3$ とすれば良い: 
                     \[
                         h_s(x_c) \approx \varphi(x_c) = 3x_c^3.
                     \]
