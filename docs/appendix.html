@@ -754,6 +754,34 @@
                 いま, $\mathbf{e}_h(0)=\mathbf{0}$ となるように初期値を設定すれば, $\mathbf{e}_h(t)$ に関する不等式評価が得られることになる. 
             </p>
 
+            <div class="remark">
+                <p>なお, 実対称行列 $-L_h$ の固有ベクトルは直交することから, 固有ベクトル $\mathbf{w}_j$ を離散 $L^2$ 内積に対して正規化することで, 任意のベクトルを 
+                    \[
+                        \mathbf{v} = \sum_{m=1}^{M-1}c_m\mathbf{w}_m
+                    \] と表すことができ, またこのとき 
+                    \[
+                        \|\mathbf{v}\|_h^2 = \sum_{m=1}^{M-1}|c_m|^2
+                    \] が成立する. 
+                    さらに行列 $-L_h$ の固有値が 
+                    \[
+                        -\lambda_j = \dfrac{4}{h^2}\sin^2\dfrac{j\pi}{2M} \gt 0 
+                    \] であることに注目すると, 
+                    \[
+                        \begin{array}{rl} 
+                            \|G_h\mathbf{v}\|_e^2 &= (-L_h\mathbf{v}, \mathbf{v})_h \cr 
+                            &= \displaystyle\sum_{m=1}^{M-1}-\lambda_m|c_m|^2 \cr 
+                            &\ge -\lambda_1\|\mathbf{v}\|_h^2 \cr 
+                            &= \dfrac{4}{h^2}\sin^2\dfrac{\pi}{2M}\|\mathbf{v}\|_h^2
+                        \end{array}
+                    \] となる. 
+                    ここで, 例えば $x\in [0, \pi/2]$ に対して $\sin x\ge 2x/\pi$ となることを利用して 
+                    \[
+                        \|G_h\mathbf{v}\|_e^2 \ge \dfrac{4}{h^2}\sin^2\dfrac{\pi}{2M}\|\mathbf{v}\|_h^2 \ge \dfrac{4}{h^2}\dfrac{1}{M^2}\|\mathbf{v}\|_h^2 = \dfrac{4}{L^2}\|\mathbf{v}\|_h^2
+                    \] のように, $\|G_h\mathbf{v}\|_e^2$ を下から抑えることができる (これは <b>ポアンカレの不等式</b> の離散版に相当している). 
+                    この不等式を利用することで, より精密な誤差評価を得ることも可能である. 
+                </p>
+            </div>
+
             <p>次に時間離散化誤差を評価しよう. 
                 上と同様に
                 \[
