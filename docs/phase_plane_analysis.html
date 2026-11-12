@@ -359,7 +359,7 @@
                 \] に含まれる軌道であると説明される. 
                 また, ヘテロクリニック軌道に含まれる点 $\mathbf{x}$ に対し, 
                 \[
-                    \alpha(\mathbf{x}) = \mathbf{x}_{*1},\quad \omega(\mathbf{x}) = \{\mathbf{x}_{*2}\}
+                    \alpha(\mathbf{x}) = \{\mathbf{x}_{*1}\},\quad \omega(\mathbf{x}) = \{\mathbf{x}_{*2}\}
                 \] である. 
 
             </p>
@@ -660,12 +660,11 @@
                             0 & e^{-2\pi} 
                         \end{pmatrix}
                     \] が得られ, その固有値 $\lambda_1 = e^{-4\pi}$, $\lambda_2 = e^{-2\pi}$ はどちらも $|\lambda_i|\lt 1$ を満たすことから, $\mathbf{p}_*$ は漸近安定な平衡点である. 
-                    このように, ポアンカレ写像を直接求めるのではなく, 離散力学系の平衡点付近での線形化問題さえ考えれば良い. 
-                    これは, 平衡点近傍でのポアンカレ写像の一次近似 $DP(\mathbf p_*)$ は, 周期軌道からの微小なずれが一周期の間にどの程度増幅, 減衰するかによって調べられることを意味している. 
+                    このように, ポアンカレ写像を精密に求めることができずとも, (おおよその近似などから) ポアンカレ写像により導出される離散力学系の平衡点付近での線形化問題さえ考えることができれば, 元の連続力学系の周期軌道の安定性を判定できる. 
                 </p>
             </div>
 
-            <p>一般の周期軌道については, その軌道に沿った線形化方程式（変分方程式）を一周期だけ解くことで, ポアンカレ写像の固定点における固有値に対応する量を求めることができる. 
+            <p>より一般的な説明として, 周期解に加えた微小な摂動の影響が一周期後にどうなるか調べることが, ポアンカレ写像により導出される離散力学系の平衡点の安定性評価に対応する. 
                 これと関連するアイデアとして <b>フロケ理論</b> が知られているが, この資料では言及しない. 
                 興味があれば調べてみると良いだろう.  
             </p>
@@ -979,10 +978,10 @@
                             \mathbf{x}' = \underbrace{\begin{pmatrix} 
                                 0 & I \cr 
                                 -I & 0 
-                            \end{pmatrix}}_{=J} \nabla H(\mathbf{x})
+                            \end{pmatrix}}_{=J} \nabla H(\mathbf{x}) = J\nabla H(\mathbf{x})
                         \] と表すことができる (一方で, 勾配系は 
                         \[
-                             \mathbf{x}' = \begin{pmatrix} 
+                             \mathbf{x}' = -\nabla E(\mathbf{x}) = \begin{pmatrix} 
                                 -I & 0 \cr 
                                 0 & -I 
                             \end{pmatrix} \nabla E(\mathbf{x})
@@ -1107,62 +1106,85 @@
                         -x^3 
                     \end{pmatrix} 
                 \] に対する数値計算を考えよう. 
-                まず, エネルギー保存解法の具体例として, ハミルトン系に対する <b>離散勾配法</b> を述べる: </p>
+                まず, ハミルトン系に対するエネルギー保存解法の具体例として <b>離散勾配法</b> を述べる: </p>
 
             <div class="definition" data-name="離散勾配法" id="discrete_gradient">
-                <p>$C^1$ 級写像 $H$ をハミルトニアンとするハミルトン系
+                <p>$C^1$ 級関数 $E$ をエネルギーとする勾配系, もしくは $C^1$ 級関数  $H$ をハミルトニアンとするハミルトン系
                     \[
-                        \mathbf{x}' = J\nabla H(\mathbf{x})
+                        \mathbf{x}' = -\nabla E(\mathbf{x}) \quad\text{もしくは}\quad \mathbf{x}' = J\nabla H(\mathbf{x})
                     \] を考える. 
-                    いま, ハミルトニアン $H$ に対し, 以下を満たす <b>離散勾配</b> $\overline{\nabla}H: \mathbb{R}^d\times\mathbb{R}^d\to\mathbb{R}^d$ を定める: 
+                    いま, 関数 $E$ (もしくは $H$) に対し, 以下を満たす <b>離散勾配</b> $\overline{\nabla}E: \mathbb{R}^d\times\mathbb{R}^d\to\mathbb{R}^d$ を (もしくは $\overline{\nabla}H$ を同様に) 定める: 
                     \[
                         \left\{\begin{array}{cl}
-                            H(\mathbf{x}) - H(\widehat{\mathbf{x}}) = (\overline{\nabla}H(\mathbf{x}, \widehat{\mathbf{x}}))\cdot(\mathbf{x} - \widehat{\mathbf{x}}) & \text{for all }\mathbf{x},\ \widehat{\mathbf{x}}\in\mathbb{R}^d, \cr 
-                            \overline{\nabla}H(\mathbf{x}, \mathbf{x}) = \nabla H(\mathbf{x}) & \text{for all }\mathbf{x}\in\mathbb{R}^d.
+                            E(\mathbf{x}) - E(\widehat{\mathbf{x}}) = (\overline{\nabla}E(\mathbf{x}, \widehat{\mathbf{x}}))\cdot(\mathbf{x} - \widehat{\mathbf{x}}) & \text{for all }\mathbf{x},\ \widehat{\mathbf{x}}\in\mathbb{R}^d, \cr 
+                            \overline{\nabla}E(\mathbf{x}, \mathbf{x}) = \nabla E(\mathbf{x}) & \text{for all }\mathbf{x}\in\mathbb{R}^d.
                         \end{array}\right.
-                    \] これを用いて, $\mathbf{x}' = J\nabla H(\mathbf{x})$ に対して 
+                    \] これを用いて, 勾配系もしくはハミルトン系に対し
                     \[
-                        \dfrac{\mathbf{x}_{n+1} - \mathbf{x}_n}{\tau} = J\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n)
+                        \dfrac{\mathbf{x}_{n+1} - \mathbf{x}_n}{\tau} = -\overline{\nabla} E(\mathbf{x}_{n+1}, \mathbf{x}_n) \quad\text{もしくは}\quad \dfrac{\mathbf{x}_{n+1} - \mathbf{x}_n}{\tau} = J\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n)
                     \] という数値計算を行う. 
                     この手法を <b>離散勾配法</b> (<b>discrete gradient method</b>) という. 
                 </p>
             </div>
 
             <div class="exercise">
-                <p>ハミルトン系 $\mathbf{x}' = J\nabla H(\mathbf{x})$ に対する離散勾配法により得られる数値計算結果 $\mathbf{x}_n$ が, 
-                    \[
-                        H(\mathbf{x}_n) = \dots = H(\mathbf{x}_0)
-                    \] を満たすことを証明せよ, ただし $\mathbf{x}_0$ は与えられた初期値とする.
-                </p>
+                <ul>
+                    <li>勾配系 $\mathbf{x}' = -\nabla E(\mathbf{x})$ に対する離散勾配法により得られる数値計算結果 $\mathbf{x}_n$ が 
+                        \[
+                            E(\mathbf{x}_n) \le \dots \le E(\mathbf{x}_0)
+                        \] を満たすことを証明せよ, ただし $\mathbf{x}_0$ は与えられた初期値とする.
+                    </li>
+                    <li>ハミルトン系 $\mathbf{x}' = J\nabla H(\mathbf{x})$ に対する離散勾配法により得られる数値計算結果 $\mathbf{x}_n$ が 
+                        \[
+                            H(\mathbf{x}_n) = \dots = H(\mathbf{x}_0)
+                        \] を満たすことを証明せよ, ただし $\mathbf{x}_0$ は与えられた初期値とする.
+                    </li>
+                </ul>
+                
             </div>
 
-            <div class="answer">
-                <p>離散勾配の性質と離散勾配法の式より 
-                    \[
-                        \begin{array}{rl} 
-                            H(\mathbf{x}_{n+1}) - H(\mathbf{x}_n) &= (\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)) \cdot (\mathbf{x}_{n+1} - \mathbf{x}_n) \cr 
-                            &= \tau\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)^{\operatorname{T}}J\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n) 
-                        \end{array}
-                    \] が得られる. 
-                    ここで, 任意のベクトル $\mathbf{v}\in\mathbb{R}^{d}$ に対し $\mathbf{v}^{\operatorname{T}}J\mathbf{v}$ はスカラー値であること, および $J$ が歪対称行列であることから 
-                    \[
-                        \begin{array}{rl} 
-                            \mathbf{v}^{\operatorname{T}}J\mathbf{v} &= \left(\mathbf{v}^{\operatorname{T}}J^{-1}\mathbf{v}\right)^{\operatorname{T}} \quad(\because \text{$\mathbf{v}^{\operatorname{T}}J\mathbf{v}$ はスカラー値}) \cr 
-                            &= \mathbf{v}^{\operatorname{T}}J^{\operatorname{T}}\mathbf{v} \cr 
-                            &= -\mathbf{v}^{\operatorname{T}}J\mathbf{v} \quad (\because \text{$J$ は歪対称})
-                        \end{array}
-                    \] が得られるため, 任意の $\mathbf{v}\in\mathbb{R}^{d}$ に対し $\mathbf{v}^{\operatorname{T}}J\mathbf{v} = 0$ である. 
-                    これを用いると 
-                    \[
-                        H(\mathbf{x}_{n+1}) - H(\mathbf{x}_n) = \tau\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)^{\operatorname{T}}J\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n) = 0
-                    \] となるため, 
-                    \[
-                        H(\mathbf{x}_{n+1}) = H(\mathbf{x}_n) = \dots = H(\mathbf{x}_0) 
-                    \] が得られる. 
-                </p>
+            <div class="remark">
+                <ul>
+                    <li>離散勾配の性質と離散勾配法の式より 
+                        \[
+                            \begin{array}{rl} 
+                                E(\mathbf{x}_{n+1}) - E(\mathbf{x}_n) &= (\overline{\nabla}E(\mathbf{x}_{n+1}, \mathbf{x}_n)) \cdot (\mathbf{x}_{n+1} - \mathbf{x}_n) \cr 
+                                &= -\tau\|\overline{\nabla}E(\mathbf{x}_{n+1}, \mathbf{x}_n)\|_2^2 \le 0
+                            \end{array}
+                        \] が得られる. 
+                        従って 
+                        \[
+                            E(\mathbf{x}_{n+1}) \le E(\mathbf{x}_n) \le \dots \le E(\mathbf{x}_0)
+                        \] が得られる. 
+                    </li>
+                    <li>離散勾配の性質と離散勾配法の式より 
+                        \[
+                            \begin{array}{rl} 
+                                H(\mathbf{x}_{n+1}) - H(\mathbf{x}_n) &= (\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)) \cdot (\mathbf{x}_{n+1} - \mathbf{x}_n) \cr 
+                                &= \tau\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)^{\operatorname{T}}J\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n) 
+                            \end{array}
+                        \] が得られる. 
+                        ここで, 任意のベクトル $\mathbf{v}\in\mathbb{R}^{d}$ に対し $\mathbf{v}^{\operatorname{T}}J\mathbf{v}$ はスカラー値であること, および $J$ が歪対称行列であることから 
+                        \[
+                            \begin{array}{rl} 
+                                \mathbf{v}^{\operatorname{T}}J\mathbf{v} &= \left(\mathbf{v}^{\operatorname{T}}J\mathbf{v}\right)^{\operatorname{T}} \quad(\because \text{$\mathbf{v}^{\operatorname{T}}J\mathbf{v}$ はスカラー値}) \cr 
+                                &= \mathbf{v}^{\operatorname{T}}J^{\operatorname{T}}\mathbf{v} \cr 
+                                &= -\mathbf{v}^{\operatorname{T}}J\mathbf{v} \quad (\because \text{$J$ は歪対称})
+                            \end{array}
+                        \] が得られるため, 任意の $\mathbf{v}\in\mathbb{R}^{d}$ に対し $\mathbf{v}^{\operatorname{T}}J\mathbf{v} = 0$ である. 
+                        これを用いると 
+                        \[
+                            H(\mathbf{x}_{n+1}) - H(\mathbf{x}_n) = \tau\overline{\nabla}H(\mathbf{x}_{n+1}, \mathbf{x}_n)^{\operatorname{T}}J\overline{\nabla} H(\mathbf{x}_{n+1}, \mathbf{x}_n) = 0
+                        \] となるため, 
+                        \[
+                            H(\mathbf{x}_{n+1}) = H(\mathbf{x}_n) = \dots = H(\mathbf{x}_0) 
+                        \] が得られる. 
+                    </li>
+                </ul>
             </div>
 
-            <p>与えられたハミルトニアン $H$ に対する離散勾配は一般に一意ではなく, 様々な構成法が存在する. 
+            <p>このように, 離散勾配法は勾配流の数値計算においても有用な性質を持つ時間離散化であるが, ここではハミルトン系のみを対象に考えることとする. 
+                与えられた $C^1$ 級関数 $H$ に対する離散勾配は一般に一意ではなく, 様々な構成法が存在する. 
                 ここでは
                 \[
                     H(\mathbf{x}) = \dfrac{x^4}{4} + \dfrac{y^2}{2},\quad \nabla H(\mathbf{x}) = \begin{pmatrix} 
