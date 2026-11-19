@@ -656,20 +656,23 @@
                 \] に相当する性質である. 
             </p>
 
-            <p>これを用いると, 熱方程式に対する後退オイラー法 
+            <p>これを用いると, 熱方程式 $u_t = k\Delta_Du$ に対する後退オイラー法 
                 \[
                     \dfrac{\mathbf{u}^{n+1} - \mathbf{u}^n}{\tau} = kL_h\mathbf{u}^{n+1}
                 \] に対し, 
                 \[
+                    \dfrac{1}{2}\dfrac{d}{dt}\int_0^L|u|^2~dx = \int_0^Lu_tu~dx = \int_0^Lk(\Delta_Du)u~dx = -k\int_0^L|\nabla u|^2~dx
+                \] と同様に
+                \[
                     \begin{array}{rl} 
-                        -k\tau\|G_h\mathbf{u}^{n+1}\|_e^2 &= k\tau(L_h\mathbf{u}^{n+1}, \mathbf{u}^{n+1})_h \cr 
-                        &= (\mathbf{u}^{n+1}-\mathbf{u}^n, \mathbf{u}^{n+1})_h \cr 
-                        &= \dfrac{1}{2}\left(\mathbf{u}^{n+1}-\mathbf{u}^n, (\mathbf{u}^{n+1}-\mathbf{u}^n) + (\mathbf{u}^{n+1}+\mathbf{u}^n)\right)_h \cr 
-                        &= \dfrac{1}{2}\left(\|\mathbf{u}^{n+1}-\mathbf{u}^n\|_h^2 + \|\mathbf{u}^{n+1}\|_h^2 - \|\mathbf{u}^n\|_h^2\right)
+                        -k\|G_h\mathbf{u}^{n+1}\|_e^2 &= k(L_h\mathbf{u}^{n+1}, \mathbf{u}^{n+1})_h \cr 
+                        &= \left(\dfrac{\mathbf{u}^{n+1}-\mathbf{u}^n}{\tau}, \mathbf{u}^{n+1}\right)_h \cr 
+                        &= \dfrac{1}{2\tau}\left(\mathbf{u}^{n+1}-\mathbf{u}^n, (\mathbf{u}^{n+1}-\mathbf{u}^n) + (\mathbf{u}^{n+1}+\mathbf{u}^n)\right)_h \cr 
+                        &= \dfrac{1}{2}\dfrac{\|\mathbf{u}^{n+1}\|_h^2 - \|\mathbf{u}^n\|_h^2}{\tau} + \dfrac{1}{2\tau}\|\mathbf{u}^{n+1}-\mathbf{u}^n\|_h^2
                     \end{array}
                 \] となるため, ここから 
                 \[
-                    \|\mathbf{u}^{n+1}\|_h^2 - \|\mathbf{u}^n\|_h^2 = -2k\tau\|G_h\mathbf{u}^{n+1}\|_e^2 - \|\mathbf{u}^{n+1}-\mathbf{u}^n\|_h^2 \le 0
+                    \|\mathbf{u}^{n+1}\|_h^2 = \|\mathbf{u}^n\|_h^2 - 2k\tau\|G_h\mathbf{u}^{n+1}\|_e^2 - \|\mathbf{u}^{n+1}-\mathbf{u}^n\|_h^2 \le \|\mathbf{u}^n\|_h^2
                 \] が得られ, 従って 
                 \[
                     \|\mathbf{u}^{n+1}\|_h^2 \le \|\mathbf{u}^n\|_h^2 \le \dots \le \|\mathbf{u}^0\|_h^2 
@@ -1190,7 +1193,7 @@
         <hr>
 
         <section id="sectionA-5"><h2>A.5: 離散変分導関数法</h2>
-            <p><a href="./phase_plane_analysis.html#section4-3">4.3: 勾配系とハミルトン系</a> において, 構造保存型数値解法の一例としてハミルトン系に対する離散勾配法を紹介した. 
+            <p><a href="./phase_plane_analysis.html#section4-3">4.3: 勾配系とハミルトン系</a> において, 構造保存型数値解法の一例として勾配系やハミルトン系に対する離散勾配法を紹介した. 
                 ここでは時間発展 PDE に対する構造保存型数値解法の一種として, <b>離散変分導関数法</b> (<b>discrete variational derivative method</b>) を紹介しよう. 
                 例として <b>カーン=ヒリアード方程式</b> (<b>Cahn-Hilliard equation</b>)  
                 \[
